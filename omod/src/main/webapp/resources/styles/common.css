@@ -1,0 +1,21 @@
+label { width: 10em; float: left; }
+label.error { float: none;  padding-left: .5em; vertical-align: top; }
+p { clear: both; }
+.submit { margin-left: 12em; }
+em { font-weight: bold; padding-right: 1em; vertical-align: top;color: red }
+
+.blue { color:blue; }
+.yellow { background:yellow; }
+.gray { background:gray; }
+.reorder{background-color: #ff6f00;}
+.gone{text-decoration:line-through;}
+
+.lessThan3Month{background-color: #F42F0C;color: white;}
+
+input.ui-button {
+    /* padding values here to your liking */
+	font-size:10px;
+}
+
+
+

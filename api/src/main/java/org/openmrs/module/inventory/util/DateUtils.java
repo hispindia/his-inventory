@@ -52,7 +52,11 @@ public class DateUtils {
 
 	//System.out.println(timestampPlusDay(createTimestamp(), -2));	
 		Date tt = getDateFromStr("13/12/2009");
-	System.out.println(tt);
+		SimpleDateFormat dateFormat = new SimpleDateFormat( "dd/MM/yyyy" );
+		Calendar cal = Calendar.getInstance();
+		cal.setTime( dateFormat.parse( "13/12/2009" ) );
+		cal.add( Calendar.DATE, 19 );
+	System.out.println(cal.getTime());
 		
 
 		

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.inventory.model">
+
+	<class name="InventoryDrug" table="inventory_drug" batch-size="500">
+
+		<id name="id" type="int" column="id" unsaved-value="0">
+				<generator class="native" />
+		</id>
+		<property name="name" column="name" length="255"/>
+		<many-to-one name="unit" class="org.openmrs.module.inventory.model.InventoryDrugUnit"
+	        column="unit_id" cascade="none" lazy="false" />
+	    <many-to-one name="category" class="org.openmrs.module.inventory.model.InventoryDrugCategory"
+	        column="category_id" cascade="none" lazy="false" />
+	    <many-to-one name="drugCore" class="org.openmrs.Drug" column="drug_id" cascade="none" lazy="false" />
+		<property name="attribute" column="attribute" />
+		<property name="consumption" column="consumption" />
+		<property name="reorderQty" column="reorder_qty" />
+		<set name="formulations" table="inventory_drug_formulations" cascade="save-update,merge,evict" lazy="false">
+            <key column="drug_id" />
+            <many-to-many column="formulation_id"  class="org.openmrs.module.inventory.model.InventoryDrugFormulation" />
+        </set>
+		<property name="createdOn" column="created_on"  />
+		<property name="createdBy" column="created_by" length="255" />
+		
+	</class>
+</hibernate-mapping>
