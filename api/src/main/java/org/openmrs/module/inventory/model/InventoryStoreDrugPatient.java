@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.openmrs.Patient;
-import org.openmrs.module.hospitalcore.util.PatientUtil;
+import org.openmrs.module.hospitalcore.util.PatientUtils;
 
 public class InventoryStoreDrugPatient implements  Serializable {
 	 private static final long serialVersionUID = 1L;
@@ -47,7 +47,7 @@ public class InventoryStoreDrugPatient implements  Serializable {
 		this.createdOn = createdOn;
 	}
 	public String getPatientCategory(){
-		return PatientUtil.getPatientCategory(patient);
+		return PatientUtils.getPatientCategory(patient);
 	}
 	public String getCreatedBy() {
 		return createdBy;
