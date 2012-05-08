@@ -49,501 +49,466 @@ import org.openmrs.module.inventory.model.InventoryStoreItemIndentDetail;
 import org.openmrs.module.inventory.model.InventoryStoreItemTransaction;
 import org.openmrs.module.inventory.model.InventoryStoreItemTransactionDetail;
 
-
 /**
  *
  */
-public class InventoryServiceImpl extends BaseOpenmrsService implements InventoryService{
-
-    public InventoryServiceImpl(){
-    }
-    
-    protected InventoryDAO dao;
+public class InventoryServiceImpl extends BaseOpenmrsService implements InventoryService {
+	
+	public InventoryServiceImpl() {
+	}
+	
+	protected InventoryDAO dao;
 	
 	public void setDao(InventoryDAO dao) {
 		this.dao = dao;
 	}
-
+	
 	/**
-	 * STORE 
+	 * STORE
 	 */
-	public List<InventoryStore> listInventoryStore(int min, int max)
-			throws APIException {
+	public List<InventoryStore> listInventoryStore(int min, int max) throws APIException {
 		return dao.listInventoryStore(min, max);
 	}
-
+	
 	public InventoryStore saveStore(InventoryStore store) throws APIException {
 		return dao.saveStore(store);
 	}
-
+	
 	public int countListStore() throws APIException {
 		return dao.countListStore();
 	}
-
+	
 	public InventoryStore getStoreById(Integer id) throws APIException {
 		return dao.getStoreById(id);
 	}
-
+	
 	public InventoryStore getStoreByRole(String role) throws APIException {
 		return dao.getStoreByRole(role);
 	}
 	
-	public InventoryStore getStoreByCollectionRole(List<Role> roles) throws APIException{
+	public InventoryStore getStoreByCollectionRole(List<Role> roles) throws APIException {
 		return dao.getStoreByCollectionRole(roles);
 	}
-
+	
 	public List<InventoryStore> listMainStore() throws APIException {
 		return dao.listMainStore();
 	}
-
+	
 	public void deleteStore(InventoryStore store) throws APIException {
 		dao.deleteStore(store);
 	}
-
+	
 	public List<InventoryStore> listAllInventoryStore() throws APIException {
 		return dao.listAllInventoryStore();
 	}
-
+	
 	public InventoryStore getStoreByName(String name) throws APIException {
 		return dao.getStoreByName(name);
 	}
 	
-	public List<InventoryStore> listStoreByMainStore(Integer mainStoreid,boolean bothMainStore) throws APIException{
-		return dao.listStoreByMainStore(mainStoreid ,bothMainStore);
+	public List<InventoryStore> listStoreByMainStore(Integer mainStoreid, boolean bothMainStore) throws APIException {
+		return dao.listStoreByMainStore(mainStoreid, bothMainStore);
 	}
 	
 	/**
 	 * ItemCategory
 	 */
-	 
-	public List<InventoryItemCategory> listItemCategory(String name ,int min, int max) throws APIException{
+	
+	public List<InventoryItemCategory> listItemCategory(String name, int min, int max) throws APIException {
 		return dao.listItemCategory(name, min, max);
 	}
 	
-	public List<InventoryItemCategory> findItemCategory(String name) throws APIException{
+	public List<InventoryItemCategory> findItemCategory(String name) throws APIException {
 		return dao.findItemCategory(name);
 	}
 	
-	public InventoryItemCategory saveItemCategory(InventoryItemCategory category) throws APIException{
+	public InventoryItemCategory saveItemCategory(InventoryItemCategory category) throws APIException {
 		return dao.saveItemCategory(category);
 	}
-
-	public int countListItemCategory(String name)  throws APIException{
+	
+	public int countListItemCategory(String name) throws APIException {
 		return dao.countListItemCategory(name);
 	}
 	
-	
-	public InventoryItemCategory getItemCategoryById(Integer id) throws APIException{
+	public InventoryItemCategory getItemCategoryById(Integer id) throws APIException {
 		return dao.getItemCategoryById(id);
 	}
 	
-	
-	public InventoryItemCategory getItemCategoryByName(String name) throws APIException{
+	public InventoryItemCategory getItemCategoryByName(String name) throws APIException {
 		return dao.getItemCategoryByName(name);
 	}
 	
-	
-	public void deleteItemCategory(InventoryItemCategory category) throws APIException{
+	public void deleteItemCategory(InventoryItemCategory category) throws APIException {
 		dao.deleteItemCategory(category);
 	}
 	
 	/**
 	 * ItemSubCategory
 	 */
-	 
 	
-	public List<InventoryItemSubCategory> listItemSubCategory(String name ,int min, int max) throws APIException{
+	public List<InventoryItemSubCategory> listItemSubCategory(String name, int min, int max) throws APIException {
 		return dao.listItemSubCategory(name, min, max);
 	}
 	
-	
-	public List<InventoryItemSubCategory> findItemSubCategory(String name) throws APIException{
+	public List<InventoryItemSubCategory> findItemSubCategory(String name) throws APIException {
 		return dao.findItemSubCategory(name);
 	}
 	
-	public InventoryItemSubCategory saveItemSubCategory(InventoryItemSubCategory subCategory) throws APIException{
+	public InventoryItemSubCategory saveItemSubCategory(InventoryItemSubCategory subCategory) throws APIException {
 		return dao.saveItemSubCategory(subCategory);
 	}
-
 	
-	public int countListItemSubCategory(String name)  throws APIException{
+	public int countListItemSubCategory(String name) throws APIException {
 		return dao.countListItemSubCategory(name);
 	}
 	
-	
-	public InventoryItemSubCategory getItemSubCategoryById(Integer id) throws APIException{
+	public InventoryItemSubCategory getItemSubCategoryById(Integer id) throws APIException {
 		return dao.getItemSubCategoryById(id);
 	}
 	
-	
-	public InventoryItemSubCategory getItemSubCategoryByName(Integer categoryId ,String name) throws APIException{
+	public InventoryItemSubCategory getItemSubCategoryByName(Integer categoryId, String name) throws APIException {
 		return dao.getItemSubCategoryByName(categoryId, name);
 	}
 	
-	public void deleteItemSubCategory(InventoryItemSubCategory subCategory) throws APIException{
-		 dao.deleteItemSubCategory(subCategory);
+	public void deleteItemSubCategory(InventoryItemSubCategory subCategory) throws APIException {
+		dao.deleteItemSubCategory(subCategory);
 	}
 	
-	public List<InventoryItemSubCategory> listSubCatByCat(Integer categoryId) throws APIException{
+	public List<InventoryItemSubCategory> listSubCatByCat(Integer categoryId) throws APIException {
 		return dao.listSubCatByCat(categoryId);
 	}
 	
 	/**
 	 * ItemSpecification
 	 */
-	 
 	
-	public List<InventoryItemSpecification> listItemSpecification(String name ,int min, int max) throws APIException{
+	public List<InventoryItemSpecification> listItemSpecification(String name, int min, int max) throws APIException {
 		return dao.listItemSpecification(name, min, max);
 	}
 	
-	
-	public List<InventoryItemSpecification> findItemSpecification(String name) throws APIException{
+	public List<InventoryItemSpecification> findItemSpecification(String name) throws APIException {
 		return dao.findItemSpecification(name);
 	}
 	
-	public InventoryItemSpecification saveItemSpecification(InventoryItemSpecification specification) throws APIException{
+	public InventoryItemSpecification saveItemSpecification(InventoryItemSpecification specification) throws APIException {
 		return dao.saveItemSpecification(specification);
 	}
-
 	
-	public int countListItemSpecification(String name)  throws APIException{
+	public int countListItemSpecification(String name) throws APIException {
 		return dao.countListItemSpecification(name);
 	}
 	
-	
-	public InventoryItemSpecification getItemSpecificationById(Integer id) throws APIException{
+	public InventoryItemSpecification getItemSpecificationById(Integer id) throws APIException {
 		return dao.getItemSpecificationById(id);
 	}
 	
-	
-	public InventoryItemSpecification getItemSpecificationByName(String name) throws APIException{
+	public InventoryItemSpecification getItemSpecificationByName(String name) throws APIException {
 		return dao.getItemSpecificationByName(name);
 	}
 	
-	public void deleteItemSpecification(InventoryItemSpecification specification) throws APIException{
+	public void deleteItemSpecification(InventoryItemSpecification specification) throws APIException {
 		dao.deleteItemSpecification(specification);
 	}
 	
 	/**
 	 * ItemUnit
 	 */
-	 
 	
-	public List<InventoryItemUnit> listItemUnit(String name ,int min, int max) throws APIException{
+	public List<InventoryItemUnit> listItemUnit(String name, int min, int max) throws APIException {
 		return dao.listItemUnit(name, min, max);
 	}
 	
-	
-	public List<InventoryItemUnit> findItemUnit(String name) throws APIException{
+	public List<InventoryItemUnit> findItemUnit(String name) throws APIException {
 		return dao.findItemUnit(name);
 	}
 	
-	public InventoryItemUnit saveItemUnit(InventoryItemUnit unit) throws APIException{
+	public InventoryItemUnit saveItemUnit(InventoryItemUnit unit) throws APIException {
 		return dao.saveItemUnit(unit);
 	}
-
 	
-	public int countListItemUnit(String name)  throws APIException{
+	public int countListItemUnit(String name) throws APIException {
 		return dao.countListItemUnit(name);
 	}
 	
-	
-	public InventoryItemUnit getItemUnitById(Integer id) throws APIException{
+	public InventoryItemUnit getItemUnitById(Integer id) throws APIException {
 		return dao.getItemUnitById(id);
 	}
 	
-	
-	public InventoryItemUnit getItemUnitByName(String name) throws APIException{
+	public InventoryItemUnit getItemUnitByName(String name) throws APIException {
 		return dao.getItemUnitByName(name);
 	}
 	
-	public void deleteItemUnit(InventoryItemUnit unit) throws APIException{
+	public void deleteItemUnit(InventoryItemUnit unit) throws APIException {
 		dao.deleteItemUnit(unit);
 	}
 	
 	/**
 	 * Item
 	 */
-	 
 	
-	public List<InventoryItem> listItem(Integer categoryId, String name ,int min, int max) throws APIException{
-		return dao.listItem(categoryId,name, min, max);
+	public List<InventoryItem> listItem(Integer categoryId, String name, int min, int max) throws APIException {
+		return dao.listItem(categoryId, name, min, max);
 	}
 	
-	
-	public List<InventoryItem> findItem(String name) throws APIException{
+	public List<InventoryItem> findItem(String name) throws APIException {
 		return dao.findItem(name);
 	}
 	
-	public InventoryItem saveItem(InventoryItem item) throws APIException{
+	public InventoryItem saveItem(InventoryItem item) throws APIException {
 		return dao.saveItem(item);
 	}
-
 	
-	public int countListItem(Integer categoryId,String name)  throws APIException{
-		return dao.countListItem(categoryId,name);
+	public int countListItem(Integer categoryId, String name) throws APIException {
+		return dao.countListItem(categoryId, name);
 	}
 	
-	
-	public InventoryItem getItemById(Integer id) throws APIException{
+	public InventoryItem getItemById(Integer id) throws APIException {
 		return dao.getItemById(id);
 	}
 	
-	
-	public InventoryItem getItemByName(String name) throws APIException{
+	public InventoryItem getItemByName(String name) throws APIException {
 		return dao.getItemByName(name);
 	}
 	
-	public void deleteItem(InventoryItem item) throws APIException{
+	public void deleteItem(InventoryItem item) throws APIException {
 		dao.deleteItem(item);
 	}
 	
-	public List<InventoryItem> findItem(Integer categoryId,String name) throws APIException{
+	public List<InventoryItem> findItem(Integer categoryId, String name) throws APIException {
 		return dao.findItem(categoryId, name);
 	}
 	
-	public int countItem(Integer categoryId, Integer unitId,  Integer subCategoryId, Integer specificationId)  throws DAOException{
+	public int countItem(Integer categoryId, Integer unitId, Integer subCategoryId, Integer specificationId)
+	                                                                                                        throws DAOException {
 		return dao.countItem(categoryId, unitId, subCategoryId, specificationId);
 	}
 	
 	/**
 	 * Drug
 	 */
-	 
 	
-	public List<InventoryDrug> listDrug(Integer categoryId, String name ,int min, int max) throws APIException{
+	public List<InventoryDrug> listDrug(Integer categoryId, String name, int min, int max) throws APIException {
 		return dao.listDrug(categoryId, name, min, max);
 	}
 	
-	
-	public List<InventoryDrug> findDrug(Integer categoryId ,String name) throws APIException{
-		return dao.findDrug(categoryId,name);
+	public List<InventoryDrug> findDrug(Integer categoryId, String name) throws APIException {
+		return dao.findDrug(categoryId, name);
 	}
 	
-	public InventoryDrug saveDrug(InventoryDrug drug) throws APIException{
+	public InventoryDrug saveDrug(InventoryDrug drug) throws APIException {
 		return dao.saveDrug(drug);
 	}
-
 	
-	public int countListDrug(Integer categoryId, String name)  throws APIException{
-		return dao.countListDrug(categoryId , name);
+	public int countListDrug(Integer categoryId, String name) throws APIException {
+		return dao.countListDrug(categoryId, name);
 	}
 	
-	
-	public InventoryDrug getDrugById(Integer id) throws APIException{
+	public InventoryDrug getDrugById(Integer id) throws APIException {
 		return dao.getDrugById(id);
 	}
 	
-	
-	public InventoryDrug getDrugByName(String name) throws APIException{
+	public InventoryDrug getDrugByName(String name) throws APIException {
 		return dao.getDrugByName(name);
 	}
 	
-	public void deleteDrug(InventoryDrug drug) throws APIException{
+	public void deleteDrug(InventoryDrug drug) throws APIException {
 		dao.deleteDrug(drug);
 	}
 	
+	public List<InventoryDrug> getAllDrug() throws APIException {
+		return dao.getAllDrug();
+	}
 	
 	@Override
-	public int countListDrug(Integer categoryId, Integer unitId,
-			Integer formulationId) throws APIException {
+	public int countListDrug(Integer categoryId, Integer unitId, Integer formulationId) throws APIException {
 		// TODO Auto-generated method stub
 		return dao.countListDrug(categoryId, unitId, formulationId);
 	}
-
+	
 	/**
 	 * DrugCategory
 	 */
-	 
 	
-	public List<InventoryDrugCategory> listDrugCategory(String name ,int min, int max) throws APIException{
+	public List<InventoryDrugCategory> listDrugCategory(String name, int min, int max) throws APIException {
 		return dao.listDrugCategory(name, min, max);
 	}
 	
-	
-	public List<InventoryDrugCategory> findDrugCategory(String name) throws APIException{
+	public List<InventoryDrugCategory> findDrugCategory(String name) throws APIException {
 		return dao.findDrugCategory(name);
 	}
 	
-	public InventoryDrugCategory saveDrugCategory(InventoryDrugCategory drugCategory) throws APIException{
+	public InventoryDrugCategory saveDrugCategory(InventoryDrugCategory drugCategory) throws APIException {
 		return dao.saveDrugCategory(drugCategory);
 	}
-
 	
-	public int countListDrugCategory(String name)  throws APIException{
+	public int countListDrugCategory(String name) throws APIException {
 		return dao.countListDrugCategory(name);
 	}
 	
-	
-	public InventoryDrugCategory getDrugCategoryById(Integer id) throws APIException{
+	public InventoryDrugCategory getDrugCategoryById(Integer id) throws APIException {
 		return dao.getDrugCategoryById(id);
 	}
 	
-	
-	public InventoryDrugCategory getDrugCategoryByName(String name) throws APIException{
+	public InventoryDrugCategory getDrugCategoryByName(String name) throws APIException {
 		return dao.getDrugCategoryByName(name);
 	}
 	
-	public void deleteDrugCategory(InventoryDrugCategory drugCategory) throws APIException{
+	public void deleteDrugCategory(InventoryDrugCategory drugCategory) throws APIException {
 		dao.deleteDrugCategory(drugCategory);
 	}
 	
 	/**
 	 * DrugFormulation
 	 */
-	 
 	
-	public List<InventoryDrugFormulation> listDrugFormulation(String name ,int min, int max) throws APIException{
+	public List<InventoryDrugFormulation> listDrugFormulation(String name, int min, int max) throws APIException {
 		return dao.listDrugFormulation(name, min, max);
 	}
 	
-	
-	public List<InventoryDrugFormulation> findDrugFormulation(String name) throws APIException{
+	public List<InventoryDrugFormulation> findDrugFormulation(String name) throws APIException {
 		return dao.findDrugFormulation(name);
 	}
 	
-	public InventoryDrugFormulation saveDrugFormulation(InventoryDrugFormulation drugFormulation) throws APIException{
+	public InventoryDrugFormulation saveDrugFormulation(InventoryDrugFormulation drugFormulation) throws APIException {
 		return dao.saveDrugFormulation(drugFormulation);
 	}
-
 	
-	public int countListDrugFormulation(String name)  throws APIException{
+	public int countListDrugFormulation(String name) throws APIException {
 		return dao.countListDrugFormulation(name);
 	}
 	
-	
-	public InventoryDrugFormulation getDrugFormulationById(Integer id) throws APIException{
+	public InventoryDrugFormulation getDrugFormulationById(Integer id) throws APIException {
 		return dao.getDrugFormulationById(id);
 	}
 	
-	
-	public InventoryDrugFormulation getDrugFormulationByName(String name) throws APIException{
+	public InventoryDrugFormulation getDrugFormulationByName(String name) throws APIException {
 		return dao.getDrugFormulationByName(name);
 	}
 	
-	
-	
-	public InventoryDrugFormulation getDrugFormulation(String name ,String dozage)
-			throws APIException {
+	public InventoryDrugFormulation getDrugFormulation(String name, String dozage) throws APIException {
 		return dao.getDrugFormulation(name, dozage);
 	}
-
-	public void deleteDrugFormulation(InventoryDrugFormulation drugFormulation) throws APIException{
+	
+	public void deleteDrugFormulation(InventoryDrugFormulation drugFormulation) throws APIException {
 		dao.deleteDrugFormulation(drugFormulation);
 	}
 	
 	/**
 	 * DrugUnit
 	 */
-	 
 	
-	public List<InventoryDrugUnit> listDrugUnit(String name ,int min, int max) throws APIException{
+	public List<InventoryDrugUnit> listDrugUnit(String name, int min, int max) throws APIException {
 		return dao.listDrugUnit(name, min, max);
 	}
 	
-	
-	public List<InventoryDrugUnit> findDrugUnit(String name) throws APIException{
+	public List<InventoryDrugUnit> findDrugUnit(String name) throws APIException {
 		return dao.findDrugUnit(name);
 	}
 	
-	public InventoryDrugUnit saveDrugUnit(InventoryDrugUnit drugUnit) throws APIException{
+	public InventoryDrugUnit saveDrugUnit(InventoryDrugUnit drugUnit) throws APIException {
 		return dao.saveDrugUnit(drugUnit);
 	}
-
 	
-	public int countListDrugUnit(String name)  throws APIException{
+	public int countListDrugUnit(String name) throws APIException {
 		return dao.countListDrugUnit(name);
 	}
 	
-	
-	public InventoryDrugUnit getDrugUnitById(Integer id) throws APIException{
+	public InventoryDrugUnit getDrugUnitById(Integer id) throws APIException {
 		return dao.getDrugUnitById(id);
 	}
 	
-	
-	public InventoryDrugUnit getDrugUnitByName(String name) throws APIException{
+	public InventoryDrugUnit getDrugUnitByName(String name) throws APIException {
 		return dao.getDrugUnitByName(name);
 	}
 	
-	public void deleteDrugUnit(InventoryDrugUnit drugUnit) throws APIException{
-		 dao.deleteDrugUnit(drugUnit);
+	public void deleteDrugUnit(InventoryDrugUnit drugUnit) throws APIException {
+		dao.deleteDrugUnit(drugUnit);
 	}
 	
 	/**
 	 * StoreDrug
-	 */ 
+	 */
 	
-	public List<InventoryStoreDrug> listStoreDrug(Integer storeId,Integer categoryId, String drugName,Integer reOrderQty,int min, int max) throws APIException{
+	public List<InventoryStoreDrug> listStoreDrug(Integer storeId, Integer categoryId, String drugName, Integer reOrderQty,
+	                                              int min, int max) throws APIException {
 		return dao.listStoreDrug(storeId, categoryId, drugName, reOrderQty, min, max);
 	}
 	
-	
-	public int countStoreDrug(Integer storeId,Integer categoryId, String drugName,Integer reOrderQty)  throws APIException{
+	public int countStoreDrug(Integer storeId, Integer categoryId, String drugName, Integer reOrderQty) throws APIException {
 		return dao.countStoreDrug(storeId, categoryId, drugName, reOrderQty);
 	}
 	
-	public InventoryStoreDrug getStoreDrugById(Integer id) throws APIException{
+	public InventoryStoreDrug getStoreDrugById(Integer id) throws APIException {
 		return dao.getStoreDrugById(id);
 	}
 	
-	public InventoryStoreDrug getStoreDrug(Integer storeId, Integer drugId,Integer formulationId) throws APIException{
+	public InventoryStoreDrug getStoreDrug(Integer storeId, Integer drugId, Integer formulationId) throws APIException {
 		return dao.getStoreDrug(storeId, drugId, formulationId);
 	}
 	
-	public InventoryStoreDrug saveStoreDrug(InventoryStoreDrug storeDrug) throws APIException{
+	public InventoryStoreDrug saveStoreDrug(InventoryStoreDrug storeDrug) throws APIException {
 		return dao.saveStoreDrug(storeDrug);
 	}
 	
 	/**
 	 * StoreDrugTransaction
-	 */ 
+	 */
 	
-	public List<InventoryStoreDrugTransaction> listStoreDrugTransaction(Integer transactionType,Integer storeId, String description, String fromDate, String toDate ,int min, int max) throws APIException{
+	public List<InventoryStoreDrugTransaction> listStoreDrugTransaction(Integer transactionType, Integer storeId,
+	                                                                    String description, String fromDate, String toDate,
+	                                                                    int min, int max) throws APIException {
 		return dao.listStoreDrugTransaction(transactionType, storeId, description, fromDate, toDate, min, max);
 	}
 	
-	public InventoryStoreDrugTransaction saveStoreDrugTransaction(InventoryStoreDrugTransaction storeTransaction) throws APIException{
+	public InventoryStoreDrugTransaction saveStoreDrugTransaction(InventoryStoreDrugTransaction storeTransaction)
+	                                                                                                             throws APIException {
 		return dao.saveStoreDrugTransaction(storeTransaction);
 	}
-
-	public int countStoreDrugTransaction(Integer transactionType,Integer storeId, String description, String fromDate, String toDate)  throws APIException{
+	
+	public int countStoreDrugTransaction(Integer transactionType, Integer storeId, String description, String fromDate,
+	                                     String toDate) throws APIException {
 		return dao.countStoreDrugTransaction(transactionType, storeId, description, fromDate, toDate);
 	}
 	
-	public InventoryStoreDrugTransaction getStoreDrugTransactionById(Integer id) throws APIException{
+	public InventoryStoreDrugTransaction getStoreDrugTransactionById(Integer id) throws APIException {
 		return dao.getStoreDrugTransactionById(id);
 	}
 	
-	
-	
 	@Override
-	public InventoryStoreDrugTransaction getStoreDrugTransactionByParentId(
-			Integer parentId) throws APIException {
+	public InventoryStoreDrugTransaction getStoreDrugTransactionByParentId(Integer parentId) throws APIException {
 		return dao.getStoreDrugTransactionByParentId(parentId);
 	}
-
+	
 	/**
 	 * StoreDrugTransactionDetail
 	 */
 	
-	public List<InventoryStoreDrugTransactionDetail> listStoreDrugTransactionDetail(Integer storeId, Integer categoryId,String drugName,String formulationName, String fromDate, String toDate ,int min, int max) throws APIException{
-		return dao.listStoreDrugTransactionDetail(storeId, categoryId, drugName, formulationName, fromDate, toDate, min, max);
+	public List<InventoryStoreDrugTransactionDetail> listStoreDrugTransactionDetail(Integer storeId, Integer categoryId,
+	                                                                                String drugName, String formulationName,
+	                                                                                String fromDate, String toDate, int min,
+	                                                                                int max) throws APIException {
+		return dao
+		        .listStoreDrugTransactionDetail(storeId, categoryId, drugName, formulationName, fromDate, toDate, min, max);
 	}
 	
-	public InventoryStoreDrugTransactionDetail saveStoreDrugTransactionDetail(InventoryStoreDrugTransactionDetail storeTransactionDetail) throws APIException{
+	public InventoryStoreDrugTransactionDetail saveStoreDrugTransactionDetail(InventoryStoreDrugTransactionDetail storeTransactionDetail)
+	                                                                                                                                     throws APIException {
 		return dao.saveStoreDrugTransactionDetail(storeTransactionDetail);
 	}
-
-	public int countStoreDrugTransactionDetail(Integer storeId,Integer categoryId,String drugName,String formulationName, String fromDate, String toDate )  throws APIException{
+	
+	public int countStoreDrugTransactionDetail(Integer storeId, Integer categoryId, String drugName, String formulationName,
+	                                           String fromDate, String toDate) throws APIException {
 		return dao.countStoreDrugTransactionDetail(storeId, categoryId, drugName, formulationName, fromDate, toDate);
 	}
 	
-	public InventoryStoreDrugTransactionDetail getStoreDrugTransactionDetailById(Integer id) throws APIException{
+	public InventoryStoreDrugTransactionDetail getStoreDrugTransactionDetailById(Integer id) throws APIException {
 		return dao.getStoreDrugTransactionDetailById(id);
 	}
 	
-	public List<InventoryStoreDrugTransactionDetail> listStoreDrugTransactionDetail(Integer storeId,Integer drugId,Integer formulationId, boolean haveQuantity) throws APIException{
+	public List<InventoryStoreDrugTransactionDetail> listStoreDrugTransactionDetail(Integer storeId, Integer drugId,
+	                                                                                Integer formulationId,
+	                                                                                boolean haveQuantity)
+	                                                                                                     throws APIException {
 		return dao.listStoreDrugTransactionDetail(storeId, drugId, formulationId, haveQuantity);
 	}
 	
@@ -551,96 +516,94 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 	public Integer sumCurrentQuantityDrugOfStore(Integer storeId, Integer drugId, Integer formulationId) throws APIException {
 		return dao.sumCurrentQuantityDrugOfStore(storeId, drugId, formulationId);
 	}
-
+	
 	@Override
-	public List<InventoryStoreDrugTransactionDetail> listStoreDrugAvaiable(
-			Integer storeId, Collection<Integer> drugs,
-			Collection<Integer> formulations) throws APIException {
+	public List<InventoryStoreDrugTransactionDetail> listStoreDrugAvaiable(Integer storeId, Collection<Integer> drugs,
+	                                                                       Collection<Integer> formulations)
+	                                                                                                        throws APIException {
 		// TODO Auto-generated method stub
 		return dao.listStoreDrugAvaiable(storeId, drugs, formulations);
 	}
-
+	
 	@Override
-	public List<InventoryStoreDrugTransactionDetail> listTransactionDetail(
-			Integer transactionId) throws APIException {
+	public List<InventoryStoreDrugTransactionDetail> listTransactionDetail(Integer transactionId) throws APIException {
 		// TODO Auto-generated method stub
 		return dao.listTransactionDetail(transactionId);
 	}
-
 	
 	@Override
-	public Integer countViewStockBalance(Integer storeId, Integer categoryId,
-			String drugName, String fromDate, String toDate, boolean isExpiry) throws APIException {
+	public Integer countViewStockBalance(Integer storeId, Integer categoryId, String drugName, String fromDate,
+	                                     String toDate, boolean isExpiry) throws APIException {
 		// TODO Auto-generated method stub
 		return dao.countViewStockBalance(storeId, categoryId, drugName, fromDate, toDate, isExpiry);
 	}
-
+	
 	@Override
-	public List<InventoryStoreDrugTransactionDetail> listViewStockBalance(
-			Integer storeId, Integer categoryId, String drugName,
-			String fromDate, String toDate, boolean isExpiry,int min, int max) throws APIException {
+	public List<InventoryStoreDrugTransactionDetail> listViewStockBalance(Integer storeId, Integer categoryId,
+	                                                                      String drugName, String fromDate, String toDate,
+	                                                                      boolean isExpiry, int min, int max)
+	                                                                                                         throws APIException {
 		// TODO Auto-generated method stub
-		return dao.listViewStockBalance(storeId, categoryId, drugName, fromDate, toDate, isExpiry,min,max);
+		return dao.listViewStockBalance(storeId, categoryId, drugName, fromDate, toDate, isExpiry, min, max);
 	}
-
+	
 	@Override
-	public List<InventoryStoreDrugTransactionDetail> listStoreDrugTransactionDetail(
-			Integer storeId, Integer drugId, Integer formulationId, Integer isExpriry)
-			throws APIException {
+	public List<InventoryStoreDrugTransactionDetail> listStoreDrugTransactionDetail(Integer storeId, Integer drugId,
+	                                                                                Integer formulationId, Integer isExpriry)
+	                                                                                                                         throws APIException {
 		// TODO Auto-generated method stub
 		return dao.listStoreDrugTransactionDetail(storeId, drugId, formulationId, isExpriry);
 	}
 	
-	
-
 	@Override
-	public int checkExistDrugTransactionDetail(Integer drugId)
-			throws APIException {
+	public int checkExistDrugTransactionDetail(Integer drugId) throws APIException {
 		// TODO Auto-generated method stub
 		return dao.checkExistDrugTransactionDetail(drugId);
 	}
-
+	
 	/**
 	 * InventoryStoreDrugIndent
 	 */
 	
-	
-	public List<InventoryStoreDrugIndent> listSubStoreIndent(Integer storeId, String name,Integer status, String fromDate, String toDate, int min, int max) throws APIException{
+	public List<InventoryStoreDrugIndent> listSubStoreIndent(Integer storeId, String name, Integer status, String fromDate,
+	                                                         String toDate, int min, int max) throws APIException {
 		return dao.listSubStoreIndent(storeId, name, status, fromDate, toDate, min, max);
 	}
 	
 	@Override
-	public List<InventoryStoreDrugIndent> listStoreDrugIndent(Integer StoreId,
-			String name, String fromDate, String toDate, int min, int max)
-			throws APIException {
+	public List<InventoryStoreDrugIndent> listStoreDrugIndent(Integer StoreId, String name, String fromDate, String toDate,
+	                                                          int min, int max) throws APIException {
 		// TODO Auto-generated method stub
 		return dao.listStoreDrugIndent(StoreId, name, fromDate, toDate, min, max);
 	}
-
+	
 	@Override
-	public int countStoreDrugIndent(Integer StoreId, String name,
-			String fromDate, String toDate) throws APIException {
+	public int countStoreDrugIndent(Integer StoreId, String name, String fromDate, String toDate) throws APIException {
 		// TODO Auto-generated method stub
 		return dao.countStoreDrugIndent(StoreId, name, fromDate, toDate);
 	}
-
-	public int countSubStoreIndent(Integer storeId, String name,Integer status, String fromDate, String toDate)  throws APIException{
+	
+	public int countSubStoreIndent(Integer storeId, String name, Integer status, String fromDate, String toDate)
+	                                                                                                            throws APIException {
 		return dao.countSubStoreIndent(storeId, name, status, fromDate, toDate);
 	}
 	
-	public List<InventoryStoreDrugIndent> listMainStoreIndent(Integer id, Integer mainStoreId,Integer subStoreId, String name,Integer status, String fromDate, String toDate, int min, int max) throws APIException{
-		return dao.listMainStoreIndent(id ,mainStoreId, subStoreId, name, status, fromDate, toDate, min, max);
+	public List<InventoryStoreDrugIndent> listMainStoreIndent(Integer id, Integer mainStoreId, Integer subStoreId,
+	                                                          String name, Integer status, String fromDate, String toDate,
+	                                                          int min, int max) throws APIException {
+		return dao.listMainStoreIndent(id, mainStoreId, subStoreId, name, status, fromDate, toDate, min, max);
 	}
 	
-	public int countMainStoreIndent(Integer id, Integer mainStoreId,Integer subStoreId, String name,Integer status, String fromDate, String toDate)  throws APIException{
+	public int countMainStoreIndent(Integer id, Integer mainStoreId, Integer subStoreId, String name, Integer status,
+	                                String fromDate, String toDate) throws APIException {
 		return dao.countMainStoreIndent(id, mainStoreId, subStoreId, name, status, fromDate, toDate);
 	}
 	
-	public InventoryStoreDrugIndent saveStoreDrugIndent(InventoryStoreDrugIndent storeDrugIndent) throws APIException{
+	public InventoryStoreDrugIndent saveStoreDrugIndent(InventoryStoreDrugIndent storeDrugIndent) throws APIException {
 		return dao.saveStoreDrugIndent(storeDrugIndent);
 	}
 	
-	public InventoryStoreDrugIndent getStoreDrugIndentById(Integer id) throws APIException{
+	public InventoryStoreDrugIndent getStoreDrugIndentById(Integer id) throws APIException {
 		return dao.getStoreDrugIndentById(id);
 	}
 	
@@ -648,117 +611,127 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 	 * InventoryStoreDrugIndentDetail
 	 */
 	
-	public List<InventoryStoreDrugIndentDetail> listStoreDrugIndentDetail(Integer storeId, Integer categoryId, String indentName, String drugName, String fromDate, String toDate, int min, int max) throws APIException{
+	public List<InventoryStoreDrugIndentDetail> listStoreDrugIndentDetail(Integer storeId, Integer categoryId,
+	                                                                      String indentName, String drugName,
+	                                                                      String fromDate, String toDate, int min, int max)
+	                                                                                                                       throws APIException {
 		return dao.listStoreDrugIndentDetail(storeId, categoryId, indentName, drugName, fromDate, toDate, min, max);
 	}
 	
-	public int countStoreDrugIndentDetail(Integer storeId, Integer categoryId, String indentName, String drugName, String fromDate, String toDate) throws APIException{
+	public int countStoreDrugIndentDetail(Integer storeId, Integer categoryId, String indentName, String drugName,
+	                                      String fromDate, String toDate) throws APIException {
 		return dao.countStoreDrugIndentDetail(storeId, categoryId, indentName, drugName, fromDate, toDate);
 	}
 	
-	public InventoryStoreDrugIndentDetail saveStoreDrugIndentDetail(InventoryStoreDrugIndentDetail storeDrugIndentDetail) throws APIException{
+	public InventoryStoreDrugIndentDetail saveStoreDrugIndentDetail(InventoryStoreDrugIndentDetail storeDrugIndentDetail)
+	                                                                                                                     throws APIException {
 		return dao.saveStoreDrugIndentDetail(storeDrugIndentDetail);
 	}
-
-	public InventoryStoreDrugIndentDetail getStoreDrugIndentDetailById(Integer id) throws APIException{
+	
+	public InventoryStoreDrugIndentDetail getStoreDrugIndentDetailById(Integer id) throws APIException {
 		return dao.getStoreDrugIndentDetailById(id);
 	}
 	
-	
 	@Override
-	public List<InventoryStoreDrugIndentDetail> listStoreDrugIndentDetail(
-			Integer indentId) throws APIException {
+	public List<InventoryStoreDrugIndentDetail> listStoreDrugIndentDetail(Integer indentId) throws APIException {
 		// TODO Auto-generated method stub
 		return dao.listStoreDrugIndentDetail(indentId);
 	}
-
 	
 	@Override
 	public int checkExistDrugIndentDetail(Integer drugId) throws APIException {
 		// TODO Auto-generated method stub
 		return dao.checkExistDrugIndentDetail(drugId);
 	}
-
+	
 	/**
 	 * InventoryStoreDrugPatient
 	 */
-	public List<InventoryStoreDrugPatient> listStoreDrugPatient(Integer storeId,String  name, String fromDate, String toDate, int min, int max) throws APIException{
-		return dao.listStoreDrugPatient(storeId,  name, fromDate, toDate, min, max);
+	public List<InventoryStoreDrugPatient> listStoreDrugPatient(Integer storeId, String name, String fromDate,
+	                                                            String toDate, int min, int max) throws APIException {
+		return dao.listStoreDrugPatient(storeId, name, fromDate, toDate, min, max);
 	}
 	
-	public int countStoreDrugPatient(Integer storeId,String  name, String fromDate, String toDate)  throws APIException{
-		return dao.countStoreDrugPatient(storeId,  name, fromDate, toDate);
+	public int countStoreDrugPatient(Integer storeId, String name, String fromDate, String toDate) throws APIException {
+		return dao.countStoreDrugPatient(storeId, name, fromDate, toDate);
 	}
 	
-	public InventoryStoreDrugPatient saveStoreDrugPatient(InventoryStoreDrugPatient bill) throws APIException{
+	public InventoryStoreDrugPatient saveStoreDrugPatient(InventoryStoreDrugPatient bill) throws APIException {
 		return dao.saveStoreDrugPatient(bill);
 	}
 	
-	public InventoryStoreDrugPatient getStoreDrugPatientById(Integer id) throws APIException{
+	public InventoryStoreDrugPatient getStoreDrugPatientById(Integer id) throws APIException {
 		return dao.getStoreDrugPatientById(id);
 	}
 	
 	/**
 	 * InventoryStoreDrugPatientDetail
 	 */
-	public List<InventoryStoreDrugPatientDetail> listStoreDrugPatientDetail(Integer storeDrugPatientDetailId) throws APIException{
+	public List<InventoryStoreDrugPatientDetail> listStoreDrugPatientDetail(Integer storeDrugPatientDetailId)
+	                                                                                                         throws APIException {
 		return dao.listStoreDrugPatientDetail(storeDrugPatientDetailId);
 	}
 	
-	public InventoryStoreDrugPatientDetail saveStoreDrugPatientDetail(InventoryStoreDrugPatientDetail storeDrugPatientDetail) throws APIException{
+	public InventoryStoreDrugPatientDetail saveStoreDrugPatientDetail(InventoryStoreDrugPatientDetail storeDrugPatientDetail)
+	                                                                                                                         throws APIException {
 		return dao.saveStoreDrugPatientDetail(storeDrugPatientDetail);
 	}
-
-	public InventoryStoreDrugPatientDetail getStoreDrugPatientDetailById(Integer id) throws APIException{
+	
+	public InventoryStoreDrugPatientDetail getStoreDrugPatientDetailById(Integer id) throws APIException {
 		return dao.getStoreDrugPatientDetailById(id);
 	}
 	
 	//change code
 	/**
 	 * StoreItem
-	 */ 
+	 */
 	
-	public List<InventoryStoreItem> listStoreItem(Integer storeId,Integer categoryId, String itemName,Integer reorderQty,int min, int max) throws APIException{
+	public List<InventoryStoreItem> listStoreItem(Integer storeId, Integer categoryId, String itemName, Integer reorderQty,
+	                                              int min, int max) throws APIException {
 		return dao.listStoreItem(storeId, categoryId, itemName, reorderQty, min, max);
 	}
 	
-	public int countStoreItem(Integer storeId,Integer categoryId, String itemName,Integer reorderQty)  throws APIException{
+	public int countStoreItem(Integer storeId, Integer categoryId, String itemName, Integer reorderQty) throws APIException {
 		return dao.countStoreItem(storeId, categoryId, itemName, reorderQty);
 	}
 	
-	public InventoryStoreItem getStoreItemById(Integer id) throws APIException{
+	public InventoryStoreItem getStoreItemById(Integer id) throws APIException {
 		return dao.getStoreItemById(id);
 	}
 	
-	public InventoryStoreItem getStoreItem(Integer storeId, Integer itemId,Integer specificationId) throws APIException{
+	public InventoryStoreItem getStoreItem(Integer storeId, Integer itemId, Integer specificationId) throws APIException {
 		return dao.getStoreItem(storeId, itemId, specificationId);
 	}
 	
-	public InventoryStoreItem saveStoreItem(InventoryStoreItem StoreItem) throws APIException{
+	public InventoryStoreItem saveStoreItem(InventoryStoreItem StoreItem) throws APIException {
 		return dao.saveStoreItem(StoreItem);
 	}
 	
 	/**
 	 * StoreItemTransaction
-	 */ 
+	 */
 	
-	public List<InventoryStoreItemTransaction> listStoreItemTransaction(Integer transactionType,Integer storeId, String description, String fromDate, String toDate ,int min, int max) throws APIException{
+	public List<InventoryStoreItemTransaction> listStoreItemTransaction(Integer transactionType, Integer storeId,
+	                                                                    String description, String fromDate, String toDate,
+	                                                                    int min, int max) throws APIException {
 		return dao.listStoreItemTransaction(transactionType, storeId, description, fromDate, toDate, min, max);
 	}
 	
-	public InventoryStoreItemTransaction saveStoreItemTransaction(InventoryStoreItemTransaction storeTransaction) throws APIException{
+	public InventoryStoreItemTransaction saveStoreItemTransaction(InventoryStoreItemTransaction storeTransaction)
+	                                                                                                             throws APIException {
 		return dao.saveStoreItemTransaction(storeTransaction);
 	}
-
-	public int countStoreItemTransaction(Integer transactionType,Integer storeId, String description, String fromDate, String toDate)  throws APIException{
+	
+	public int countStoreItemTransaction(Integer transactionType, Integer storeId, String description, String fromDate,
+	                                     String toDate) throws APIException {
 		return dao.countStoreItemTransaction(transactionType, storeId, description, fromDate, toDate);
 	}
 	
-	public InventoryStoreItemTransaction getStoreItemTransactionById(Integer id) throws APIException{
+	public InventoryStoreItemTransaction getStoreItemTransactionById(Integer id) throws APIException {
 		return dao.getStoreItemTransactionById(id);
 	}
 	
-	public InventoryStoreItemTransaction getStoreItemTransactionByParentId(Integer parentId) throws APIException{
+	public InventoryStoreItemTransaction getStoreItemTransactionByParentId(Integer parentId) throws APIException {
 		return dao.getStoreItemTransactionByParentId(parentId);
 	}
 	
@@ -766,91 +739,115 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 	 * StoreItemTransactionDetail
 	 */
 	
-	public List<InventoryStoreItemTransactionDetail> listStoreItemTransactionDetail(Integer storeId,  Integer categoryId,String itemName,String specificationName, String fromDate, String toDate ,int min, int max) throws APIException{
-		return dao.listStoreItemTransactionDetail(storeId, categoryId, itemName, specificationName, fromDate, toDate, min, max);
+	public List<InventoryStoreItemTransactionDetail> listStoreItemTransactionDetail(Integer storeId, Integer categoryId,
+	                                                                                String itemName,
+	                                                                                String specificationName,
+	                                                                                String fromDate, String toDate, int min,
+	                                                                                int max) throws APIException {
+		return dao.listStoreItemTransactionDetail(storeId, categoryId, itemName, specificationName, fromDate, toDate, min,
+		    max);
 	}
 	
-	public InventoryStoreItemTransactionDetail saveStoreItemTransactionDetail(InventoryStoreItemTransactionDetail storeTransactionDetail) throws APIException{
+	public InventoryStoreItemTransactionDetail saveStoreItemTransactionDetail(InventoryStoreItemTransactionDetail storeTransactionDetail)
+	                                                                                                                                     throws APIException {
 		return dao.saveStoreItemTransactionDetail(storeTransactionDetail);
 	}
-
-	public int countStoreItemTransactionDetail(Integer storeId,  Integer categoryId,String itemName,String specificationName, String fromDate, String toDate )  throws APIException{
+	
+	public int countStoreItemTransactionDetail(Integer storeId, Integer categoryId, String itemName,
+	                                           String specificationName, String fromDate, String toDate) throws APIException {
 		return dao.countStoreItemTransactionDetail(storeId, categoryId, itemName, specificationName, fromDate, toDate);
 	}
 	
-	public InventoryStoreItemTransactionDetail getStoreItemTransactionDetailById(Integer id) throws APIException{
+	public InventoryStoreItemTransactionDetail getStoreItemTransactionDetailById(Integer id) throws APIException {
 		return dao.getStoreItemTransactionDetailById(id);
 	}
 	
-	public List<InventoryStoreItemTransactionDetail> listStoreItemTransactionDetail(Integer storeId,Integer itemId,Integer specificationId, boolean haveQuantity) throws APIException{
+	public List<InventoryStoreItemTransactionDetail> listStoreItemTransactionDetail(Integer storeId, Integer itemId,
+	                                                                                Integer specificationId,
+	                                                                                boolean haveQuantity)
+	                                                                                                     throws APIException {
 		return dao.listStoreItemTransactionDetail(storeId, itemId, specificationId, haveQuantity);
 	}
 	
-	public List<InventoryStoreItemTransactionDetail> listStoreItemAvaiable(Integer storeId,Collection<Integer> items,Collection<Integer> specifications) throws APIException{
+	public List<InventoryStoreItemTransactionDetail> listStoreItemAvaiable(Integer storeId, Collection<Integer> items,
+	                                                                       Collection<Integer> specifications)
+	                                                                                                          throws APIException {
 		return dao.listStoreItemAvaiable(storeId, items, specifications);
 	}
 	
-	public Integer sumStoreItemCurrentQuantity(Integer storeId,Integer itemId,Integer specificationId) throws APIException{
+	public Integer sumStoreItemCurrentQuantity(Integer storeId, Integer itemId, Integer specificationId) throws APIException {
 		return dao.sumStoreItemCurrentQuantity(storeId, itemId, specificationId);
 	}
 	
-	public List<InventoryStoreItemTransactionDetail> listStoreItemTransactionDetail(Integer transactionId) throws APIException{
+	public List<InventoryStoreItemTransactionDetail> listStoreItemTransactionDetail(Integer transactionId)
+	                                                                                                      throws APIException {
 		return dao.listStoreItemTransactionDetail(transactionId);
 	}
 	
-	public Integer countStoreItemViewStockBalance(Integer storeId,Integer categoryId, String itemName , String fromDate, String toDate) throws APIException{
+	public Integer countStoreItemViewStockBalance(Integer storeId, Integer categoryId, String itemName, String fromDate,
+	                                              String toDate) throws APIException {
 		return dao.countStoreItemViewStockBalance(storeId, categoryId, itemName, fromDate, toDate);
 	}
 	
-	public List<InventoryStoreItemTransactionDetail> listStoreItemViewStockBalance(Integer storeId,Integer categoryId, String itemName ,String fromDate, String toDate,int min, int max) throws APIException{
-		return dao.listStoreItemViewStockBalance(storeId, categoryId, itemName, fromDate,toDate, min, max);
+	public List<InventoryStoreItemTransactionDetail> listStoreItemViewStockBalance(Integer storeId, Integer categoryId,
+	                                                                               String itemName, String fromDate,
+	                                                                               String toDate, int min, int max)
+	                                                                                                               throws APIException {
+		return dao.listStoreItemViewStockBalance(storeId, categoryId, itemName, fromDate, toDate, min, max);
 	}
 	
-	public List<InventoryStoreItemTransactionDetail> listStoreItemTransactionDetail(Integer storeId,Integer itemId,Integer specificationId,int min, int max) throws APIException{
-		return dao.listStoreItemTransactionDetail(storeId, itemId, specificationId, min ,max);
+	public List<InventoryStoreItemTransactionDetail> listStoreItemTransactionDetail(Integer storeId, Integer itemId,
+	                                                                                Integer specificationId, int min, int max)
+	                                                                                                                          throws APIException {
+		return dao.listStoreItemTransactionDetail(storeId, itemId, specificationId, min, max);
 	}
-	
 	
 	@Override
-	public int checkExistItemTransactionDetail(Integer itemId)
-			throws APIException {
+	public int checkExistItemTransactionDetail(Integer itemId) throws APIException {
 		// TODO Auto-generated method stub
 		return dao.checkExistItemTransactionDetail(itemId);
 	}
-
+	
 	/**
 	 * InventoryStoreItemIndent
 	 */
 	
-	public  List<InventoryStoreItemIndent> listStoreItemIndent(Integer StoreId, String name, String fromDate, String toDate,int min, int max)  throws APIException{
+	public List<InventoryStoreItemIndent> listStoreItemIndent(Integer StoreId, String name, String fromDate, String toDate,
+	                                                          int min, int max) throws APIException {
 		return dao.listStoreItemIndent(StoreId, name, fromDate, toDate, min, max);
 	}
 	
-	public int countStoreItemIndent(Integer StoreId, String name, String fromDate, String toDate)  throws APIException{
+	public int countStoreItemIndent(Integer StoreId, String name, String fromDate, String toDate) throws APIException {
 		return dao.countStoreItemIndent(StoreId, name, fromDate, toDate);
 	}
 	
-	public List<InventoryStoreItemIndent> listSubStoreItemIndent(Integer storeId, String name,Integer status, String fromDate, String toDate, int min, int max) throws APIException{
+	public List<InventoryStoreItemIndent> listSubStoreItemIndent(Integer storeId, String name, Integer status,
+	                                                             String fromDate, String toDate, int min, int max)
+	                                                                                                              throws APIException {
 		return dao.listSubStoreItemIndent(storeId, name, status, fromDate, toDate, min, max);
 	}
 	
-	public int countSubStoreItemIndent(Integer storeId, String name,Integer status, String fromDate, String toDate)  throws APIException{
+	public int countSubStoreItemIndent(Integer storeId, String name, Integer status, String fromDate, String toDate)
+	                                                                                                                throws APIException {
 		return dao.countSubStoreItemIndent(storeId, name, status, fromDate, toDate);
 	}
 	
-	public List<InventoryStoreItemIndent> listMainStoreItemIndent(Integer id,Integer mainStoreId,Integer subStoreId, String name,Integer status, String fromDate, String toDate, int min, int max) throws APIException{
+	public List<InventoryStoreItemIndent> listMainStoreItemIndent(Integer id, Integer mainStoreId, Integer subStoreId,
+	                                                              String name, Integer status, String fromDate,
+	                                                              String toDate, int min, int max) throws APIException {
 		return dao.listMainStoreItemIndent(id, mainStoreId, subStoreId, name, status, fromDate, toDate, min, max);
 	}
 	
-	public int countMainStoreItemIndent(Integer id,Integer mainStoreId,Integer subStoreId, String name,Integer status, String fromDate, String toDate)  throws APIException{
+	public int countMainStoreItemIndent(Integer id, Integer mainStoreId, Integer subStoreId, String name, Integer status,
+	                                    String fromDate, String toDate) throws APIException {
 		return dao.countMainStoreItemIndent(id, mainStoreId, subStoreId, name, status, fromDate, toDate);
 	}
 	
-	public InventoryStoreItemIndent saveStoreItemIndent(InventoryStoreItemIndent storeItemIndent) throws APIException{
+	public InventoryStoreItemIndent saveStoreItemIndent(InventoryStoreItemIndent storeItemIndent) throws APIException {
 		return dao.saveStoreItemIndent(storeItemIndent);
 	}
 	
-	public InventoryStoreItemIndent getStoreItemIndentById(Integer id) throws APIException{
+	public InventoryStoreItemIndent getStoreItemIndentById(Integer id) throws APIException {
 		return dao.getStoreItemIndentById(id);
 	}
 	
@@ -858,98 +855,108 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 	 * InventoryStoreItemIndentDetail
 	 */
 	
-	public List<InventoryStoreItemIndentDetail> listStoreItemIndentDetail(Integer storeId, Integer categoryId, String indentName, String itemName, String fromDate, String toDate, int min, int max) throws APIException{
+	public List<InventoryStoreItemIndentDetail> listStoreItemIndentDetail(Integer storeId, Integer categoryId,
+	                                                                      String indentName, String itemName,
+	                                                                      String fromDate, String toDate, int min, int max)
+	                                                                                                                       throws APIException {
 		return dao.listStoreItemIndentDetail(storeId, categoryId, indentName, itemName, fromDate, toDate, min, max);
 	}
 	
-	public int countStoreItemIndentDetail(Integer storeId, Integer categoryId, String indentName, String itemName, String fromDate, String toDate) throws APIException{
+	public int countStoreItemIndentDetail(Integer storeId, Integer categoryId, String indentName, String itemName,
+	                                      String fromDate, String toDate) throws APIException {
 		return dao.countStoreItemIndentDetail(storeId, categoryId, indentName, itemName, fromDate, toDate);
 	}
 	
-	public List<InventoryStoreItemIndentDetail> listStoreItemIndentDetail(Integer indentId) throws APIException{
+	public List<InventoryStoreItemIndentDetail> listStoreItemIndentDetail(Integer indentId) throws APIException {
 		return dao.listStoreItemIndentDetail(indentId);
 	}
 	
-	public InventoryStoreItemIndentDetail saveStoreItemIndentDetail(InventoryStoreItemIndentDetail storeItemIndentDetail) throws APIException{
+	public InventoryStoreItemIndentDetail saveStoreItemIndentDetail(InventoryStoreItemIndentDetail storeItemIndentDetail)
+	                                                                                                                     throws APIException {
 		return dao.saveStoreItemIndentDetail(storeItemIndentDetail);
 	}
-
-	public InventoryStoreItemIndentDetail getStoreItemIndentDetailById(Integer id) throws APIException{
+	
+	public InventoryStoreItemIndentDetail getStoreItemIndentDetailById(Integer id) throws APIException {
 		return dao.getStoreItemIndentDetailById(id);
 	}
-	
 	
 	@Override
 	public int checkExistItemIndentDetail(Integer itemId) throws APIException {
 		// TODO Auto-generated method stub
 		return dao.checkExistItemIndentDetail(itemId);
 	}
-
+	
 	/**
 	 * InventoryStoreItemAccount
 	 */
-	public List<InventoryStoreItemAccount> listStoreItemAccount(Integer storeId,String  name, String fromDate, String toDate, int min, int max) throws APIException{
+	public List<InventoryStoreItemAccount> listStoreItemAccount(Integer storeId, String name, String fromDate,
+	                                                            String toDate, int min, int max) throws APIException {
 		return dao.listStoreItemAccount(storeId, name, fromDate, toDate, min, max);
 	}
 	
-	public int countStoreItemAccount(Integer storeId,String  name, String fromDate, String toDate)  throws APIException{
+	public int countStoreItemAccount(Integer storeId, String name, String fromDate, String toDate) throws APIException {
 		return dao.countStoreItemAccount(storeId, name, fromDate, toDate);
 	}
 	
-	public InventoryStoreItemAccount saveStoreItemAccount(InventoryStoreItemAccount issue) throws APIException{
+	public InventoryStoreItemAccount saveStoreItemAccount(InventoryStoreItemAccount issue) throws APIException {
 		return dao.saveStoreItemAccount(issue);
 	}
 	
-	public InventoryStoreItemAccount getStoreItemAccountById(Integer id) throws APIException{
+	public InventoryStoreItemAccount getStoreItemAccountById(Integer id) throws APIException {
 		return dao.getStoreItemAccountById(id);
 	}
 	
 	/**
 	 * InventoryStoreItemAccountDetail
 	 */
-	public List<InventoryStoreItemAccountDetail> listStoreItemAccountDetail(Integer storeItemAccountDetailId) throws APIException{
+	public List<InventoryStoreItemAccountDetail> listStoreItemAccountDetail(Integer storeItemAccountDetailId)
+	                                                                                                         throws APIException {
 		return dao.listStoreItemAccountDetail(storeItemAccountDetailId);
 	}
 	
-	public InventoryStoreItemAccountDetail saveStoreItemAccountDetail(InventoryStoreItemAccountDetail storeItemAccountDetail) throws APIException{
+	public InventoryStoreItemAccountDetail saveStoreItemAccountDetail(InventoryStoreItemAccountDetail storeItemAccountDetail)
+	                                                                                                                         throws APIException {
 		return dao.saveStoreItemAccountDetail(storeItemAccountDetail);
 	}
-
-	public InventoryStoreItemAccountDetail getStoreItemAccountDetailById(Integer id) throws APIException{
+	
+	public InventoryStoreItemAccountDetail getStoreItemAccountDetailById(Integer id) throws APIException {
 		return dao.getStoreItemAccountDetailById(id);
 	}
 	
 	/**
 	 * InventoryStoreDrugAccount
 	 */
-	public List<InventoryStoreDrugAccount> listStoreDrugAccount(Integer storeId,String  name, String fromDate, String toDate, int min, int max) throws APIException{
+	public List<InventoryStoreDrugAccount> listStoreDrugAccount(Integer storeId, String name, String fromDate,
+	                                                            String toDate, int min, int max) throws APIException {
 		return dao.listStoreDrugAccount(storeId, name, fromDate, toDate, min, max);
 	}
 	
-	public int countStoreDrugAccount(Integer storeId,String  name, String fromDate, String toDate)  throws APIException{
+	public int countStoreDrugAccount(Integer storeId, String name, String fromDate, String toDate) throws APIException {
 		return dao.countStoreDrugAccount(storeId, name, fromDate, toDate);
 	}
 	
-	public InventoryStoreDrugAccount saveStoreDrugAccount(InventoryStoreDrugAccount issue) throws APIException{
+	public InventoryStoreDrugAccount saveStoreDrugAccount(InventoryStoreDrugAccount issue) throws APIException {
 		return dao.saveStoreDrugAccount(issue);
 	}
 	
-	public InventoryStoreDrugAccount getStoreDrugAccountById(Integer id) throws APIException{
+	public InventoryStoreDrugAccount getStoreDrugAccountById(Integer id) throws APIException {
 		return dao.getStoreDrugAccountById(id);
 	}
 	
 	/**
 	 * InventoryStoreDrugAccountDetail
 	 */
-	public List<InventoryStoreDrugAccountDetail> listStoreDrugAccountDetail(Integer storeDrugAccountDetailId) throws APIException{
+	public List<InventoryStoreDrugAccountDetail> listStoreDrugAccountDetail(Integer storeDrugAccountDetailId)
+	                                                                                                         throws APIException {
 		return dao.listStoreDrugAccountDetail(storeDrugAccountDetailId);
 	}
 	
-	public InventoryStoreDrugAccountDetail saveStoreDrugAccountDetail(InventoryStoreDrugAccountDetail storeDrugAccountDetail) throws APIException{
+	public InventoryStoreDrugAccountDetail saveStoreDrugAccountDetail(InventoryStoreDrugAccountDetail storeDrugAccountDetail)
+	                                                                                                                         throws APIException {
 		return dao.saveStoreDrugAccountDetail(storeDrugAccountDetail);
 	}
-
-	public InventoryStoreDrugAccountDetail getStoreDrugAccountDetailById(Integer id) throws APIException{
+	
+	public InventoryStoreDrugAccountDetail getStoreDrugAccountDetailById(Integer id) throws APIException {
 		return dao.getStoreDrugAccountDetailById(id);
 	}
 	
