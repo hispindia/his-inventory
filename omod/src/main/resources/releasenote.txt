@@ -1,0 +1,25 @@
+
+version 2.0.2
+-Fix when transfer from mainstore to substore we will show batch-number
+
+31/05/2011
+-Fix bug issue drug many times for the same drug
+10/05/2011
+- Add patient category for issue drug to patient
+- Fix print out receipt drugs
+07/05/2011
+- Fix size print out report when issue drug to patient
+1.9.7
+-Add advance search for inventory
+27/04/2011
+- Fix issue drug|item to account|patient not correct
+23/04/2011
+- Just change layout for print out indent|receipt|issue for both main-store and sub-store
+18/04/2011
+-
+-View detail stock balance now not popup 
+-Add remove item/drug on indent/issue/receipt
+-Update some problems with ajax when receipt or indent
+15/04/2011
+-Update print for indent between main-store and sub-store
+-Fix VAT not accept with float value
