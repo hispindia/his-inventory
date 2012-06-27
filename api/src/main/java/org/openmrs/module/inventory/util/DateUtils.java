@@ -112,7 +112,7 @@ public class DateUtils {
 	public static long getCurrentDate(){
 		return Calendar.getInstance().getTimeInMillis();
 	}
-	//ghanshyam 27/06/2012 tag STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE
+	//ghanshyam 27/06/2012 tag STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE Total bug=8
 	public static String getYYYYMMDD(){
 		SimpleDateFormat formatterYYYYMMDD = new SimpleDateFormat("yyyyMMdd");
 		return formatterYYYYMMDD.format(Calendar.getInstance().getTime());
