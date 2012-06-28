@@ -55,7 +55,9 @@ public class ProcessTransferDrugFromGeneralStoreController {
 			for(InventoryStoreDrugIndentDetail t : listDrugNeedProcess){
 				if(transactionAvaiableOfMainStore != null && transactionAvaiableOfMainStore.size() > 0){
 					for(InventoryStoreDrugTransactionDetail trDetail : transactionAvaiableOfMainStore ){
-						if(t.getDrug().getId() == trDetail.getDrug().getId() && t.getFormulation().getId() == trDetail.getFormulation().getId()){
+						//if(t.getDrug().getId() == trDetail.getDrug().getId() && t.getFormulation().getId() == trDetail.getFormulation().getId()){
+						//ghanshyam 28/06/2012 tag RC_REF_COMPARISON
+							if(t.getDrug().getId().equals(trDetail.getDrug().getId()) && t.getFormulation().getId().equals(trDetail.getFormulation().getId())){
 							//System.out.println("quantity check hre: "+trDetail.getCurrentQuantity());
 							t.setMainStoreTransfer(trDetail.getCurrentQuantity());
 						}
