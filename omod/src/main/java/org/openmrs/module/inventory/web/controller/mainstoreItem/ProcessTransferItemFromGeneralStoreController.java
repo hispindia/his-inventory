@@ -60,7 +60,9 @@ public class ProcessTransferItemFromGeneralStoreController {
 								continue;
 							}
 						}else{
-							if(t.getItem().getId() == trDetail.getItem().getId() && trDetail.getSpecification() == null){
+							//if(t.getItem().getId() == trDetail.getItem().getId() && trDetail.getSpecification() == null){
+							//ghanshyam 28/06/2012 tag RC_REF_COMPARISON
+								if(t.getItem().getId().equals(trDetail.getItem().getId()) && trDetail.getSpecification() == null){
 								t.setMainStoreTransfer(trDetail.getCurrentQuantity());
 							}
 						}
