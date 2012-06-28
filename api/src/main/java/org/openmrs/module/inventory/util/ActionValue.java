@@ -8,23 +8,21 @@ import org.apache.commons.lang.ArrayUtils;
 public class ActionValue {
 
 	
-
-	public static final int[] DRUG_ATTRIBUTE = { 1, 2,3 };
-	public static final String[] DRUG_ATTRIBUTE_NAMES = {"Vital", "Essential","Desired" };
+	//ghanshyam 28/06/2012 tag MS_MUTABLE_ARRAY
+	public static int[] DRUG_ATTRIBUTE = { 1, 2,3 };
+	public static String[] DRUG_ATTRIBUTE_NAMES = {"Vital", "Essential","Desired" };
 	
-	public static final int[] IS_DRUG = { 1, 2 };
-	public static final String[] IS_DRUG_NAMES = {"Yes", "No" };
+	public static int[] IS_DRUG = { 1, 2 };
+	public static String[] IS_DRUG_NAMES = {"Yes", "No" };
 	
-	public static final int[] ITEM_ATTRIBUTE = { 1, 2 };
-	public static final String[] ITEM_ATTRIBUTE_NAMES = {"Essential Item", "Non Essential Item" };
+	public static int[] ITEM_ATTRIBUTE = { 1, 2 };
+	public static String[] ITEM_ATTRIBUTE_NAMES = {"Essential Item", "Non Essential Item" };
 	
 	
-	public static final int[] INDENT_SUBSTORE = { 1, 2,3,4,5,6};
-	public static final String[] INDENT_SUBSTORE_NAMES = {"SAVE", "SENT","RECEIPT","REFUSE","DONE","MAIN-STORE REFUSE" };
+	public static int[] INDENT_SUBSTORE = { 1, 2,3,4,5,6};
+	public static String[] INDENT_SUBSTORE_NAMES = {"SAVE", "SENT","RECEIPT","REFUSE","DONE","MAIN-STORE REFUSE" };
 	
-	public static final int[] TRANSACTION = { 1, 2};
-    //public static final String[] TRANSACTION_NAMES = {"RECEIPT", "ISSUE" };
-	//ghanshyam 28/06/2012 tag MS_MUTABLE_ARRAY code public static final String[] TRANSACTION_NAMES = {"RECEIPT", "ISSUE" };
+	public static int[] TRANSACTION = { 1, 2};
 	public static String[] TRANSACTION_NAMES = {"RECEIPT", "ISSUE" };
 	
 	public static String getIndentSubStoreName(int pos) {
