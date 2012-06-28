@@ -23,7 +23,9 @@ public class ActionValue {
 	public static final String[] INDENT_SUBSTORE_NAMES = {"SAVE", "SENT","RECEIPT","REFUSE","DONE","MAIN-STORE REFUSE" };
 	
 	public static final int[] TRANSACTION = { 1, 2};
-	public static final String[] TRANSACTION_NAMES = {"RECEIPT", "ISSUE" };
+    //public static final String[] TRANSACTION_NAMES = {"RECEIPT", "ISSUE" };
+	//ghanshyam 28/06/2012 tag MS_MUTABLE_ARRAY code public static final String[] TRANSACTION_NAMES = {"RECEIPT", "ISSUE" };
+	public static String[] TRANSACTION_NAMES = {"RECEIPT", "ISSUE" };
 	
 	public static String getIndentSubStoreName(int pos) {
 		if(ArrayUtils.contains(INDENT_SUBSTORE, pos)) {
