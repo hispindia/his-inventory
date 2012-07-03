@@ -24,6 +24,26 @@
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
 
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	jQuery("#receiptDate").change(function() {
+		VALIDATION.checkRecieptDate();
+	});
+	});
+
+VALIDATION={
+	checkRecieptDate : function() {
+		var recieptDate = new Date(jQuery('#receiptDate').val());
+		var expiryDate = new Date(jQuery('#dateExpiry').val());
+
+		if (recieptDate > expiryDate){
+			jQuery('#receiptDate').val("");
+			alert("You can not receipt an expired drug");
+			}
+		}
+}
+</script>
+
 <div style="width: 26%; float: left; margin-left: 4px; ">
 <b class="boxHeader">Drug</b>
 <div class="box">
