@@ -14,6 +14,7 @@ package org.openmrs.module.inventory.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ import org.apache.commons.lang.time.DateUtils;
  * <p> Create date: Jan 5, 2011 1:28:02 PM </p>
  * <p> Update date: Jan 5, 2011 1:28:02 PM </p>
  **/
-public class InventoryStoreDrugTransactionDetail implements  Serializable {
+public class InventoryStoreDrugTransactionDetail implements  Serializable , Comparable<InventoryStoreDrugTransactionDetail>, Comparator<InventoryStoreDrugTransactionDetail>{
 
 	 private static final long serialVersionUID = 1L;
 	 private Integer id;
@@ -56,6 +57,11 @@ public class InventoryStoreDrugTransactionDetail implements  Serializable {
 	 private Set<InventoryStoreDrugTransactionDetail> subDetails;
 	 
 	 private Date receiptDate;
+	 
+	 
+    public InventoryStoreDrugTransactionDetail() {
+	 
+    }
 	 
 	public Integer getId() {
 		return id;
@@ -191,7 +197,16 @@ public class InventoryStoreDrugTransactionDetail implements  Serializable {
 		}
 		return 0;
 	}
+	//03/07/2012: Kesavulu:sort Item Names  #300
+	 @Override
+	public int compare(InventoryStoreDrugTransactionDetail i1, InventoryStoreDrugTransactionDetail i2) {
 	 
+	    return 0;
+	}
+	 @Override
+	public int compareTo(InventoryStoreDrugTransactionDetail i) {
 	 
+	    return (this.drug).compareTo(i.drug);
+	}
 	 
 }

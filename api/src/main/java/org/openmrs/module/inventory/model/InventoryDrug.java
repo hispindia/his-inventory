@@ -94,6 +94,11 @@ public class InventoryDrug  implements  Serializable {
 	public void setReorderQty(Integer reorderQty) {
 		this.reorderQty = reorderQty;
 	}
+	//03/07/2012: Kesavulu:sort Item Names  #300
+	public int compareTo(InventoryDrug drug) {
+	    
+	    return (this.name).compareTo(drug.name);
+    }
 	  
 	  
 	

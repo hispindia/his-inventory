@@ -1,6 +1,7 @@
 package org.openmrs.module.inventory.web.controller.mainstore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -66,6 +67,8 @@ public class ViewStockBalanceController {
 		PagingUtil pagingUtil = new PagingUtil( RequestUtil.getCurrentLink(request)+temp , pageSize, currentPage, total );
 		List<InventoryStoreDrugTransactionDetail> stockBalances = inventoryService.listViewStockBalance(store.getId(), categoryId, drugName, fromDate, toDate, false, pagingUtil.getStartPos(), pagingUtil.getPageSize());
 		List<InventoryDrugCategory> listCategory = inventoryService.listDrugCategory("", 0, 0);
+		//03/07/2012: Kesavulu:sort Item Names  #300
+		Collections.sort(stockBalances);
 		model.put("categoryId", categoryId );
 		model.put("drugName", drugName );
 		model.put("fromDate", fromDate );

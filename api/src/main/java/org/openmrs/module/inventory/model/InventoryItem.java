@@ -93,6 +93,11 @@ public class InventoryItem  implements  Serializable {
 	public void setReorderQty(Integer reorderQty) {
 		this.reorderQty = reorderQty;
 	}
+	//03/07/2012: Kesavulu:sort Item Names  #300
+	public int compareTo(InventoryItem item) {
+	    
+	    return (this.name).compareTo(item.name);
+    }
 	  
 	  
 	  
