@@ -1,3 +1,9 @@
+2.0.5
+- High priority Jenkins bugs fixed
+	STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE Total bug=8
+	RC_REF_COMPARISON
+	MS_MUTABLE_ARRAY code public static final String[] TRANSACTION_NAMES = {"RECEIPT", "ISSUE" };
+	
 
 version 2.0.2
 -Fix when transfer from mainstore to substore we will show batch-number
