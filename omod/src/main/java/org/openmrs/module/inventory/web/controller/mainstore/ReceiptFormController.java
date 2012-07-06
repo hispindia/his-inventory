@@ -61,9 +61,13 @@ public class ReceiptFormController {
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		 List<InventoryDrugCategory> listCategory = inventoryService.findDrugCategory("");
 		 model.addAttribute("listCategory", listCategory);
-		int category = NumberUtils.toInt(request.getParameter("category"),0);
+		//int category = NumberUtils.toInt(request.getParameter("category"),0);
 		int formulation = NumberUtils.toInt(request.getParameter("formulation"),0);
-		int drugId = NumberUtils.toInt(request.getParameter("drugId"), 0 );
+		InventoryDrug drug=inventoryService.getDrugByName(request.getParameter("drugName"));
+		if(drug == null){
+			errors.add("inventory.receiptDrug.drug.required");
+		}
+		int drugId = drug.getId();
 		int quantity = NumberUtils.toInt(request.getParameter("quantity"),0);
 		BigDecimal VAT = NumberUtils.createBigDecimal(request.getParameter("VAT"));
 		BigDecimal unitPrice =  NumberUtils.createBigDecimal(request.getParameter("unitPrice"));
@@ -85,17 +89,15 @@ public class ReceiptFormController {
 		{
 			errors.add("inventory.receiptDrug.formulation.required");
 		}
-		InventoryDrug drug = inventoryService.getDrugById(drugId);
-		if(drug == null){
-			errors.add("inventory.receiptDrug.drug.required");
-		}
+		//InventoryDrug drug = inventoryService.getDrugById(drugId);
+	
 		if(formulationO != null && drug != null && !drug.getFormulations().contains(formulationO))
 		{
 			errors.add("inventory.receiptDrug.formulation.notCorrect");
 		}
 		if(!CollectionUtils.isEmpty(errors)){
 			model.addAttribute("errors", errors);
-			model.addAttribute("category", category);
+		//	model.addAttribute("category", category);
 			model.addAttribute("formulation", formulation);
 			model.addAttribute("drugId", drugId);
 			model.addAttribute("quantity", quantity);

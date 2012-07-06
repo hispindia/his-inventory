@@ -37,7 +37,7 @@
 <br/>
 <table class="box">
 <tr><td><b>Drug info</b></td></tr>
-<tr>
+<%--<tr>
 		<td><spring:message code="inventory.drug.category"/><em>*</em></td>
 		<td>
 			<select name="category" id="category" onchange="ISSUE.onChangeCategoryAccount(this);"  style="width: 250px;">
@@ -48,19 +48,13 @@
    			</select>
 		</td>
 	</tr>
+	 --%>
 	<tr>
 		<td>Drug<em>*</em></td>
 		<td>
-			<div id="divDrug">
-				<select id="drugId" name="drugId" onchange="ISSUE.onBlur(this);"  style="width: 250px;">
-					<option value=""><spring:message code="inventory.pleaseSelect"/></option>
-					   <c:if test ="${not empty drugs }">
-					       <c:forEach items="${drugs}" var="drug">
-					           <option value="${drug.id}" >${drug.name}</option>
-					       </c:forEach>
-				       </c:if>
-				</select>
-			</div>
+			
+				<input id="drugName" name="drugName" onblur="ISSUE.onBlur(this);" style="width: 200px;">
+				
 		</td>
 	</tr>
 	<tr>

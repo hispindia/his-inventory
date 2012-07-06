@@ -57,29 +57,33 @@ public class SubStoreIndentDrugController {
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		 List<InventoryDrugCategory> listCategory = inventoryService.findDrugCategory("");
 		 model.addAttribute("listCategory", listCategory);
-		int category = NumberUtils.toInt(request.getParameter("category"),0);
+	//	int category = NumberUtils.toInt(request.getParameter("category"),0);
 		int formulation = NumberUtils.toInt(request.getParameter("formulation"),0);
-		int drugId = NumberUtils.toInt(request.getParameter("drugId") , 0);
+		
+		InventoryDrug drug = inventoryService.getDrugByName(request.getParameter("drugName"));
+		if(drug == null){
+			errors.add("inventory.indent.drug.required");
+			
+		}
+		int drugId = drug.getId();
+		
 		int quantity = NumberUtils.toInt(request.getParameter("quantity"),0);
 		
-		InventoryDrug drug = inventoryService.getDrugById(drugId);
+		
 		InventoryDrugFormulation formulationO = inventoryService.getDrugFormulationById(formulation);
 		if(formulationO == null)
 		{
 			errors.add("inventory.receiptDrug.formulation.required");
 		}
 		
-		if(drug == null){
-			errors.add("inventory.indent.drug.required");
-			
-		}
+	
 		if(formulationO != null && drug != null && !drug.getFormulations().contains(formulationO))
 		{
 			errors.add("inventory.receiptDrug.formulation.notCorrect");
 		}
 		
 		if(CollectionUtils.isNotEmpty(errors)){
-			model.addAttribute("category", category);
+		//	model.addAttribute("category", category);
 			model.addAttribute("formulation", formulation);
 			model.addAttribute("drugId", drugId);
 			model.addAttribute("quantity", quantity);

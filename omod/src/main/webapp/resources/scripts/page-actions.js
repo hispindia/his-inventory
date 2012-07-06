@@ -211,6 +211,11 @@ var CHECK =
 	receiptDrug : function()
 	{
 		//jQuery("#drugName").autocomplete({source: 'autoCompleteDrugList.form?categoryId='+jQuery('#category').val(), minLength: 3 });
+		jQuery("#drugName").autocomplete('autoCompleteDrugList.form', {
+			 minChars: 3 ,
+			 delay:1000,
+			 scroll: true});
+		
 		var validator = jQuery("#receiptDrug").validate(
 				{
 					event : "blur",
@@ -263,6 +268,11 @@ var CHECK =
 	subStoreIndentDrug : function()
 	{
 		//jQuery("#drugName").autocomplete({source: 'autoCompleteDrugList.form?categoryId='+jQuery('#category').val(), minLength: 3 });
+		jQuery("#drugName").autocomplete('autoCompleteDrugList.form', {
+			 minChars: 3 ,
+			 delay:1000,
+			 scroll: true});
+		
 		var validator = jQuery("#subStoreIndentDrug").validate(
 				{
 					event : "blur",
@@ -308,6 +318,11 @@ var CHECK =
 	formIssueDrug : function()
 	{
 		//jQuery("#drugName").autocomplete({source: 'autoCompleteDrugList.form?categoryId='+jQuery('#category').val(), minLength: 3 });
+		jQuery("#drugName").autocomplete('autoCompleteDrugList.form', {
+			 minChars: 3 ,
+			 delay:1000,
+			 scroll: true});
+		
 		var validator = jQuery("#formIssueDrug").validate(
 				{
 					event : "blur",

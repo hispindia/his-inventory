@@ -21,10 +21,14 @@
 	$ = jQuery.noConflict();
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/calendar/calendar.js"></script>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/moduleResources/inventory/scripts/jquery/css/jquery.autocomplete.css" />
+
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/moduleResources/inventory/styles/paging.css" />
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/moduleResources/inventory/styles/common.css" />
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/moduleResources/inventory/scripts/jquery/css/thickbox.css" />
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/moduleResources/hospitalcore/styles/jquery.loadmask.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/moduleResources/inventory/scripts/jquery/jquery.autocomplete.js"></script>
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/moduleResources/inventory/scripts/jquery/jquery.metadata.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/moduleResources/inventory/scripts/jquery/jquery.validate.pack.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/moduleResources/inventory/scripts/jquery/jquery.thickbox.js"></script>

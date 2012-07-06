@@ -34,7 +34,7 @@ public class AutoCompleteController {
 			return "/module/inventory/autocomplete/autoCompleteDrugCoreList";
 		}
 		@RequestMapping("/module/inventory/autoCompleteDrugList.form")
-		public String drug(@RequestParam(value="term",required=false) String name,@RequestParam(value="categoryId",required=false) Integer categoryId, Model model) {
+		public String drug(@RequestParam(value="q",required=false) String name,@RequestParam(value="categoryId",required=false) Integer categoryId, Model model) {
 			InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 			List<InventoryDrug> drugs = inventoryService.findDrug(categoryId, name);
 			model.addAttribute("drugs",drugs);

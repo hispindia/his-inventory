@@ -233,8 +233,8 @@ RECEIPT={
 					var data = jQuery.ajax(
 							{
 								type:"GET"
-								,url: "formulationByDrug.form"
-								,data: ({drugId: x})	
+								,url: "formulationByDrugName.form"
+								,data: ({drugName: x})	
 								,async: false
 								, cache : false
 							}).responseText;
@@ -409,8 +409,8 @@ INDENT={
 					var data = jQuery.ajax(
 							{
 								type:"GET"
-								,url: "formulationByDrug.form"
-								,data: ({drugId :x})	
+								,url: "formulationByDrugName.form"
+								,data: ({drugName :x})	
 								,async: false
 								, cache : false
 							}).responseText;
@@ -624,8 +624,8 @@ ISSUE={
 					var data = jQuery.ajax(
 							{
 								type:"GET"
-								,url: "formulationByDrugForIssue.form"
-								,data: ({drugId :x})	
+								,url: "formulationByDrugNameForIssue.form"
+								,data: ({drugName :x})	
 								,async: false
 								, cache : false
 							}).responseText;

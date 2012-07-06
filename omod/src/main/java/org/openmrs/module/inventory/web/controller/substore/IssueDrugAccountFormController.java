@@ -66,16 +66,18 @@ public class IssueDrugAccountFormController {
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		 List<InventoryDrugCategory> listCategory = inventoryService.findDrugCategory("");
 		 model.addAttribute("listCategory", listCategory);
-		int category = NumberUtils.toInt(request.getParameter("category"),0);
+		//int category = NumberUtils.toInt(request.getParameter("category"),0);
 		Integer formulation = NumberUtils.toInt(request.getParameter("formulation"),0);
-		int drugId= NumberUtils.toInt(request.getParameter("drugId"), 0);
 		
-		InventoryDrug drug = inventoryService.getDrugById(drugId);
+		InventoryDrug drug = inventoryService.getDrugByName(request.getParameter("drugName"));
+		
 		if(drug == null){
 			errors.add("inventory.issueDrug.drug.required");
 			
 			//return "/module/inventory/substore/subStoreIssueDrugAccountForm";
 		}
+		int drugId= drug.getId();
+			
 		InventoryDrugFormulation formulationO = inventoryService.getDrugFormulationById(formulation);
 		if(formulationO == null)
 		{
@@ -87,7 +89,7 @@ public class IssueDrugAccountFormController {
 		}
 		if(CollectionUtils.isNotEmpty(errors)){
 			
-			model.addAttribute("category", category);
+		//	model.addAttribute("category", category);
 			model.addAttribute("errors", errors);
 			String fowardParam = "issueDrugAccountDetail_"+userId;
 			List<InventoryStoreDrugAccountDetail> list = (List<InventoryStoreDrugAccountDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
@@ -126,7 +128,7 @@ public class IssueDrugAccountFormController {
 		}
 		if(errors != null && errors.size() > 0){
 			
-			model.addAttribute("category", category);
+		//	model.addAttribute("category", category);
 			model.addAttribute("formulation", formulation);
 			model.addAttribute("listIssueQty", listIssueQty);
 			model.addAttribute("drugId", drugId);

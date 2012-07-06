@@ -87,6 +87,20 @@ public class AjaxController {
 		}
 		return "/module/inventory/autocomplete/formulationByDrug";
 	}
+	@RequestMapping("/module/inventory/formulationByDrugName.form")
+	public String formulationByDrugName(
+			@RequestParam(value = "drugName", required = false) String drugName,
+			Model model) {
+		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
+		InventoryDrug drug = inventoryService.getDrugByName(drugName);
+		if (drug != null) {
+			List<InventoryDrugFormulation> formulations = new ArrayList<InventoryDrugFormulation>(
+					drug.getFormulations());
+			model.addAttribute("formulations", formulations);
+		}
+		return "/module/inventory/autocomplete/formulationByDrug";
+	}
+
 	@RequestMapping("/module/inventory/specificationByItem.form")
 	public String specificationByItem(@RequestParam(value="itemId",required=false) Integer itemId, Model model) {
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
@@ -328,10 +342,21 @@ public class AjaxController {
 		if(drug != null){
 			List<InventoryDrugFormulation> formulations = new ArrayList<InventoryDrugFormulation>(drug.getFormulations());
 			model.addAttribute("formulations", formulations);
+			
 		}
 		return "/module/inventory/autocomplete/formulationByDrugForIssue";
 	}
-	
+	@RequestMapping("/module/inventory/formulationByDrugNameForIssue.form")
+	public String formulationByDrugNameForIssueDrug(@RequestParam(value="drugName",required=false)String drugName, Model model) {
+		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
+		InventoryDrug drug = inventoryService.getDrugByName(drugName);
+		if(drug != null){
+			List<InventoryDrugFormulation> formulations = new ArrayList<InventoryDrugFormulation>(drug.getFormulations());
+			model.addAttribute("formulations", formulations);
+			model.addAttribute("drugId", drug.getId());
+		}
+		return "/module/inventory/autocomplete/formulationByDrugForIssue";
+	}
 	@RequestMapping("/module/inventory/specificationByItemForIssue.form")
 	public String specificationByItemForIssueItem(@RequestParam(value="itemId",required=false) Integer itemId, Model model) {
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
