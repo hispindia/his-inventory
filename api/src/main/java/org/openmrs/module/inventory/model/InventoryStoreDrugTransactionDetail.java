@@ -30,7 +30,7 @@ import org.apache.commons.lang.time.DateUtils;
  * <p> Create date: Jan 5, 2011 1:28:02 PM </p>
  * <p> Update date: Jan 5, 2011 1:28:02 PM </p>
  **/
-public class InventoryStoreDrugTransactionDetail implements  Serializable , Comparable<InventoryStoreDrugTransactionDetail>, Comparator<InventoryStoreDrugTransactionDetail>{
+public class InventoryStoreDrugTransactionDetail implements  Serializable , Comparable<InventoryStoreDrugTransactionDetail>{
 
 	 private static final long serialVersionUID = 1L;
 	 private Integer id;
@@ -198,11 +198,7 @@ public class InventoryStoreDrugTransactionDetail implements  Serializable , Comp
 		return 0;
 	}
 	//03/07/2012: Kesavulu:sort Item Names  #300
-	 @Override
-	public int compare(InventoryStoreDrugTransactionDetail i1, InventoryStoreDrugTransactionDetail i2) {
-	 
-	    return 0;
-	}
+	//10/7/2012: harsh #300 : deleted unused method
 	 @Override
 	public int compareTo(InventoryStoreDrugTransactionDetail i) {
 	 

@@ -853,7 +853,9 @@ public class AjaxController {
 		List<InventoryStoreDrugTransactionDetail> stockBalances = inventoryService.listViewStockBalance(store.getId(), categoryId, drugName,  fromDate, toDate, true, pagingUtil.getStartPos(), pagingUtil.getPageSize());
 		List<InventoryDrugCategory> listCategory = inventoryService.listDrugCategory("", 0, 0);
 		//03/07/2012: Kesavulu:sort Item Names  #300
+		if (stockBalances!=null){
 		Collections.sort(stockBalances);
+		}
 		model.put("categoryId", categoryId );
 		model.put("drugName", drugName );
 		model.put("fromDate", fromDate );
