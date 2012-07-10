@@ -68,6 +68,7 @@ public class ViewStockBalanceController {
 		List<InventoryStoreItemTransactionDetail> stockBalances = inventoryService.listStoreItemViewStockBalance(store.getId(), categoryId, itemName,  fromDate, toDate, pagingUtil.getStartPos(), pagingUtil.getPageSize());
 		List<InventoryItemSubCategory> listCategory = inventoryService.listItemSubCategory("", 0, 0);
 		//03/07/2012: Kesavulu:sort Item Names  #300 
+		// Harsh checked for null before sorting #300
 		if (stockBalances!=null)
 		Collections.sort(stockBalances);
 		
