@@ -58,16 +58,33 @@ public class ReceiptFormController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String submit(HttpServletRequest request, Model model) {
 		List<String> errors = new ArrayList<String>();
+		int drugId=0;
+		String drugN="",drugIdStr="";
+		InventoryDrug drug=null;
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		 List<InventoryDrugCategory> listCategory = inventoryService.findDrugCategory("");
 		 model.addAttribute("listCategory", listCategory);
 		//int category = NumberUtils.toInt(request.getParameter("category"),0);
 		int formulation = NumberUtils.toInt(request.getParameter("formulation"),0);
-		InventoryDrug drug=inventoryService.getDrugByName(request.getParameter("drugName"));
+		
+		if (request.getParameter("drugName")!=null)
+		drugN=request.getParameter("drugName");
+		if (request.getParameter("drugId")!=null)
+	 drugIdStr=request.getParameter("drugId");
+		
+		if (!drugN.equalsIgnoreCase("")){
+			
+			 drug=inventoryService.getDrugByName(drugN);
+		}else if (!drugIdStr.equalsIgnoreCase("")){
+			drugId=Integer.parseInt(drugIdStr);
+			 drug=inventoryService.getDrugById(drugId);
+		}
+		
 		if(drug == null){
 			errors.add("inventory.receiptDrug.drug.required");
+		}else{
+		 drugId = drug.getId();
 		}
-		int drugId = drug.getId();
 		int quantity = NumberUtils.toInt(request.getParameter("quantity"),0);
 		BigDecimal VAT = NumberUtils.createBigDecimal(request.getParameter("VAT"));
 		BigDecimal unitPrice =  NumberUtils.createBigDecimal(request.getParameter("unitPrice"));

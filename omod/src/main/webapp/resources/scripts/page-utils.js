@@ -152,6 +152,8 @@ RECEIPT={
 							}).responseText;
 					if(data != undefined  && data != null && data != ''){
 						jQuery("#divDrug").html(data);
+						jQuery("#drugName").hide();
+						jQuery("#drugName").val("");
 					}else{
 						alert('Please refresh page!');
 					}
@@ -235,6 +237,27 @@ RECEIPT={
 								type:"GET"
 								,url: "formulationByDrugName.form"
 								,data: ({drugName: x})	
+								,async: false
+								, cache : false
+							}).responseText;
+					if(data != undefined  && data != null && data != ''){
+						jQuery("#divFormulation").html(data);
+					}else{
+						alert('Please refresh page!');
+					}
+				}
+			}
+		},
+		onBlurDrug : function(thiz)
+		{
+			var x = jQuery(thiz).val();
+			if(x != null && x != '' ){
+				if(SESSION.checkSession()){
+					var data = jQuery.ajax(
+							{
+								type:"GET"
+								,url: "formulationByDrug.form"
+								,data: ({drugId: x})	
 								,async: false
 								, cache : false
 							}).responseText;
@@ -374,6 +397,8 @@ INDENT={
 							}).responseText;
 					if(data != undefined  && data != null && data != ''){
 						jQuery("#divDrug").html(data);
+						jQuery("#drugName").hide();
+						jQuery("#drugName").val("");
 					}else{
 						alert('Please refresh page!');
 					}
@@ -411,6 +436,27 @@ INDENT={
 								type:"GET"
 								,url: "formulationByDrugName.form"
 								,data: ({drugName :x})	
+								,async: false
+								, cache : false
+							}).responseText;
+					if(data != undefined  && data != null && data != ''){
+						jQuery("#divFormulation").html(data);
+					}else{
+						alert('Please refresh page!');
+					}
+				}
+			}
+		},
+		onBlurDrug : function(thiz)
+		{
+			var x = jQuery(thiz).val();
+			if(x != null && x != '' ){
+				if(SESSION.checkSession()){
+					var data = jQuery.ajax(
+							{
+								type:"GET"
+								,url: "formulationByDrug.form"
+								,data: ({drugId :x})	
 								,async: false
 								, cache : false
 							}).responseText;
@@ -568,6 +614,7 @@ ISSUE={
 							}).responseText;
 					if(data != undefined  && data != null && data != ''){
 						jQuery("#divDrug").html(data);
+						
 					}else{
 						alert('Please refresh page!');
 					}
@@ -589,6 +636,8 @@ ISSUE={
 							}).responseText;
 					if(data != undefined  && data != null && data != ''){
 						jQuery("#divDrug").html(data);
+						jQuery("#drugName").hide();
+						jQuery("#drugName").val("");
 					}else{
 						alert('Please refresh page!');
 					}
@@ -626,6 +675,27 @@ ISSUE={
 								type:"GET"
 								,url: "formulationByDrugNameForIssue.form"
 								,data: ({drugName :x})	
+								,async: false
+								, cache : false
+							}).responseText;
+					if(data != undefined  && data != null && data != ''){
+						jQuery("#divFormulation").html(data);
+					}else{
+						alert('Please refresh page!');
+					}
+				}
+			}
+		},
+		onBlurDrug : function(thiz)
+		{
+			var x = jQuery(thiz).val();
+			if(x != null && x != '' ){
+				if(SESSION.checkSession()){
+					var data = jQuery.ajax(
+							{
+								type:"GET"
+								,url: "formulationByDrugForIssue.form"
+								,data: ({drugId :x})	
 								,async: false
 								, cache : false
 							}).responseText;

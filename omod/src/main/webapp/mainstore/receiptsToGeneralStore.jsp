@@ -58,7 +58,7 @@ VALIDATION={
 <br/>
 <table width="100%">
 <tr><td><b>Drug info</b></td></tr>
-<%-- <tr>
+ <tr>
 		<td><spring:message code="inventory.drug.category"/><em>*</em></td>
 		<td>
 			<select name="category" id="category" onchange="RECEIPT.onChangeCategory(this);"  style="width: 200px;">
@@ -68,16 +68,15 @@ VALIDATION={
                 </c:forEach>
    			</select>
 		</td>
-		
-
+	
 	</tr>
---%>
+
 	<tr>
 		<td>Drug<em>*</em></td>
 		<td>
 			
 				<input id="drugName" name="drugName" onblur="RECEIPT.onBlur(this);" style="width: 200px;">
-			
+				<div id="divDrug"  ></div>
 		</td>
 	</tr>
 	<tr>

@@ -44,6 +44,9 @@ public class IssueDrugAccountFormController {
 	 model.addAttribute("listCategory", listCategory);
 	 model.addAttribute("categoryId", categoryId);
 	 
+	 
+	 
+	 
 	 if(categoryId != null && categoryId > 0){
 		 List<InventoryDrug> drugs = inventoryService.findDrug(categoryId, null);
 		 model.addAttribute("drugs",drugs);
@@ -62,6 +65,11 @@ public class IssueDrugAccountFormController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String submit(HttpServletRequest request, Model model) {
 		List<String> errors = new ArrayList<String>();
+		
+		InventoryDrug drug=null;
+		String drugN="",drugIdStr="";
+		int drugId=-1;
+		
 		int userId = Context.getAuthenticatedUser().getId();
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		 List<InventoryDrugCategory> listCategory = inventoryService.findDrugCategory("");
@@ -69,15 +77,29 @@ public class IssueDrugAccountFormController {
 		//int category = NumberUtils.toInt(request.getParameter("category"),0);
 		Integer formulation = NumberUtils.toInt(request.getParameter("formulation"),0);
 		
-		InventoryDrug drug = inventoryService.getDrugByName(request.getParameter("drugName"));
+		if (request.getParameter("drugName")!=null)
+			drugN=request.getParameter("drugName");
+			if (request.getParameter("drugId")!=null)
+		 drugIdStr=request.getParameter("drugId");
+			
+			if (!drugN.equalsIgnoreCase("")){
+				
+				 drug=inventoryService.getDrugByName(drugN);
+				 
+			}else if (!drugIdStr.equalsIgnoreCase("")){
+				drugId=Integer.parseInt(drugIdStr);
+				 drug=inventoryService.getDrugById(drugId);
+			}
 		
 		if(drug == null){
 			errors.add("inventory.issueDrug.drug.required");
 			
 			//return "/module/inventory/substore/subStoreIssueDrugAccountForm";
-		}
-		int drugId= drug.getId();
-			
+		} else 
+			{
+			drugId= drug.getId();
+			}
+		
 		InventoryDrugFormulation formulationO = inventoryService.getDrugFormulationById(formulation);
 		if(formulationO == null)
 		{

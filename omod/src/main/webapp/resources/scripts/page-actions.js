@@ -278,7 +278,7 @@ var CHECK =
 					event : "blur",
 					rules : 
 					{
-						"category" : { required : true},
+						
 						"drugId" : { required : true},
 						"formulation" : { required : true},
 						"quantity" : { required : true,digits : true}
@@ -328,7 +328,7 @@ var CHECK =
 					event : "blur",
 					rules : 
 					{
-						"category" : { required : true},
+						
 						"drugId" : { required : true},
 						"formulation" : { required : true}
 					}
