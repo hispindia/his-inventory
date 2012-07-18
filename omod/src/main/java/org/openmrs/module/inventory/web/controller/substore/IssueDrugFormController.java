@@ -86,19 +86,38 @@ public class IssueDrugFormController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String submit(HttpServletRequest request, Model model) {
 		List<String> errors = new ArrayList<String>();
+		
+		int drugId=0;
+		String drugN="",drugIdStr="";
+		InventoryDrug drug=null;
+		
 		int userId = Context.getAuthenticatedUser().getId();
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		List<InventoryDrugCategory> listCategory = inventoryService.findDrugCategory("");
 		model.addAttribute("listCategory", listCategory);
 		int category = NumberUtils.toInt(request.getParameter("category"), 0);
 		Integer formulation = NumberUtils.toInt(request.getParameter("formulation"), 0);
-		int drugId = NumberUtils.toInt(request.getParameter("drugId"), 0);
 		
-		InventoryDrug drug = inventoryService.getDrugById(drugId);
-		if (drug == null) {
-			errors.add("inventory.issueDrug.drug.required");
+		if (request.getParameter("drugName")!=null)
+			drugN=request.getParameter("drugName");
+			if (request.getParameter("drugId")!=null)
+		 drugIdStr=request.getParameter("drugId");
 			
-		}
+			if (!drugN.equalsIgnoreCase("")){
+				
+				 drug=inventoryService.getDrugByName(drugN);
+			}else if (!drugIdStr.equalsIgnoreCase("")){
+				drugId=Integer.parseInt(drugIdStr);
+				 drug=inventoryService.getDrugById(drugId);
+			}
+			
+			if(drug == null){
+				errors.add("inventory.receiptDrug.drug.required");
+			}else{
+			 drugId = drug.getId();
+			}
+		
+		
 		InventoryDrugFormulation formulationO = inventoryService.getDrugFormulationById(formulation);
 		if (formulationO == null) {
 			errors.add("inventory.receiptDrug.formulation.required");

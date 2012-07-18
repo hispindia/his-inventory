@@ -614,7 +614,8 @@ ISSUE={
 							}).responseText;
 					if(data != undefined  && data != null && data != ''){
 						jQuery("#divDrug").html(data);
-						
+						jQuery("#drugName").hide();
+						jQuery("#drugName").val("");
 					}else{
 						alert('Please refresh page!');
 					}
