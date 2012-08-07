@@ -38,7 +38,9 @@
 <table class="box">
 <tr><td><b>Drug info</b></td></tr>
 <tr>
-		<td><spring:message code="inventory.drug.category"/><em>*</em></td>
+
+<%-- 	// Sagar Bele - 07-08-2012 New Requirement #302 [INVENTORY] Non Mandatory Drug Category filter for drug search  --%>
+		<td><spring:message code="inventory.drug.category"/></td>
 		<td>
 			<select name="category" id="category" onchange="ISSUE.onChangeCategoryAccount(this);"  style="width: 250px;">
 				<option value=""><spring:message code="inventory.pleaseSelect"/></option>
