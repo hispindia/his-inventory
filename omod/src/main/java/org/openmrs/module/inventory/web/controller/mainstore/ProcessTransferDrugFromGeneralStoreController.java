@@ -30,9 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/module/inventory/mainStoreDrugProcessIndent.form")
 public class ProcessTransferDrugFromGeneralStoreController {
 	@RequestMapping(method = RequestMethod.GET)
-	public String sendIndent( @RequestParam(value="indentId",required=false)  Integer id,
-			
-			Model model) {
+	public String sendIndent( @RequestParam(value="indentId",required=false)  Integer id,Model model) {
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		InventoryStoreDrugIndent indent = inventoryService.getStoreDrugIndentById(id);
 		InventoryStore mainStore =  inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
@@ -161,7 +159,10 @@ public class ProcessTransferDrugFromGeneralStoreController {
 	 transaction.setStore(mainStore);
 	 transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
 	 transaction.setCreatedOn(new Date());
-	 transaction.setCreatedBy("System");
+	 
+	// transaction.setCreatedBy("System");
+	// Sagar Bele - 07-08-2012 Bug #326 [INVENTORY] Transaction Stored with different user name
+	 transaction.setCreatedBy(Context.getAuthenticatedUser().getGivenName());
 	 transaction = inventoryService.saveStoreDrugTransaction(transaction);
 	 
 	 
