@@ -23,7 +23,7 @@ public class ActionValue {
 	public static final String[] INDENT_SUBSTORE_NAMES = {"SAVE", "SENT","RECEIPT","REFUSE","DONE","MAIN-STORE REFUSE" };
 	
 	public static final int[] TRANSACTION = { 1, 2};
-	public static final String[] TRANSACTION_NAMES = {"RECEIPT", "ISSUE" };
+	public static final List<String> TRANSACTION_NAMES = Collections.unmodifiableList(Arrays.asList("RECEIPT", "ISSUE"));
 	
 	public static String getIndentSubStoreName(int pos) {
 		if(ArrayUtils.contains(INDENT_SUBSTORE, pos)) {
@@ -114,7 +114,7 @@ public class ActionValue {
 	
 	public static String getTransactionName(int pos) {
 		if(ArrayUtils.contains(TRANSACTION, pos)) {
-			return TRANSACTION_NAMES[ArrayUtils.indexOf(TRANSACTION, pos)];
+			return ActionValue.TRANSACTION_NAMES.get(ArrayUtils.indexOf(TRANSACTION, pos));
 		}
 		
 		return " ";
@@ -122,8 +122,8 @@ public class ActionValue {
 	
 	public static List<Action> getListTypeTransaction() {
 		List<Action> rs = new ArrayList<Action>();
-		for (int i = 0; i < TRANSACTION_NAMES.length; i++) {
-			rs.add(new Action(TRANSACTION[i], TRANSACTION_NAMES[i]));
+		for (int i = 0; i < TRANSACTION_NAMES.size(); i++) {
+			rs.add(new Action(TRANSACTION[i], TRANSACTION_NAMES.get(i)));
 		}
 		return rs;
 	}
