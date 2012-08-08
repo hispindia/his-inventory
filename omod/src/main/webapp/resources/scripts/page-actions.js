@@ -102,7 +102,13 @@ var CHECK =
 	},
 	drugForm : function()
 	{
-		jQuery("#drugCore").autocomplete({source: 'autoCompleteDrugCoreList.form', minLength: 3 } );
+		//jQuery("#drugCore").autocomplete({source: 'autoCompleteDrugCoreList.form', minLength: 3 } );
+		
+		jQuery("#drugCore").autocomplete('autoCompleteDrugCoreList.form', {
+			 minChars: 3 ,
+			 delay:1000,
+			 scroll: true});
+		
 		var validator = jQuery("#drugForm").validate(
 		{
 			event : "blur",
@@ -115,7 +121,6 @@ var CHECK =
 				"formulations" : { required : true},
 				"attribute" : { required : true},
 				"reorderQty" : { required : true, number: true}
-			
 			}
 		});
 	},

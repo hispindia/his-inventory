@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller("AutoCompleteController")
 public class AutoCompleteController {
 		@RequestMapping("/module/inventory/autoCompleteDrugCoreList.form")
-		public String drugCore(@RequestParam(value="term",required=false) String name, Model model) {
+		public String drugCore(@RequestParam(value="q",required=false) String name, Model model) {
 			List<Drug> drugs = new ArrayList<Drug>();
 			if(!StringUtils.isBlank(name)){
 				drugs = Context.getConceptService().getDrugs(name);
