@@ -1364,6 +1364,12 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		} else {
 			criteria.add(Restrictions.ge("transactionDetail.dateExpiry", new Date()));
 		}
+		
+		
+/*Sagar Bele : 13-08-2012  Bug #330 ( [INVENTORY]-error in Current quantity of pharmacy )*/
+		criteria.add(Restrictions.ge("transactionDetail.currentQuantity", 0));
+	
+		
 		criteria.setProjection(proList);
 		if (max > 0) {
 			criteria.setFirstResult(min).setMaxResults(max);
