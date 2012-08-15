@@ -79,7 +79,20 @@ STRING =
 					break;
 				}
 			}
+		},
+		
+			
+		/**
+		Convert from "dd/mm/yyyy" to "mm/dd/yyyy"
+		Aug 15th 2012 - Thai Chuong - Fixed issue #335
+		*/
+		convertDateFormat : function(myDate) {
+			var date = myDate.split("/")[0];
+			var month = myDate.split("/")[1];
+			var year = myDate.split("/")[2];
+			return month + "/" + date + "/" + year;
 		}
+
 };
 SHOWTHICKBOX = {
 		show : function(header ,link )

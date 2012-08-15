@@ -34,14 +34,14 @@ jQuery(document).ready(function() {
 
 VALIDATION={
 	checkRecieptDate : function() {
-		var recieptDate = new Date(jQuery('#receiptDate').val());
-		var expiryDate = new Date(jQuery('#dateExpiry').val());
+		var recieptDate = new Date(STRING.convertDateFormat(jQuery('#receiptDate').val()));
+		var expiryDate = new Date(STRING.convertDateFormat(jQuery('#dateExpiry').val()));
 
 		if (recieptDate > expiryDate){
 			jQuery('#receiptDate').val("");
 			alert("You can not receipt an expired drug");
-			}
 		}
+	}
 }
 
 </script>
