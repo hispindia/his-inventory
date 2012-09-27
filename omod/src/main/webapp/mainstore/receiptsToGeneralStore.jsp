@@ -152,7 +152,7 @@ VALIDATION={
 </div>
 <!-- Receipt list -->
 <div style="width: 73%; float: right; margin-right: 4px; ">
-<b class="boxHeader">Receipt slip</b>
+<b class="boxHeader">Receipt Slip</b>  <!-- Sept 22,2012 -- Sagar Bele -- Issue 387 --Change case of word Slip-->
 <div class="box">
 <table class="box" width="100%" cellpadding="5" cellspacing="0">
 	<tr>
