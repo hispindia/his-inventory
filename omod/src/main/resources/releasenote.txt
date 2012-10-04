@@ -1,3 +1,13 @@
+2.0.6
+Bug #326: [INVENTORY] Transaction Stored with different user name
+Bug #328: [INVENTORY] Manage drug in inventory
+Bug #330: [INVENTORY]-error in Current quantity of pharmacy
+Bug #335: [INVENTORY]- Error on validation when "receipts to general store"
+Bug #336: [INVENTORY]- The title of "View stock balance expiry" is "View stock balance"
+New Requirement #300: [INVENTORY] View lists in Alphabetical Order
+New Requirement #301: [INVENTORY] Don't allow the reception of expired drugs
+New Requirement #302: [INVENTORY] Non Mandatory Drug Category filter for drug search 
+
 2.0.5
 - High priority Jenkins bugs fixed
 	STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE Total bug=8
