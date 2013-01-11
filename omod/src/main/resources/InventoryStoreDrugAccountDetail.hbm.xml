@@ -11,7 +11,7 @@
 		</id>
 	    <many-to-one name="drugAccount" class="org.openmrs.module.inventory.model.InventoryStoreDrugAccount"
 	        column="drug_account_id" cascade="none" lazy="false" />
-	    <many-to-one name="transactionDetail" class="org.openmrs.module.inventory.model.InventoryStoreDrugTransactionDetail"
+	    <many-to-one name="transactionDetail" class="org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransactionDetail"
 	        column="transaction_detail_id" cascade="none"  />
 		<property name="quantity" column="quantity"  />
 	</class>

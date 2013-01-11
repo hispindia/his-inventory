@@ -2,6 +2,8 @@ package org.openmrs.module.inventory.model;
 
 import java.io.Serializable;
 
+import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransactionDetail;
+
 public class InventoryStoreDrugAccountDetail implements  Serializable {
 		 private static final long serialVersionUID = 1L;
 		 private Integer id;

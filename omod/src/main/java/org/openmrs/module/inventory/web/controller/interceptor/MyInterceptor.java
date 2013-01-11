@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.openmrs.Role;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.model.InventoryStore;
 import org.openmrs.module.inventory.InventoryService;
-import org.openmrs.module.inventory.model.InventoryStore;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 

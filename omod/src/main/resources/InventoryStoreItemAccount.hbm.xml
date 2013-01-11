@@ -9,7 +9,7 @@
 		<id name="id" type="int" column="id" unsaved-value="0">
 				<generator class="native" />
 		</id>
-	    <many-to-one name="store" class="org.openmrs.module.inventory.model.InventoryStore"
+	    <many-to-one name="store" class="org.openmrs.module.hospitalcore.model.InventoryStore"
 	        column="store_id" cascade="none" lazy="false" />
 		<property name="name" column="name"  />
 		<property name="createdBy" column="created_by"  />

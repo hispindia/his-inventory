@@ -2,8 +2,8 @@ package org.openmrs.module.inventory.web.controller.drug;
 
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.model.InventoryDrugCategory;
 import org.openmrs.module.inventory.InventoryService;
-import org.openmrs.module.inventory.model.InventoryDrugCategory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

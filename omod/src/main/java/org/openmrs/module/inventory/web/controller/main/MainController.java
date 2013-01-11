@@ -17,8 +17,8 @@ import java.util.ArrayList;
 
 import org.openmrs.Role;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.model.InventoryStore;
 import org.openmrs.module.inventory.InventoryService;
-import org.openmrs.module.inventory.model.InventoryStore;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

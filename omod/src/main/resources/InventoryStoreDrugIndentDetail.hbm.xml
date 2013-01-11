@@ -9,11 +9,11 @@
 		<id name="id" type="int" column="id" unsaved-value="0">
 				<generator class="native" />
 		</id>
-	    <many-to-one name="indent" class="org.openmrs.module.inventory.model.InventoryStoreDrugIndent"
+	    <many-to-one name="indent" class="org.openmrs.module.hospitalcore.model.InventoryStoreDrugIndent"
 	        column="indent_id" cascade="none" lazy="false" />
-	    <many-to-one name="drug" class="org.openmrs.module.inventory.model.InventoryDrug"
+	    <many-to-one name="drug" class="org.openmrs.module.hospitalcore.model.InventoryDrug"
 	        column="drug_id" cascade="none" lazy="false" />
-	    <many-to-one name="formulation" class="org.openmrs.module.inventory.model.InventoryDrugFormulation"
+	    <many-to-one name="formulation" class="org.openmrs.module.hospitalcore.model.InventoryDrugFormulation"
 	        column="formulation_id" cascade="none" lazy="false" />
 		<property name="quantity" column="quantity"  />
 		<property name="mainStoreTransfer" column="main_store_transfer"  />

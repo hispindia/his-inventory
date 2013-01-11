@@ -2,7 +2,7 @@ package org.openmrs.module.inventory.web.controller.substore;
 
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.inventory.model.InventoryStoreDrugPatient;
+import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatient;
 import org.springframework.validation.Errors;
 
 public class IssueDrugPatientValidator {
