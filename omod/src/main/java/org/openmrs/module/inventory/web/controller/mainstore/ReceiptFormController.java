@@ -90,6 +90,8 @@ public class ReceiptFormController {
 		BigDecimal unitPrice =  NumberUtils.createBigDecimal(request.getParameter("unitPrice"));
 		String batchNo = request.getParameter("batchNo");
 		String companyName = request.getParameter("companyName");
+		// Sagar Bele : Date - 22-01-2013 Issue Number 660 : [Inventory] Add receipt from field in Table and front end	
+		String receiptFrom = request.getParameter("receiptFrom");
 		String dateManufacture = request.getParameter("dateManufacture");
 		String dateExpiry = request.getParameter("dateExpiry");
 		String receiptDate = request.getParameter("receiptDate");
@@ -123,8 +125,9 @@ public class ReceiptFormController {
 			model.addAttribute("unitPrice", unitPrice);
 			model.addAttribute("companyName", companyName);
 			model.addAttribute("dateManufacture", dateManufacture);
-			model.addAttribute("companyName", companyName);
 			model.addAttribute("dateExpiry", dateExpiry);
+			// Sagar Bele : Date - 22-01-2013 Issue Number 660 : [Inventory] Add receipt from field in Table and front end	
+			model.addAttribute("receiptFrom", receiptFrom);
 			
 			return "/module/inventory/mainstore/receiptsToGeneralStore";
 		}
@@ -149,6 +152,8 @@ public class ReceiptFormController {
 		transactionDetail.setDateManufacture(DateUtils.getDateFromStr(dateManufacture));
 		transactionDetail.setReceiptDate(DateUtils.getDateFromStr(receiptDate));
 		
+		//Sagar Bele : Date - 22-01-2013 Issue Number 660 : [Inventory] Add receipt from field in Table and front end	
+		transactionDetail.setReceiptFrom(receiptFrom);
 		
 		/*Money moneyUnitPrice = new Money(unitPrice);
 		Money totl = moneyUnitPrice.times(quantity);

@@ -46,7 +46,7 @@ VALIDATION={
 
 </script>
 
-<div style="width: 26%; float: left; margin-left: 4px; ">
+<div style="width: 20%; float: left; margin-left: 4px; ">
 <b class="boxHeader">Drug</b>
 <div class="box">
 <form method="post" id="receiptDrug">
@@ -143,6 +143,14 @@ VALIDATION={
 			<input type="text" id="receiptDate" name="receiptDate" class="date-pick left" readonly="readonly"  ondblclick="this.value='';"/>
 		</td>
 	</tr>
+	<!-- Sagar Bele : Date - 22-01-2013 Issue Number 660 : [Inventory] Add receipt from field in Table and front end -->
+	<tr>
+		<td><spring:message code="inventory.receiptDrug.receiptFrom"/></td>
+		<td>
+			<input type="text" id="receiptFrom" name="receiptFrom" />
+		</td>
+	</tr>
+
 </table>
 <br/>
 <input type="submit" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.receiptDrug.addToSlip"/>">
@@ -151,10 +159,10 @@ VALIDATION={
 </div>
 </div>
 <!-- Receipt list -->
-<div style="width: 73%; float: right; margin-right: 4px; ">
+<div style="width: 79%; float: right; margin-right: 4px; ">
 <b class="boxHeader">Receipt Slip</b>  <!-- Sept 22,2012 -- Sagar Bele -- Issue 387 --Change case of word Slip-->
 <div class="box">
-<table class="box" width="100%" cellpadding="5" cellspacing="0">
+<table class="box" width="100%" border="1" cellpadding="5" cellspacing="0">
 	<tr>
 	<th>#</th>
 	<th><spring:message code="inventory.drug.category"/></th>
@@ -169,6 +177,7 @@ VALIDATION={
 	<th title="<spring:message code="inventory.receiptDrug.dateManufacture"/>">DM</th>
 	<th title="<spring:message code="inventory.receiptDrug.dateExpiry"/>">DE</th>
 	<th title="<spring:message code="inventory.receiptDrug.receiptDate"/>">RD</th>
+	<th title="<spring:message code="inventory.receiptDrug.receiptFrom"/>">RF</th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty listReceipt}">
@@ -187,6 +196,7 @@ VALIDATION={
 		<td><openmrs:formatDate date="${receipt.dateManufacture}" type="textbox"/></td>
 		<td><openmrs:formatDate date="${receipt.dateExpiry}" type="textbox"/></td>
 		<td><openmrs:formatDate date="${receipt.receiptDate}" type="textbox"/></td>
+		<td>${receipt.receiptFrom}</td>
 		</tr>
 	</c:forEach>
 	
@@ -208,8 +218,8 @@ VALIDATION={
 </div>
 </div>
 <!-- PRINT DIV -->
-<div  id="printDiv" style="display: none; ">
-<div style="margin: 10px auto; width: 981px; font-size: 1.0em;font-family:'Dot Matrix Normal',Arial,Helvetica,sans-serif;">        		
+<div id="printDiv" style="display: none; ">
+<div style="width: 100%; float: right; margin-right: 4px; font-size: 1.0em;font-family:'Dot Matrix Normal',Arial,Helvetica,sans-serif;">        		
 <br />
 <br />      		
 <center style="float:center;font-size: 2.2em">${store.name} - Receipt - Drugs</center>
@@ -233,6 +243,8 @@ VALIDATION={
 	<th><spring:message code="inventory.receiptDrug.dateManufacture"/></th>
 	<th><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
 	<th><spring:message code="inventory.receiptDrug.receiptDate"/></th>
+	<!-- Sagar Bele : Date - 22-01-2013 Issue Number 660 : [Inventory] Add receipt from field in Table and front end -->	
+	<th><spring:message code="inventory.receiptDrug.receiptFrom"/></th>	
 	</tr>
 	<c:choose>
 	<c:when test="${not empty listReceipt}">
@@ -251,6 +263,7 @@ VALIDATION={
 		<td><openmrs:formatDate date="${receipt.dateManufacture}" type="textbox"/></td>
 		<td><openmrs:formatDate date="${receipt.dateExpiry}" type="textbox"/></td>
 		<td><openmrs:formatDate date="${receipt.receiptDate}" type="textbox"/></td>
+		<td>${receipt.receiptFrom}</td>
 		</tr>
 	</c:forEach>
 	</c:when>

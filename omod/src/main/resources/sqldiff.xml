@@ -121,4 +121,15 @@
 			ALTER TABLE inventory_store_drug_transaction_detail MODIFY VAT decimal(19,2);
 		</sql>
 	</diff>
+	<diff>
+		<version>2.2.5</version>
+		<author>Sagar Bele</author>
+		<date>JAN 15rd 2013</date>
+		<description>
+			Update inventory_store_drug_transaction_detail
+		</description>
+		<sql>
+			ALTER TABLE inventory_store_drug_transaction_detail ADD receipt_from varchar(255);
+		</sql>
+	</diff>	
 </sqldiff>

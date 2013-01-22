@@ -22,7 +22,7 @@
 <%@ include file="../includes/js_css.jsp" %>
 <span class="boxHeader"><spring:message code="inventory.receiptDrug.receiptDrugList"/></span>
 <div class="box">
-<table width="100%" cellpadding="5" cellspacing="0">
+<table width="100%" border="1" cellpadding="5" cellspacing="0">
 	<tr align="center">
 	<th>#</th>
 	<th><spring:message code="inventory.drug.category"/></th>
@@ -37,6 +37,8 @@
 	<th title="<spring:message code="inventory.receiptDrug.dateManufacture"/>">DM</th>
 	<th title="<spring:message code="inventory.receiptDrug.dateExpiry"/>">DE</th>
 	<th title="<spring:message code="inventory.receiptDrug.receiptDate"/>">RD</th>
+	<!-- Sagar Bele : Date - 22-01-2013 Issue Number 660 : [Inventory] Add receipt from field in Table and front end -->	
+	<th title="<spring:message code="inventory.receiptDrug.receiptFrom"/>">RF</th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty transactionDetails}">
@@ -55,6 +57,7 @@
 		<td><openmrs:formatDate date="${receipt.dateManufacture}" type="textbox"/></td>
 		<td><openmrs:formatDate date="${receipt.dateExpiry}" type="textbox"/></td>
 		<td><openmrs:formatDate date="${receipt.receiptDate}" type="textbox"/></td>
+		<td>${receipt.receiptFrom}</td>
 		</tr>
 	</c:forEach>
 	</c:when>
@@ -66,7 +69,7 @@
 
 <!-- PRINT DIV -->
 <div  id="printDiv" style="display: none;">
-<div style="margin: 10px auto; width: 981px; font-size: 1.0em;font-family:'Dot Matrix Normal',Arial,Helvetica,sans-serif;">        		
+<div style="width: 100%; float: right; margin-right: 4px; font-size: 1.0em;font-family:'Dot Matrix Normal',Arial,Helvetica,sans-serif;">        		
 <br />
 <br />      		
 <center style="float:center;font-size: 2.2em">${store.name} - Receipt - Drugs</center>
@@ -90,6 +93,7 @@
 	<th>DM</th>
 	<th>DE</th>
 	<th>DR</th>
+	<th>RF</th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty transactionDetails}">
@@ -108,6 +112,8 @@
 		<td><openmrs:formatDate date="${receipt.dateManufacture}" type="textbox"/></td>
 		<td><openmrs:formatDate date="${receipt.dateExpiry}" type="textbox"/></td>
 		<td><openmrs:formatDate date="${receipt.receiptDate}" type="textbox"/></td>
+		<!-- Sagar Bele : Date - 22-01-2013 Issue Number 660 : [Inventory] Add receipt from field in Table and front end -->	
+		<td>${receipt.receiptFrom}</td>
 		</tr>
 	</c:forEach>
 	</c:when>
