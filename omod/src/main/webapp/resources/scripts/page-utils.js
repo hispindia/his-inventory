@@ -47,7 +47,7 @@ INVENTORY={
 		},
 		removeObject : function(position, check)
 		{
-			if(confirm("Are you want to remove this?")){
+			if(confirm("Are you sure you want to remove this?")){
 				ACT.go("removeObjectFromList.form?position="+position+"&check="+check);
 			}
 		},
@@ -280,7 +280,7 @@ RECEIPT={
 						tb_show("Add description for this slip....",url,false);
 					}
 				}else{
-					if( confirm("Are you want to clear this slip?")){
+					if( confirm("Are you sure you want to clear this slip?")){
 						ACT.go("clearSlip.form?action="+action);
 					}
 				}
@@ -292,7 +292,7 @@ RECEIPT={
 					tb_show("Add description for this slip....",url,false);
 				}
 			}else{
-				if( confirm("Are you want to clear this slip?")){
+				if( confirm("Are you sure you want to clear this slip?")){
 					ACT.go("itemClearSlip.form?action="+action);
 				}
 			}
@@ -361,7 +361,7 @@ PURCHASE={
 						tb_show("Add name for purchase order slip....",url,false);
 					}
 				}else{
-					if( confirm("Are you want to clear this?")){
+					if( confirm("Are you sure you want to clear this?")){
 						ACT.go("clearPurchaseOrder.form?action="+action);
 					}
 				}
@@ -373,7 +373,7 @@ PURCHASE={
 					tb_show("Add name for purchase order slip....",url,false);
 				}
 			}else{
-				if( confirm("Are you want to clear this?")){
+				if( confirm("Are you sure you want to clear this?")){
 					ACT.go("itemClearPurchaseOrder.form?action="+action);
 				}
 			}
@@ -520,7 +520,7 @@ INDENT={
 						tb_show("Add name for indent slip....",url,false);
 					}
 				}else{
-					if( confirm("Are you want to clear this?")){
+					if( confirm("Are you sure you want to clear this?")){
 						ACT.go("clearSubStoreIndent.form?action="+action);
 					}
 				}
@@ -537,7 +537,7 @@ INDENT={
 					tb_show("Add name for indent slip....",url,false);
 				}
 			}else{
-				if( confirm("Are you want to clear this?")){
+				if( confirm("Are you sure you want to clear this?")){
 					ACT.go("itemClearSubStoreIndent.form?action="+action);
 				}
 			}
@@ -566,7 +566,7 @@ INDENT={
 		},
 		refuseIndentFromMainStore : function(thiz)
 		{
-			if(confirm("Are you sure this?")) {
+			if(confirm("Are you sure about this?")) {
 				jQuery('#tableIndent').remove();
 				jQuery("#refuse").val("1");
 				jQuery('#formMainStoreProcessIndent').submit()
@@ -587,7 +587,7 @@ INDENT={
 		},
 		refuseIndentFromSubStoreItem : function(thiz)
 		{
-			if(confirm("Are you sure this?")) {
+			if(confirm("Are you sure about this?")) {
 				jQuery('#tableIndent').remove();
 				jQuery("#refuse").val("1");
 				jQuery('#formSubStoreItemProcessIndent').submit()
@@ -841,7 +841,7 @@ ISSUE={
 		},
 		processSlip : function(data){
 			if(data == 1){
-				if( confirm("Are you want to clear this?")){
+				if( confirm("Are you sure you want to clear this?")){
 					ACT.go("processIssueDrug.form?action="+data);
 				}
 			}else{
@@ -857,7 +857,7 @@ ISSUE={
 		},
 		processIssueDrugToAccount : function(data){
 			if(data == 1){
-				if( confirm("Are you want to clear this?")){
+				if( confirm("Are you sure you want to clear this?")){
 					ACT.go("processIssueDrugAccount.form?action="+data);
 				}
 			}else{
@@ -873,7 +873,7 @@ ISSUE={
 		},
 		processSlipItem : function(data){
 			if(data == 1){
-				if( confirm("Are you want to clear this?")){
+				if( confirm("Are you sure you want to clear this?")){
 					ACT.go("processIssueItem.form?action="+data);
 				}
 			}else{
