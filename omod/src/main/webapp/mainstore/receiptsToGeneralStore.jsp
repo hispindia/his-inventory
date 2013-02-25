@@ -64,7 +64,7 @@ VALIDATION={
 <%-- 	// Sagar Bele - 07-08-2012 New Requirement #302 [INVENTORY] Non Mandatory Drug Category filter for drug search  --%>
 		<td><spring:message code="inventory.drug.category"/></td>
 		<td>
-			<select name="category" id="category" onchange="RECEIPT.onChangeCategory(this);"  style="width: 200px;">
+			<select name="category" id="category" onchange="RECEIPT.onChangeCategory(this);"  style="width: 80%;">
 				<option value=""><spring:message code="inventory.pleaseSelect"/></option>
                 <c:forEach items="${listCategory}" var="vCat">
                     <option value="${vCat.id}" title="${vCat.name}" <c:if test="${vCat.id == categoryId }">selected</c:if> >${vCat.name}</option>
@@ -78,7 +78,7 @@ VALIDATION={
 		<td>Drug<em>*</em></td>
 		<td>
 			
-				<input id="drugName" name="drugName" onblur="RECEIPT.onBlur(this);" style="width: 200px;">
+				<input id="drugName" name="drugName" onblur="RECEIPT.onBlur(this);" style="width: 80%;">
 				<div id="divDrug"  ></div>
 		</td>
 	</tr>
@@ -86,7 +86,7 @@ VALIDATION={
 		<td><spring:message code="inventory.drug.formulation"/><em>*</em></td>
 		<td>
 			<div id="divFormulation"  >
-				<select id="formulation"  name="formulation">
+				<select id="formulation"  name="formulation" style="width: 80%;">
 					<option value=""><spring:message code="inventory.pleaseSelect"/></option>
 				</select>
 			</div>
