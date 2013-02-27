@@ -59,7 +59,10 @@
 <c:if  test="${not empty listDrugIssue}">
 <table border="1">
 	<tr><td>Patient identifier</td><td>${issueDrugPatient.identifier }</td></tr>
+	<%-- ghanshyam 27-02-2013 Feedback #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(remove category from registration,OPD,IPD,Inventory) --%>
+	<%-- 
 	<tr><td>Patient category</td><td>${issueDrugPatient.patientCategory }</td></tr>
+	--%>
 	<tr><td>Name</td><td>${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.middleName}&nbsp;${issueDrugPatient.patient.familyName}</td></tr>
 	<tr><td>Age</td><td>
 		<c:choose>
