@@ -97,6 +97,7 @@
 	</c:choose>
 </table>
 <br/><br/><br/><br/><br/><br/>
-<span style="float:right;font-size: 1.5em">Signature of inventory clerk/ Stamp</span>
+<!-- [Inventory] kesavulu 20/03/2013 Support #1136 In the Print out of receipt signature  Inventory clerk changed to  pharmacist -->
+<span style="float:right;font-size: 1.5em">Signature of pharmacist/ Stamp</span>
 </div>
 <!-- END PRINT DIV -->   
