@@ -50,7 +50,7 @@
 	 				 -->
 				<tr>
 
-<%-- 	// Sagar Bele - 07-08-2012 New Requirement #302 [INVENTORY] Non Mandatory Drug Category filter for drug search  --%>
+					<%-- 	// Sagar Bele - 07-08-2012 New Requirement #302 [INVENTORY] Non Mandatory Drug Category filter for drug search  --%>
 					<td><spring:message code="inventory.drug.category" /></td>
 					<td><select name="category" id="category"
 						onchange="ISSUE.onChangeCategory(this);" style="width: 250px;">
@@ -63,15 +63,12 @@
 							</c:forEach>
 					</select></td>
 				</tr>
-				  
+
 				<tr>
 					<td>Drug<em>*</em></td>
-					<td>
-					
-				 <input id="drugName" name="drugName" onblur="ISSUE.onBlur(this);" style="width: 200px;">
-						<div id="divDrug"  ></div>
-					
-					</td>
+					<td><input id="drugName" name="drugName"
+						onblur="ISSUE.onBlur(this);" style="width: 200px;">
+						<div id="divDrug"></div></td>
 				</tr>
 				<tr>
 					<td><spring:message code="inventory.drug.formulation" /><em>*</em></td>
@@ -227,8 +224,7 @@
 		<c:if test="${not empty issueDrugPatient}">
 			<br />
 			<br />
-			<center style="float: center; font-size: 2.2em">Issue Drug
-				To Patient</center>
+			<center style="float: center; font-size: 2.2em">Issue Drug To Patient</center>
 			<br />
 			<br />
 			<table border="1">
@@ -282,9 +278,9 @@
 				</c:when>
 			</c:choose>
 		</table>
-		<br /> <br /> <br /> <br /> <br /> <br /> <span
-			style="float: right; font-size: 1.5em">Signature of inventory
-			clerk/ Stamp</span>
+		<br /> <br /> <br /> <br /> <br /> <br /> 
+		<!-- [Inventory] kesavulu 21/03/2013 Support #1136 In the Print out of receipt signature  Inventory clerk changed to  pharmacist -->
+		<span style="float: right; font-size: 1.5em">Signature of pharmacist/ Stamp</span>
 	</div>
 </div>
 <!-- END PRINT DIV -->
