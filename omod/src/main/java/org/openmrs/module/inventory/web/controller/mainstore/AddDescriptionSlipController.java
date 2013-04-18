@@ -20,12 +20,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.openmrs.Role;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.model.InventoryStore;
+import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransaction;
+import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransactionDetail;
+import org.openmrs.module.hospitalcore.util.ActionValue;
 import org.openmrs.module.inventory.InventoryService;
-import org.openmrs.module.inventory.model.InventoryStore;
 import org.openmrs.module.inventory.model.InventoryStoreDrug;
-import org.openmrs.module.inventory.model.InventoryStoreDrugTransaction;
-import org.openmrs.module.inventory.model.InventoryStoreDrugTransactionDetail;
-import org.openmrs.module.inventory.util.ActionValue;
 import org.openmrs.module.inventory.web.controller.global.StoreSingleton;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

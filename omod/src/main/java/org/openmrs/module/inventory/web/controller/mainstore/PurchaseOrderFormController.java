@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.math.NumberUtils;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.model.InventoryDrug;
+import org.openmrs.module.hospitalcore.model.InventoryDrugCategory;
 import org.openmrs.module.inventory.InventoryService;
-import org.openmrs.module.inventory.model.InventoryDrug;
-import org.openmrs.module.inventory.model.InventoryDrugCategory;
 import org.openmrs.module.inventory.model.InventoryStoreDrugIndentDetail;
 import org.openmrs.module.inventory.web.controller.global.StoreSingleton;
 import org.springframework.stereotype.Controller;

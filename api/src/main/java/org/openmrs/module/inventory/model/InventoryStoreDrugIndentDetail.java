@@ -3,6 +3,10 @@ package org.openmrs.module.inventory.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.openmrs.module.hospitalcore.model.InventoryDrug;
+import org.openmrs.module.hospitalcore.model.InventoryDrugFormulation;
+import org.openmrs.module.hospitalcore.model.InventoryStoreDrugIndent;
+
 public class InventoryStoreDrugIndentDetail implements  Serializable {
 	 private static final long serialVersionUID = 1L;
 	 private Integer id;

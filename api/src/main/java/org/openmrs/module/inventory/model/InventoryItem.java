@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.openmrs.module.inventory.util.ActionValue;
+import org.openmrs.module.hospitalcore.util.ActionValue;
 
-public class InventoryItem  implements  Serializable {
+public class InventoryItem  implements  Serializable{
 
 	 private static final long serialVersionUID = 1L;
 	  private Integer id;

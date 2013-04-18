@@ -6,8 +6,8 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.model.InventoryStore;
 import org.openmrs.module.inventory.InventoryService;
-import org.openmrs.module.inventory.model.InventoryStore;
 
 public class StorePropertyEditor  extends PropertyEditorSupport {
 	private Log log = LogFactory.getLog(this.getClass());

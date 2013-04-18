@@ -11,11 +11,11 @@
 				<generator class="native" />
 		</id>
 		
-		<many-to-one name="store" class="org.openmrs.module.inventory.model.InventoryStore"
+		<many-to-one name="store" class="org.openmrs.module.hospitalcore.model.InventoryStore"
 	        column="store_id" cascade="none" lazy="false" />
-	    <many-to-one name="drug" class="org.openmrs.module.inventory.model.InventoryDrug"
+	    <many-to-one name="drug" class="org.openmrs.module.hospitalcore.model.InventoryDrug"
 	        column="drug_id" cascade="none" lazy="false" />
-	    <many-to-one name="formulation" class="org.openmrs.module.inventory.model.InventoryDrugFormulation"
+	    <many-to-one name="formulation" class="org.openmrs.module.hospitalcore.model.InventoryDrugFormulation"
 	        column="formulation_id" cascade="none" lazy="false" />
 		<property name="currentQuantity" column="current_quantity"  />
 		<property name="receiptQuantity" column="receipt_quantity"  />
