@@ -1,4 +1,13 @@
+2.0.7
+released by ghanshyam on 20-may-2013
+- #395	In pharmacy current quantity of drug doesn’t match with the closing balance of the drug for some drugs ([2.0.6 snapshot][Solan])	
+- #411	An inconsistency in drug quantities shown in indenting drugs from pharmacy store(Solan) 
+- #429	Cannot view Inventory or Pharmacy store/sub store on accessing using logins(Solan, Mandi, Kullu) - Inventory-2.0.6	
+- #823	Grammatical error shown in the message when TAB 'Clear' is clicked after issuing drug to the patient.
+- #824	Unable to issue items to the Account under inventory	Not an issue Really	
+
 2.0.6
+released by harsh
 Bug #326: [INVENTORY] Transaction Stored with different user name
 Bug #328: [INVENTORY] Manage drug in inventory
 Bug #330: [INVENTORY]-error in Current quantity of pharmacy
