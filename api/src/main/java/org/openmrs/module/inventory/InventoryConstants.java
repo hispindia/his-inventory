@@ -27,7 +27,8 @@ public class InventoryConstants {
 	
 	public static final String STORE_DELETE = "Delete Store";
 	
-	
+	//ghanshyam 15-june-2013 New Requirement #1636 User is able to see and dispense drugs in patient queue for issuing drugs, as ordered from dashboard
+	public static final Integer PAGESIZE = 20;
 
 }
 

@@ -14,6 +14,7 @@
 package org.openmrs.module.inventory.impl;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.openmrs.Role;
@@ -30,6 +31,7 @@ import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatient;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatientDetail;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransaction;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransactionDetail;
+import org.openmrs.module.hospitalcore.model.PatientSearch;
 import org.openmrs.module.inventory.InventoryService;
 import org.openmrs.module.inventory.db.InventoryDAO;
 import org.openmrs.module.inventory.model.InventoryItem;
@@ -958,6 +960,11 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 	
 	public InventoryStoreDrugAccountDetail getStoreDrugAccountDetailById(Integer id) throws APIException {
 		return dao.getStoreDrugAccountDetailById(id);
+	}
+	
+	// ghanshyam 15-june-2013 New Requirement #1636 User is able to see and dispense drugs in patient queue for issuing drugs, as ordered from dashboard
+	public List<PatientSearch> searchListOfPatient(Date date, String searchKey,int page) throws APIException {
+		return dao.searchListOfPatient(date,searchKey,page);
 	}
 	
 }

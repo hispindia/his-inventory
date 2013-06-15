@@ -25,6 +25,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
@@ -42,7 +44,9 @@ import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatient;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatientDetail;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransaction;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransactionDetail;
+import org.openmrs.module.hospitalcore.model.PatientSearch;
 import org.openmrs.module.hospitalcore.util.ActionValue;
+import org.openmrs.module.inventory.InventoryConstants;
 import org.openmrs.module.inventory.db.InventoryDAO;
 import org.openmrs.module.inventory.model.InventoryItem;
 import org.openmrs.module.inventory.model.InventoryItemCategory;
@@ -3644,6 +3648,25 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		        .add(Restrictions.eq("billDetail.id", id));
 		
 		return (InventoryStoreDrugAccountDetail) criteria.uniqueResult();
+	}
+	
+	// ghanshyam 15-june-2013 New Requirement #1636 User is able to see and dispense drugs in patient queue for issuing drugs, as ordered from dashboard
+	public List<PatientSearch> searchListOfPatient(Date date,
+			String searchKey, int page) throws DAOException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String startDate = sdf.format(date) + " 00:00:00";
+		String endDate = sdf.format(date) + " 23:59:59";
+		String hql = "from PatientSearch ps where ps.patientId IN (SELECT o.patient FROM OpdDrugOrder o where o.createdOn BETWEEN '"
+				+ startDate
+				+ "' AND '"
+				+ endDate
+				+ "' AND o.orderStatus=0 AND o.cancelStatus=0 GROUP BY o.patient) AND (ps.identifier LIKE '%"
+				+ searchKey + "%' OR ps.fullname LIKE '" + searchKey + "%')";
+		int firstResult = (page - 1) * InventoryConstants.PAGESIZE;
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.createQuery(hql);
+		List<PatientSearch> list = q.list();
+		return list;
 	}
 	
 }
