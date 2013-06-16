@@ -74,7 +74,7 @@
 	 */
 	function reset(){
 		jQuery("#date").val("${currentDate}");
-		jQuery("#phrase").val("");
+		jQuery("#searchKey").val("");
 	}
 </script> 
 
