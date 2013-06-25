@@ -23,8 +23,11 @@
 
 package org.openmrs.module.inventory.web.controller.patientqueuedrugorder;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.model.OpdDrugOrder;
 import org.openmrs.module.inventory.InventoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,16 +39,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/module/inventory/drugorder.form")
 public class DrugOrderController {
 	@RequestMapping(method = RequestMethod.GET)
-	public String main(Model model, @RequestParam("patientId") Integer patientId,
+	public String main(Model model,
+			@RequestParam("patientId") Integer patientId,
 			@RequestParam("encounterId") Integer encounterId) {
-		InventoryService inventoryService = Context.getService(InventoryService.class);
-		/*
-		List<BillableService> serviceOrderList = billingService.listOfServiceOrder(patientId,encounterId);
-		model.addAttribute("serviceOrderList", serviceOrderList);
-		model.addAttribute("serviceOrderSize", serviceOrderList.size());
+		InventoryService inventoryService = Context
+				.getService(InventoryService.class);
+
+		List<OpdDrugOrder> drugOrderList = inventoryService.listOfDrugOrder(
+				patientId, encounterId);
+		model.addAttribute("drugOrderList", drugOrderList);
+		model.addAttribute("drugOrderSize", drugOrderList.size());
 		model.addAttribute("patientId", patientId);
 		model.addAttribute("encounterId", encounterId);
-		*/
+
 		return "/module/inventory/queue/drugOrder";
 	}
 
@@ -58,106 +64,93 @@ public class DrugOrderController {
 			@RequestParam(value = "billType", required = false) String billType) {
 
 		/*
-		BillingService billingService = Context.getService(BillingService.class);
-		
-		PatientDashboardService patientDashboardService = Context.getService(PatientDashboardService.class);
-
-		PatientService patientService = Context.getPatientService();
-
-		// Get the BillCalculator to calculate the rate of bill item the patient has to pay
-		Patient patient = patientService.getPatient(patientId);
-		Map<String, String> attributes = PatientUtils.getAttributes(patient);
-
-		BillCalculatorForBDService calculator = new BillCalculatorForBDService();
-
-		PatientServiceBill bill = new PatientServiceBill();
-		bill.setCreatedDate(new Date());
-		bill.setPatient(patient);
-		bill.setCreator(Context.getAuthenticatedUser());
-
-		PatientServiceBillItem item;
-		String servicename;
-		int quantity = 0;
-		String selectservice;
-		BigDecimal unitPrice;
-		String reschedule;
-		String paybill;
-		BillableService service;
-		Money mUnitPrice;
-		Money itemAmount;
-		Money totalAmount = new Money(BigDecimal.ZERO);
-		BigDecimal rate;
-		String billTyp;
-		BigDecimal totalActualAmount = new BigDecimal(0);
-		OpdTestOrder opdTestOrder=new OpdTestOrder();
-	
-		for (Integer i = 1; i <= indCount; i++) {
-			selectservice = request.getParameter(i.toString() + "selectservice");
-			if("billed".equals(selectservice)){
-			servicename = request.getParameter(i.toString() + "service");
-			quantity = NumberUtils.createInteger(request.getParameter(i.toString()+ "servicequantity"));
-			reschedule = request.getParameter(i.toString() + "reschedule");
-			paybill = request.getParameter(i.toString() + "paybill");
-			unitPrice = NumberUtils.createBigDecimal(request.getParameter(i.toString() + "unitprice"));
-			//ConceptService conceptService = Context.getConceptService();
-			//Concept con = conceptService.getConcept("servicename");
-			service = billingService.getServiceByConceptName(servicename);
-
-			mUnitPrice = new Money(unitPrice);
-			itemAmount = mUnitPrice.times(quantity);
-			totalAmount = totalAmount.plus(itemAmount);
-
-			item = new PatientServiceBillItem();
-			item.setCreatedDate(new Date());
-			item.setName(servicename);
-			item.setPatientServiceBill(bill);
-			item.setQuantity(quantity);
-			item.setService(service);
-			item.setUnitPrice(unitPrice);
-
-			item.setAmount(itemAmount.getAmount());
-
-			// Get the ratio for each bill item
-			Map<String, Object> parameters = HospitalCoreUtils.buildParameters(
-					"patient", patient, "attributes", attributes, "billItem",
-					item, "request", request);
-			
-			if("pay".equals( paybill)){
-				billTyp = "paid";
-			}
-			else{
-				billTyp = "free";
-			
-			}
-			
-			rate = calculator.getRate(parameters, billTyp);
-			item.setActualAmount(item.getAmount().multiply(rate));
-			totalActualAmount = totalActualAmount.add(item.getActualAmount());
-			bill.addBillItem(item);
-	
-			opdTestOrder=billingService.getOpdTestOrder(encounterId,service.getConceptId());
-			opdTestOrder.setBillingStatus(1);
-			patientDashboardService.saveOrUpdateOpdOrder(opdTestOrder);
-			
-		  }
-			else{
-				servicename = request.getParameter(i.toString() + "service");
-				service = billingService.getServiceByConceptName(servicename);
-				opdTestOrder=billingService.getOpdTestOrder(encounterId,service.getConceptId());
-				opdTestOrder.setCancelStatus(1);
-				patientDashboardService.saveOrUpdateOpdOrder(opdTestOrder);
-			}
-		}
-
-		bill.setAmount(totalAmount.getAmount());
-		bill.setActualAmount(totalActualAmount);
-		bill.setFreeBill(2);
-		bill.setReceipt(billingService.createReceipt());
-		bill = billingService.savePatientServiceBill(bill);
-
-		return "redirect:/module/billing/patientServiceBillForBD.list?patientId=" + patientId + "&billId="
-        + bill.getPatientServiceBillId() + "&billType=" + billType;
-        */
+		 * BillingService billingService =
+		 * Context.getService(BillingService.class);
+		 * 
+		 * PatientDashboardService patientDashboardService =
+		 * Context.getService(PatientDashboardService.class);
+		 * 
+		 * PatientService patientService = Context.getPatientService();
+		 * 
+		 * // Get the BillCalculator to calculate the rate of bill item the
+		 * patient has to pay Patient patient =
+		 * patientService.getPatient(patientId); Map<String, String> attributes
+		 * = PatientUtils.getAttributes(patient);
+		 * 
+		 * BillCalculatorForBDService calculator = new
+		 * BillCalculatorForBDService();
+		 * 
+		 * PatientServiceBill bill = new PatientServiceBill();
+		 * bill.setCreatedDate(new Date()); bill.setPatient(patient);
+		 * bill.setCreator(Context.getAuthenticatedUser());
+		 * 
+		 * PatientServiceBillItem item; String servicename; int quantity = 0;
+		 * String selectservice; BigDecimal unitPrice; String reschedule; String
+		 * paybill; BillableService service; Money mUnitPrice; Money itemAmount;
+		 * Money totalAmount = new Money(BigDecimal.ZERO); BigDecimal rate;
+		 * String billTyp; BigDecimal totalActualAmount = new BigDecimal(0);
+		 * OpdTestOrder opdTestOrder=new OpdTestOrder();
+		 * 
+		 * for (Integer i = 1; i <= indCount; i++) { selectservice =
+		 * request.getParameter(i.toString() + "selectservice");
+		 * if("billed".equals(selectservice)){ servicename =
+		 * request.getParameter(i.toString() + "service"); quantity =
+		 * NumberUtils.createInteger(request.getParameter(i.toString()+
+		 * "servicequantity")); reschedule = request.getParameter(i.toString() +
+		 * "reschedule"); paybill = request.getParameter(i.toString() +
+		 * "paybill"); unitPrice =
+		 * NumberUtils.createBigDecimal(request.getParameter(i.toString() +
+		 * "unitprice")); //ConceptService conceptService =
+		 * Context.getConceptService(); //Concept con =
+		 * conceptService.getConcept("servicename"); service =
+		 * billingService.getServiceByConceptName(servicename);
+		 * 
+		 * mUnitPrice = new Money(unitPrice); itemAmount =
+		 * mUnitPrice.times(quantity); totalAmount =
+		 * totalAmount.plus(itemAmount);
+		 * 
+		 * item = new PatientServiceBillItem(); item.setCreatedDate(new Date());
+		 * item.setName(servicename); item.setPatientServiceBill(bill);
+		 * item.setQuantity(quantity); item.setService(service);
+		 * item.setUnitPrice(unitPrice);
+		 * 
+		 * item.setAmount(itemAmount.getAmount());
+		 * 
+		 * // Get the ratio for each bill item Map<String, Object> parameters =
+		 * HospitalCoreUtils.buildParameters( "patient", patient, "attributes",
+		 * attributes, "billItem", item, "request", request);
+		 * 
+		 * if("pay".equals( paybill)){ billTyp = "paid"; } else{ billTyp =
+		 * "free";
+		 * 
+		 * }
+		 * 
+		 * rate = calculator.getRate(parameters, billTyp);
+		 * item.setActualAmount(item.getAmount().multiply(rate));
+		 * totalActualAmount = totalActualAmount.add(item.getActualAmount());
+		 * bill.addBillItem(item);
+		 * 
+		 * opdTestOrder=billingService.getOpdTestOrder(encounterId,service.
+		 * getConceptId()); opdTestOrder.setBillingStatus(1);
+		 * patientDashboardService.saveOrUpdateOpdOrder(opdTestOrder);
+		 * 
+		 * } else{ servicename = request.getParameter(i.toString() + "service");
+		 * service = billingService.getServiceByConceptName(servicename);
+		 * opdTestOrder
+		 * =billingService.getOpdTestOrder(encounterId,service.getConceptId());
+		 * opdTestOrder.setCancelStatus(1);
+		 * patientDashboardService.saveOrUpdateOpdOrder(opdTestOrder); } }
+		 * 
+		 * bill.setAmount(totalAmount.getAmount());
+		 * bill.setActualAmount(totalActualAmount); bill.setFreeBill(2);
+		 * bill.setReceipt(billingService.createReceipt()); bill =
+		 * billingService.savePatientServiceBill(bill);
+		 * 
+		 * return
+		 * "redirect:/module/billing/patientServiceBillForBD.list?patientId=" +
+		 * patientId + "&billId=" + bill.getPatientServiceBillId() +
+		 * "&billType=" + billType;
+		 */
 		return null;
 	}
 }

@@ -4536,5 +4536,16 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		List<OpdDrugOrder> list = q.list();
 		return list;
 	}
+	
+	public List<OpdDrugOrder> listOfDrugOrder(Integer patientId,
+			Integer encounterId) throws DAOException {
+		String hql = "from OpdDrugOrder o where o.patient='" + patientId
+				+ "' AND o.encounter='" + encounterId
+				+ "' AND orderStatus=0 AND o.cancelStatus=0";
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.createQuery(hql);
+		List<OpdDrugOrder> list = q.list();
+		return list;
+	}
 
 }

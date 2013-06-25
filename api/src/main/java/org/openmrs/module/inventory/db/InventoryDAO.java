@@ -592,4 +592,6 @@ public interface InventoryDAO {
 	
 	public List<OpdDrugOrder> listOfOrder(Integer patientId,Date date) throws DAOException;
 	
+	public List<OpdDrugOrder> listOfDrugOrder(Integer patientId, Integer encounterId) throws DAOException;
+	
 }

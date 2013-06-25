@@ -19,7 +19,7 @@
  *  author: ghanshyam
  *  date: 15-june-2013
  *  issue no: #1636
---%> 
+--%>
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <%@ include file="../includes/js_css.jsp"%>
@@ -83,20 +83,16 @@ else{
 	<table id="myTable" class="tablesorter" class="thickbox">
 		<thead>
 			<tr>
-				<th style="text-align: center;">Sl No</th>
-				<th style="text-align: center;">Service</th>
-				<th style="text-align: center;">Quantity</th>
-				<th style="text-align: center;">Select</th>
-				<!-- 
-				<th style="text-align: center;">Reschedule</th>
-				 -->
-				<th style="text-align: center;">Pay</th>
-				<th style="text-align: right;">Unit Price</th>
-				<th style="text-align: right;">Q*Unit Price</th>
+				<th style="text-align: center;">S.No</th>
+				<th style="text-align: center;">Drug Name</th>
+				<th style="text-align: center;">Formulation</th>
+				<th style="text-align: center;">Frequency</th>
+				<th style="text-align: center;">Days</th>
+				<th style="text-align: center;">Action</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="sol" items="${serviceOrderList}" varStatus="index">
+			<c:forEach var="dol" items="${drugOrderList}" varStatus="index">
 				<c:choose>
 					<c:when test="${index.count mod 2 == 0}">
 						<c:set var="klass" value="odd" />
@@ -107,50 +103,16 @@ else{
 				</c:choose>
 				<tr class="${klass}" id="">
 					<td align="center">${index.count}</td>
-					<td align="center"><input type="text"
-						id="${index.count}service" name="${index.count}service"
-						value="${sol.name}" readOnly="true"></td>
-					<td align="center"><input type="text"
-						id="${index.count}servicequantity"
-						name="${index.count}servicequantity" size="7"
-						onkeyup="updatePrice(${index.count});" class="serquncalc" /></td>
-					<td align="center"><input type="checkbox"
-						id="${index.count}selectservice"
-						name="${index.count}selectservice" checked="checked"
-						value="billed" onclick="disable(${index.count});">
+					<td align="center">${dol.inventoryDrug.name}</td>
+					<td align="center">${dol.inventoryDrugFormulation.name}-${dol.inventoryDrugFormulation.dozage}</td>
+					<td align="center">${dol.frequency.name}</td>
+					<td align="center">${dol.noOfDays}</td>
+					<td align="center"><input type="button" onclick=""
+						value="Process">
 					</td>
-					<!-- 
-					<td align="center"><input type="text"
-						id="${index.count}reschedule" name="${index.count}reschedule"
-						size="12" readOnly="true">
-						 -->
-					</td>
-					<td align="center"><input type="checkbox"
-						id="${index.count}paybill" name="${index.count}paybill"
-						checked="checked" value="pay">
-					</td>
-					<td align="right"><input type="text"
-						id="${index.count}unitprice" name="${index.count}unitprice"
-						size="7" value="${sol.price}" readOnly="true"></td>
-					<td align="right"><input type="text"
-						id="${index.count}serviceprice" name="${index.count}serviceprice"
-						size="7" value="0" readOnly="true" class="serpricalc"></td>
 				</tr>
 			</c:forEach>
 		</tbody>
-		<tr>
-			<td colspan="6" align="right">Total</td>
-			<td align="right"><input type="text" id="total" name="total"
-				size="7" value="0" readOnly="true" /></td>
-		</tr>
 	</table>
-	<tr>
-		<td><input type="submit" id="savebill" name="savebill" value="Save bill">
-		</td>
-		<td><input type="button"
-			onclick="javascript:window.location.href='patientQueueDrugOrder.form?'"
-			value="Cancel">
-		</td>
-	</tr>
 </form>
 <%@ include file="/WEB-INF/template/footer.jsp"%>
