@@ -148,7 +148,7 @@ else{
 		<td><input type="submit" id="savebill" name="savebill" value="Save bill">
 		</td>
 		<td><input type="button"
-			onclick="javascript:window.location.href='billingqueue.form?'"
+			onclick="javascript:window.location.href='patientQueueDrugOrder.form?'"
 			value="Cancel">
 		</td>
 	</tr>

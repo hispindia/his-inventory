@@ -4492,9 +4492,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		return (InventoryStoreDrugAccountDetail) criteria.uniqueResult();
 	}
 
-	// ghanshyam 15-june-2013 New Requirement #1636 User is able to see and
-	// dispense drugs in patient queue for issuing drugs, as ordered from
-	// dashboard
+	// ghanshyam 15-june-2013 New Requirement #1636 User is able to see and dispense drugs in patient queue for issuing drugs, as ordered from dashboard
 	public List<PatientSearch> searchListOfPatient(Date date, String searchKey,
 			int page) throws DAOException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -4513,7 +4511,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		return list;
 	}
 
-	public List<OpdDrugOrder> listOfOrder(Integer patientId)
+	public List<OpdDrugOrder> listOfOrder(Integer patientId, Date date)
 			throws DAOException {
 		/*
 		 * Criteria criteria =
@@ -4523,8 +4521,15 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		 * criteria.add(Restrictions.eq("cancelStatus", 0)); return
 		 * criteria.list();
 		 */
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String startDate = sdf.format(date) + " 00:00:00";
+		String endDate = sdf.format(date) + " 23:59:59";
 		String hql = "from OpdDrugOrder o where o.patient='"
 				+ patientId
+				+ "' AND o.createdOn BETWEEN '"
+				+ startDate
+				+ "' AND '"
+				+ endDate
 				+ "' AND o.orderStatus=0 AND o.cancelStatus=0 GROUP BY encounter";
 		Session session = sessionFactory.getCurrentSession();
 		Query q = session.createQuery(hql);

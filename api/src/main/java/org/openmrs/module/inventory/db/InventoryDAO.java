@@ -590,6 +590,6 @@ public interface InventoryDAO {
 	//ghanshyam 15-june-2013 New Requirement #1636 User is able to see and dispense drugs in patient queue for issuing drugs, as ordered from dashboard
 	public List<PatientSearch> searchListOfPatient(Date date, String searchKey,int page) throws DAOException;
 	
-	public List<OpdDrugOrder> listOfOrder(Integer patientId) throws DAOException;
+	public List<OpdDrugOrder> listOfOrder(Integer patientId,Date date) throws DAOException;
 	
 }

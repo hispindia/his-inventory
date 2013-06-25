@@ -23,6 +23,9 @@
 
 package org.openmrs.module.inventory.web.controller.patientqueuedrugorder;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.openmrs.Patient;
@@ -40,12 +43,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/module/inventory/listoforder.form")
 public class ListOfDrugOrderController {
 	@RequestMapping(method = RequestMethod.GET)
-	public String main(Model model, @RequestParam("patientId") Integer patientId) {
+	public String main(Model model, @RequestParam("patientId") Integer patientId,
+			@RequestParam(value = "date", required = false) String dateStr) {
 		InventoryService inventoryService = Context
 				.getService(InventoryService.class);
 		PatientService patientService = Context.getPatientService();
 		Patient patient = patientService.getPatient(patientId);
-		List<OpdDrugOrder> listOfOrders = inventoryService.listOfOrder(patientId);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = null;
+		try {
+			date = sdf.parse(dateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		List<OpdDrugOrder> listOfOrders = inventoryService.listOfOrder(patientId,date);
 		model.addAttribute("listOfOrders", listOfOrders);
 		//model.addAttribute("serviceOrderSize", serviceOrderList.size());
 		model.addAttribute("patientId", patientId);

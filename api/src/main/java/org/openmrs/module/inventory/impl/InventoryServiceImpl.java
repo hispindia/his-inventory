@@ -968,8 +968,8 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 		return dao.searchListOfPatient(date,searchKey,page);
 	}
 	
-	public List<OpdDrugOrder> listOfOrder(Integer patientId) throws APIException {
-		return dao.listOfOrder(patientId);
+	public List<OpdDrugOrder> listOfOrder(Integer patientId,Date date) throws APIException {
+		return dao.listOfOrder(patientId,date);
 	}
 	
 }

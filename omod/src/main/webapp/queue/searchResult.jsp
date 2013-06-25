@@ -37,8 +37,9 @@
 	PATIENTSEARCHRESULT = {
 		oldBackgroundColor: "",
 		
-		visit: function(patientId){		
-			window.location.href = openmrsContextPath + "/module/inventory/listoforder.form?patientId=" + patientId;
+		visit: function(patientId,date){
+		    var dat = date.toString(); 			
+			window.location.href = openmrsContextPath + "/module/inventory/listoforder.form?patientId=" + patientId + "&date=" + dat;
 		}
 	};
 
@@ -90,7 +91,7 @@
 			<c:forEach items="${patientList}" var="patient" varStatus="varStatus">
 				<tr
 					class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } patientSearchRow'
-					onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});">
+					onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${date}');">
 					<td>
 					<c:choose>
 					<c:when test="${pagingUtil.currentPage != 1}">

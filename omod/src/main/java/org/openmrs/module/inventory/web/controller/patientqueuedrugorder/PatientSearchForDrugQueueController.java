@@ -64,6 +64,7 @@ public class PatientSearchForDrugQueueController {
 				currentPage, total);
 		model.addAttribute("pagingUtil", pagingUtil);
 		model.addAttribute("patientList", patientSearchResult);
+		model.addAttribute("date", dateStr);
 		return "/module/inventory/queue/searchResult";
 	}
 }
