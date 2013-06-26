@@ -24,51 +24,24 @@
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <%@ include file="../includes/js_css.jsp"%>
 
-<script type="text/javascript">
-jQuery(document).ready(function(){
-$('.serquncalc').keyup(function() {
-    var result = 0;
-    $('#total').attr('value', function() {
-        $('.serpricalc').each(function() {
-            if ($(this).val() !== '') {
-                result += parseInt($(this).val());
-            }
-        });
-        return result;
-    });
-});
-var sos=${serviceOrderSize};
-if(sos==0){
-jQuery("#savebill").hide(); 
-  }
-
-});
-</script>
-
-<script type="text/javascript">
-function updatePrice(incon){
-var con=incon.toString();
-var serqunid=con.concat("servicequantity"); 
-var serpriid=con.concat("serviceprice");
-var unipriid=con.concat("unitprice");  
-//alert(document.getElementById(serqunid).value);
-serqun=jQuery("#"+serqunid).val();
-unpri=jQuery("#"+unipriid).val();
-jQuery("#"+serpriid).val(serqun*unpri);
-}
-</script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/moduleResources/inventory/scripts/jquery/jquery-ui-1.8.2.custom.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/moduleResources/inventory/scripts/jquery/ui.core.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/moduleResources/inventory/scripts/jquery/ui.tabs.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/moduleResources/inventory/scripts/common.js"></script>
+<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/moduleResources/inventory/scripts/jquery/css/start/ui.tabs.css" />
+<script type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/moduleResources/inventory/scripts/jquery/css/start/jquery-ui-1.8.2.custom.css"></script>
+<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/moduleResources/inventory/styles/drug.process.css" />
 
 <script type="text/javascript">
 function disable(incon){
-var icon=incon.toString();
-if(jQuery("#"+icon+"selectservice").attr('checked')) {
-  jQuery("#"+icon+"servicequantity").removeAttr("disabled");
-  jQuery("#"+icon+"paybill").removeAttr("disabled");
-} 
-else{
- jQuery("#"+icon+"servicequantity").attr("disabled", "disabled"); 
- jQuery("#"+icon+"paybill").attr("disabled", "disabled"); 
-}
+
 }
 </script>
 
@@ -115,4 +88,42 @@ else{
 		</tbody>
 	</table>
 </form>
+
+<!-- Right side div for drug process -->
+<div id="billDiv">
+	<form method="POST" id="billForm" onsubmit="return false">
+		<div>
+			<input type="button" onclick="submitBillForm()" id="subm" name="subm"
+				value="<spring:message code='billing.bill.save'/>" /> <input
+				type="button" value="<spring:message code='general.cancel'/>"
+				onclick="javascript:window.location.href='patientServiceBill.list?patientId=${patientId}'" />
+			<!-- 
+		    <select name="enctype"  tabindex="20" >
+                <c:forEach items="${encounterTypes}" var="enct">
+                    <option value="${enct.encounterTypeId}">${enct.name}</option>
+                </c:forEach>
+            </select>
+		 -->
+			<input type="button" id="toogleBillBtn" value="-"
+				onclick="toogleBill(this);" class="min" style="float: right" />
+		</div>
+		<div id="total"
+			style="background: #f6f6f6; border: 1px #808080 solid; padding: 0.3em; margin: 0.3em 0em; width: 100%;">
+			<input type='text' size='25' value='Total:' />&nbsp; <input
+				type='text' size='3' value='' readonly="readonly" />&nbsp; <input
+				type='text' id='totalprice' name='totalprice' size='5' value='0'
+				readonly="readonly" />&nbsp; <b>
+		</div>
+
+		<div id="extra" class="cancelDraggable"
+			style="background: #f6f6f6; border: 1px #808080 solid; padding: 0.3em; margin: 0.3em 0em; width: 100%;">
+			<input type='text' size='25' value='Service Name' readonly='readonly' />&nbsp;
+			<input type='text' size="3" value='Qty' readonly="readonly" />&nbsp;
+			<input type='text' size='5' value='Price' readonly="readonly" />&nbsp;</b>
+			<hr />
+		</div>
+
+
+	</form>
+</div>
 <%@ include file="/WEB-INF/template/footer.jsp"%>
