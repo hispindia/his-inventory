@@ -40,8 +40,80 @@
 	href="${pageContext.request.contextPath}/moduleResources/inventory/styles/drug.process.css" />
 
 <script type="text/javascript">
-function disable(incon){
+// get context path in order to build controller url
+	function getContextPath(){		
+		pn = location.pathname;
+		len = pn.indexOf("/", 1);				
+		cp = pn.substring(0, len);
+		return cp;
+	}
+</script>
 
+<script type="text/javascript">
+function process(drugId,formulationId){
+jQuery.ajax({
+			type : "GET",
+			url : getContextPath() + "/module/inventory/processDrugOrder.form",
+			data : ({
+				drugId			: drugId,
+				formulationId		: formulationId
+			}),
+			success : function(data) {
+				jQuery("#processOrder").html(data);	
+				jQuery("#processOrder").show();
+			},
+			
+		});
+}
+
+</script>
+
+
+<script type="text/javascript">
+function issueDrugOrder() {
+   var drugName=document.getElementById('drugName').value;
+   var formulation=document.getElementById('formulation').value;
+   var formulationId=document.getElementById('formulationId').value;
+   var quantity=document.getElementById('quantity').value;
+   var avaiableId=document.getElementById('avaiableId').value;
+   var deleteString = 'deleteInput(\"'+drugName+'\")';
+   var htmlText =  "<div id='com_"+drugName+"_div'>"
+	       	 +"<input id='"+drugName+"_name'  name='drugOrder' type='text' size='20' value='"+drugName+"'  readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+drugName+"_formulationName'  name='"+drugName+"_formulatioNname' type='text' size='11' value='"+formulation+"'  readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+drugName+"_quantity'  name='"+drugName+"_quantity' type='text' size='3' value='"+quantity+"'  readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+drugName+"_formulationId'  name='"+drugName+"_formulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
+	       	 +"<input id='"+drugName+"_avaiableId'  name='"+drugName+"_avaiableId' type='hidden' value='"+avaiableId+"'/>&nbsp;"
+	       	 +"<a style='color:red' href='#' onclick='"+deleteString+"' >[X]</a>"	
+	       	 +"</div>";
+	       	
+   var newElement = document.createElement('div');
+   newElement.setAttribute("id", drugName);   
+   newElement.innerHTML = htmlText;
+   var fieldsArea = document.getElementById('headerValue');
+   fieldsArea.appendChild(newElement);
+}
+
+function deleteInput(drugName) {
+   var parentDiv = 'headerValue';
+   var child = document.getElementById(drugName);
+   var parent = document.getElementById(parentDiv);
+   parent.removeChild(child); 
+}
+
+</script>
+
+<script type="text/javascript">
+function cancel() {
+jQuery("#processOrder").remove();
+}
+</script>
+
+<script type="text/javascript">
+function finishDrugOrder() {
+if(confirm("Are you sure?")){
+return true;
+}
+return false;
 }
 </script>
 
@@ -80,7 +152,8 @@ function disable(incon){
 					<td align="center">${dol.inventoryDrugFormulation.name}-${dol.inventoryDrugFormulation.dozage}</td>
 					<td align="center">${dol.frequency.name}</td>
 					<td align="center">${dol.noOfDays}</td>
-					<td align="center"><input type="button" onclick=""
+					<td align="center"><input type="button"
+						onclick="process(${dol.inventoryDrug.id},${dol.inventoryDrugFormulation.id});"
 						value="Process">
 					</td>
 				</tr>
@@ -89,14 +162,18 @@ function disable(incon){
 	</table>
 </form>
 
+<div id="processOrder"></div>
+
 <!-- Right side div for drug process -->
 <div id="billDiv">
-	<form method="POST" id="billForm" onsubmit="return false">
+	<form id="finishDrugOrderForm"
+		action="drugorder.form?patientId=${patientId}&encounterId=${encounterId}"
+		method="POST" onsubmit="javascript:return finishDrugOrder();">
 		<div>
-			<input type="button" onclick="submitBillForm()" id="subm" name="subm"
-				value="<spring:message code='billing.bill.save'/>" /> <input
+			<input type="submit" id="subm" name="subm"
+				value="<spring:message code='inventory.drug.process.finish'/>" /> <input
 				type="button" value="<spring:message code='general.cancel'/>"
-				onclick="javascript:window.location.href='patientServiceBill.list?patientId=${patientId}'" />
+				onclick="javascript:window.location.href='patientQueueDrugOrder.form'" />
 			<!-- 
 		    <select name="enctype"  tabindex="20" >
                 <c:forEach items="${encounterTypes}" var="enct">
@@ -107,19 +184,12 @@ function disable(incon){
 			<input type="button" id="toogleBillBtn" value="-"
 				onclick="toogleBill(this);" class="min" style="float: right" />
 		</div>
-		<div id="total"
-			style="background: #f6f6f6; border: 1px #808080 solid; padding: 0.3em; margin: 0.3em 0em; width: 100%;">
-			<input type='text' size='25' value='Total:' />&nbsp; <input
-				type='text' size='3' value='' readonly="readonly" />&nbsp; <input
-				type='text' id='totalprice' name='totalprice' size='5' value='0'
-				readonly="readonly" />&nbsp; <b>
-		</div>
 
-		<div id="extra" class="cancelDraggable"
+		<div id="headerValue" class="cancelDraggable"
 			style="background: #f6f6f6; border: 1px #808080 solid; padding: 0.3em; margin: 0.3em 0em; width: 100%;">
-			<input type='text' size='25' value='Service Name' readonly='readonly' />&nbsp;
-			<input type='text' size="3" value='Qty' readonly="readonly" />&nbsp;
-			<input type='text' size='5' value='Price' readonly="readonly" />&nbsp;</b>
+			<input type='text' size='20' value='Drug Name' readonly='readonly' />&nbsp;
+			<input type='text' size="11" value='Formulation' readonly="readonly" />&nbsp;
+			<input type='text' size="3" value='Qty' readonly="readonly" />&nbsp;</b>
 			<hr />
 		</div>
 

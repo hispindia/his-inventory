@@ -976,4 +976,8 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 		return dao.listOfDrugOrder(patientId,encounterId);
 	}
 	
+	public OpdDrugOrder getOpdDrugOrder(Integer patientId,Integer encounterId,Integer inventoryDrugId,Integer formulationId) throws APIException {
+		return dao.getOpdDrugOrder(patientId,encounterId,inventoryDrugId,formulationId);
+	}
+	
 }

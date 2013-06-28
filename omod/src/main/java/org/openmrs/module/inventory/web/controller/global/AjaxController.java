@@ -961,4 +961,79 @@ public class AjaxController {
 		
 		return "redirect:/module/inventory/main.form";
 	}
+	
+	//ghanshyam 15-june-2013 New Requirement #1636 User is able to see and dispense drugs in patient queue for issuing drugs, as ordered from dashboard
+	@RequestMapping("/module/inventory/processDrugOrder.form")
+	public String listReceiptDrugAvailablee(
+			@RequestParam(value = "drugId", required = false) Integer drugId,
+			@RequestParam(value = "formulationId", required = false) Integer formulationId,
+			Model model) {
+		InventoryService inventoryService = (InventoryService) Context
+				.getService(InventoryService.class);
+		InventoryDrug drug = inventoryService.getDrugById(drugId);
+		InventoryStore store = inventoryService
+				.getStoreByCollectionRole(new ArrayList<Role>(Context
+						.getAuthenticatedUser().getAllRoles()));
+		if (store != null && drug != null && formulationId != null) {
+			List<InventoryStoreDrugTransactionDetail> listReceiptDrug = inventoryService
+					.listStoreDrugTransactionDetail(store.getId(),
+							drug.getId(), formulationId, true);
+			// check that drug is issued before
+			int userId = Context.getAuthenticatedUser().getId();
+
+			String fowardParam = "issueDrugAccountDetail_" + userId;
+			String fowardParamDrug = "issueDrugDetail_" + userId;
+			List<InventoryStoreDrugPatientDetail> listDrug = (List<InventoryStoreDrugPatientDetail>) StoreSingleton
+					.getInstance().getHash().get(fowardParamDrug);
+			List<InventoryStoreDrugAccountDetail> listDrugAccount = (List<InventoryStoreDrugAccountDetail>) StoreSingleton
+					.getInstance().getHash().get(fowardParam);
+			List<InventoryStoreDrugTransactionDetail> listReceiptDrugReturn = new ArrayList<InventoryStoreDrugTransactionDetail>();
+			boolean check = false;
+			if (CollectionUtils.isNotEmpty(listDrug)) {
+				if (CollectionUtils.isNotEmpty(listReceiptDrug)) {
+					for (InventoryStoreDrugTransactionDetail drugDetail : listReceiptDrug) {
+						for (InventoryStoreDrugPatientDetail drugPatient : listDrug) {
+							if (drugDetail.getId().equals(
+									drugPatient.getTransactionDetail().getId())) {
+								drugDetail.setCurrentQuantity(drugDetail
+										.getCurrentQuantity()
+										- drugPatient.getQuantity());
+							}
+
+						}
+						if (drugDetail.getCurrentQuantity() > 0) {
+							listReceiptDrugReturn.add(drugDetail);
+							check = true;
+						}
+					}
+				}
+			}
+
+			if (CollectionUtils.isNotEmpty(listDrugAccount)) {
+				if (CollectionUtils.isNotEmpty(listReceiptDrug)) {
+					for (InventoryStoreDrugTransactionDetail drugDetail : listReceiptDrug) {
+						for (InventoryStoreDrugAccountDetail drugAccount : listDrugAccount) {
+							if (drugDetail.getId().equals(
+									drugAccount.getTransactionDetail().getId())) {
+								drugDetail.setCurrentQuantity(drugDetail
+										.getCurrentQuantity()
+										- drugAccount.getQuantity());
+							}
+						}
+						if (drugDetail.getCurrentQuantity() > 0 && !check) {
+							listReceiptDrugReturn.add(drugDetail);
+						}
+					}
+				}
+			}
+			if (CollectionUtils.isEmpty(listReceiptDrugReturn)
+					&& CollectionUtils.isNotEmpty(listReceiptDrug)) {
+				listReceiptDrugReturn.addAll(listReceiptDrug);
+			}
+
+			model.addAttribute("listReceiptDrug", listReceiptDrugReturn);
+		}
+
+		return "/module/inventory/queue/processDrugOrder";
+	}
 }

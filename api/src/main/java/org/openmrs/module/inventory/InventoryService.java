@@ -633,4 +633,6 @@ public interface InventoryService extends OpenmrsService {
 	
 	public List<OpdDrugOrder> listOfDrugOrder(Integer patientId, Integer encounterId) throws APIException;
 	
+	public OpdDrugOrder getOpdDrugOrder(Integer patientId,Integer encounterId,Integer inventoryDrugId,Integer formulationId) throws APIException;
+	
 }

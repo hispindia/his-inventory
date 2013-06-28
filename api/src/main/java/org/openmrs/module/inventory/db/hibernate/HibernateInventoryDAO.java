@@ -4547,5 +4547,16 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		List<OpdDrugOrder> list = q.list();
 		return list;
 	}
+	
+	public OpdDrugOrder getOpdDrugOrder(Integer patientId,Integer encounterId,Integer inventoryDrugId,Integer formulationId) throws DAOException {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(
+				OpdDrugOrder.class);
+		criteria.add(Restrictions.eq("patient.id", patientId));
+		criteria.add(Restrictions.eq("encounter.encounterId", encounterId));
+		criteria.add(Restrictions.eq("inventoryDrug.id", inventoryDrugId));
+		criteria.add(Restrictions.eq("inventoryDrugFormulation.id", formulationId));
+
+		return (OpdDrugOrder) criteria.uniqueResult();
+	}
 
 }
