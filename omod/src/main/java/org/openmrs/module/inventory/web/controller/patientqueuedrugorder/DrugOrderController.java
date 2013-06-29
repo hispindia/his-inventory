@@ -32,6 +32,7 @@ import org.openmrs.Patient;
 import org.openmrs.Role;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.InventoryCommonService;
 import org.openmrs.module.hospitalcore.PatientDashboardService;
 import org.openmrs.module.hospitalcore.model.InventoryDrug;
@@ -42,6 +43,7 @@ import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatientDetail;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransaction;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransactionDetail;
 import org.openmrs.module.hospitalcore.model.OpdDrugOrder;
+import org.openmrs.module.hospitalcore.model.PatientSearch;
 import org.openmrs.module.hospitalcore.util.ActionValue;
 import org.openmrs.module.inventory.InventoryService;
 import org.openmrs.module.inventory.util.DateUtils;
@@ -57,7 +59,8 @@ public class DrugOrderController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String main(Model model,
 			@RequestParam("patientId") Integer patientId,
-			@RequestParam("encounterId") Integer encounterId) {
+			@RequestParam("encounterId") Integer encounterId,
+			@RequestParam(value = "date", required = false) String dateStr) {
 		InventoryService inventoryService = Context
 				.getService(InventoryService.class);
 
@@ -67,6 +70,10 @@ public class DrugOrderController {
 		model.addAttribute("drugOrderSize", drugOrderList.size());
 		model.addAttribute("patientId", patientId);
 		model.addAttribute("encounterId", encounterId);
+		HospitalCoreService hospitalCoreService = Context.getService(HospitalCoreService.class);
+		PatientSearch patientSearch = hospitalCoreService.getPatientByPatientId(patientId);
+		model.addAttribute("patientSearch", patientSearch);
+		model.addAttribute("date", dateStr);
 
 		return "/module/inventory/queue/drugOrder";
 	}

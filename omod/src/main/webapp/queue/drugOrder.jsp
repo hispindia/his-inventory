@@ -104,7 +104,7 @@ function deleteInput(drugName) {
 
 <script type="text/javascript">
 function cancel() {
-jQuery("#processOrder").remove();
+jQuery("#processOrder").hide();
 }
 </script>
 
@@ -121,6 +121,27 @@ return false;
 	<b class="boxHeader">List of drug</b>
 </div>
 <br />
+
+<div id="patientDetails">
+	<!--
+<div id="patientDetails" style="margin: 10px auto; width: 981px;">
+-->
+	<table>
+		<tr>
+			<td>Patient ID :</td>
+			<td>${patientSearch.identifier}</td>
+		</tr>
+		<tr>
+			<td>Name of the patient:</td>
+			<td>${patientSearch.givenName}&nbsp;&nbsp;${patientSearch.middleName}&nbsp;&nbsp;
+				${patientSearch.familyName}</td>
+		</tr>
+		<tr>
+			<td>Date :</td>
+			<td>${date}</td>
+		</tr>
+	</table>
+</div>
 
 <form id="orderBillingForm"
 	action="drugorder.form?patientId=${patientId}&encounterId=${encounterId}&indCount=${serviceOrderSize}&billType=mixed"

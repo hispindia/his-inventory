@@ -31,7 +31,9 @@ import java.util.List;
 import org.openmrs.Patient;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.model.OpdDrugOrder;
+import org.openmrs.module.hospitalcore.model.PatientSearch;
 import org.openmrs.module.inventory.InventoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,9 +59,13 @@ public class ListOfDrugOrderController {
 			e.printStackTrace();
 		}
 		List<OpdDrugOrder> listOfOrders = inventoryService.listOfOrder(patientId,date);
+		HospitalCoreService hospitalCoreService = Context.getService(HospitalCoreService.class);
+		PatientSearch patientSearch = hospitalCoreService.getPatientByPatientId(patientId);
+		model.addAttribute("patientSearch", patientSearch);
 		model.addAttribute("listOfOrders", listOfOrders);
 		//model.addAttribute("serviceOrderSize", serviceOrderList.size());
 		model.addAttribute("patientId", patientId);
+		model.addAttribute("date", dateStr);
 		return "/module/inventory/queue/listOfOrder";
 	}
 }

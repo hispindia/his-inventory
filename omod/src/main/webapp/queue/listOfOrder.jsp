@@ -27,6 +27,25 @@
 <div style="max-height: 50px; max-width: 1800px;">
 	<b class="boxHeader">List of Order</b>
 </div>
+
+<div>	
+	<table>
+		<tr>
+			<td>Patient ID :</td>
+			<td>${patientSearch.identifier}</td>
+		</tr>
+		<tr>
+			<td>Name of the patient:</td>
+			<td>${patientSearch.givenName}&nbsp;&nbsp;${patientSearch.middleName}&nbsp;&nbsp;
+				${patientSearch.familyName}</td>
+		</tr>
+		<tr>
+			<td>Date :</td>
+			<td>${date}</td>
+		</tr>
+	</table>
+</div>
+
 <br />
 
 	<table id="myTable" class="tablesorter" class="thickbox">
@@ -49,7 +68,7 @@
 			</c:choose>
 			<tr class="${klass}">
 				<td>${index.count}</td>
-				<td><a href="drugorder.form?patientId=${patientId}&encounterId=${listOfOrder.encounter.encounterId}">${listOfOrder.encounter.encounterId}</a>
+				<td><a href="drugorder.form?patientId=${patientId}&encounterId=${listOfOrder.encounter.encounterId}&date=${date}">${listOfOrder.encounter.encounterId}</a>
 				</td>
 				<td><openmrs:formatDate date="${listOfOrder.createdOn}" /></td>
 			</tr>
