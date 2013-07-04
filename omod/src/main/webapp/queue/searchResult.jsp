@@ -21,6 +21,7 @@
  *  issue no: #1636
 --%>
 <%@ include file="/WEB-INF/template/include.jsp"%>
+<openmrs:require privilege="Drug order queue" otherwise="/login.htm" redirect="/module/inventory/main.form" />
 
 <script type="text/javascript">
 // get context path in order to build controller url

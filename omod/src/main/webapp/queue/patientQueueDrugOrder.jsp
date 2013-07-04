@@ -21,10 +21,8 @@
  *  issue no: #1636
 --%> 
 <%@ include file="/WEB-INF/template/include.jsp" %>
-
-<openmrs:require privilege="Add/Edit substore" otherwise="/login.htm" redirect="/module/inventory/main.form" />
-<spring:message var="pageTitle" code="inventory.viewStockBalance.manage" scope="page"/>
 <%@ include file="/WEB-INF/template/header.jsp" %>
+<openmrs:require privilege="Drug order queue" otherwise="/login.htm" redirect="/module/inventory/main.form" />
 <%@ include file="../substore/nav.jsp" %>
 <h2><spring:message code="inventory.substore.patientQueueForDrugOrders"/></h2>	
 <br />

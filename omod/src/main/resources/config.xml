@@ -190,6 +190,12 @@
 		<description>Allows user to view substore</description>
 	</privilege>
 	
+	<!-- ghanshyam 15-june-2013 New Requirement #1636 User is able to see and dispense drugs in patient queue for issuing drugs, as ordered from dashboard -->
+	<privilege>
+		<name>Drug order queue</name>
+		<description>Allows user to process drug order queue</description>
+	</privilege>
+	
 	<!-- End itemUnit -->
 	
 
