@@ -1032,6 +1032,14 @@ public class AjaxController {
 			}
 
 			model.addAttribute("listReceiptDrug", listReceiptDrugReturn);
+			
+			//ghanshyam,4-july-2013, issue no # 1984, User can issue drugs only from the first indent
+			String listOfDrugQuantity="";
+			for(InventoryStoreDrugTransactionDetail lrdr:listReceiptDrugReturn){
+				listOfDrugQuantity=listOfDrugQuantity+lrdr.getId().toString()+".";
+			}
+
+			model.addAttribute("listOfDrugQuantity", listOfDrugQuantity);
 		}
 
 		return "/module/inventory/queue/processDrugOrder";

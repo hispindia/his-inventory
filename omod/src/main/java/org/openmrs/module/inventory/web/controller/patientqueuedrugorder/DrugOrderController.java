@@ -82,27 +82,27 @@ public class DrugOrderController {
 	public String onSubmit(HttpServletRequest request,
 			@RequestParam("patientId") Integer patientId,
 			@RequestParam("encounterId") Integer encounterId,
-			@RequestParam(value="drugOrder",required=false) String[] drugOrder) throws Exception{
+			//ghanshyam,4-july-2013, issue no # 1984, User can issue drugs only from the first indent
+			@RequestParam(value="avaiableId",required=false) String[] avaiableId) throws Exception{
 
 		PatientService  patientService = Context.getPatientService();
 		Patient patient = patientService.getPatient(patientId);
 		Integer formulationId;
 		Integer quantity;
-		Integer avaiableId;
-		if(drugOrder!=null){
-		for (String drugName : drugOrder) {
+		Integer avlId;
+		if(avaiableId!=null){
+		for (String avId : avaiableId) {
 			InventoryCommonService inventoryCommonService = Context.getService(InventoryCommonService.class);
 			InventoryService inventoryService = Context.getService(InventoryService.class);
-			InventoryDrug inventoryDrug = inventoryCommonService.getDrugByName(drugName);
-			if(inventoryDrug!=null){
-			formulationId = Integer.parseInt(request.getParameter(drugName
-					+ "_formulationId"));
-			quantity = Integer.parseInt(request.getParameter(drugName
-					+ "_quantity"));
-			avaiableId = Integer.parseInt(request.getParameter(drugName
-					+ "_avaiableId"));
+		
+			formulationId = Integer.parseInt(request.getParameter(avId
+					+ "_fFormulationId"));
+			quantity = Integer.parseInt(request.getParameter(avId
+					+ "_fQuantity"));
+			
+			if(quantity!=0){
+			avlId = Integer.parseInt(avId);
 			InventoryDrugFormulation inventoryDrugFormulation = inventoryCommonService.getDrugFormulationById(formulationId);
-			OpdDrugOrder opdDrugOrder = inventoryService.getOpdDrugOrder(patientId,encounterId,inventoryDrug.getId(),formulationId);
 			
 			InventoryStore store =  inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
 			
@@ -128,12 +128,10 @@ public class DrugOrderController {
 			 inventoryStoreDrugPatient.setCreatedBy(Context.getAuthenticatedUser().getGivenName());
 			 inventoryStoreDrugPatient.setCreatedOn(date);
 			 
-			 //inventoryStoreDrugPatientDetail.set
-			 
 			 inventoryStoreDrugPatient = inventoryService.saveStoreDrugPatient(inventoryStoreDrugPatient);
 			 
-			 InventoryStoreDrugTransactionDetail inventoryStoreDrugTransactionDetail = inventoryService.getStoreDrugTransactionDetailById(avaiableId);
-			 Integer totalQuantity = inventoryService.sumCurrentQuantityDrugOfStore(store.getId(),inventoryDrug.getId(), inventoryDrugFormulation.getId());
+			 InventoryStoreDrugTransactionDetail inventoryStoreDrugTransactionDetail = inventoryService.getStoreDrugTransactionDetailById(avlId);
+			 Integer totalQuantity = inventoryService.sumCurrentQuantityDrugOfStore(store.getId(),inventoryStoreDrugTransactionDetail.getDrug().getId(), inventoryDrugFormulation.getId());
 				int t = totalQuantity -quantity;
 				InventoryStoreDrugTransactionDetail drugTransactionDetail = inventoryService.getStoreDrugTransactionDetailById(inventoryStoreDrugTransactionDetail.getId());
 				inventoryStoreDrugTransactionDetail.setCurrentQuantity(drugTransactionDetail.getCurrentQuantity() - quantity);
@@ -149,7 +147,7 @@ public class DrugOrderController {
 				transDetail.setQuantity(0);
 				transDetail.setVAT(inventoryStoreDrugTransactionDetail.getVAT());
 				transDetail.setUnitPrice(inventoryStoreDrugTransactionDetail.getUnitPrice());
-				transDetail.setDrug(inventoryDrug);
+				transDetail.setDrug(inventoryStoreDrugTransactionDetail.getDrug());
 				transDetail.setFormulation(inventoryDrugFormulation);
 				transDetail.setBatchNo(inventoryStoreDrugTransactionDetail.getBatchNo());
 				transDetail.setCompanyName(inventoryStoreDrugTransactionDetail.getCompanyName());
@@ -170,12 +168,15 @@ public class DrugOrderController {
 				pDetail.setTransactionDetail(transDetail);
 				//save issue to patient detail
 				inventoryService.saveStoreDrugPatientDetail(pDetail);
+				
+				OpdDrugOrder opdDrugOrder = inventoryService.getOpdDrugOrder(patientId,encounterId,inventoryStoreDrugTransactionDetail.getDrug().getId(),formulationId);
 				PatientDashboardService patientDashboardService = Context.getService(PatientDashboardService.class);
 				opdDrugOrder.setOrderStatus(1);
 				patientDashboardService.saveOrUpdateOpdDrugOrder(opdDrugOrder);
-			
-			}
+		}
+				
 		  }
+		  
 		}
 		return "redirect:/module/inventory/patientQueueDrugOrder.form";
 	}

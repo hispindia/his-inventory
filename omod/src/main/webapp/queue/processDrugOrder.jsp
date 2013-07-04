@@ -48,21 +48,22 @@
 						<td title="${avaiable.companyName }">${avaiable.companyNameShort}</td>
 						<td>${avaiable.batchNo }</td>
 						<td>${avaiable.currentQuantity}</td>
-						<td><em>*</em><input type="text" id="quantity"
-							${!varStatus.first ? 'disabled' : ''} onchange="INVENTORY.checkValueExt(this, '${avaiable.currentQuantity}');"
-							name="quantity" class="required digits" size="5" />
+						<!-- ghanshyam,4-july-2013, issue no # 1984, User can issue drugs only from the first indent -->
+						<td><em>*</em><input type="text" id="${avaiable.id }_quantity"
+							${!varStatus.first ? 'value=0' : ''} onchange="INVENTORY.checkValueExt(this, '${avaiable.currentQuantity}');"
+							name="${avaiable.id }_quantity" class="required digits" size="5" />
 						</td>
-						<td><input id="drugName" name="drugName" type='hidden'
+						<td><input id="${avaiable.id }_drugName"
+							name="${avaiable.id }_drugName" type='hidden'
 							value="${avaiable.drug.name}" />
 						</td>
-						<td><input id="formulation" name="formulation" type='hidden'
+						<td><input id="${avaiable.id }_formulation"
+							name="${avaiable.id }_formulation" type='hidden'
 							value="${avaiable.formulation.name}-${avaiable.formulation.dozage}" />
 						</td>
-						<td><input id="formulationId" name="formulationId"
-							type='hidden' value="${avaiable.formulation.id }" />
-						</td>
-						<td><input id="avaiableId" name="avaiableId" type='hidden'
-							value="${avaiable.id }" />
+						<td><input id="${avaiable.id }_formulationId"
+							name="${avaiable.id }_formulationId" type='hidden'
+							value="${avaiable.formulation.id }" />
 						</td>
 					</tr>
 				</c:forEach>
@@ -79,9 +80,10 @@
 			</c:otherwise>
 		</c:choose>
 	</table>
+	<!-- ghanshyam,4-july-2013, issue no # 1984, User can issue drugs only from the first indent -->
 	<br /> <input type="button"
 		class="ui-button ui-widget ui-state-default ui-corner-all"
-		value="Issue" onClick="issueDrugOrder();"> <input
+		value="Issue" onClick="issueDrugOrder('${listOfDrugQuantity}');"> <input
 		type="button"
 		class="ui-button ui-widget ui-state-default ui-corner-all"
 		value="Cancel" onclick="cancel();">

@@ -70,32 +70,41 @@ jQuery.ajax({
 
 
 <script type="text/javascript">
-function issueDrugOrder() {
-   var drugName=document.getElementById('drugName').value;
-   var formulation=document.getElementById('formulation').value;
-   var formulationId=document.getElementById('formulationId').value;
-   var quantity=document.getElementById('quantity').value;
-   var avaiableId=document.getElementById('avaiableId').value;
-   var deleteString = 'deleteInput(\"'+drugName+'\")';
-   var htmlText =  "<div id='com_"+drugName+"_div'>"
-	       	 +"<input id='"+drugName+"_name'  name='drugOrder' type='text' size='20' value='"+drugName+"'  readonly='readonly'/>&nbsp;"
-	       	 +"<input id='"+drugName+"_formulationName'  name='"+drugName+"_formulatioNname' type='text' size='11' value='"+formulation+"'  readonly='readonly'/>&nbsp;"
-	       	 +"<input id='"+drugName+"_quantity'  name='"+drugName+"_quantity' type='text' size='3' value='"+quantity+"'  readonly='readonly'/>&nbsp;"
-	       	 +"<input id='"+drugName+"_formulationId'  name='"+drugName+"_formulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
-	       	 +"<input id='"+drugName+"_avaiableId'  name='"+drugName+"_avaiableId' type='hidden' value='"+avaiableId+"'/>&nbsp;"
+//ghanshyam,4-july-2013, issue no # 1984, User can issue drugs only from the first indent
+function issueDrugOrder(listOfDrugQuantity) {
+   var availableIdArr=listOfDrugQuantity.split("."); 
+   for (var i = 0; i < availableIdArr.length-1; i++) {
+
+   var quantity=document.getElementById(availableIdArr[i].toString()+'_quantity').value;
+   if(quantity!="0"){
+   var drugName=document.getElementById(availableIdArr[i].toString()+'_drugName').value;
+   var formulation=document.getElementById(availableIdArr[i].toString()+'_formulation').value;
+   var formulationId=document.getElementById(availableIdArr[i].toString()+'_formulationId').value;
+   var avaiableId=availableIdArr[i];
+   var deleteString = 'deleteInput(\"'+avaiableId+'\")';
+   var htmlText =  "<div id='com_"+avaiableId+"_div'>"
+	       	 +"<input id='"+avaiableId+"_fName'  name='"+avaiableId+"_fName' type='text' size='20' value='"+drugName+"'  readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fFormulationName'  name='"+avaiableId+"_fFormulationName' type='text' size='11' value='"+formulation+"'  readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fQuantity'  name='"+avaiableId+"_fQuantity' type='text' size='3' value='"+quantity+"'  readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fFormulationId'  name='"+avaiableId+"_fFormulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fAavaiableId'  name='avaiableId' type='hidden' value='"+avaiableId+"'/>&nbsp;"
 	       	 +"<a style='color:red' href='#' onclick='"+deleteString+"' >[X]</a>"	
 	       	 +"</div>";
 	       	
    var newElement = document.createElement('div');
-   newElement.setAttribute("id", drugName);   
+   newElement.setAttribute("id", avaiableId);   
    newElement.innerHTML = htmlText;
    var fieldsArea = document.getElementById('headerValue');
    fieldsArea.appendChild(newElement);
+    }
+    
+  }
+  
 }
 
-function deleteInput(drugName) {
+function deleteInput(avaiableId) {
    var parentDiv = 'headerValue';
-   var child = document.getElementById(drugName);
+   var child = document.getElementById(avaiableId);
    var parent = document.getElementById(parentDiv);
    parent.removeChild(child); 
 }
