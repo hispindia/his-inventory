@@ -77,6 +77,17 @@ function issueDrugOrder(listOfDrugQuantity) {
    for (var i = 0; i < availableIdArr.length-1; i++) {
 
    var quantity=document.getElementById(availableIdArr[i].toString()+'_quantity').value;
+   //ghanshyam,5-july-2013, issue no # 1990, User is able to 'finish' without issuing a drug to patient
+   if (quantity==null || quantity==""){
+       alert("Please enter quantity");
+       return false;
+     }
+   if (quantity!=null || quantity!=""){
+	   if(isNaN(quantity)){
+	   alert("Please enter quantity in correct format");
+	   return false;
+	  }
+	 }
    if(quantity!="0"){
    var drugName=document.getElementById(availableIdArr[i].toString()+'_drugName').value;
    var formulation=document.getElementById(availableIdArr[i].toString()+'_formulation').value;
