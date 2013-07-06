@@ -60,8 +60,8 @@ jQuery.ajax({
 				formulationId		: formulationId
 			}),
 			success : function(data) {
-				jQuery("#processOrder").html(data);	
-				jQuery("#processOrder").show();
+				jQuery("#processDrugOrder").html(data);	
+				jQuery("#processDrugOrder").show();
 			},
 			
 		});
@@ -100,6 +100,7 @@ function issueDrugOrder(listOfDrugQuantity) {
 	       	 +"<input id='"+avaiableId+"_fQuantity'  name='"+avaiableId+"_fQuantity' type='text' size='3' value='"+quantity+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fFormulationId'  name='"+avaiableId+"_fFormulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fAavaiableId'  name='avaiableId' type='hidden' value='"+avaiableId+"'/>&nbsp;"
+	       	 +"<input id='drugProcessName'  name='drugProcessName' type='hidden' value='"+drugName+"'/>&nbsp;"
 	       	 +"<a style='color:red' href='#' onclick='"+deleteString+"' >[X]</a>"	
 	       	 +"</div>";
 	       	
@@ -108,6 +109,9 @@ function issueDrugOrder(listOfDrugQuantity) {
    newElement.innerHTML = htmlText;
    var fieldsArea = document.getElementById('headerValue');
    fieldsArea.appendChild(newElement);
+   
+   jQuery("#"+drugName).hide();
+   jQuery("#processDrugOrder").hide();
     }
     
   }
@@ -125,15 +129,23 @@ function deleteInput(avaiableId) {
 
 <script type="text/javascript">
 function cancel() {
-jQuery("#processOrder").hide();
+jQuery("#processDrugOrder").hide();
 }
 </script>
 
 <script type="text/javascript">
 function finishDrugOrder() {
+
+var drugProcessName=document.getElementById("drugProcessName");
+if (drugProcessName==null){
+alert("Please select atleast one drug");
+return false;
+}
+
 if(confirm("Are you sure?")){
 return true;
 }
+
 return false;
 }
 </script>
@@ -188,7 +200,7 @@ return false;
 						<c:set var="klass" value="even" />
 					</c:otherwise>
 				</c:choose>
-				<tr class="${klass}" id="">
+				<tr class="${klass}" id="${dol.inventoryDrug.name}">
 					<td align="center">${index.count}</td>
 					<td align="center">${dol.inventoryDrug.name}</td>
 					<td align="center">${dol.inventoryDrugFormulation.name}-${dol.inventoryDrugFormulation.dozage}</td>
@@ -204,7 +216,7 @@ return false;
 	</table>
 </form>
 
-<div id="processOrder"></div>
+<div id="processDrugOrder"></div>
 
 <!-- Right side div for drug process -->
 <div id="billDiv">
