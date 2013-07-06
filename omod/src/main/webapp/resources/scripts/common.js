@@ -29,22 +29,22 @@ jQuery(document).ready(function(){
 		}
 	);
 	
-	var billDiv = jQuery("div#billDiv");
-	if( billDiv.length > 0 )
+	var finishDrugOrderDiv = jQuery("div#finishDrugOrderDiv");
+	if( finishDrugOrderDiv.length > 0 )
 	{
-		var left = f_clientWidth() - billDiv.outerWidth();
-		var top = f_clientHeight() - billDiv.outerHeight();
-		billDiv.css({"position":"fixed","top":top+"px","left":left+"px"});
-		jQuery("div#extra",billDiv).css({"max-height":"300px","overflow":"auto"});
+		var left = f_clientWidth() - finishDrugOrderDiv.outerWidth();
+		var top = f_clientHeight() - finishDrugOrderDiv.outerHeight();
+		finishDrugOrderDiv.css({"position":"fixed","top":top+"px","left":left+"px"});
+		jQuery("div#extra",finishDrugOrderDiv).css({"max-height":"300px","overflow":"auto"});
 		
 	    /**
 	    * June 5th 2012: Thai Chuong supported issue #246
 	    * [PUNJAB] Text box when bill is voided & Print out of a bill that is voided
 	    * Cancel draggale to allow typing. 
 	    */
-		billDiv.draggable({cancel:".cancelDraggable",containment:"window"});
+		finishDrugOrderDiv.draggable({cancel:".cancelDraggable",containment:"window"});
 		
-		jQuery("#toogleBillBtn").click();
+		jQuery("#toogleFinishDrugOrderBtn").click();
 	}
 	jQuery("#tabs").tabs();
 
@@ -70,21 +70,21 @@ function f_filterResults(n_win, n_docel, n_body) {
 		n_result = n_docel;
 	return n_body && (!n_result || (n_result > n_body)) ? n_body : n_result;
 }
-function toogleBill(this_)
+function toogleFinishDrugOrder(this_)
 {
 	if( jQuery(this_).val() == "-" ) 
 	{
-		var billDiv = jQuery("div#billDiv");
-		jQuery("#extra",billDiv).hide();
-		var left = f_clientWidth() - billDiv.outerWidth()  ;
-		var top = f_clientHeight() - billDiv.outerHeight();
-		billDiv.css({"position":"fixed","top":top+"px","left":left+"px"});
+		var finishDrugOrderDiv = jQuery("div#finishDrugOrderDiv");
+		jQuery("#extra",finishDrugOrderDiv).hide();
+		var left = f_clientWidth() - finishDrugOrderDiv.outerWidth()  ;
+		var top = f_clientHeight() - finishDrugOrderDiv.outerHeight();
+		finishDrugOrderDiv.css({"position":"fixed","top":top+"px","left":left+"px"});
 		jQuery(this_).val("+");
 	}else{
-		var billDiv = jQuery("div#billDiv");
-		var left = f_clientWidth() - billDiv.outerWidth();
-		billDiv.css({"position":"fixed","top":"50px","left":left+"px"});
-		jQuery("#extra",billDiv).show();
+		var finishDrugOrderDiv = jQuery("div#finishDrugOrderDiv");
+		var left = f_clientWidth() - finishDrugOrderDiv.outerWidth();
+		finishDrugOrderDiv.css({"position":"fixed","top":"50px","left":left+"px"});
+		jQuery("#extra",finishDrugOrderDiv).show();
 		jQuery(this_).val("-");
 	}
 }

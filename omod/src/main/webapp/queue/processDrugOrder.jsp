@@ -24,7 +24,7 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <openmrs:require privilege="Drug order queue" otherwise="/login.htm" redirect="/module/inventory/main.form" />
 
-<form method="post" id="admissionForm" class="box">
+<form method="post" id="processDrugOrderForm" class="box">
 	<table class="box">
 		<tr>
 			<th>#</th>

@@ -176,7 +176,7 @@ return false;
 	</table>
 </div>
 
-<form id="orderBillingForm"
+<form id="drugOrderForm"
 	action="drugorder.form?patientId=${patientId}&encounterId=${encounterId}&indCount=${serviceOrderSize}&billType=mixed"
 	method="POST">
 	<table id="myTable" class="tablesorter" class="thickbox">
@@ -219,7 +219,7 @@ return false;
 <div id="processDrugOrder"></div>
 
 <!-- Right side div for drug process -->
-<div id="billDiv">
+<div id="finishDrugOrderDiv">
 	<form id="finishDrugOrderForm"
 		action="drugorder.form?patientId=${patientId}&encounterId=${encounterId}"
 		method="POST" onsubmit="javascript:return finishDrugOrder();">
@@ -235,8 +235,8 @@ return false;
                 </c:forEach>
             </select>
 		 -->
-			<input type="button" id="toogleBillBtn" value="-"
-				onclick="toogleBill(this);" class="min" style="float: right" />
+			<input type="button" id="toogleFinishDrugOrderBtn" value="-"
+				onclick="toogleFinishDrugOrder(this);" class="min" style="float: right" />
 		</div>
 
 		<div id="headerValue" class="cancelDraggable"
