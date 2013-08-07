@@ -38,14 +38,17 @@ public class ItemCategoryListController {
 					for(String sId : ids )
 					{
 						InventoryItemCategory itemCategory = inventoryService.getItemCategoryById( NumberUtils.toInt(sId));
+						//ghanshyam 7-august-2013 code review bug
+						if( itemCategory!= null ){
 						List<InventoryItemSubCategory> list = inventoryService.listSubCatByCat(itemCategory.getId());
-						if( itemCategory!= null && CollectionUtils.isEmpty(list) )
+						if(CollectionUtils.isEmpty(list) )
 						{
 							inventoryService.deleteItemCategory(itemCategory);
 						}else{
 							//temp += "We can't delete category="+itemCategory.getName()+" because that category is using please check <br/>";
 							temp = "This category/categories cannot be deleted as it is in use";
 						}
+					  }
 					}
 				}
 			}catch (Exception e) {

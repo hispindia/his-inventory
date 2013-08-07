@@ -125,7 +125,8 @@ public class ProcessTransferDrugFromGeneralStoreController {
 		quantityTransfers.add(temp);
 		if(transactionAvaiableOfMainStore != null && transactionAvaiableOfMainStore.size() > 0){
 		for(InventoryStoreDrugTransactionDetail trDetail : transactionAvaiableOfMainStore ){
-			if(t.getDrug().getId() == trDetail.getDrug().getId() && t.getFormulation().getId() == trDetail.getFormulation().getId()){
+			//ghanshyam 7-august-2013 code review bug
+			if(t.getDrug().getId().equals(trDetail.getDrug().getId()) && t.getFormulation().getId().equals(trDetail.getFormulation().getId())){
 				t.setMainStoreTransfer(trDetail.getCurrentQuantity());
 				if(temp > trDetail.getCurrentQuantity() || temp < 0 ){
 					errors.add("inventory.indent.error.quantity");

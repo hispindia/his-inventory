@@ -821,6 +821,8 @@ public class AjaxController {
 	 InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 	 InventoryStore store = inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
 	 
+	//ghanshyam 7-august-2013 code review bug
+	 if(store != null ){
 	 int total = inventoryService.countViewStockBalance(store.getId(), categoryId, drugName,  fromDate, toDate , true);
 	 String temp = "";
 		if(categoryId != null){	
@@ -864,6 +866,7 @@ public class AjaxController {
 		model.put("stockBalances", stockBalances );
 		model.put("listCategory", listCategory );
 		model.put("store", store );
+	 }
 		if(store != null && store.getParent() == null){
 			return "/module/inventory/mainstore/viewStockBalanceExpiry";
 		}else

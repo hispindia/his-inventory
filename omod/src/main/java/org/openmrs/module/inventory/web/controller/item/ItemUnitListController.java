@@ -36,14 +36,17 @@ public class ItemUnitListController {
 					for(String sId : ids )
 					{
 						InventoryItemUnit itemUnit = inventoryService.getItemUnitById( NumberUtils.toInt(sId));
+						//ghanshyam 7-august-2013 code review bug
+						if( itemUnit!= null ){
 						int countItem = inventoryService.countItem(null,  itemUnit.getId(), null, null);
-						if( itemUnit!= null && countItem == 0 )
+						if( countItem == 0 )
 						{
 							inventoryService.deleteItemUnit(itemUnit);
 						}else{
 							//temp += "We can't delete unit="+itemUnit.getName()+" because that unit is using please check <br/>";
 							temp = "This unit/units cannot be deleted as it is in use";
 						}
+					  }
 					}
 				}
 			}catch (Exception e) {

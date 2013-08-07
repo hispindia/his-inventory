@@ -36,14 +36,17 @@ public class ItemSpecificationListController {
 					for(String sId : ids )
 					{
 						InventoryItemSpecification itemSpecification = inventoryService.getItemSpecificationById( NumberUtils.toInt(sId));
+						//ghanshyam 7-august-2013 code review bug
+						if( itemSpecification!= null ){
 						int countItem = inventoryService.countItem(null, null, null, itemSpecification.getId());
-						if( itemSpecification!= null && countItem == 0 )
+						if( countItem == 0 )
 						{
 							inventoryService.deleteItemSpecification(itemSpecification);
 						}else{
 							//temp += "We can't delete specification="+itemSpecification.getName()+" because that specification is using please check <br/>";
 							temp = "This specification/specifications cannot be deleted as it is in use";
 						}
+					  }
 					}
 				}
 			}catch (Exception e) {

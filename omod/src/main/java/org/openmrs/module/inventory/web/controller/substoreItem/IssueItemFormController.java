@@ -132,7 +132,8 @@ public class IssueItemFormController {
 		
 		for(InventoryStoreItemTransactionDetail t: listReceiptItem){
 			InventoryStoreItemAccountDetail issueItemDetail = new InventoryStoreItemAccountDetail();
-			if(t.getItem().getId() == item.getId() ){
+			//ghanshyam 7-august-2013 code review bug
+			if(t.getItem().getId().equals(item.getId())){
 				if(t.getCurrentQuantity() >= issueItemQuantity){
 					issueItemDetail.setTransactionDetail(t);
 					issueItemDetail.setQuantity(issueItemQuantity);

@@ -135,7 +135,8 @@ public class ProcessTransferItemFromGeneralStoreController {
 			
 			if(t.getSpecification() != null){
 				if(trDetail.getSpecification() != null){
-					if(t.getItem().getId() == trDetail.getItem().getId() && t.getSpecification().getId() == trDetail.getSpecification().getId()){
+					//ghanshyam 7-august-2013 code review bug
+					if(t.getItem().getId().equals(trDetail.getItem().getId()) && t.getSpecification().getId().equals(trDetail.getSpecification().getId())){
 						t.setMainStoreTransfer(trDetail.getCurrentQuantity());
 						if(temp > trDetail.getCurrentQuantity() || temp < 0 ){
 							//System.out.println("nhay avo day 1");
@@ -147,7 +148,8 @@ public class ProcessTransferItemFromGeneralStoreController {
 					continue;
 				}
 			}else{
-				if(t.getItem().getId() == trDetail.getItem().getId() && trDetail.getSpecification() == null){
+				//ghanshyam 7-august-2013 code review bug
+				if(t.getItem().getId().equals(trDetail.getItem().getId()) && trDetail.getSpecification() == null){
 					t.setMainStoreTransfer(trDetail.getCurrentQuantity());
 					if(temp > trDetail.getCurrentQuantity() || temp < 0 ){
 						//System.out.println("temp: "+temp+" itemName: "+t.getItem().getName()+" current quantity: "+trDetail.getCurrentQuantity());

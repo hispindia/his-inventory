@@ -37,15 +37,18 @@ public class DrugListController {
 				for(String sId : ids )
 				{
 					InventoryDrug drug = inventoryService.getDrugById( NumberUtils.toInt(sId));
+					//ghanshyam 7-august-2013 code review bug
+					if( drug!= null ){
 					int  countDrugInTransactionDetail = inventoryService.checkExistDrugTransactionDetail(drug.getId());
 					int  countDrugInIndentDetail = inventoryService.checkExistDrugIndentDetail(drug.getId());
-					if( drug!= null && countDrugInTransactionDetail == 0 && countDrugInIndentDetail == 0)
+					if(countDrugInTransactionDetail == 0 && countDrugInIndentDetail == 0)
 					{
 						inventoryService.deleteDrug(drug);
 					}else{
 						//temp += "We can't delete drug="+drug.getName()+" because that drug is using please check <br/>";
 						temp = "This drug/drugs cannot be deleted as it is in use";
 					}
+				  }	
 				}
 			}
 		}catch (Exception e) {

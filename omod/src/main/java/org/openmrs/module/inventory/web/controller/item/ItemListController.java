@@ -37,16 +37,19 @@ public class ItemListController {
 				for(String sId : ids )
 				{
 					InventoryItem item = inventoryService.getItemById( NumberUtils.toInt(sId));
+					//ghanshyam 7-august-2013 code review bug
+					if( item!= null ){
 					int  countItemInTransactionDetail = inventoryService.checkExistItemTransactionDetail(item.getId());
 					int  countItemInIndentDetail = inventoryService.checkExistItemIndentDetail(item.getId());
 				
-					if( item!= null && countItemInIndentDetail == 0 && countItemInTransactionDetail == 0 )
+					if( countItemInIndentDetail == 0 && countItemInTransactionDetail == 0 )
 					{
 						inventoryService.deleteItem(item);
 					}else{
 						//temp += "We can't delete item="+item.getName()+" because that item is using please check <br/>";
 						temp = "This item/items cannot be deleted as it is in use";
 					}
+				  }	
 				}
 			}
 		}catch (Exception e) {
