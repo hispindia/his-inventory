@@ -1,3 +1,9 @@
+2.0.8
+- #1990             User is able to 'finish' without issuing a drug to patient
+- #1984             User can issue drugs only from the first indent
+- #1980             No header with patient details above the order ID
+- #1636             User is able to see and dispense drugs in patient queue for issuing drugs, as ordered from dashboard
+
 2.0.7
 - #660               Add "Receipt from" field in Receipt to General Store option in mainstore.
 

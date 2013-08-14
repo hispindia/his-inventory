@@ -52,9 +52,9 @@ public class InventoryHeader extends LinkExt {
 	 */
 	@Override
 	public String getLabel() {
+		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
+		InventoryStore store = inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
 		try {
-			InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
-			InventoryStore store = inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
 			if(store!=null && !store.getRetired()){
 				return store.getName();	
 			}else{
@@ -65,7 +65,7 @@ public class InventoryHeader extends LinkExt {
 			e.printStackTrace();
 			
 		}
-		return "";
+		return store.getName();	
 	}
 
 	/** 
