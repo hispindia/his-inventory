@@ -37,9 +37,9 @@
 <br/>
 <table class="box">
 <tr><td><b>Drug info</b></td></tr>
-<tr>
-
-<%-- 	// Sagar Bele - 07-08-2012 New Requirement #302 [INVENTORY] Non Mandatory Drug Category filter for drug search  --%>
+<%-- ghanshyam,7-oct-2013,issue #2983,The user need not enter the category of the drug while receiving or issuing drugs to --%>
+    <%--
+    <tr>
 		<td><spring:message code="inventory.drug.category"/></td>
 		<td>
 			<select name="category" id="category" onchange="ISSUE.onChangeCategoryAccount(this);"  style="width: 250px;">
@@ -50,6 +50,7 @@
    			</select>
 		</td>
 	</tr>
+	--%>
 	
 	<tr>
 		<td>Drug<em>*</em></td>
