@@ -17,11 +17,11 @@ import java.util.ArrayList;
 
 import org.openmrs.Role;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.Extension;
+//import org.openmrs.module.Extension;
 import org.openmrs.module.hospitalcore.model.InventoryStore;
 import org.openmrs.module.inventory.InventoryConstants;
 import org.openmrs.module.inventory.InventoryService;
-import org.openmrs.module.web.extension.AdministrationSectionExt;
+//import org.openmrs.module.web.extension.AdministrationSectionExt;
 import org.openmrs.module.web.extension.LinkExt;
 
 /**
@@ -35,8 +35,8 @@ public class InventoryHeader extends LinkExt {
 	/**
 	 * @see org.openmrs.module.web.extension.AdministrationSectionExt#getMediaType()
 	 */
-	public Extension.MEDIA_TYPE getMediaType() {
-		return Extension.MEDIA_TYPE.html;
+	public MEDIA_TYPE getMediaType() {
+		return MEDIA_TYPE.html;
 	}
 	
 	/**
@@ -54,6 +54,8 @@ public class InventoryHeader extends LinkExt {
 	public String getLabel() {
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		InventoryStore store = inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
+		
+		
 		try {
 			if(store!=null && !store.getRetired()){
 				return store.getName();	
