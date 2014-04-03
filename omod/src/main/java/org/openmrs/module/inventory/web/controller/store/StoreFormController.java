@@ -3,6 +3,8 @@ package org.openmrs.module.inventory.web.controller.store;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -97,14 +99,13 @@ public class StoreFormController {
 	    listParents.addAll(stores);
 	    //System.out.println("parents: "+stores);
 	    for( InventoryStore storeV : stores ){
-	    	if(storeV.getParent() != null){
+	    	if(storeV.getParentStores().size() > 0){ //luan. should be updated here
 	    		listParents.remove(storeV);
 	    	}
-	    
+	    	
 	    }
 		return listParents;
-	}
-	
+	}	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(java.lang.Integer.class,new CustomNumberEditor(java.lang.Integer.class, true));
@@ -127,8 +128,23 @@ public class StoreFormController {
 			//save store
 			store.setCreatedBy(Context.getAuthenticatedUser().getGivenName());
 			store.setCreatedOn(new Date());
+			
+			Set<InventoryStore> listParents = new HashSet<InventoryStore>();
+			for (String parentId :request.getParameterValues("parent"))
+			{
+				System.out.println(parentId);
+				
+				InventoryStore parentStore = new InventoryStore();
+				parentStore = inventoryService.getStoreById(Integer.valueOf(parentId));
+				listParents.add(parentStore);
+				
+				
+			};
+			store.setParentStores( listParents);
+			
 			inventoryService.saveStore(store);
 			
+
 			status.setComplete();
 			return "redirect:/module/inventory/storeList.form";
 		}

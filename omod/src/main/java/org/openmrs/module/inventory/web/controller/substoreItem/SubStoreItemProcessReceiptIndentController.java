@@ -77,7 +77,10 @@ public class SubStoreItemProcessReceiptIndentController {
 		
 		if(refundItemList != null && refundItemList.size() > 0){
 			InventoryStoreItemTransaction transaction = new InventoryStoreItemTransaction();
-			transaction.setStore(subStore.getParent());
+			//transaction.setStore(subStore.getParent());
+			/*
+			 * luan- should update code here as new requirement for multiple main stores
+			 */
 			transaction.setDescription("REFUND ITEM BC SUBSTORE REFUSE "+DateUtils.getDDMMYYYY());
 			transaction.setTypeTransaction(ActionValue.TRANSACTION[0]);
 			transaction.setCreatedBy("System");
@@ -88,7 +91,11 @@ public class SubStoreItemProcessReceiptIndentController {
 			for(InventoryStoreItemTransactionDetail refund : refundItemList){
 				
 				Date date = new Date();
-				Integer sumTotalQuantity = inventoryService.sumStoreItemCurrentQuantity(subStore.getParent().getId(), refund.getItem().getId(), refund.getSpecification()!= null?refund.getSpecification().getId() : null);
+				//Integer sumTotalQuantity = inventoryService.sumStoreItemCurrentQuantity(subStore.getParent().getId(), refund.getItem().getId(), refund.getSpecification()!= null?refund.getSpecification().getId() : null);
+				/*
+				 * luan- should update code here as new requirement for multiple main stores
+				 */
+				Integer sumTotalQuantity = 0; //just for testing. Should update later
 				InventoryStoreItemTransactionDetail transDetail = new InventoryStoreItemTransactionDetail();
 				transDetail.setTransaction(transaction);
 				transDetail.setItem(refund.getItem());

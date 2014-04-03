@@ -19,7 +19,12 @@
 --%> 
 <%@ include file="../includes/js_css.jsp" %>
 <br/>
-<c:if test ="${not empty store && not empty store.parent && store.isDrug != 1  }">
+<!-- c:if test ="${not empty store && not empty store.parent && store.isDrug != 1  }">
+<b>Drug&nbsp;| <a href="#" onclick="ACT.go('itemViewStockBalanceSubStore.form');">Item </a></b>
+<br/><br/>
+</c:if-->
+<!--  luan: Should update this later -->
+<c:if test ="${not empty store && not empty store.parentStores && store.isDrug != 1  }">
 <b>Drug&nbsp;| <a href="#" onclick="ACT.go('itemViewStockBalanceSubStore.form');">Item </a></b>
 <br/><br/>
 </c:if>

@@ -57,7 +57,7 @@ public class MyInterceptor implements HandlerInterceptor{
 			Object object) throws Exception {
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		 InventoryStore store = inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
-		 if(store != null && store.getParent() == null){
+		 if(store != null && store.getParentStores() == null){
 			 response.sendRedirect("/module/inventory/mainstore/mainPage");
 		 }else{
 			 response.sendRedirect( "/module/inventory/substore/mainPage");

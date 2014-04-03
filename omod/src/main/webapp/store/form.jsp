@@ -68,11 +68,15 @@
 	<tr>
 		<td valign="top"><spring:message code="inventory.store.parent"/></td>
 		<td>
-			<spring:bind path="store.parent">
+			<spring:bind path="store.parentStores">
 			<select name="parent"  tabindex="20" >
 				<option value=""></option>
                 <c:forEach items="${parents}" var="vparent">
-                    <option value="${vparent.id}" <c:if test="${vparent.id == store.parent.id }">selected</c:if> >${vparent.name}</option>
+                   <option value="${vparent.id}" 
+                   <c:forEach items="${store.parentStores}" var="vselectedParent">
+                        <c:if test="${vselectedParent.id == vparent.id}">selected</c:if>
+                   </c:forEach>>${vparent.name}</option>
+				  
                 </c:forEach>
    			</select>
 			<c:if test="${status.errorMessage != ''}"><span class="error">${status.errorMessage}</span></c:if>

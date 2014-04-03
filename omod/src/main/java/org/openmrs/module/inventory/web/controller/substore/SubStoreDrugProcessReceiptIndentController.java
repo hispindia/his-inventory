@@ -75,7 +75,10 @@ public class SubStoreDrugProcessReceiptIndentController {
 		
 		if(refundDrugList != null && refundDrugList.size() > 0){
 			InventoryStoreDrugTransaction transaction = new InventoryStoreDrugTransaction();
-			transaction.setStore(subStore.getParent());
+			//transaction.setStore(subStore.getParent());
+			/*
+			 * luan- should update code here as new requirement for multiple main stores
+			 */
 			transaction.setDescription("REFUND BC SUBSTORE REFUSE "+DateUtils.getDDMMYYYY());
 			transaction.setTypeTransaction(ActionValue.TRANSACTION[0]);
 			transaction.setCreatedBy("System");
@@ -86,7 +89,11 @@ public class SubStoreDrugProcessReceiptIndentController {
 			for(InventoryStoreDrugTransactionDetail refund : refundDrugList){
 				
 				Date date = new Date();
-				Integer sumTotalQuantity = inventoryService.sumCurrentQuantityDrugOfStore(subStore.getParent().getId(), refund.getDrug().getId(), refund.getFormulation().getId());
+				//Integer sumTotalQuantity = inventoryService.sumCurrentQuantityDrugOfStore(subStore.getParent().getId(), refund.getDrug().getId(), refund.getFormulation().getId());
+				/*
+				 * luan- should update code here as new requirement for multiple main stores
+				 */
+				Integer sumTotalQuantity = 0; //just for testing. Remember to remove it
 				InventoryStoreDrugTransactionDetail transDetail = new InventoryStoreDrugTransactionDetail();
 				transDetail.setTransaction(transaction);
 				transDetail.setDrug(refund.getDrug());
