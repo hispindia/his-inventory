@@ -69,7 +69,7 @@
 		<td valign="top"><spring:message code="inventory.store.parent"/></td>
 		<td>
 			<spring:bind path="store.parentStores">
-			<select name="parent"  tabindex="20" >
+			<select name="parent"  tabindex="20" multiple>
 				<option value=""></option>
                 <c:forEach items="${parents}" var="vparent">
                    <option value="${vparent.id}" 
