@@ -132,16 +132,4 @@
 			ALTER TABLE inventory_store_drug_transaction_detail ADD receipt_from varchar(255);
 		</sql>
 	</diff>
-	<diff>
-		<version>2.2.7</version>
-		<author>Luan Vo</author>
-		<date>Mar 10 2014</date>
-		<description>
-			Multiple parent mainstores
-		</description>
-		<sql>
-			CREATE TABLE IF NOT EXISTS inventory_store_relationship (inventory_store_child_id integer not null, inventory_store_parent_id integer not null, primary key (inventory_store_child_id, inventory_store_parent_id));
-			ALTER  TABLE inventory_store_relationship add index fk_inventorystore_parent (inventory_store_parent_id), add constraint fk_inventorystore_child foreign key (inventory_store_child_id) references inventory_store (id);
-		</sql>
-	</diff>		
 </sqldiff>
