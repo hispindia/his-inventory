@@ -129,22 +129,26 @@ public class StoreFormController {
 			store.setCreatedBy(Context.getAuthenticatedUser().getGivenName());
 			store.setCreatedOn(new Date());
 			
-			Set<InventoryStore> listParents = new HashSet<InventoryStore>();
-			for (String parentId :request.getParameterValues("parent"))
+			if (request.getParameterValues("parent") != null
+					&& request.getParameterValues("parent").length >0
+					&& !request.getParameterValues("parent")[0].isEmpty())
 			{
-				System.out.println(parentId);
+				Set<InventoryStore> listParents = new HashSet<InventoryStore>();
+				for (String parentId :request.getParameterValues("parent"))
+				{
+					System.out.println(parentId);
+					
+					InventoryStore parentStore = new InventoryStore();
+					parentStore = inventoryService.getStoreById(Integer.valueOf(parentId));
+					listParents.add(parentStore);
+					
+					
+				};
+				store.setParentStores( listParents);
 				
-				InventoryStore parentStore = new InventoryStore();
-				parentStore = inventoryService.getStoreById(Integer.valueOf(parentId));
-				listParents.add(parentStore);
-				
-				
-			};
-			store.setParentStores( listParents);
+			}
 			
 			inventoryService.saveStore(store);
-			
-
 			status.setComplete();
 			return "redirect:/module/inventory/storeList.form";
 		}

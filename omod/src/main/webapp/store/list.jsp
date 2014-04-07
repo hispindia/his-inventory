@@ -61,7 +61,11 @@
 		<td><a href="#" onclick="STORE.edit('${ store.id}');">${store.name}</a> </td>
 		<td>${store.code}</td>
 	<!-- 	<td></td>     store.parent. It should be updated later-->
-		<td><font color="red">Update later</font></td>
+		<td>
+			<c:forEach items="${store.parentStores}" var="vparent">
+			  ${vparent.name} <br>
+			</c:forEach>
+		</td>
 		<td>${store.role.role}</td>
 		<td>${store.isDrugName}</td>
 		<td>${store.retired}</td>
