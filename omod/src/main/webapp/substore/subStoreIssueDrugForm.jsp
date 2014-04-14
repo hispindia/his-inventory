@@ -19,6 +19,7 @@
  *
 --%>
 <%@ include file="/WEB-INF/template/include.jsp"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <openmrs:require privilege="Add/Edit substore" otherwise="/login.htm"
 	redirect="/module/inventory/main.form" />
@@ -176,11 +177,15 @@
 				<th><spring:message code="inventory.drug.name" /></th>
 				<th><spring:message code="inventory.drug.formulation" /></th>
 				<th><spring:message code="inventory.receiptDrug.quantity" /></th>
+				<th>Price</th>
 			</tr>
 			<c:choose>
 				<c:when test="${not empty listPatientDetail}">
+					<c:set var="total" value="${0}"/>   
 					<c:forEach items="${listPatientDetail}" var="issue"
 						varStatus="varStatus">
+						<c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" />
+					<c:set var="total" value="${total + price}"/>
 						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 							<td><c:out value="${varStatus.count }" /></td>
 							<td>${issue.transactionDetail.drug.category.name}</td>
@@ -188,9 +193,18 @@
 								onclick="INVENTORY.removeObject('${varStatus.index}','5');">${issue.transactionDetail.drug.name}</a></td>
 							<td>${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
 							<td>${issue.quantity}</td>
+							<td><fmt:formatNumber value="${price}" type="currency"/></td>
 						</tr>
 					</c:forEach>
-
+						<tr><td>&nbsp;</td></tr>
+						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+							<td>Total</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><fmt:formatNumber value="${total}" type="currency"/></td>						
+						</tr>
 				</c:when>
 			</c:choose>
 		</table>
