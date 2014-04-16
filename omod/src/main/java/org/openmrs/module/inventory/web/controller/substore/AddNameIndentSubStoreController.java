@@ -26,21 +26,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AddNameIndentSubStoreController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String firstView(@RequestParam(value="send",required=false)  String send,Model model) {
+    	        InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
+                InventoryStore store = inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
+                model.addAttribute("store", store);
 		model.addAttribute("send", send);
 		return "/module/inventory/substore/addNameIndentSlip";
 	}
 	@RequestMapping(method = RequestMethod.POST)
 	public String submit(HttpServletRequest request, Model model) {
 		String indentName = request.getParameter("indentName");
+		int mainStoreId = Integer.parseInt(request.getParameter("mainstore"));
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		Date date = new Date();
 		int userId = Context.getAuthenticatedUser().getId();
 		InventoryStore store = inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
-		
+		InventoryStore mainStore = inventoryService.getStoreById( mainStoreId );
+		    
 		InventoryStoreDrugIndent indent = new InventoryStoreDrugIndent();
 		indent.setName(indentName);
 		indent.setCreatedOn(date);
 		indent.setStore(store);
+		indent.setMainStore( mainStore );
 		
 		if(!StringUtils.isBlank(request.getParameter("send"))){
 			indent.setMainStoreStatus(1);

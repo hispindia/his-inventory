@@ -29,6 +29,18 @@
 		</td>
 	</tr>
 	<tr>
+		<td>
+		<spring:message code="inventory.substore.selectMainStore"/> <spring:message code="inventory.substore.indentDrug"/>
+		</td>
+		<td>
+			<select name="mainstore">
+			<c:forEach items="${store.parentStores}" var="vparent">
+			  <option value="${vparent.id}">${vparent.name}</option>
+			</c:forEach>
+			</select>
+		</td>
+	</tr>
+	<tr>
 		<td></td>
 		<td colspan="2"><input type="submit" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="general.save"/>"></td>
 	</tr>
