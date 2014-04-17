@@ -29,9 +29,12 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StandardBasicTypes;
+import org.hibernate.type.Type;
 import org.openmrs.Role;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.hospitalcore.model.InventoryDrug;
@@ -1504,7 +1507,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		criteria.add(Restrictions
 				.gt("transactionDetail.dateExpiry", new Date()));
 		ProjectionList proList = Projections.projectionList();
-		proList.add(Projections.sum("currentQuantity"));
+		proList.add(Projections.sqlProjection( "sum(current_quantity) as current_quantity", new String[] {"current_quantity"},new Type[] {StandardBasicTypes.INTEGER}));
 		criteria.setProjection(proList);
 		Object l = criteria.uniqueResult();
 		return l != null ? (Integer) l : 0;
@@ -1523,7 +1526,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		ProjectionList proList = Projections.projectionList();
 		proList.add(Projections.groupProperty("drug"))
 				.add(Projections.groupProperty("formulation"))
-				.add(Projections.sum("currentQuantity"));
+				.add(Projections.sqlProjection( "sum(current_quantity) as current_quantity", new String[] {"current_quantity"},new Type[] {StandardBasicTypes.INTEGER}));
 		criteria.add(Restrictions.eq("transaction.store.id", storeId));
 		if (drugs != null) {
 			criteria.createCriteria("transactionDetail.drug",
@@ -1571,9 +1574,9 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		ProjectionList proList = Projections.projectionList();
 		proList.add(Projections.groupProperty("drug"))
 				.add(Projections.groupProperty("formulation"))
-				.add(Projections.sum("currentQuantity"))
-				.add(Projections.sum("quantity"))
-				.add(Projections.sum("issueQuantity"));
+				.add(Projections.sqlProjection( "sum(current_quantity) as current_quantity", new String[] {"current_quantity"},new Type[] {StandardBasicTypes.INTEGER}))
+				.add(Projections.sqlProjection( "sum(quantity)  as quantity", new String[] {"quantity"},new Type[] {StandardBasicTypes.INTEGER}))
+				.add(Projections.sqlProjection( "sum(issue_quantity)  as issue_quantity", new String[] {"issue_quantity"},new Type[] {StandardBasicTypes.INTEGER} ));
 		criteria.add(Restrictions.eq("transaction.store.id", storeId));
 		if (categoryId != null) {
 			criteria.add(Restrictions.eq("drugAlias.category.id", categoryId));
