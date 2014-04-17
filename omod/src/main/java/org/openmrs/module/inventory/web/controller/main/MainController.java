@@ -38,11 +38,11 @@ public class MainController {
 		 try {
 			 InventoryStore store = inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
 			 if(store != null){
-				 if( store.getParentStores() == null && !store.getRetired()){
+				 if( store.getParentStores().isEmpty() && !store.getRetired()){
 					 return "redirect:/module/inventory/viewStockBalance.form";
-				 }else if( store.getParentStores() != null && store.getIsDrug() == 1 && !store.getRetired() ){
+				 }else if( !store.getParentStores().isEmpty() && store.getIsDrug() == 1 && !store.getRetired() ){
 					 return "redirect:/module/inventory/subStoreIssueDrugList.form";
-				 }else if( store.getParentStores() != null && store.getIsDrug() == 2 && !store.getRetired() ){
+				 }else if( !store.getParentStores().isEmpty() && store.getIsDrug() == 2 && !store.getRetired() ){
 					 return "redirect:/module/inventory/itemViewStockBalanceSubStore.form";
 				 }
 			 }
