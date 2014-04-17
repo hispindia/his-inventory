@@ -175,13 +175,14 @@ public class HibernateInventoryDAO implements InventoryDAO {
 	public List<InventoryStore> listStoreByMainStore(Integer mainStoreid,
 			boolean bothMainStore) throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(
-				InventoryStore.class, "store");
+				InventoryStore.class, "store").createAlias("parentStores", "parent");
+	        
 		if (bothMainStore) {
 			criteria.add(Restrictions.or(
-					Restrictions.eq("store.parent.id", mainStoreid),
+					Restrictions.eq("parent.id", mainStoreid),
 					Restrictions.eq("store.id", mainStoreid)));
 		} else {
-			criteria.add(Restrictions.eq("store.parent.id", mainStoreid));
+			criteria.add(Restrictions.eq("parent.id", mainStoreid));
 		}
 		List<InventoryStore> l = criteria.list();
 		return l;
@@ -1920,7 +1921,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 				.createAlias("indent.store", "store");
 
-		criteria.add(Restrictions.eq("store.parent.id", mainStoreId));
+		criteria.add(Restrictions.eq("indent.mainStore.id", mainStoreId));
 
 		if (subStoreId != null) {
 
@@ -2137,7 +2138,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 				.createAlias("indent.store", "store");
 
-		criteria.add(Restrictions.eq("store.parent.id", mainStoreId));
+		criteria.add(Restrictions.eq("indent.mainStore.id", mainStoreId));
 		if (id != null && id > 0) {
 			criteria.add(Restrictions.eq("indent.id", id));
 		}
@@ -3601,7 +3602,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 				.createAlias("indent.store", "store");
 
-		criteria.add(Restrictions.eq("store.parent.id", mainStoreId));
+		criteria.add(Restrictions.eq("indent.mainStore.id", mainStoreId));
 
 		if (id != null && id > 0) {
 
@@ -3818,7 +3819,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 				.createAlias("indent.store", "store");
 
-		criteria.add(Restrictions.eq("store.parent.id", mainStoreId));
+		criteria.add(Restrictions.eq("indent.mainStore.id", mainStoreId));
 
 		if (subStoreId != null) {
 
