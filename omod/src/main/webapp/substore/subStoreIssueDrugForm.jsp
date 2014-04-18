@@ -177,7 +177,7 @@
 				<th><spring:message code="inventory.drug.name" /></th>
 				<th><spring:message code="inventory.drug.formulation" /></th>
 				<th><spring:message code="inventory.receiptDrug.quantity" /></th>
-				<th>Price</th>
+				<th><spring:message code="inventory.receiptDrug.price" text="Price" /></th>
 			</tr>
 			<c:choose>
 				<c:when test="${not empty listPatientDetail}">
@@ -193,17 +193,17 @@
 								onclick="INVENTORY.removeObject('${varStatus.index}','5');">${issue.transactionDetail.drug.name}</a></td>
 							<td>${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
 							<td>${issue.quantity}</td>
-							<td><fmt:formatNumber value="${price}" type="currency"/></td>
+							<td><fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/></td>
 						</tr>
 					</c:forEach>
 						<tr><td>&nbsp;</td></tr>
 						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
-							<td>Total</td>
+							<td><spring:message code="inventory.receiptDrug.total" text="Total" /></td>
 							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
-							<td><fmt:formatNumber value="${total}" type="currency"/></td>						
+							<td><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/></td>						
 						</tr>
 				</c:when>
 			</c:choose>
