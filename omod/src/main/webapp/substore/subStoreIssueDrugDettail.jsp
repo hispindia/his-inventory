@@ -20,6 +20,7 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ include file="/WEB-INF/template/headerMinimal.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <span class="boxHeader">Issue drugs detail</span>
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0">
@@ -30,10 +31,14 @@
 	<th><spring:message code="inventory.viewStockBalance.formulation"/></th>
 	<th ><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
 	<th><spring:message code="inventory.issueDrug.quantity"/></th>
+	<th><spring:message code="inventory.receiptDrug.price" text="Price" /></th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty listDrugIssue}">
+	<c:set var="total" value="${0}"/>  
 	<c:forEach items="${listDrugIssue}" var="detail" varStatus="varStatus">
+	<c:set var="price" value="${ detail.quantity* (detail.transactionDetail.unitPrice + 0.01*detail.transactionDetail.VAT*detail.transactionDetail.unitPrice) }" />
+	<c:set var="total" value="${total + price}"/>
 	<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${varStatus.count }"/></td>
 		<td>${detail.transactionDetail.drug.category.name} </td>	
@@ -41,8 +46,19 @@
 		<td>${detail.transactionDetail.formulation.name}-${detail.transactionDetail.formulation.dozage}</td>
 		<td><openmrs:formatDate date="${detail.transactionDetail.dateExpiry}" type="textbox"/></td>
 		<td>${detail.quantity }</td>
+		<td><fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/></td>
 		</tr>
 	</c:forEach>
+	<tr><td>&nbsp;</td></tr>
+	<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+		<td><spring:message code="inventory.receiptDrug.total" text="Total" /></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/></td>						
+	</tr>	
 	</c:when>
 	</c:choose>
 </table>
