@@ -282,20 +282,33 @@
 				<th><spring:message code="inventory.drug.name" /></th>
 				<th><spring:message code="inventory.drug.formulation" /></th>
 				<th><spring:message code="inventory.receiptDrug.quantity" /></th>
+				<th><spring:message code="inventory.receiptDrug.price" text="Price" /></th>
 			</tr>
 			<c:choose>
 				<c:when test="${not empty listPatientDetail}">
+				<c:set var="total" value="${0}"/>
 					<c:forEach items="${listPatientDetail}" var="issue"
 						varStatus="varStatus">
+						<c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" />
+						<c:set var="total" value="${total + price}"/>
 						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 							<td><c:out value="${varStatus.count }" /></td>
 							<td>${issue.transactionDetail.drug.category.name}</td>
 							<td>${issue.transactionDetail.drug.name}</td>
 							<td>${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
 							<td>${issue.quantity}</td>
+							<td><fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/></td>
 						</tr>
 					</c:forEach>
-
+						<tr><td>&nbsp;</td></tr>
+						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+							<td><spring:message code="inventory.receiptDrug.total" text="Total" /></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/></td>						
+						</tr>
 				</c:when>
 			</c:choose>
 		</table>
