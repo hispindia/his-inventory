@@ -89,44 +89,6 @@
 			</table>
 			<br />
 			<div id="divDrugAvailable">
-				<!--<c:if  test="${not empty listReceiptDrug}">
-<table class="box">
-	<tr>
-		<th>#</th>
-		<th>Date of expiry</th>
-		<th>Date of manufacturing</th>
-		<th>Company name</th>
-		<th>Patch no</th>
-		<th>Quantity available</th>
-		<th>Issue quantity</th>
-	</tr>
-	<c:choose>
-	<c:when test="${not empty listReceiptDrug}">
-	<c:forEach items="${listReceiptDrug}" var="avaiable" varStatus="varStatus">
-	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
-		<td><c:out value="${varStatus.count }"/></td>
-		<td><openmrs:formatDate date="${avaiable.dateExpiry}" type="textbox"/> </td>
-		<td><openmrs:formatDate date="${avaiable.dateManufacture}" type="textbox"/> </td>
-		<td>${avaiable.companyName }</td>
-		<td>${avaiable.batchNo }</td>
-		<td>${avaiable.currentQuantity}</td>
-		<td><input type="text" id="${avaiable.id }" name="${avaiable.id }" class="required digits" size="5"/></td>
-	</tr>
-	</c:forEach>
-	
-	</c:when>
-	<c:otherwise>
-	<tr >
-		<td colspan="6">This drug is empty in your store please indent it
-		<input type="hidden" id="${avaiable.id }" name="${avaiable.id }" class="required digits" size="5"/></td>
-		
-	</tr>	
-	</c:otherwise>
-	</c:choose>
-</table>
-</c:if>
-
--->
 			</div>
 			<br /> <input type="submit"
 				class="ui-button ui-widget ui-state-default ui-corner-all"
@@ -152,13 +114,13 @@
 			<table class="box" width="100%">
 				<tr>
 					<th>Identifier</th>
-					<th>Category</th>
+				 <!-- 	<th>Category</th> --> 
 					<th>Name</th>
 					<th>Age</th>
 				</tr>
 				<tr>
 					<td>${issueDrugPatient.patient.patientIdentifier.identifier}</td>
-					<td>${issueDrugPatient.patientCategory}</td>
+				    <!-- <td>${issueDrugPatient.patientCategory}</td>  -->
 					<td>${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.middleName}&nbsp;${issueDrugPatient.patient.familyName}</td>
 					<td><c:choose>
 							<c:when test="${issueDrugPatient.patient.age == 0  }">&lt 1</c:when>
@@ -250,13 +212,11 @@
 					<td>Patient identifier</td>
 					<td>${issueDrugPatient.identifier }</td>
 				</tr>
-				<%-- ghanshyam 27-02-2013 Feedback #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(remove category from registration,OPD,IPD,Inventory) --%>
-				<%--
+ 
 				<tr>
 					<td>Patient category</td>
 					<td>${issueDrugPatient.patientCategory }</td>
-				</tr>
-				--%>
+				</tr>  
 				<tr>
 					<td>Name</td>
 					<td>${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.middleName}&nbsp;${issueDrugPatient.patient.familyName}</td>
