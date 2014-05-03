@@ -22,6 +22,7 @@
  *  issue no: #1636
 --%>
 <%@ include file="/WEB-INF/template/include.jsp"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <openmrs:require privilege="Drug order queue" otherwise="/login.htm" redirect="/module/inventory/main.form" />
 
 <form method="post" id="processDrugOrderForm" class="box">
@@ -66,6 +67,13 @@
 							name="${avaiable.id }_formulationId" type='hidden'
 							value="${avaiable.formulation.id }" />
 						</td>
+						<c:set var="price" value="${avaiable.unitPrice + 0.01*avaiable.VAT*avaiable.unitPrice}" />
+						<td><input id="${avaiable.id }_price"
+							name="${avaiable.id }_price" type='hidden'
+							value=<fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/>
+							/>
+						</td>
+						
 					</tr>
 				</c:forEach>
 

@@ -54,7 +54,7 @@
 function process(drugId,formulationId){
 jQuery.ajax({
 			type : "GET",
-			url : getContextPath() + "/module/inventory/processDrugOrder.form",
+			url : getContextPath() + "/inventory/processDrugOrder.form",
 			data : ({
 				drugId			: drugId,
 				formulationId		: formulationId
@@ -92,12 +92,14 @@ function issueDrugOrder(listOfDrugQuantity) {
    var drugName=document.getElementById(availableIdArr[i].toString()+'_drugName').value;
    var formulation=document.getElementById(availableIdArr[i].toString()+'_formulation').value;
    var formulationId=document.getElementById(availableIdArr[i].toString()+'_formulationId').value;
+   var price=document.getElementById(availableIdArr[i].toString()+'_price').value;
    var avaiableId=availableIdArr[i];
    var deleteString = 'deleteInput(\"'+avaiableId+'\")';
    var htmlText =  "<div id='com_"+avaiableId+"_div'>"
 	       	 +"<input id='"+avaiableId+"_fName'  name='"+avaiableId+"_fName' type='text' size='20' value='"+drugName+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fFormulationName'  name='"+avaiableId+"_fFormulationName' type='text' size='11' value='"+formulation+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fQuantity'  name='"+avaiableId+"_fQuantity' type='text' size='3' value='"+quantity+"'  readonly='readonly'/>&nbsp;"
+			  +"<input id='"+avaiableId+"_fPrice'  name='"+avaiableId+"_fPrice' type='text' size='3' value='"+price+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fFormulationId'  name='"+avaiableId+"_fFormulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fAavaiableId'  name='avaiableId' type='hidden' value='"+avaiableId+"'/>&nbsp;"
 	       	 +"<input id='drugProcessName'  name='drugProcessName' type='hidden' value='"+drugName+"'/>&nbsp;"
@@ -109,6 +111,8 @@ function issueDrugOrder(listOfDrugQuantity) {
    newElement.innerHTML = htmlText;
    var fieldsArea = document.getElementById('headerValue');
    fieldsArea.appendChild(newElement);
+   
+
    
    jQuery("#"+drugName).hide();
    jQuery("#processDrugOrder").hide();
@@ -241,9 +245,10 @@ return false;
 
 		<div id="headerValue" class="cancelDraggable"
 			style="background: #f6f6f6; border: 1px #808080 solid; padding: 0.3em; margin: 0.3em 0em; width: 100%;">
-			<input type='text' size='20' value='Drug Name' readonly='readonly' />&nbsp;
-			<input type='text' size="11" value='Formulation' readonly="readonly" />&nbsp;
-			<input type='text' size="3" value='Qty' readonly="readonly" />&nbsp;</b>
+			<input type='text' size='20' value='Drug Name' readonly='readonly' />
+			<input type='text' size="11" value='Formulation' readonly="readonly" />
+			<input type='text' size="3" value='Qty' readonly="readonly" />
+			<input type='text' size="3" value='Price' readonly="readonly" />
 			<hr />
 		</div>
 
