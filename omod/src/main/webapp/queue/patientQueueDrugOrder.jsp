@@ -51,7 +51,7 @@
 		var searchKey = jQuery("#searchKey").val();
 		jQuery.ajax({
 			type : "GET",
-			url : getContextPath() + "/module/inventory/patientsearchdruggqueue.form",
+			url : getContextPath() + "/inventory/patientsearchdruggqueue.form",
 			data : ({
 				date			: date,
 				searchKey		: searchKey,
