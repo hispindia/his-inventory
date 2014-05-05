@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.openmrs.Role;
+import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.model.InventoryDrug;
 import org.openmrs.module.hospitalcore.model.InventoryDrugCategory;
@@ -30,6 +31,7 @@ import org.openmrs.module.hospitalcore.model.InventoryStore;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatient;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatientDetail;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransactionDetail;
+import org.openmrs.module.hospitalcore.util.PatientUtils;
 import org.openmrs.module.inventory.InventoryService;
 import org.openmrs.module.inventory.web.controller.global.StoreSingleton;
 import org.springframework.stereotype.Controller;
@@ -77,6 +79,12 @@ public class IssueDrugFormController {
 		        .getHash().get(fowardParam);
 		InventoryStoreDrugPatient issueDrugPatient = (InventoryStoreDrugPatient) StoreSingleton.getInstance().getHash()
 		        .get("issueDrug_" + userId);
+		if (issueDrugPatient != null) {
+			PatientService ps = (PatientService) Context.getService(PatientService.class);
+			model.addAttribute("patientCategory",
+			    ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
+			            .getValue());
+		}
 		model.addAttribute("listPatientDetail", list);
 		model.addAttribute("issueDrugPatient", issueDrugPatient);
 		return "/module/inventory/substore/subStoreIssueDrugForm";
@@ -87,9 +95,9 @@ public class IssueDrugFormController {
 	public String submit(HttpServletRequest request, Model model) {
 		List<String> errors = new ArrayList<String>();
 		
-		int drugId=0;
-		String drugN="",drugIdStr="";
-		InventoryDrug drug=null;
+		int drugId = 0;
+		String drugN = "", drugIdStr = "";
+		InventoryDrug drug = null;
 		
 		int userId = Context.getAuthenticatedUser().getId();
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
@@ -98,25 +106,24 @@ public class IssueDrugFormController {
 		int category = NumberUtils.toInt(request.getParameter("category"), 0);
 		Integer formulation = NumberUtils.toInt(request.getParameter("formulation"), 0);
 		
-		if (request.getParameter("drugName")!=null)
-			drugN=request.getParameter("drugName");
-			if (request.getParameter("drugId")!=null)
-		 drugIdStr=request.getParameter("drugId");
-			
-			if (!drugN.equalsIgnoreCase("")){
-				
-				 drug=inventoryService.getDrugByName(drugN);
-			}else if (!drugIdStr.equalsIgnoreCase("")){
-				drugId=Integer.parseInt(drugIdStr);
-				 drug=inventoryService.getDrugById(drugId);
-			}
-			
-			if(drug == null){
-				errors.add("inventory.receiptDrug.drug.required");
-			}else{
-			 drugId = drug.getId();
-			}
+		if (request.getParameter("drugName") != null)
+			drugN = request.getParameter("drugName");
+		if (request.getParameter("drugId") != null)
+			drugIdStr = request.getParameter("drugId");
 		
+		if (!drugN.equalsIgnoreCase("")) {
+			
+			drug = inventoryService.getDrugByName(drugN);
+		} else if (!drugIdStr.equalsIgnoreCase("")) {
+			drugId = Integer.parseInt(drugIdStr);
+			drug = inventoryService.getDrugById(drugId);
+		}
+		
+		if (drug == null) {
+			errors.add("inventory.receiptDrug.drug.required");
+		} else {
+			drugId = drug.getId();
+		}
 		
 		InventoryDrugFormulation formulationO = inventoryService.getDrugFormulationById(formulation);
 		if (formulationO == null) {

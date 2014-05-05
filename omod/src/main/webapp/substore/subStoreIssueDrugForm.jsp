@@ -114,13 +114,13 @@
 			<table class="box" width="100%">
 				<tr>
 					<th>Identifier</th>
-				 <!-- 	<th>Category</th> --> 
+				  	<th>Category</th> 
 					<th>Name</th>
 					<th>Age</th>
 				</tr>
 				<tr>
 					<td>${issueDrugPatient.patient.patientIdentifier.identifier}</td>
-				    <!-- <td>${issueDrugPatient.patientCategory}</td>  -->
+				    <td>${patientCategory}</td>
 					<td>${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.middleName}&nbsp;${issueDrugPatient.patient.familyName}</td>
 					<td><c:choose>
 							<c:when test="${issueDrugPatient.patient.age == 0  }">&lt 1</c:when>
@@ -215,7 +215,7 @@
  
 				<tr>
 					<td>Patient category</td>
-					<td>${issueDrugPatient.patientCategory }</td>
+					<td>${patientCategory }</td>
 				</tr>  
 				<tr>
 					<td>Name</td>
