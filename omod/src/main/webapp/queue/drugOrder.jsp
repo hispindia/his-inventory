@@ -74,6 +74,8 @@ jQuery.ajax({
 //ghanshyam,4-july-2013, issue no # 1984, User can issue drugs only from the first indent
 function issueDrugOrder(listOfDrugQuantity) {
    var availableIdArr=listOfDrugQuantity.split("."); 
+   	var totalValue = 0;
+	var preTotal = document.getElementById('totalValue');
    for (var i = 0; i < availableIdArr.length-1; i++) {
 
    var quantity=document.getElementById(availableIdArr[i].toString()+'_quantity').value;
@@ -93,21 +95,37 @@ function issueDrugOrder(listOfDrugQuantity) {
    var formulation=document.getElementById(availableIdArr[i].toString()+'_formulation').value;
    var formulationId=document.getElementById(availableIdArr[i].toString()+'_formulationId').value;
    var price=document.getElementById(availableIdArr[i].toString()+'_price').value;
+   totalValue = totalValue + price*quantity;
+	
+   if (preTotal != null){
+		totalValue = +totalValue + +preTotal.value;
+		preTotal.value = totalValue;
+		
+		}
+   var theLastNumberOfDiv = 1; 
+   var previousDiv = document.getElementById('1');
+   		 while (previousDiv) {
+			theLastNumberOfDiv = +theLastNumberOfDiv +1
+			previousDiv = document.getElementById(theLastNumberOfDiv);
+			}		
    var avaiableId=availableIdArr[i];
-   var deleteString = 'deleteInput(\"'+avaiableId+'\")';
+   var deleteString = 'deleteInput(\"'+theLastNumberOfDiv+'\")';
    var htmlText =  "<div id='com_"+avaiableId+"_div'>"
-	       	 +"<input id='"+avaiableId+"_fName'  name='"+avaiableId+"_fName' type='text' size='20' value='"+drugName+"'  readonly='readonly'/>&nbsp;"
-	       	 +"<input id='"+avaiableId+"_fFormulationName'  name='"+avaiableId+"_fFormulationName' type='text' size='11' value='"+formulation+"'  readonly='readonly'/>&nbsp;"
-	       	 +"<input id='"+avaiableId+"_fQuantity'  name='"+avaiableId+"_fQuantity' type='text' size='3' value='"+quantity+"'  readonly='readonly'/>&nbsp;"
-			  +"<input id='"+avaiableId+"_fPrice'  name='"+avaiableId+"_fPrice' type='text' size='3' value='"+price+"'  readonly='readonly'/>&nbsp;"
-	       	 +"<input id='"+avaiableId+"_fFormulationId'  name='"+avaiableId+"_fFormulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
-	       	 +"<input id='"+avaiableId+"_fAavaiableId'  name='avaiableId' type='hidden' value='"+avaiableId+"'/>&nbsp;"
+	       	 +"<input id='"+theLastNumberOfDiv+"_fName'  name='"+theLastNumberOfDiv+"_fName' type='text' size='20' value='"+drugName+"'  readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+theLastNumberOfDiv+"_fFormulationName'  name='"+theLastNumberOfDiv+"_fFormulationName' type='text' size='11' value='"+formulation+"'  readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+theLastNumberOfDiv+"_fQuantity'  name='"+theLastNumberOfDiv+"_fQuantity' type='text' size='3' value='"+quantity+"'  readonly='readonly'/>&nbsp;"
+			  +"<input id='"+theLastNumberOfDiv+"_fPrice'  name='"+theLastNumberOfDiv+"_fPrice' type='text' size='3' value='"+price+"'  readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+theLastNumberOfDiv+"_fFormulationId'  name='"+theLastNumberOfDiv+"_fFormulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
+	       	 +"<input id='"+theLastNumberOfDiv+"_fAavaiableId'  name='avaiableId' type='hidden' value='"+theLastNumberOfDiv+"'/>&nbsp;"
 	       	 +"<input id='drugProcessName'  name='drugProcessName' type='hidden' value='"+drugName+"'/>&nbsp;"
 	       	 +"<a style='color:red' href='#' onclick='"+deleteString+"' >[X]</a>"	
 	       	 +"</div>";
-	       	
+	
+
+     	
    var newElement = document.createElement('div');
-   newElement.setAttribute("id", avaiableId);   
+   
+   newElement.setAttribute("id", theLastNumberOfDiv);   
    newElement.innerHTML = htmlText;
    var fieldsArea = document.getElementById('headerValue');
    fieldsArea.appendChild(newElement);
@@ -117,15 +135,44 @@ function issueDrugOrder(listOfDrugQuantity) {
    jQuery("#"+drugName).hide();
    jQuery("#processDrugOrder").hide();
     }
-    
+	if (preTotal == null){
+		var totalText =  "<div id='com_"+avaiableId+"_div'>"
+				 +"<input id='"+avaiableId+"_fTotal'  name='"+avaiableId+"_fTotal' type='text' size='20' value='Total'  readonly='readonly'/>&nbsp;"
+				 +"<input id='totalValue'  name='totalValue' type='text' size='11' value='"+totalValue+"'  readonly='readonly'/>&nbsp;"
+				 +"</div>";  	
+	   var totalElement = document.createElement('div');
+	   totalElement.innerHTML = totalText;
+		var totalDiv = document.getElementById('totalDiv');
+	   totalDiv.appendChild(totalElement);
+	   jQuery("#totalDiv").show();	
+	}   
   }
   
 }
 
 function deleteInput(avaiableId) {
+	
    var parentDiv = 'headerValue';
    var child = document.getElementById(avaiableId);
    var parent = document.getElementById(parentDiv);
+   
+   var price = document.getElementById(avaiableId.toString()+'_fPrice').value;
+   var quantity=document.getElementById(avaiableId.toString()+'_fQuantity').value;
+   var removedTotal = +price* +quantity;
+
+   alert(price);
+   var preTotal = document.getElementById('totalValue');
+   var currentTotal = preTotal.value;
+   if( +currentTotal <= +removedTotal){
+		 var totalDiv = document.getElementById('totalDiv');
+		 while (totalDiv.firstChild) {
+			totalDiv.removeChild(totalDiv.firstChild);
+			}
+		jQuery("#totalDiv").hide();	
+		}
+	else{
+		preTotal.value = +currentTotal - + removedTotal
+	}	
    parent.removeChild(child); 
 }
 
@@ -245,6 +292,10 @@ return false;
 
 		<div id="headerValue" class="cancelDraggable"
 			style="background: #f6f6f6; border: 1px #808080 solid; padding: 0.3em; margin: 0.3em 0em; width: 100%;">
+			<div id="totalDiv" style="padding: 0.3em; margin: 0.3em 0em; width: 100%; display: none;">
+				
+			</div>
+			
 			<input type='text' size='20' value='Drug Name' readonly='readonly' />
 			<input type='text' size="11" value='Formulation' readonly="readonly" />
 			<input type='text' size="3" value='Qty' readonly="readonly" />
