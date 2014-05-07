@@ -18,5 +18,7 @@
 		<property name="createdOn" column="created_on"  />	
 		<property name="subStoreStatus" column="sub_store_status"  />
 		<property name="mainStoreStatus" column="main_store_status"  />
+		<many-to-one name="mainStore" class="org.openmrs.module.hospitalcore.model.InventoryStore"
+	        column="mainstore_id" cascade="none" lazy="false" />
 	</class>
 </hibernate-mapping>

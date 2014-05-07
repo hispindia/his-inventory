@@ -3213,7 +3213,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 
 		criteria.add(Restrictions.gt("transactionDetail.currentQuantity", 0));
 		ProjectionList proList = Projections.projectionList();
-		proList.add(Projections.sum("currentQuantity"));
+		proList.add(Projections.sqlProjection( "sum(current_quantity) as current_quantity", new String[] {"current_quantity"},new Type[] {StandardBasicTypes.INTEGER}));
 		criteria.setProjection(proList);
 		Object l = criteria.uniqueResult();
 		return l != null ? (Integer) l : 0;
@@ -3233,7 +3233,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		ProjectionList proList = Projections.projectionList();
 		proList.add(Projections.groupProperty("item"))
 				.add(Projections.groupProperty("specification"))
-				.add(Projections.sum("currentQuantity"));
+				.add(Projections.sqlProjection( "sum(current_quantity) as current_quantity", new String[] {"current_quantity"},new Type[] {StandardBasicTypes.INTEGER}));
 		criteria.add(Restrictions.eq("transaction.store.id", storeId));
 		if (CollectionUtils.isNotEmpty(items)) {
 			criteria.createCriteria("transactionDetail.item",
@@ -3283,9 +3283,10 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		ProjectionList proList = Projections.projectionList();
 		proList.add(Projections.groupProperty("item"))
 				.add(Projections.groupProperty("specification"))
-				.add(Projections.sum("currentQuantity"))
-				.add(Projections.sum("quantity"))
-				.add(Projections.sum("issueQuantity"));
+				.add(Projections.sqlProjection( "sum(current_quantity) as current_quantity", new String[] {"current_quantity"},new Type[] {StandardBasicTypes.INTEGER}))
+				.add(Projections.sqlProjection( "sum(quantity)  as quantity", new String[] {"quantity"},new Type[] {StandardBasicTypes.INTEGER}))
+				.add(Projections.sqlProjection( "sum(issue_quantity)  as issue_quantity", new String[] {"issue_quantity"},new Type[] {StandardBasicTypes.INTEGER} ));
+
 		criteria.add(Restrictions.eq("transaction.store.id", storeId));
 		if (categoryId != null) {
 			criteria.add(Restrictions
@@ -3381,9 +3382,9 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		ProjectionList proList = Projections.projectionList();
 		proList.add(Projections.groupProperty("item"))
 				.add(Projections.groupProperty("specification"))
-				.add(Projections.sum("currentQuantity"))
-				.add(Projections.sum("quantity"))
-				.add(Projections.sum("issueQuantity"));
+				.add(Projections.sqlProjection( "sum(current_quantity) as current_quantity", new String[] {"current_quantity"},new Type[] {StandardBasicTypes.INTEGER}))
+				.add(Projections.sqlProjection( "sum(quantity)  as quantity", new String[] {"quantity"},new Type[] {StandardBasicTypes.INTEGER}))
+				.add(Projections.sqlProjection( "sum(issue_quantity)  as issue_quantity", new String[] {"issue_quantity"},new Type[] {StandardBasicTypes.INTEGER} ));
 		criteria.add(Restrictions.eq("transaction.store.id", storeId));
 		if (categoryId != null) {
 			criteria.add(Restrictions

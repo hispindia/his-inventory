@@ -132,4 +132,18 @@
 			ALTER TABLE inventory_store_drug_transaction_detail ADD receipt_from varchar(255);
 		</sql>
 	</diff>
+	<diff>
+		<version>2.2.6</version>
+		<author>Thai Chuong</author>
+		<date>May 8th 2014</date>
+		<description>
+			Add column mainstore_id to store the assigned mainstore when indent item
+		</description>
+		<sql>
+			ALTER TABLE inventory_store_item_indent
+			ADD COLUMN `mainstore_id`  int(11) default NULL;
+			ALTER  TABLE inventory_store_item_indent add index fk_inventorystore_mainstore_item (mainstore_id), add constraint fk_inventorystore_mainstore_item foreign key (mainstore_id) references inventory_store (id);
+		</sql>
+	</diff>
+	
 </sqldiff>

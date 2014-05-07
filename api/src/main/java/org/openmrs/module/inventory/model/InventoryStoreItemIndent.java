@@ -14,6 +14,7 @@ public class InventoryStoreItemIndent implements  Serializable {
 	 private Date createdOn;
 	 private Integer subStoreStatus;
 	 private Integer mainStoreStatus;
+	 private InventoryStore mainStore;
 	 private InventoryStoreItemTransaction transaction;
 	public Integer getId() {
 		return id;
@@ -57,6 +58,13 @@ public class InventoryStoreItemIndent implements  Serializable {
 	public void setMainStoreStatus(Integer mainStoreStatus) {
 		this.mainStoreStatus = mainStoreStatus;
 	}
+    public InventoryStore getMainStore() {
+    	return mainStore;
+    }
+	
+    public void setMainStore(InventoryStore mainStore) {
+    	this.mainStore = mainStore;
+    }
 	public InventoryStoreItemTransaction getTransaction() {
 		return transaction;
 	}
