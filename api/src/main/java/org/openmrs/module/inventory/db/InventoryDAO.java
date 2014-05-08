@@ -46,6 +46,8 @@ import org.openmrs.module.inventory.model.InventoryStoreItemAccount;
 import org.openmrs.module.inventory.model.InventoryStoreItemAccountDetail;
 import org.openmrs.module.inventory.model.InventoryStoreItemIndent;
 import org.openmrs.module.inventory.model.InventoryStoreItemIndentDetail;
+import org.openmrs.module.inventory.model.InventoryStoreItemPatient;
+import org.openmrs.module.inventory.model.InventoryStoreItemPatientDetail;
 import org.openmrs.module.inventory.model.InventoryStoreItemTransaction;
 import org.openmrs.module.inventory.model.InventoryStoreItemTransactionDetail;
 
@@ -595,5 +597,29 @@ public interface InventoryDAO {
 	public List<OpdDrugOrder> listOfDrugOrder(Integer patientId, Integer encounterId) throws DAOException;
 	
 	public OpdDrugOrder getOpdDrugOrder(Integer patientId,Integer encounterId,Integer inventoryDrugId,Integer formulationId) throws DAOException;
+
+	/**
+	 * InventoryStoreItemPatient
+	 */
+	public List<InventoryStoreItemPatient> listStoreItemPatient(Integer storeId, String name, String fromDate,
+	                                                            String toDate, int min, int max) throws DAOException;
+	
+	public int countStoreItemPatient(Integer storeId, String name, String fromDate, String toDate) throws DAOException;
+	
+	public InventoryStoreItemPatient saveStoreItemPatient(InventoryStoreItemPatient bill) throws DAOException;
+	
+	public InventoryStoreItemPatient getStoreItemPatientById(Integer id) throws DAOException;
+	
+	/**
+	 * InventoryStoreItemPatientDetail
+	 */
+	public List<InventoryStoreItemPatientDetail> listStoreItemPatientDetail(Integer storeItemPatientDetailId)
+	                                                                                                         throws DAOException;
+	
+	public InventoryStoreItemPatientDetail saveStoreItemPatientDetail(InventoryStoreItemPatientDetail storeItemPatientDetail)
+	                                                                                                                         throws DAOException;
+	
+	public InventoryStoreItemPatientDetail getStoreItemPatientDetailById(Integer id) throws DAOException;
+
 	
 }

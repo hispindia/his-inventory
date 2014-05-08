@@ -284,6 +284,8 @@
 		InventoryStoreItemAccountDetail.hbm.xml
 		InventoryStoreDrugAccount.hbm.xml
 		InventoryStoreDrugAccountDetail.hbm.xml
+		InventoryStoreItemPatient.hbm.xml
+		InventoryStoreItemPatientDetail.hbm.xml
     </mappingFiles>
 </module>
 

@@ -145,5 +145,19 @@
 			ALTER  TABLE inventory_store_item_indent add index fk_inventorystore_mainstore_item (mainstore_id), add constraint fk_inventorystore_mainstore_item foreign key (mainstore_id) references inventory_store (id);
 		</sql>
 	</diff>
+	<diff>
+		<version>2.2.7</version>
+		<author>Thai Chuong</author>
+		<date>May 8th 2014</date>
+		<description>
+			Create tables to store "issue item to patient"
+		</description>
+		<sql>
+			CREATE TABLE IF NOT EXISTS inventory_store_item_patient (id integer not null auto_increment, store_id integer, patient_id integer, name varchar(255), prescription varchar(255), identifier varchar(255), created_by varchar(255), created_on datetime, primary key (id));
+			CREATE TABLE IF NOT EXISTS inventory_store_item_patient_detail (id integer not null auto_increment, store_item_patient_id integer, transaction_detail_id integer, quantity integer, primary key (id));
+			ALTER  TABLE inventory_store_item_patient_detail add constraint fk_inventory_store_item_patient foreign key (store_item_patient_id) references inventory_store_item_patient (id), add constraint fk_inventory_store_item_transaction_detail foreign key (transaction_detail_id) references inventory_store_item_transaction_detail (id);
+		</sql>
+	</diff>
+	
 	
 </sqldiff>

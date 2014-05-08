@@ -49,6 +49,8 @@ import org.openmrs.module.inventory.model.InventoryStoreItemAccount;
 import org.openmrs.module.inventory.model.InventoryStoreItemAccountDetail;
 import org.openmrs.module.inventory.model.InventoryStoreItemIndent;
 import org.openmrs.module.inventory.model.InventoryStoreItemIndentDetail;
+import org.openmrs.module.inventory.model.InventoryStoreItemPatient;
+import org.openmrs.module.inventory.model.InventoryStoreItemPatientDetail;
 import org.openmrs.module.inventory.model.InventoryStoreItemTransaction;
 import org.openmrs.module.inventory.model.InventoryStoreItemTransactionDetail;
 
@@ -978,6 +980,43 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 	
 	public OpdDrugOrder getOpdDrugOrder(Integer patientId,Integer encounterId,Integer inventoryDrugId,Integer formulationId) throws APIException {
 		return dao.getOpdDrugOrder(patientId,encounterId,inventoryDrugId,formulationId);
+	}
+
+	/**
+	 * InventoryStoreItemPatient
+	 */
+	public List<InventoryStoreItemPatient> listStoreItemPatient(Integer storeId, String name, String fromDate,
+	                                                            String toDate, int min, int max) throws APIException {
+		return dao.listStoreItemPatient(storeId, name, fromDate, toDate, min, max);
+	}
+	
+	public int countStoreItemPatient(Integer storeId, String name, String fromDate, String toDate) throws APIException {
+		return dao.countStoreItemPatient(storeId, name, fromDate, toDate);
+	}
+	
+	public InventoryStoreItemPatient saveStoreItemPatient(InventoryStoreItemPatient bill) throws APIException {
+		return dao.saveStoreItemPatient(bill);
+	}
+	
+	public InventoryStoreItemPatient getStoreItemPatientById(Integer id) throws APIException {
+		return dao.getStoreItemPatientById(id);
+	}
+	
+	/**
+	 * InventoryStoreItemPatientDetail
+	 */
+	public List<InventoryStoreItemPatientDetail> listStoreItemPatientDetail(Integer storeItemPatientDetailId)
+	                                                                                                         throws APIException {
+		return dao.listStoreItemPatientDetail(storeItemPatientDetailId);
+	}
+	
+	public InventoryStoreItemPatientDetail saveStoreItemPatientDetail(InventoryStoreItemPatientDetail storeItemPatientDetail)
+	                                                                                                                         throws APIException {
+		return dao.saveStoreItemPatientDetail(storeItemPatientDetail);
+	}
+	
+	public InventoryStoreItemPatientDetail getStoreItemPatientDetailById(Integer id) throws APIException {
+		return dao.getStoreItemPatientDetailById(id);
 	}
 	
 }

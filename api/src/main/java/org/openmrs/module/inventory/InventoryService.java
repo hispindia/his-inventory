@@ -46,6 +46,8 @@ import org.openmrs.module.inventory.model.InventoryStoreItemAccount;
 import org.openmrs.module.inventory.model.InventoryStoreItemAccountDetail;
 import org.openmrs.module.inventory.model.InventoryStoreItemIndent;
 import org.openmrs.module.inventory.model.InventoryStoreItemIndentDetail;
+import org.openmrs.module.inventory.model.InventoryStoreItemPatient;
+import org.openmrs.module.inventory.model.InventoryStoreItemPatientDetail;
 import org.openmrs.module.inventory.model.InventoryStoreItemTransaction;
 import org.openmrs.module.inventory.model.InventoryStoreItemTransactionDetail;
 import org.springframework.transaction.annotation.Transactional;
@@ -634,5 +636,30 @@ public interface InventoryService extends OpenmrsService {
 	public List<OpdDrugOrder> listOfDrugOrder(Integer patientId, Integer encounterId) throws APIException;
 	
 	public OpdDrugOrder getOpdDrugOrder(Integer patientId,Integer encounterId,Integer inventoryDrugId,Integer formulationId) throws APIException;
+	
+	/**
+	 * InventoryStoreItemPatient
+	 */
+	public List<InventoryStoreItemPatient> listStoreItemPatient(Integer storeId, String name, String fromDate,
+	                                                            String toDate, int min, int max) throws APIException;
+	
+	public int countStoreItemPatient(Integer storeId, String name, String fromDate, String toDate) throws APIException;
+	
+	@Transactional(readOnly = false)
+	public InventoryStoreItemPatient saveStoreItemPatient(InventoryStoreItemPatient bill) throws APIException;
+	
+	public InventoryStoreItemPatient getStoreItemPatientById(Integer id) throws APIException;
+	
+	/**
+	 * InventoryStoreItemPatientDetail
+	 */
+	public List<InventoryStoreItemPatientDetail> listStoreItemPatientDetail(Integer storeItemPatientDetailId)
+	                                                                                                         throws APIException;
+	
+	@Transactional(readOnly = false)
+	public InventoryStoreItemPatientDetail saveStoreItemPatientDetail(InventoryStoreItemPatientDetail storeItemPatientDetail)
+	                                                                                                                         throws APIException;
+	
+	public InventoryStoreItemPatientDetail getStoreItemPatientDetailById(Integer id) throws APIException;
 	
 }

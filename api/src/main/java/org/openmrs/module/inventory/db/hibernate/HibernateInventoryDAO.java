@@ -66,6 +66,8 @@ import org.openmrs.module.inventory.model.InventoryStoreItemAccount;
 import org.openmrs.module.inventory.model.InventoryStoreItemAccountDetail;
 import org.openmrs.module.inventory.model.InventoryStoreItemIndent;
 import org.openmrs.module.inventory.model.InventoryStoreItemIndentDetail;
+import org.openmrs.module.inventory.model.InventoryStoreItemPatient;
+import org.openmrs.module.inventory.model.InventoryStoreItemPatientDetail;
 import org.openmrs.module.inventory.model.InventoryStoreItemTransaction;
 import org.openmrs.module.inventory.model.InventoryStoreItemTransactionDetail;
 
@@ -4562,6 +4564,195 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		criteria.add(Restrictions.eq("inventoryDrugFormulation.id", formulationId));
 
 		return (OpdDrugOrder) criteria.uniqueResult();
+	}
+	
+	/**
+	 * InventoryStoreItemPatient
+	 */
+	public List<InventoryStoreItemPatient> listStoreItemPatient(
+			Integer storeId, String name, String fromDate, String toDate,
+			int min, int max) throws DAOException {
+		Criteria criteria = sessionFactory.getCurrentSession()
+				.createCriteria(InventoryStoreItemPatient.class, "bill")
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+				.createAlias("bill.store", "store");
+
+		if (storeId != null) {
+
+			criteria.add(Restrictions.eq("store.id", storeId));
+		}
+		if (!StringUtils.isBlank(name)) {
+			criteria.add(Restrictions.or(
+					Restrictions.like("bill.identifier", "%" + name + "%"),
+					Restrictions.like("bill.name", "%" + name + "%")));
+		}
+
+		if (!StringUtils.isBlank(fromDate) && StringUtils.isBlank(toDate)) {
+			String startFromDate = fromDate + " 00:00:00";
+			String endFromDate = fromDate + " 23:59:59";
+			try {
+				criteria.add(Restrictions.and(
+						Restrictions.ge("bill.createdOn",
+								formatter.parse(startFromDate)),
+						Restrictions.le("bill.createdOn",
+								formatter.parse(endFromDate))));
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("listBill>>Error convert date: "
+						+ e.toString());
+				e.printStackTrace();
+			}
+		} else if (StringUtils.isBlank(fromDate)
+				&& !StringUtils.isBlank(toDate)) {
+			String startToDate = toDate + " 00:00:00";
+			String endToDate = toDate + " 23:59:59";
+			try {
+				criteria.add(Restrictions.and(
+						Restrictions.ge("bill.createdOn",
+								formatter.parse(startToDate)),
+						Restrictions.le("bill.createdOn",
+								formatter.parse(endToDate))));
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("listBill>>Error convert date: "
+						+ e.toString());
+				e.printStackTrace();
+			}
+		} else if (!StringUtils.isBlank(fromDate)
+				&& !StringUtils.isBlank(toDate)) {
+			String startToDate = fromDate + " 00:00:00";
+			String endToDate = toDate + " 23:59:59";
+			try {
+				criteria.add(Restrictions.and(
+						Restrictions.ge("bill.createdOn",
+								formatter.parse(startToDate)),
+						Restrictions.le("bill.createdOn",
+								formatter.parse(endToDate))));
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("listBill>>Error convert date: "
+						+ e.toString());
+				e.printStackTrace();
+			}
+		}
+		criteria.addOrder(Order.desc("bill.createdOn"));
+		criteria.setFirstResult(min).setMaxResults(max);
+		List<InventoryStoreItemPatient> l = criteria.list();
+		return l;
+	}
+
+	public int countStoreItemPatient(Integer storeId, String name,
+			String fromDate, String toDate) throws DAOException {
+		Criteria criteria = sessionFactory.getCurrentSession()
+				.createCriteria(InventoryStoreItemPatient.class, "bill")
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+				.createAlias("bill.store", "store")
+				.setProjection(Projections.rowCount());
+
+		if (storeId != null) {
+			criteria.add(Restrictions.eq("store.id", storeId));
+		}
+		if (!StringUtils.isBlank(name)) {
+			criteria.add(Restrictions.or(
+					Restrictions.like("bill.identifier", "%" + name + "%"),
+					Restrictions.like("bill.name", "%" + name + "%")));
+		}
+		if (!StringUtils.isBlank(fromDate) && StringUtils.isBlank(toDate)) {
+			String startFromDate = fromDate + " 00:00:00";
+			String endFromDate = fromDate + " 23:59:59";
+			try {
+				criteria.add(Restrictions.and(
+						Restrictions.ge("bill.createdOn",
+								formatter.parse(startFromDate)),
+						Restrictions.le("bill.createdOn",
+								formatter.parse(endFromDate))));
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("countBill>>Error convert date: "
+						+ e.toString());
+				e.printStackTrace();
+			}
+		} else if (StringUtils.isBlank(fromDate)
+				&& !StringUtils.isBlank(toDate)) {
+			String startToDate = toDate + " 00:00:00";
+			String endToDate = toDate + " 23:59:59";
+			try {
+				criteria.add(Restrictions.and(
+						Restrictions.ge("bill.createdOn",
+								formatter.parse(startToDate)),
+						Restrictions.le("bill.createdOn",
+								formatter.parse(endToDate))));
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("countBill>>Error convert date: "
+						+ e.toString());
+				e.printStackTrace();
+			}
+		} else if (!StringUtils.isBlank(fromDate)
+				&& !StringUtils.isBlank(toDate)) {
+			String startToDate = fromDate + " 00:00:00";
+			String endToDate = toDate + " 23:59:59";
+			try {
+				criteria.add(Restrictions.and(
+						Restrictions.ge("bill.createdOn",
+								formatter.parse(startToDate)),
+						Restrictions.le("bill.createdOn",
+								formatter.parse(endToDate))));
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("countBill>>Error convert date: "
+						+ e.toString());
+				e.printStackTrace();
+			}
+		}
+		Number rs = (Number) criteria.uniqueResult();
+		return rs != null ? rs.intValue() : 0;
+	}
+
+	public InventoryStoreItemPatient saveStoreItemPatient(
+			InventoryStoreItemPatient bill) throws DAOException {
+		return (InventoryStoreItemPatient) sessionFactory.getCurrentSession()
+				.merge(bill);
+	}
+
+	public InventoryStoreItemPatient getStoreItemPatientById(Integer id)
+			throws DAOException {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(
+				InventoryStoreItemPatient.class, "itemPatient");
+		criteria.add(Restrictions.eq("patientBill.id", id));
+		return (InventoryStoreItemPatient) criteria.uniqueResult();
+	}
+
+	/**
+	 * InventoryStoreItemPatientDetail
+	 */
+	public List<InventoryStoreItemPatientDetail> listStoreItemPatientDetail(
+			Integer storeItemPatientId) throws DAOException {
+		Criteria criteria = sessionFactory
+				.getCurrentSession()
+				.createCriteria(InventoryStoreItemPatientDetail.class,
+						"billDetail")
+				.add(Restrictions.eq("billDetail.storeItemPatient.id",
+						storeItemPatientId));
+		List<InventoryStoreItemPatientDetail> l = criteria.list();
+		return l;
+	}
+
+	public InventoryStoreItemPatientDetail saveStoreItemPatientDetail(
+			InventoryStoreItemPatientDetail storeItemPatientDetail)
+			throws DAOException {
+		return (InventoryStoreItemPatientDetail) sessionFactory
+				.getCurrentSession().merge(storeItemPatientDetail);
+	}
+
+	public InventoryStoreItemPatientDetail getStoreItemPatientDetailById(
+			Integer id) throws DAOException {
+		Criteria criteria = sessionFactory
+				.getCurrentSession()
+				.createCriteria(InventoryStoreItemPatientDetail.class,
+						"billDetail").add(Restrictions.eq("billDetail.id", id));
+
+		return (InventoryStoreItemPatientDetail) criteria.uniqueResult();
 	}
 
 }
