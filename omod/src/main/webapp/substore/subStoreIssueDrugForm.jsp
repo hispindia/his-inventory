@@ -130,6 +130,9 @@
 
 			</table>
 		</c:if>
+		
+		
+
 	</div>
 	<div class="box">
 		<table class="box" width="100%" cellpadding="5" cellspacing="0">
@@ -147,7 +150,8 @@
 					<c:forEach items="${listPatientDetail}" var="issue"
 						varStatus="varStatus">
 						<c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" />
-					<c:set var="total" value="${total + price}"/>
+						<c:set var="generalVar" value="General"/>
+						<c:set var="total" value="${total + price}"/>	
 						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 							<td><c:out value="${varStatus.count }" /></td>
 							<td>${issue.transactionDetail.drug.category.name}</td>
@@ -165,7 +169,18 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/></td>						
+							<td>	
+								<c:choose>
+									<c:when test ="${patientCategory ne generalVar}">
+										<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+									</c:when>
+									
+									<c:otherwise>
+										<strike><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+										</strike>  0.00
+									</c:otherwise>
+								</c:choose>
+							</td>						
 						</tr>
 				</c:when>
 			</c:choose>
@@ -267,7 +282,18 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/></td>						
+							<td>	
+								<c:choose>
+									<c:when test ="${patientCategory ne generalVar}">
+										<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+									</c:when>
+									
+									<c:otherwise>
+										<strike><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+										</strike>  0.00
+									</c:otherwise>
+								</c:choose>
+							</td>						
 						</tr>
 				</c:when>
 			</c:choose>
