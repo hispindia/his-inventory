@@ -160,7 +160,6 @@ function deleteInput(avaiableId) {
    var quantity=document.getElementById(avaiableId.toString()+'_fQuantity').value;
    var removedTotal = +price* +quantity;
 
-   alert(price);
    var preTotal = document.getElementById('totalValue');
    var currentTotal = preTotal.value;
    if( +currentTotal <= +removedTotal){
