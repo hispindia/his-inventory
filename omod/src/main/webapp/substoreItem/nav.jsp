@@ -23,8 +23,8 @@
 <br/><br/>
 <b><a href="#" onclick="ACT.go('itemViewStockBalanceSubStore.form');"><spring:message code="inventory.viewStockBalance"/></a></b>&nbsp;|
 <b><a href="#" onclick="ACT.go('subStoreIndentItemList.form');"><spring:message code="inventory.substore.indentItem"/></a></b>&nbsp;|
-<b><a href="#" onclick="ACT.go('subStoreIssueItemList.form');"><spring:message code="inventory.substore.issueItem"/></a></b>
-
+<b><a href="#" onclick="ACT.go('subStoreIssueItemList.form');"><spring:message code="inventory.substore.issueItem"/></a></b>&nbsp;|
+<b><a href="#" onclick="ACT.go('subStoreIssueItemPatientList.form');"><spring:message code="inventory.substore.issueItemPatient"/></a></b>
 <br/><br/>
 
 
