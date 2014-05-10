@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.hospitalcore.model">
+
+	<class name="InventoryStoreItemPatientDetail" table="inventory_store_item_patient_detail" batch-size="500">
+		<id name="id" type="int" column="id" unsaved-value="0">
+				<generator class="native" />
+		</id>
+	    <many-to-one name="storeItemPatient" class="org.openmrs.module.hospitalcore.model.InventoryStoreItemPatient"
+	        column="store_item_patient_id" cascade="none" lazy="false" />
+	    <many-to-one name="transactionDetail" class="org.openmrs.module.hospitalcore.model.InventoryStoreItemTransactionDetail"
+	        column="transaction_detail_id" cascade="none"  />
+		<property name="quantity" column="quantity"  />
+	</class>
+</hibernate-mapping>
