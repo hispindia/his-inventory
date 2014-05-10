@@ -171,7 +171,7 @@
 							<td></td>
 							<td>	
 								<c:choose>
-									<c:when test ="${patientCategory ne generalVar}">
+									<c:when test ="${patientCategory == generalVar}">
 										<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
 									</c:when>
 									
