@@ -97,9 +97,12 @@
 --></div>
 <br/>
 <input type="submit" class="ui-button ui-widget ui-state-default ui-corner-all" onclick="ISSUE.checkQtyBeforeIssue(this);" value="<spring:message code="inventory.issueItem.addToSlip"/>">
-<c:if  test="${empty issueItemAccount}">
-<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.issueItem.createPatient"/>" onclick="ISSUE.createPatient();">
-</c:if>
+			<c:if test="${empty issueItemPatient}">
+				<input type="button"
+					class="ui-button ui-widget ui-state-default ui-corner-all"
+					value="Find Patient"
+					onclick="ISSUE.createPatientForItem();">
+			</c:if>
 <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.back"/>" onclick="ACT.go('subStoreIssueItemList.form');">
 </form>
 </div>
@@ -107,13 +110,33 @@
 <!-- Purchase list -->
 <div style="width: 58%; float: right; margin-right: 16px; ">
 <b class="boxHeader">Issue item to patient slip</b>
+
 <div class="box">
-<c:if  test="${not empty issueItemAccount}">
-<table class="box" width="100%" cellpadding="5" cellspacing="0">
-	<tr><td>Name of account: <strong>${issueItemAccount.name }</strong></td></tr>
-</table>
-</c:if>
+	<c:if test="${not empty issueItemPatient}">
+		<table class="box" width="100%">
+			<tr>
+				<th>Identifier</th>
+				<th>Category</th> 
+				<th>Name</th>
+				<th>Age</th>
+			</tr>
+			<tr>
+				<td>${issueItemPatient.patient.patientIdentifier.identifier}</td>
+				<td>${patientCategory}</td>
+				<td>${issueItemPatient.patient.givenName}&nbsp;${issueItemPatient.patient.middleName}&nbsp;${issueItemPatient.patient.familyName}</td>
+				<td><c:choose>
+						<c:when test="${issueItemPatient.patient.age == 0  }">&lt 1</c:when>
+						<c:otherwise>${issueItemPatient.patient.age }</c:otherwise>
+					</c:choose></td>
+			</tr>
+
+		</table>
+	</c:if>
+	
+	
+
 </div>
+
 <div class="box">
 <table class="box" width="100%" cellpadding="5" cellspacing="0">
 	<tr>
@@ -124,8 +147,8 @@
 	<th><spring:message code="inventory.receiptItem.quantity"/></th>
 	</tr>
 	<c:choose>
-	<c:when test="${not empty listAccountDetail}">
-	<c:forEach items="${listAccountDetail}" var="issue" varStatus="varStatus">
+	<c:when test="${not empty listPatientDetail}">
+	<c:forEach items="${listPatientDetail}" var="issue" varStatus="varStatus">
 	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${varStatus.count }"/></td>
 		<td>${issue.transactionDetail.item.subCategory.name} </td>	
@@ -142,12 +165,12 @@
 		<table class="box" width="100%" cellpadding="5" cellspacing="0">
 		<tr>
 			<td>
-				<c:if  test="${not empty listAccountDetail && not empty issueItemAccount}">
-					<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all"  id="bttprocess" value="<spring:message code="inventory.finish"/>" onclick="ISSUE.processSlipItem('0');" />
+				<c:if  test="${not empty listPatientDetail && not empty issueItemAccount}">
+					<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all"  id="bttprocess" value="<spring:message code="inventory.finish"/>" onclick="ISSUE.processSlipItemPatient('0');" />
 					<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="bttprint" value="<spring:message code="inventory.print"/>" onClick="PURCHASE.printDiv();" />
 				</c:if>
-				<c:if  test="${not empty listAccountDetail || not empty issueItemAccount}">
-					<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="bttclear" value="<spring:message code="inventory.clear"/>"  onclick="ISSUE.processSlipItem('1');"/>
+				<c:if  test="${not empty listPatientDetail || not empty issueItemPatient}">
+					<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="bttclear" value="<spring:message code="inventory.clear"/>"  onclick="ISSUE.processSlipItemPatient('1');"/>
 				</c:if>
 			</td>
 		</tr>
@@ -161,7 +184,7 @@
 <c:if  test="${not empty issueItemAccount}">
 <br />
 <br />      		
-<center style="float:center;font-size: 2.2em">Issue Item To Patient ${issueItemAccount.name }</center>
+<center style="float:center;font-size: 2.2em">Issue Item To Account ${issueItemAccount.name }</center>
 <br/>
 <br/>
 <span style="float:right;font-size: 1.7em">Date: <openmrs:formatDate date="${date}" type="textbox"/></span>
@@ -177,8 +200,8 @@
 	<th><spring:message code="inventory.receiptItem.quantity"/></th>
 	</tr>
 	<c:choose>
-	<c:when test="${not empty listAccountDetail}">
-	<c:forEach items="${listAccountDetail}" var="issue" varStatus="varStatus">
+	<c:when test="${not empty listPatientDetail}">
+	<c:forEach items="${listPatientDetail}" var="issue" varStatus="varStatus">
 	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${varStatus.count }"/></td>
 		<td>${issue.transactionDetail.item.subCategory.name} </td>	

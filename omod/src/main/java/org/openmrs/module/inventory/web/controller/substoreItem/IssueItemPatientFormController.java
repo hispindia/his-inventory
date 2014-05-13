@@ -16,6 +16,8 @@ import org.openmrs.module.inventory.model.InventoryItem;
 import org.openmrs.module.inventory.model.InventoryItemSubCategory;
 import org.openmrs.module.inventory.model.InventoryStoreItemAccount;
 import org.openmrs.module.inventory.model.InventoryStoreItemAccountDetail;
+import org.openmrs.module.inventory.model.InventoryStoreItemPatient;
+import org.openmrs.module.inventory.model.InventoryStoreItemPatientDetail;
 import org.openmrs.module.inventory.model.InventoryStoreItemTransactionDetail;
 import org.openmrs.module.inventory.web.controller.global.StoreSingleton;
 import org.springframework.stereotype.Controller;
@@ -44,10 +46,10 @@ public class IssueItemPatientFormController {
 	 model.addAttribute("date",new Date());
  	 int userId = Context.getAuthenticatedUser().getId();
 	 String fowardParam = "issueItemDetail_"+userId;
-	 List<InventoryStoreItemAccountDetail> list = (List<InventoryStoreItemAccountDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
-	 InventoryStoreItemAccount issueItemAccount = (InventoryStoreItemAccount )StoreSingleton.getInstance().getHash().get("issueItem_"+userId);
-	 model.addAttribute("listAccountDetail", list);
-	 model.addAttribute("issueItemAccount", issueItemAccount);
+	 List<InventoryStoreItemPatientDetail> list = (List<InventoryStoreItemPatientDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
+	 InventoryStoreItemPatient issueItemPatient = (InventoryStoreItemPatient )StoreSingleton.getInstance().getHash().get("issueItemPatient_"+userId);
+	 model.addAttribute("listPatientDetail", list);
+	 model.addAttribute("issueItemPatient", issueItemPatient);
 	 return "/module/inventory/substoreItem/subStoreIssueItemPatientForm";
 	 
 	}
@@ -69,11 +71,11 @@ public class IssueItemPatientFormController {
 			model.addAttribute("errors", errors);
 			model.addAttribute("category", category);
 			String fowardParam = "issueItemDetail_"+userId;
-			List<InventoryStoreItemAccountDetail> list = (List<InventoryStoreItemAccountDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
+			List<InventoryStoreItemPatientDetail> list = (List<InventoryStoreItemPatientDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
 			 InventoryStoreItemAccount issueItemAccount = (InventoryStoreItemAccount )StoreSingleton.getInstance().getHash().get("issueItem_"+userId);
 			 model.addAttribute("issueItemAccount", issueItemAccount);
-			model.addAttribute("listAccountDetail", list);
-			return "/module/inventory/substoreItem/subStoreIssueItemForm";
+			model.addAttribute("listPatientDetail", list);
+			return "/module/inventory/substoreItem/subStoreIssueItemPatientForm";
 		}
 		
 		
@@ -89,7 +91,7 @@ public class IssueItemPatientFormController {
 		
 		if(errors != null && errors.size() > 0){
 			String fowardParam = "issueItemDetail_"+userId;
-			List<InventoryStoreItemAccountDetail> list = (List<InventoryStoreItemAccountDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
+			List<InventoryStoreItemPatientDetail> list = (List<InventoryStoreItemPatientDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
 			 InventoryStoreItemAccount issueItemAccount = (InventoryStoreItemAccount )StoreSingleton.getInstance().getHash().get("issueItem_"+userId);
 			 model.addAttribute("issueItemAccount", issueItemAccount);
 			model.addAttribute("listAccountDetail", list);
@@ -98,20 +100,20 @@ public class IssueItemPatientFormController {
 			model.addAttribute("issueItemQuantity", issueItemQuantity);
 			model.addAttribute("itemId", itemId);
 			model.addAttribute("errors", errors);
-			return "/module/inventory/substoreItem/subStoreIssueItemForm";
+			return "/module/inventory/substoreItem/subStoreIssueItemPatientForm";
 		}
 		
 		
 		String fowardParam = "issueItemDetail_"+userId;
-		List<InventoryStoreItemAccountDetail> list = (List<InventoryStoreItemAccountDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
+		List<InventoryStoreItemPatientDetail> list = (List<InventoryStoreItemPatientDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
 		
 		List<InventoryStoreItemTransactionDetail> listReceiptItem = inventoryService.listStoreItemTransactionDetail(store.getId(), item.getId(), specification, true);
 		if(list == null){
-			list = new ArrayList<InventoryStoreItemAccountDetail>();
+			list = new ArrayList<InventoryStoreItemPatientDetail>();
 		}
-		List<InventoryStoreItemAccountDetail> listExt = new ArrayList<InventoryStoreItemAccountDetail>(list); 
+		List<InventoryStoreItemPatientDetail> listExt = new ArrayList<InventoryStoreItemPatientDetail>(list); 
 		if(CollectionUtils.isNotEmpty(list)){
-			for(InventoryStoreItemAccountDetail tDetail : list){
+			for(InventoryStoreItemPatientDetail tDetail : list){
 				if(tDetail.getTransactionDetail().getItem().getId().equals(item.getId()) ){
 					if(tDetail.getTransactionDetail().getSpecification() != null && specification != null  ){
 						if(tDetail.getTransactionDetail().getSpecification().getId().equals(specification)){
@@ -131,7 +133,7 @@ public class IssueItemPatientFormController {
 		
 		
 		for(InventoryStoreItemTransactionDetail t: listReceiptItem){
-			InventoryStoreItemAccountDetail issueItemDetail = new InventoryStoreItemAccountDetail();
+			InventoryStoreItemPatientDetail issueItemDetail = new InventoryStoreItemPatientDetail();
 			//ghanshyam 7-august-2013 code review bug
 			if(t.getItem().getId().equals(item.getId())){
 				if(t.getCurrentQuantity() >= issueItemQuantity){
@@ -150,9 +152,9 @@ public class IssueItemPatientFormController {
 			}
 		}
 		StoreSingleton.getInstance().getHash().put(fowardParam, listExt);
-		 InventoryStoreItemAccount issueItemAccount = (InventoryStoreItemAccount )StoreSingleton.getInstance().getHash().get("issueItem_"+userId);
+		InventoryStoreItemPatientDetail issueItemAccount = (InventoryStoreItemPatientDetail )StoreSingleton.getInstance().getHash().get("issueItem_"+userId);
 		// model.addAttribute("issueItemAccount", issueItemAccount);
 		//model.addAttribute("listAccountDetail", list);
-	 return "redirect:/module/inventory/subStoreIssueItemForm.form";
+	 return "redirect:/module/inventory/subStoreIssueItemPatientForm.form";
 	}
 }

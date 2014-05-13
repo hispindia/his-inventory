@@ -35,6 +35,8 @@ import org.openmrs.module.inventory.model.InventoryStoreItemAccount;
 import org.openmrs.module.inventory.model.InventoryStoreItemAccountDetail;
 import org.openmrs.module.inventory.model.InventoryStoreItemIndent;
 import org.openmrs.module.inventory.model.InventoryStoreItemIndentDetail;
+import org.openmrs.module.inventory.model.InventoryStoreItemPatient;
+import org.openmrs.module.inventory.model.InventoryStoreItemPatientDetail;
 import org.openmrs.module.inventory.model.InventoryStoreItemTransaction;
 import org.openmrs.module.inventory.model.InventoryStoreItemTransactionDetail;
 import org.openmrs.module.inventory.util.DateUtils;
@@ -706,6 +708,105 @@ public class AjaxController {
 		}
 		
 		return "redirect:/module/inventory/subStoreIssueItemList.form";
+	}
+	
+	@RequestMapping("/module/inventory/processIssueItemPatient.form")
+	public String processIssueItemPatient( @RequestParam(value="action",required=false)  Integer action,Model model) {
+		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
+		int userId = Context.getAuthenticatedUser().getId();
+		String fowardParam = "issueItemDetail_"+userId;
+		InventoryStore store =  inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
+		if(action == 1){
+			StoreSingleton.getInstance().getHash().remove(fowardParam);
+			StoreSingleton.getInstance().getHash().remove("issueItemPatient_"+userId);
+			return "redirect:/module/inventory/subStoreIssueItemPatientForm.form";
+		}
+		List<InventoryStoreItemPatientDetail> list = (List<InventoryStoreItemPatientDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
+		InventoryStoreItemPatient issueItemPatient = (InventoryStoreItemPatient )StoreSingleton.getInstance().getHash().get("issueItemPatient_"+userId);
+		if(issueItemPatient != null && list != null && list.size() > 0){
+			
+			Date date = new Date();
+			//create transaction issue from substore
+			 InventoryStoreItemTransaction transaction = new InventoryStoreItemTransaction();
+			 transaction.setDescription("ISSUE ITEM "+DateUtils.getDDMMYYYY());
+			 transaction.setStore(store);
+			 transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
+			 transaction.setCreatedOn(date);
+			 transaction.setCreatedBy(Context.getAuthenticatedUser().getGivenName());
+			 transaction = inventoryService.saveStoreItemTransaction(transaction);
+			 
+			 
+			
+			 issueItemPatient = inventoryService.saveStoreItemPatient(issueItemPatient);
+			for(InventoryStoreItemPatientDetail pDetail : list){
+				Date date1 = new Date();
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Integer specificationId =  pDetail.getTransactionDetail().getSpecification() != null? pDetail.getTransactionDetail().getSpecification().getId() : null;
+				Integer totalQuantity = inventoryService.sumStoreItemCurrentQuantity(store.getId(),pDetail.getTransactionDetail().getItem().getId(), specificationId);
+				int t = totalQuantity - pDetail.getQuantity();
+				InventoryStoreItemTransactionDetail itemTransactionDetail = inventoryService.getStoreItemTransactionDetailById(pDetail.getTransactionDetail().getId());
+				pDetail.getTransactionDetail().setCurrentQuantity(itemTransactionDetail.getCurrentQuantity() - pDetail.getQuantity());
+				//System.out.println("get current quantity: "+pDetail.getTransactionDetail().getCurrentQuantity());
+				//System.out.println("total quantity: "+totalQuantity);
+				inventoryService.saveStoreItemTransactionDetail(pDetail.getTransactionDetail());
+				
+				//save transactiondetail first
+				InventoryStoreItemTransactionDetail transDetail = new InventoryStoreItemTransactionDetail();
+				transDetail.setTransaction(transaction);
+				transDetail.setCurrentQuantity(0);
+				transDetail.setIssueQuantity(pDetail.getQuantity());
+				transDetail.setOpeningBalance(totalQuantity);
+				transDetail.setClosingBalance(t);
+				transDetail.setQuantity(0);
+				transDetail.setVAT(pDetail.getTransactionDetail().getVAT());
+				transDetail.setUnitPrice(pDetail.getTransactionDetail().getUnitPrice());
+				transDetail.setItem(pDetail.getTransactionDetail().getItem());
+				transDetail.setSpecification(pDetail.getTransactionDetail().getSpecification());
+				transDetail.setCompanyName(pDetail.getTransactionDetail().getCompanyName());
+				transDetail.setDateManufacture(pDetail.getTransactionDetail().getDateManufacture());
+				transDetail.setReceiptDate(pDetail.getTransactionDetail().getReceiptDate());
+				transDetail.setCreatedOn(date1);
+				
+				//-------------
+				//Money moneyUnitPrice = new Money(pDetail.getTransactionDetail().getUnitPrice());
+				//Money vATUnitPrice = new Money(pDetail.getTransactionDetail().getVAT());
+				//Money m = moneyUnitPrice.plus(vATUnitPrice);
+				//Money totl = m.times( pDetail.getQuantity());
+				//transDetail.setTotalPrice(totl.getAmount());
+				//-----------------
+				
+
+				 /*Money moneyUnitPrice = new Money(pDetail.getTransactionDetail().getUnitPrice());
+				 Money totl = moneyUnitPrice.times(pDetail.getQuantity());
+				
+				totl = totl.plus(totl.times(pDetail.getTransactionDetail().getVAT().divide(new BigDecimal(100),2)));
+				transDetail.setTotalPrice(totl.getAmount());*/
+				
+				BigDecimal moneyUnitPrice = pDetail.getTransactionDetail().getUnitPrice().multiply(new BigDecimal(pDetail.getQuantity()));
+				moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(pDetail.getTransactionDetail().getVAT().divide(new BigDecimal(100))));
+				transDetail.setTotalPrice(moneyUnitPrice);
+				
+				transDetail.setParent(pDetail.getTransactionDetail());
+				transDetail = inventoryService.saveStoreItemTransactionDetail(transDetail);
+				
+				pDetail.setStoreItemPatient(issueItemPatient);
+				pDetail.setTransactionDetail(transDetail);
+				//save issue to patient detail
+				inventoryService.saveStoreItemPatientDetail(pDetail);
+				//save issues transaction detail
+				
+			}
+			
+			StoreSingleton.getInstance().getHash().remove(fowardParam);
+			StoreSingleton.getInstance().getHash().remove("issueItemPatient_"+userId);
+		}
+		
+		return "redirect:/module/inventory/subStoreIssueItemPatientList.form";
 	}
 	
 	@RequestMapping("/module/inventory/viewStockBalanceDetail.form")

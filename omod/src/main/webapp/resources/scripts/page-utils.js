@@ -818,6 +818,13 @@ ISSUE={
 				tb_show("...",url,false);
 			}
 		},
+		createPatientForItem : function()
+		{
+			if(SESSION.checkSession()){
+				url = "createPatientIssueItem.form?keepThis=false&TB_iframe=true&height=500&width=800";
+				tb_show("...",url,false);
+			}
+		},		
 		addPatient : function(url)
 		{
 			if(SESSION.checkSession()){
@@ -887,6 +894,22 @@ ISSUE={
 			}
 			
 		},
+		processSlipItemPatient : function(data){
+			if(data == 1){
+				if( confirm("Are you sure you want to clear this?")){
+					ACT.go("processIssueItemPatient.form?action="+data);
+				}
+			}else{
+				if( confirm("Are you sure ?")){
+					jQuery("#bttprocess").val("Wait a moment!");
+					jQuery("#bttprocess").attr("disabled","disabled");
+					jQuery("#bttclear").attr("disabled","disabled");
+					jQuery("#bttprint").attr("disabled","disabled");
+					ACT.go("processIssueItem.form?action="+data);
+				}
+			}
+			
+		},		
 		detailIssueDrug : function(id){
 			if(SESSION.checkSession()){
 				url = "subStoreIssueDrugDettail.form?issueId="+id+"&keepThis=false&TB_iframe=true&height=500&width=800";
