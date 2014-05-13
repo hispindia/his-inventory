@@ -28,7 +28,7 @@
 <c:forEach items="${errors.allErrors}" var="error">
 	<span class="error"><spring:message code="${error.defaultMessage}" text="${error.defaultMessage}"/></span><
 </c:forEach>
-<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code='inventory.issueItemPatient.add'/>" onclick="ACT.go('subStoreIssueItemForm.form');"/>
+<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code='inventory.issueItemPatient.add'/>" onclick="ACT.go('subStoreIssueItemPatientForm.form');"/>
 <br /><br />
 
 <form method="get"  id="form">
