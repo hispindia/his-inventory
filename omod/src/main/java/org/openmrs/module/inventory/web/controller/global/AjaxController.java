@@ -877,6 +877,18 @@ public class AjaxController {
 		}
 		return "/module/inventory/substoreItem/subStoreIssueItemDettail";
 	}
+
+	@RequestMapping("/module/inventory/subStoreIssueItemPatientDettail.form")
+	public String viewDetailIssueItemPatient( @RequestParam(value="issueId",required=false)  Integer issueId, Model model) {
+		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
+		List<InventoryStoreItemPatientDetail> listItemIssue = inventoryService.listStoreItemPatientDetail(issueId);
+		model.addAttribute("listItemPatientIssue", listItemIssue);
+		if(CollectionUtils.isNotEmpty(listItemIssue)){
+			model.addAttribute("issueItemPatient", listItemIssue.get(0).getStoreItemPatient());
+			model.addAttribute("date", listItemIssue.get(0).getStoreItemPatient().getCreatedOn());
+		}
+		return "/module/inventory/substoreItem/subStoreIssueItemPatientDettail";
+	}
 	
 	@RequestMapping("/module/inventory/subCatByCat.form")
 	public String getSubCatByCat( @RequestParam(value="categoryId",required=false)  Integer categoryId, Model model) {

@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.openmrs.Role;
+import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.model.InventoryStore;
+import org.openmrs.module.hospitalcore.util.PatientUtils;
 import org.openmrs.module.inventory.InventoryService;
 import org.openmrs.module.inventory.model.InventoryItem;
 import org.openmrs.module.inventory.model.InventoryItemSubCategory;
@@ -48,7 +50,14 @@ public class IssueItemPatientFormController {
 	 String fowardParam = "issueItemDetail_"+userId;
 	 List<InventoryStoreItemPatientDetail> list = (List<InventoryStoreItemPatientDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
 	 InventoryStoreItemPatient issueItemPatient = (InventoryStoreItemPatient )StoreSingleton.getInstance().getHash().get("issueItemPatient_"+userId);
-	 model.addAttribute("listPatientDetail", list);
+	 
+	if (issueItemPatient != null) {
+		PatientService ps = (PatientService) Context.getService(PatientService.class);
+		model.addAttribute("patientCategory",
+		    ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
+		            .getValue());
+	}
+	 model.addAttribute("listItemDetail", list);
 	 model.addAttribute("issueItemPatient", issueItemPatient);
 	 return "/module/inventory/substoreItem/subStoreIssueItemPatientForm";
 	 

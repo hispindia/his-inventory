@@ -23,6 +23,7 @@
 <spring:message var="pageTitle" code="inventory.issueItem.manage" scope="page"/>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div style="width: 40%; float: left; margin-left: 4px; ">
 
@@ -103,7 +104,7 @@
 					value="Find Patient"
 					onclick="ISSUE.createPatientForItem();">
 			</c:if>
-<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.back"/>" onclick="ACT.go('subStoreIssueItemList.form');">
+<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.back"/>" onclick="ACT.go('subStoreIssueItemPatientList.form');">
 </form>
 </div>
 </div>
@@ -145,19 +146,46 @@
 	<th><spring:message code="inventory.item.name"/></th>
 	<th><spring:message code="inventory.item.specification"/></th>
 	<th><spring:message code="inventory.receiptItem.quantity"/></th>
+	<th><spring:message code="inventory.receiptItem.price" text="Price" /></th>
 	</tr>
 	<c:choose>
-	<c:when test="${not empty listPatientDetail}">
-	<c:forEach items="${listPatientDetail}" var="issue" varStatus="varStatus">
+	<c:when test="${not empty listItemDetail}">
+	<c:set var="total" value="${0}"/>
+	<c:forEach items="${listItemDetail}" var="issue" varStatus="varStatus">
+		<c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" />
+		<c:set var="generalVar" value="General"/>
+		<c:set var="total" value="${total + price}"/>
+		
 	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${varStatus.count }"/></td>
 		<td>${issue.transactionDetail.item.subCategory.name} </td>	
-		<td><a href="#" title="Remove this" onclick="INVENTORY.removeObject('${varStatus.index}','1');">${issue.transactionDetail.item.name}</a></td>
+		<td>${issue.transactionDetail.item.name}</td>
 		<td>${issue.transactionDetail.specification.name}</td>
 		<td>${issue.quantity}</td>
+		<td><fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/></td>
 		</tr>
 	</c:forEach>
 	
+	<tr><td>&nbsp;</td></tr>
+	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+		<td><spring:message code="inventory.receiptItem.total" text="Total" /></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>	
+			<c:choose>
+				<c:when test ="${patientCategory == generalVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				
+				<c:otherwise>
+					<strike><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+					</strike>  0.00
+				</c:otherwise>
+			</c:choose>
+		</td>						
+	</tr>	
 	</c:when>
 	</c:choose>
 </table>
@@ -165,11 +193,11 @@
 		<table class="box" width="100%" cellpadding="5" cellspacing="0">
 		<tr>
 			<td>
-				<c:if  test="${not empty listPatientDetail && not empty issueItemAccount}">
+				<c:if  test="${not empty listItemDetail && not empty issueItemPatient}">
 					<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all"  id="bttprocess" value="<spring:message code="inventory.finish"/>" onclick="ISSUE.processSlipItemPatient('0');" />
 					<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="bttprint" value="<spring:message code="inventory.print"/>" onClick="PURCHASE.printDiv();" />
 				</c:if>
-				<c:if  test="${not empty listPatientDetail || not empty issueItemPatient}">
+				<c:if  test="${not empty listItemDetail || not empty issueItemPatient}">
 					<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="bttclear" value="<spring:message code="inventory.clear"/>"  onclick="ISSUE.processSlipItemPatient('1');"/>
 				</c:if>
 			</td>
@@ -181,10 +209,10 @@
 <!-- PRINT DIV -->
 <div  id="printDiv" style="display: none; ">        		
 <div style="margin: 10px auto; width: 981px; font-size: 1.0em;font-family:'Dot Matrix Normal',Arial,Helvetica,sans-serif;">
-<c:if  test="${not empty issueItemAccount}">
+<c:if  test="${not empty issueItemPatient}">
 <br />
 <br />      		
-<center style="float:center;font-size: 2.2em">Issue Item To Account ${issueItemAccount.name }</center>
+<center style="float:center;font-size: 2.2em">Issue Item To Patient ${issueItemPatient.patient.givenName}&nbsp;${issueItemPatient.patient.middleName}&nbsp;${issueItemPatient.patient.familyName}</center>
 <br/>
 <br/>
 <span style="float:right;font-size: 1.7em">Date: <openmrs:formatDate date="${date}" type="textbox"/></span>
@@ -198,19 +226,47 @@
 	<th><spring:message code="inventory.item.name"/></th>
 	<th><spring:message code="inventory.item.specification"/></th>
 	<th><spring:message code="inventory.receiptItem.quantity"/></th>
+	<th><spring:message code="inventory.receiptItem.price" text="Price" /></th>
 	</tr>
 	<c:choose>
-	<c:when test="${not empty listPatientDetail}">
-	<c:forEach items="${listPatientDetail}" var="issue" varStatus="varStatus">
+	<c:when test="${not empty listItemDetail}">
+	<c:set var="total" value="${0}"/>
+	<c:forEach items="${listItemDetail}" var="issue" varStatus="varStatus">
+		<c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" />
+		<c:set var="generalVar" value="General"/>
+		<c:set var="total" value="${total + price}"/>
+		
 	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${varStatus.count }"/></td>
 		<td>${issue.transactionDetail.item.subCategory.name} </td>	
 		<td>${issue.transactionDetail.item.name}</td>
 		<td>${issue.transactionDetail.specification.name}</td>
 		<td>${issue.quantity}</td>
+		<td><fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/></td>
 		</tr>
 	</c:forEach>
-	
+
+	<tr><td>&nbsp;</td></tr>
+	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+		<td><spring:message code="inventory.receiptItem.total" text="Total" /></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>	
+			<c:choose>
+				<c:when test ="${patientCategory == generalVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				
+				<c:otherwise>
+					<strike><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+					</strike>  0.00
+				</c:otherwise>
+			</c:choose>
+		</td>						
+	</tr>
+						
 	</c:when>
 	</c:choose>
 </table>

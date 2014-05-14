@@ -905,7 +905,7 @@ ISSUE={
 					jQuery("#bttprocess").attr("disabled","disabled");
 					jQuery("#bttclear").attr("disabled","disabled");
 					jQuery("#bttprint").attr("disabled","disabled");
-					ACT.go("processIssueItem.form?action="+data);
+					ACT.go("processIssueItemPatient.form?action="+data);
 				}
 			}
 			
@@ -925,6 +925,12 @@ ISSUE={
 		detailIssueItem : function(id){
 			if(SESSION.checkSession()){
 				url = "subStoreIssueItemDettail.form?issueId="+id+"&keepThis=false&TB_iframe=true&height=500&width=800";
+				tb_show("Detail issue....",url,false);
+			}
+		},
+		detailIssueItemPatient : function(id){
+			if(SESSION.checkSession()){
+				url = "subStoreIssueItemPatientDettail.form?issueId="+id+"&keepThis=false&TB_iframe=true&height=500&width=800";
 				tb_show("Detail issue....",url,false);
 			}
 		}

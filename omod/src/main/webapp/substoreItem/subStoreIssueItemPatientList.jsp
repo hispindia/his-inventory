@@ -61,7 +61,7 @@
 	<c:forEach items="${listIssue}" var="issue" varStatus="varStatus">
 	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${(( pagingUtil.currentPage - 1  ) * pagingUtil.pageSize ) + varStatus.count }"/></td>
-		<td> <a href="#" title="Detail issue Item to this patient" onclick="ISSUE.detailIssueItem('${issue.id}');">${issue.identifier}</a> </td>
+		<td> <a href="#" title="Detail issue Item to this patient" onclick="ISSUE.detailIssueItemPatient('${issue.id}');">${issue.identifier}</a> </td>
 		<td>${issue.patient.givenName}&nbsp;${issue.patient.middleName}&nbsp;${issue.patient.familyName}</td>
 		<td>
               	<c:choose>
