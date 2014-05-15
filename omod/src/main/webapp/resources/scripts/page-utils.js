@@ -666,6 +666,27 @@ ISSUE={
 				}
 			}
 		},
+		onChangeCategoryItemPatient : function(thiz)
+		{
+			var x = jQuery(thiz).val();
+			if(x != null && x != '' ){
+				if(SESSION.checkSession()){
+					var data = jQuery.ajax(
+							{
+								type:"GET"
+								,url: "itemBySubCategoryForIssuePatient.form"
+								,data: ({categoryId: x})	
+								,async: false
+								, cache : false
+							}).responseText;
+					if(data != undefined  && data != null && data != ''){
+						jQuery("#divItem").html(data);
+					}else{
+						alert('Please refresh page!');
+					}
+				}
+			}
+		},
 		onBlur : function(thiz)
 		{
 			var x = jQuery(thiz).val();
@@ -717,6 +738,36 @@ ISSUE={
 							{
 								type:"GET"
 								,url: "specificationByItemForIssue.form"
+								,data: ({itemId :x})	
+								,async: false
+								, cache : false
+							}).responseText;
+					
+					if(data != undefined  && data != null && data != ''){
+						if(jQuery(data).hasClass('box')){
+							jQuery("#divSpecification").html('');
+							jQuery("#divItemAvailable").html(data);
+						}else{
+							jQuery("#divItemAvailable").html('');
+							jQuery("#divSpecification").html(data);
+						}
+						
+					}else{
+						alert('Please refresh page!');
+					}
+				}
+			}
+		}
+		,
+		onBlurItemPatient : function(thiz)
+		{
+			var x = jQuery(thiz).val();
+			if(x != undefined  && x != null && x != '' ){
+				if(SESSION.checkSession()){
+					var data = jQuery.ajax(
+							{
+								type:"GET"
+								,url: "specificationByItemPatientForIssue.form"
 								,data: ({itemId :x})	
 								,async: false
 								, cache : false

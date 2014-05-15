@@ -42,7 +42,7 @@
 <tr>
 		<td><spring:message code="inventory.item.subCategory"/><em>*</em></td>
 		<td>
-			<select name="category" id="category" onchange="ISSUE.onChangeCategoryItem(this);"  style="width: 250px;">
+			<select name="category" id="category" onchange="ISSUE.onChangeCategoryItemPatient(this);"  style="width: 250px;">
 				<option value=""><spring:message code="inventory.pleaseSelect"/></option>
                 <c:forEach items="${listCategory}" var="vCat">
                     <option value="${vCat.id}" <c:if test="${vCat.id == categoryId }">selected</c:if> >${vCat.name}</option>
@@ -54,7 +54,7 @@
 		<td>Item<em>*</em></td>
 		<td>
 			<div id="divItem">
-				<select id="itemId" name="itemId" onchange="ISSUE.onBlurItem(this);"  style="width: 250px;">
+				<select id="itemId" name="itemId" onchange="ISSUE.onBlurItemPatient(this);"  style="width: 250px;">
 					<option value=""><spring:message code="inventory.pleaseSelect"/></option>
 					   <c:if test ="${not empty items}">
 					       <c:forEach items="${items}" var="item">

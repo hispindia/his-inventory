@@ -79,6 +79,13 @@ public class AjaxController {
 		model.addAttribute("items", items);
 		return "/module/inventory/autocomplete/itemBySubCategoryForIssue";
 	}
+	@RequestMapping("/module/inventory/itemBySubCategoryForIssuePatient.form")
+	public String itemBySubCategoryForIssuePatient(@RequestParam(value="categoryId",required=false) Integer categoryId, Model model) {
+		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
+		List<InventoryItem> items = inventoryService.listItem(categoryId, null, 0, 0);
+		model.addAttribute("items", items);
+		return "/module/inventory/autocomplete/itemBySubCategoryForIssuePatient";
+	}
 	@RequestMapping("/module/inventory/formulationByDrug.form")
 	public String formulationByDrug(@RequestParam(value="drugId",required=false) Integer drugId, Model model) {
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
@@ -383,6 +390,47 @@ public class AjaxController {
 								 if(itemAccount.getTransactionDetail().getSpecification() == null )
 								 {
 									 sumReceiptItem -= itemAccount.getQuantity();
+								 }
+								 
+							 }
+						 }
+					 }
+					
+					model.addAttribute("sumReceiptItem", sumReceiptItem);
+				}
+				return "/module/inventory/autocomplete/listReceiptItem";
+			}
+		}
+		
+		
+		return "/module/inventory/autocomplete/specificationByItemForIssue";
+	}
+
+	
+	@RequestMapping("/module/inventory/specificationByItemPatientForIssue.form")
+	public String specificationByItemForIssueItemPatient(@RequestParam(value="itemId",required=false) Integer itemId, Model model) {
+		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
+		InventoryItem item= inventoryService.getItemById(itemId);
+		if(item != null ){
+			if(item.getSpecifications() != null && item.getSpecifications().size() > 0){
+				List<InventoryItemSpecification> specifications = new ArrayList<InventoryItemSpecification>(item.getSpecifications());
+				model.addAttribute("specifications", specifications);
+				return "/module/inventory/autocomplete/specificationByItemForIssue";
+			}else{
+				InventoryStore store =  inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
+				if(store != null){
+					Integer sumReceiptItem = inventoryService.sumStoreItemCurrentQuantity(store.getId(), item.getId(), null);
+					
+					 int userId = Context.getAuthenticatedUser().getId();
+					 String fowardParam = "issueItemDetail_"+userId;
+					 List<InventoryStoreItemPatientDetail> list = (List<InventoryStoreItemPatientDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
+					 if(CollectionUtils.isNotEmpty(list)){
+						 for(InventoryStoreItemPatientDetail itemPatient : list)
+						 {
+							 if(itemPatient.getTransactionDetail().getItem().getId().equals(itemId)){
+								 if(itemPatient.getTransactionDetail().getSpecification() == null )
+								 {
+									 sumReceiptItem -= itemPatient.getQuantity();
 								 }
 								 
 							 }
