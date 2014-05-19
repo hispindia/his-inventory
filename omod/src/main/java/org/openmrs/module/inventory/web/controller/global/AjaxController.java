@@ -1028,7 +1028,7 @@ public class AjaxController {
 		model.put("listCategory", listCategory );
 		model.put("store", store );
 	 }
-		if(store != null && store.getParentStores() == null){
+		if(store != null && store.getParentStores().isEmpty()){
 			return "/module/inventory/mainstore/viewStockBalanceExpiry";
 		}else
 		{
