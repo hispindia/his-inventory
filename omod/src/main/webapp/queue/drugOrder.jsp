@@ -52,9 +52,10 @@
 
 <script type="text/javascript">
 function process(drugId,formulationId){
+
 jQuery.ajax({
 			type : "GET",
-			url : getContextPath() + "/inventory/processDrugOrder.form",
+			url : getContextPath() + "/module/inventory/processDrugOrder.form",
 			data : ({
 				drugId			: drugId,
 				formulationId		: formulationId
