@@ -158,6 +158,17 @@
 			ALTER  TABLE inventory_store_item_patient_detail add constraint fk_inventory_store_item_patient foreign key (store_item_patient_id) references inventory_store_item_patient (id), add constraint fk_inventory_store_item_transaction_detail foreign key (transaction_detail_id) references inventory_store_item_transaction_detail (id);
 		</sql>
 	</diff>
-	
-	
+	<diff>
+		<version>2.2.8</version>
+		<author>Sagar Bele</author>
+		<date>May 20th 2014</date>
+		<description>
+			ALTER  TABLE inventory_store_drug_indent,inventory_store_relationship
+		</description>
+		<sql>
+			ALTER  TABLE inventory_store_relationship add index fk_inventorystore_parent (inventory_store_parent_id), add constraint fk_inventorystore_child foreign key (inventory_store_child_id) references inventory_store (id);
+			ALTER TABLE inventory_store_drug_indent ADD COLUMN `mainstore_id`  int(11) default NULL;
+			ALTER  TABLE inventory_store_drug_indent add index fk_inventorystore_mainstore (mainstore_id), add constraint fk_inventorystore_mainstore foreign key (mainstore_id) references inventory_store (id);
+		</sql>
+	</diff>
 </sqldiff>
