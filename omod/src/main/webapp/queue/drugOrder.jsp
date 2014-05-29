@@ -96,28 +96,24 @@ function issueDrugOrder(listOfDrugQuantity) {
    var formulation=document.getElementById(availableIdArr[i].toString()+'_formulation').value;
    var formulationId=document.getElementById(availableIdArr[i].toString()+'_formulationId').value;
    var price=document.getElementById(availableIdArr[i].toString()+'_price').value;
-   totalValue = totalValue + price*quantity;
+   totalValue = (totalValue + price*quantity).toFixed(2);
 	
    if (preTotal != null){
 		totalValue = +totalValue + +preTotal.value;
 		preTotal.value = totalValue;
 		
 		}
-   var theLastNumberOfDiv = 1; 
-   var previousDiv = document.getElementById('1');
-   		 while (previousDiv) {
-			theLastNumberOfDiv = +theLastNumberOfDiv +1
-			previousDiv = document.getElementById(theLastNumberOfDiv);
-			}		
+	
    var avaiableId=availableIdArr[i];
-   var deleteString = 'deleteInput(\"'+theLastNumberOfDiv+'\")';
+   var deleteString = 'deleteInput(\"'+avaiableId+'\")';
+   var deleteString = 'deleteInput(\"'+avaiableId+'\")';
    var htmlText =  "<div id='com_"+avaiableId+"_div'>"
-	       	 +"<input id='"+theLastNumberOfDiv+"_fName'  name='"+theLastNumberOfDiv+"_fName' type='text' size='20' value='"+drugName+"'  readonly='readonly'/>&nbsp;"
-	       	 +"<input id='"+theLastNumberOfDiv+"_fFormulationName'  name='"+theLastNumberOfDiv+"_fFormulationName' type='text' size='11' value='"+formulation+"'  readonly='readonly'/>&nbsp;"
-	       	 +"<input id='"+theLastNumberOfDiv+"_fQuantity'  name='"+theLastNumberOfDiv+"_fQuantity' type='text' size='3' value='"+quantity+"'  readonly='readonly'/>&nbsp;"
-			  +"<input id='"+theLastNumberOfDiv+"_fPrice'  name='"+theLastNumberOfDiv+"_fPrice' type='text' size='3' value='"+price+"'  readonly='readonly'/>&nbsp;"
-	       	 +"<input id='"+theLastNumberOfDiv+"_fFormulationId'  name='"+theLastNumberOfDiv+"_fFormulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
-	       	 +"<input id='"+theLastNumberOfDiv+"_fAavaiableId'  name='avaiableId' type='hidden' value='"+theLastNumberOfDiv+"'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fName'  name='"+avaiableId+"_fName' type='text' size='20' value='"+drugName+"'  readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fFormulationName'  name='"+avaiableId+"_fFormulationName' type='text' size='11' value='"+formulation+"'  readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fQuantity'  name='"+avaiableId+"_fQuantity' type='text' size='3' value='"+quantity+"'  readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fPrice'  name='"+avaiableId+"_fPrice' type='text' size='3' value='"+price+"'  readonly='readonly'/>&nbsp;"
+			 +"<input id='"+avaiableId+"_fFormulationId'  name='"+avaiableId+"_fFormulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fAavaiableId'  name='avaiableId' type='hidden' value='"+avaiableId+"'/>&nbsp;"
 	       	 +"<input id='drugProcessName'  name='drugProcessName' type='hidden' value='"+drugName+"'/>&nbsp;"
 	       	 +"<a style='color:red' href='#' onclick='"+deleteString+"' >[X]</a>"	
 	       	 +"</div>";
@@ -126,7 +122,7 @@ function issueDrugOrder(listOfDrugQuantity) {
      	
    var newElement = document.createElement('div');
    
-   newElement.setAttribute("id", theLastNumberOfDiv);   
+   newElement.setAttribute("id", avaiableId);   
    newElement.innerHTML = htmlText;
    var fieldsArea = document.getElementById('headerValue');
    fieldsArea.appendChild(newElement);
@@ -171,7 +167,7 @@ function deleteInput(avaiableId) {
 		jQuery("#totalDiv").hide();	
 		}
 	else{
-		preTotal.value = +currentTotal - + removedTotal
+		preTotal.value = (+currentTotal - + removedTotal).toFixed(2)
 	}	
    parent.removeChild(child); 
 }
