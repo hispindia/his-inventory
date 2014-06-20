@@ -898,6 +898,19 @@ public class AjaxController {
 		if(CollectionUtils.isNotEmpty(listDrugIssue)){
 			model.addAttribute("issueDrugPatient", listDrugIssue.get(0).getStoreDrugPatient());
 			model.addAttribute("date", listDrugIssue.get(0).getStoreDrugPatient().getCreatedOn());
+			model.addAttribute("cashier", listDrugIssue.get(0).getStoreDrugPatient().getCreatedBy());
+			model.addAttribute("category", listDrugIssue.get(0).getStoreDrugPatient().getPatient().getAttribute(14));
+			
+			if(listDrugIssue.get(0).getStoreDrugPatient().getPatient().getAttribute(14).getValue() == "Waiver"){
+				model.addAttribute("exemption", listDrugIssue.get(0).getStoreDrugPatient().getPatient().getAttribute(32));
+			}
+			else if(listDrugIssue.get(0).getStoreDrugPatient().getPatient().getAttribute(14).getValue()!="General" && listDrugIssue.get(0).getStoreDrugPatient().getPatient().getAttribute(14).getValue()!="Waiver"){
+				model.addAttribute("exemption", listDrugIssue.get(0).getStoreDrugPatient().getPatient().getAttribute(36));
+			}
+			else {
+				model.addAttribute("exemption", " ");
+			}
+
 		}
 		return "/module/inventory/substore/subStoreIssueDrugDettail";
 	}
@@ -932,8 +945,24 @@ public class AjaxController {
 		List<InventoryStoreItemPatientDetail> listItemIssue = inventoryService.listStoreItemPatientDetail(issueId);
 		model.addAttribute("listItemPatientIssue", listItemIssue);
 		if(CollectionUtils.isNotEmpty(listItemIssue)){
+			
 			model.addAttribute("issueItemPatient", listItemIssue.get(0).getStoreItemPatient());
 			model.addAttribute("date", listItemIssue.get(0).getStoreItemPatient().getCreatedOn());
+			
+			model.addAttribute("cashier", listItemIssue.get(0).getStoreItemPatient().getCreatedBy());
+			model.addAttribute("category", listItemIssue.get(0).getStoreItemPatient().getPatient().getAttribute(14));
+			
+			if(listItemIssue.get(0).getStoreItemPatient().getPatient().getAttribute(14).getValue() == "Waiver"){
+				model.addAttribute("exemption", listItemIssue.get(0).getStoreItemPatient().getPatient().getAttribute(32));
+			}
+			else if(listItemIssue.get(0).getStoreItemPatient().getPatient().getAttribute(14).getValue()!="General" && listItemIssue.get(0).getStoreItemPatient().getPatient().getAttribute(14).getValue()!="Waiver"){
+				model.addAttribute("exemption", listItemIssue.get(0).getStoreItemPatient().getPatient().getAttribute(36));
+			}
+			else {
+				model.addAttribute("exemption", " ");
+			}
+
+			
 		}
 		return "/module/inventory/substoreItem/subStoreIssueItemPatientDettail";
 	}

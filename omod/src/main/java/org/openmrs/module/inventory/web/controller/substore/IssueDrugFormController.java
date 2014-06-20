@@ -84,6 +84,21 @@ public class IssueDrugFormController {
 			model.addAttribute("patientCategory",
 			    ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
 			            .getValue());
+
+		
+			if(ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
+		            .getValue() == "Waiver"){
+				model.addAttribute("exemption", issueDrugPatient.getPatient().getAttribute(32));
+			}
+			else if(ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
+		            .getValue()!="General" && ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
+		            .getValue()!="Waiver"){
+				model.addAttribute("exemption", issueDrugPatient.getPatient().getAttribute(36));
+			}
+			else {
+				model.addAttribute("exemption", " ");
+			}
+			
 		}
 		model.addAttribute("listPatientDetail", list);
 		model.addAttribute("issueDrugPatient", issueDrugPatient);

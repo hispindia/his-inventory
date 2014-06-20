@@ -56,6 +56,21 @@ public class IssueItemPatientFormController {
 		model.addAttribute("patientCategory",
 		    ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
 		            .getValue());
+		
+		if(ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
+	            .getValue() == "Waiver"){
+			model.addAttribute("exemption", issueItemPatient.getPatient().getAttribute(32));
+		}
+		else if(ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
+	            .getValue()!="General" && ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
+	            .getValue()!="Waiver"){
+			model.addAttribute("exemption", issueItemPatient.getPatient().getAttribute(36));
+		}
+		else {
+			model.addAttribute("exemption", " ");
+		}
+
+		
 	}
 	 model.addAttribute("listItemDetail", list);
 	 model.addAttribute("issueItemPatient", issueItemPatient);
