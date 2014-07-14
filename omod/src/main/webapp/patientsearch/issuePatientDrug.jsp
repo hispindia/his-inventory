@@ -66,7 +66,7 @@
 				<td>
 					${patient.patientIdentifier.identifier}
 				</td>
-				<td>${patient.givenName} ${patient.middleName} ${patient.familyName}</td>
+				<td>${patient.givenName} ${patient.familyName} ${patient.middleName} </td>
 				<td> 
                 	<c:choose>
                 		<c:when test="${patient.age == 0}">&lt 1</c:when>

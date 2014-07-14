@@ -143,7 +143,7 @@ String cat="General";
 				<tr>
 					<td>${issueDrugPatient.patient.patientIdentifier.identifier}</td>
 				    <td>${patientCategory}</td>
-					<td>${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.middleName}&nbsp;${issueDrugPatient.patient.familyName}</td>
+					<td>${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.familyName}&nbsp;${issueDrugPatient.patient.middleName}</td>
 					<td><c:choose>
 							<c:when test="${issueDrugPatient.patient.age == 0  }">&lt 1</c:when>
 							<c:otherwise>${issueDrugPatient.patient.age }</c:otherwise>
@@ -257,7 +257,7 @@ String cat="General";
 				</tr>
 				<tr>
 					<td>Name</td>
-					<td>:${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.middleName}&nbsp;${issueDrugPatient.patient.familyName}</td>
+					<td>:${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.familyName}&nbsp;${issueDrugPatient.patient.middleName}</td>
 				</tr>
 				<tr>
 					<td>Identifier</td>

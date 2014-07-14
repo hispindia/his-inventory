@@ -62,7 +62,7 @@
 	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${(( pagingUtil.currentPage - 1  ) * pagingUtil.pageSize ) + varStatus.count }"/></td>
 		<td> <a href="#" title="Detail issue drug to this patient" onclick="ISSUE.detailIssueDrug('${issue.id}');">${issue.identifier}</a> </td>
-		<td>${issue.patient.givenName}&nbsp;${issue.patient.middleName}&nbsp;${issue.patient.familyName}</td>
+		<td>${issue.patient.givenName}&nbsp;${issue.patient.familyName}&nbsp;${issue.patient.middleName}</td>
 		<td>
               	<c:choose>
               		<c:when test="${issue.patient.age == 0  }">&lt 1</c:when>

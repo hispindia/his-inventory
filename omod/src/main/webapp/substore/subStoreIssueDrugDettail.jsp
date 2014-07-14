@@ -103,7 +103,7 @@ String cat="General";
 <c:if  test="${not empty listDrugIssue}">
 <table class="spacer" style="margin-left: 60px;">
 	<tr><td>Date/Time: </td><td>:${date}</td></tr>
-	<tr><td>Name</td><td>:${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.middleName}&nbsp;${issueDrugPatient.patient.familyName}</td></tr>
+	<tr><td>Name</td><td>:${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.familyName}&nbsp;${issueDrugPatient.patient.middleName}</td></tr>
 	<tr><td>Identifier</td><td>:${issueDrugPatient.identifier }</td></tr>
 	<tr><td>Patient category</td><td>:${category}</td></tr>
 	<tr><td>Waiver/Exempt. No.</td><td>:${exemption}</td></tr>

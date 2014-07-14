@@ -105,8 +105,8 @@
 					</c:choose>
 					</td>
 					<td>${patient.identifier}</td>
-					<td>${patient.givenName} ${patient.middleName}
-						${patient.familyName}</td>
+					<td>${patient.givenName} ${patient.familyName} ${patient.middleName}
+						</td>
 					<td><c:choose>
 							<c:when test="${patient.age == 0}">&lt 1</c:when>
 							<c:otherwise>${patient.age}</c:otherwise>

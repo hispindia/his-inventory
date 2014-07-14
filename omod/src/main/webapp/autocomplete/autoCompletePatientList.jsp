@@ -30,7 +30,7 @@
 			<c:forEach items="${patients }" var="patient" varStatus="varStatus">
 				<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '  >
 					<td ><a href="#" onclick="ISSUE.addPatient('createPatientIssueDrug.form?patientId=${patient.patientId}');">${patient.patientIdentifier.identifier}</a></td>
-					<td>${patient.givenName}&nbsp;${patient.middleName}&nbsp;${patient.familyName}</td>
+					<td>${patient.givenName}&nbsp;${patient.familyName}&nbsp;${patient.middleName}</td>
 	                <td>
 	                	<c:choose>
 	                		<c:when test="${patient.age == 0  }">&lt 1</c:when>

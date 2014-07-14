@@ -37,8 +37,8 @@
 		</tr>
 		<tr>
 			<td>Name of the patient:</td>
-			<td>${patientSearch.givenName}&nbsp;&nbsp;${patientSearch.middleName}&nbsp;&nbsp;
-				${patientSearch.familyName}</td>
+			<td>${patientSearch.givenName}&nbsp;&nbsp;
+				${patientSearch.familyName}&nbsp;&nbsp;${patientSearch.middleName}</td>
 		</tr>
 		<tr>
 			<td>Date :</td>
