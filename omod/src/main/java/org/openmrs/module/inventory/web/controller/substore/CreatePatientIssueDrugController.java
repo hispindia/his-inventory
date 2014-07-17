@@ -34,7 +34,7 @@ public class CreatePatientIssueDrugController {
 				issue.setCreatedOn(new Date());
 				issue.setStore(subStore);
 				issue.setIdentifier(patient.getPatientIdentifier().getIdentifier());
-				issue.setName(patient.getGivenName()+" "+patient.getFamilyName()+" "+patient.getMiddleName());
+				issue.setName(patient.getGivenName()+" "+patient.getFamilyName()+" "+patient.getMiddleName().replace(",", " "));
 				issue.setPatient(patient);
 				String fowardParam = "issueDrug_"+userId;
 				StoreSingleton.getInstance().getHash().put(fowardParam,issue);

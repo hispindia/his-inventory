@@ -89,7 +89,7 @@ String cat="General";
 <c:if  test="${not empty issueItemPatient}">
 <table class="spacer" style="margin-left: 60px; margin-top: 40px;">
 	<tr><td>Date/Time: </td><td>:${date}</td></tr>
-	<tr><td>Name</td><td>:${issueItemPatient.patient.givenName}&nbsp;${issueItemPatient.patient.familyName}&nbsp;${issueItemPatient.patient.middleName}</td></tr>
+	<tr><td>Name</td><td>:${issueItemPatient.patient.givenName}&nbsp;${issueItemPatient.patient.familyName}&nbsp;${fn:replace(issueItemPatient.patient.middleName,","," ")}</td></tr>
 	<tr><td>Identifier</td><td>:${issueItemPatient.identifier }</td></tr>
 	<tr><td>Patient category</td><td>:${category}</td></tr>
 	<tr><td>Waiver/Exempt. No.</td><td>:${exemption}</td></tr>

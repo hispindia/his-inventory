@@ -214,7 +214,7 @@ return false;
 		<tr>
 			<td>Name of the patient:</td>
 			<td>${patientSearch.givenName}&nbsp;&nbsp;
-				${patientSearch.familyName}&nbsp;&nbsp;${patientSearch.middleName}</td>
+				${patientSearch.familyName}&nbsp;&nbsp;${fn:replace(patientSearch.middleName,","," ")}</td>
 		</tr>
 		<tr>
 			<td>Date :</td>
