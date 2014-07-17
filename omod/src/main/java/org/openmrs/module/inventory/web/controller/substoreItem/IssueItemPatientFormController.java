@@ -47,7 +47,7 @@ public class IssueItemPatientFormController {
 	 }
 	 model.addAttribute("date",new Date());
  	 int userId = Context.getAuthenticatedUser().getId();
-	 String fowardParam = "issueItemDetail_"+userId;
+	 String fowardParam = "issueItemDetailPatient_"+userId;
 	 List<InventoryStoreItemPatientDetail> list = (List<InventoryStoreItemPatientDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
 	 InventoryStoreItemPatient issueItemPatient = (InventoryStoreItemPatient )StoreSingleton.getInstance().getHash().get("issueItemPatient_"+userId);
 	 
@@ -94,7 +94,7 @@ public class IssueItemPatientFormController {
 			errors.add("inventory.issueItem.quantity.required");
 			model.addAttribute("errors", errors);
 			model.addAttribute("category", category);
-			String fowardParam = "issueItemDetail_"+userId;
+			String fowardParam = "issueItemDetailPatient_"+userId;
 			List<InventoryStoreItemPatientDetail> list = (List<InventoryStoreItemPatientDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
 			 InventoryStoreItemAccount issueItemAccount = (InventoryStoreItemAccount )StoreSingleton.getInstance().getHash().get("issueItem_"+userId);
 			 model.addAttribute("issueItemAccount", issueItemAccount);
@@ -114,7 +114,7 @@ public class IssueItemPatientFormController {
 		}
 		
 		if(errors != null && errors.size() > 0){
-			String fowardParam = "issueItemDetail_"+userId;
+			String fowardParam = "issueItemDetailPatient_"+userId;
 			List<InventoryStoreItemPatientDetail> list = (List<InventoryStoreItemPatientDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
 			 InventoryStoreItemAccount issueItemAccount = (InventoryStoreItemAccount )StoreSingleton.getInstance().getHash().get("issueItem_"+userId);
 			 model.addAttribute("issueItemAccount", issueItemAccount);
@@ -128,7 +128,7 @@ public class IssueItemPatientFormController {
 		}
 		
 		
-		String fowardParam = "issueItemDetail_"+userId;
+		String fowardParam = "issueItemDetailPatient_"+userId;
 		List<InventoryStoreItemPatientDetail> list = (List<InventoryStoreItemPatientDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
 		
 		List<InventoryStoreItemTransactionDetail> listReceiptItem = inventoryService.listStoreItemTransactionDetail(store.getId(), item.getId(), specification, true);

@@ -422,7 +422,7 @@ public class AjaxController {
 					Integer sumReceiptItem = inventoryService.sumStoreItemCurrentQuantity(store.getId(), item.getId(), null);
 					
 					 int userId = Context.getAuthenticatedUser().getId();
-					 String fowardParam = "issueItemDetail_"+userId;
+					 String fowardParam = "issueItemDetailPatient_"+userId;
 					 List<InventoryStoreItemPatientDetail> list = (List<InventoryStoreItemPatientDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
 					 if(CollectionUtils.isNotEmpty(list)){
 						 for(InventoryStoreItemPatientDetail itemPatient : list)
@@ -762,7 +762,7 @@ public class AjaxController {
 	public String processIssueItemPatient( @RequestParam(value="action",required=false)  Integer action,Model model) {
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		int userId = Context.getAuthenticatedUser().getId();
-		String fowardParam = "issueItemDetail_"+userId;
+		String fowardParam = "issueItemDetailPatient_"+userId;
 		InventoryStore store =  inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
 		if(action == 1){
 			StoreSingleton.getInstance().getHash().remove(fowardParam);
