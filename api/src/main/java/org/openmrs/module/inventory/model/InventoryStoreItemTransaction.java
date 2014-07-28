@@ -40,7 +40,14 @@ public class InventoryStoreItemTransaction implements  Serializable {
 	 private int typeTransaction;
 	 private Date createdOn;
 	 private String createdBy;
-	 private Set<InventoryStoreItemIndent> indents;
+	 private String paymentMode;
+	 public String getPaymentMode() {
+		return paymentMode;
+	}
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
+	}
+	private Set<InventoryStoreItemIndent> indents;
 	public Integer getId() {
 		return id;
 	}
