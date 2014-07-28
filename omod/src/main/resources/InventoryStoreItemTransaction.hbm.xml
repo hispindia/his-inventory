@@ -22,5 +22,6 @@
 		<property name="description" column="description" length="500"/>
 		<property name="createdOn" column="created_on"  />
 		<property name="createdBy" column="created_by" length="255" />
+		<property name="paymentMode" column="payment_mode" length="50" />
 	</class>
 </hibernate-mapping>

@@ -29,7 +29,15 @@
 <%@ include file="../includes/js_css.jsp"%>
 <openmrs:globalProperty var="userLocation" key="hospital.location_user" defaultValue="false"/>
 <script type="text/javascript">
-String cat="General";
+var cat="General";
+
+function getValue()
+  {
+	var payMod=jQuery("#paymentMode").val();
+	ISSUE.processSlip('0',payMod);
+  }
+
+
 </script>
 		<style>
 @media print {
@@ -186,22 +194,34 @@ String cat="General";
 					</c:forEach>
 						<tr><td>&nbsp;</td></tr>
 						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
-							<td><spring:message code="inventory.receiptDrug.total" text="Total" /></td>
 							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
+							<td><b><spring:message code="inventory.receiptDrug.total" text="Total" /></b></td>
 							<td>	
 								<c:choose>
 									<c:when test ="${patientCategory == generalVar}">
-										<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+										<fmt:formatNumber value="${total}" type="number" pattern="#"/>
 									</c:when>
 									
 									<c:otherwise>
-										<strike><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+										<strike><fmt:formatNumber value="${total}" type="number" pattern="#"/>
 										</strike>  0.00
 									</c:otherwise>
 								</c:choose>
+							</td>						
+						</tr>
+						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><b>Payment Mode</b></td>
+							<td><select id="paymentMode" name="paymentMode">
+								<option value="Cash">Cash</option>
+								<option value="Card">Card</option>
+							</select>
 							</td>						
 						</tr>
 				</c:when>
@@ -216,7 +236,7 @@ String cat="General";
 						<input type="button"
 							class="ui-button ui-widget ui-state-default ui-corner-all"
 							id="bttprocess" value="<spring:message code="inventory.finish"/>"
-							onclick="ISSUE.processSlip('0');" />
+							onclick="getValue();" />
 						<input type="button"
 							class="ui-button ui-widget ui-state-default ui-corner-all"
 							id="bttprint" value="<spring:message code="inventory.print"/>"
@@ -310,11 +330,11 @@ String cat="General";
 								
 								<c:choose>
 									<c:when test ="${patientCategory == generalVar}">
-										<td><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/></td>
+										<td><fmt:formatNumber value="${total}" type="number" pattern="#"/></td>
 									</c:when>
 									
 									<c:otherwise>
-										<td><fmt:formatNumber value="0.00" type="number" maxFractionDigits="2"/></td>
+										<td><fmt:formatNumber value="0.00" type="number" pattern="#"/></td>
 										
 									</c:otherwise>
 								</c:choose>

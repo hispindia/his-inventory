@@ -82,6 +82,7 @@ public class DrugOrderController {
 	public String onSubmit(HttpServletRequest request,
 			@RequestParam("patientId") Integer patientId,
 			@RequestParam("encounterId") Integer encounterId,
+			@RequestParam(value = "paymentMode", required = false) String paymentMode,
 			//ghanshyam,4-july-2013, issue no # 1984, User can issue drugs only from the first indent
 			@RequestParam(value="avaiableId",required=false) String[] avaiableId) throws Exception{
 
@@ -109,6 +110,7 @@ public class DrugOrderController {
 		transaction.setStore(store);
 		transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
 		transaction.setCreatedOn(date);
+		transaction.setPaymentMode(paymentMode);
 		transaction.setCreatedBy(Context.getAuthenticatedUser().getGivenName());
 		transaction = inventoryService.saveStoreDrugTransaction(transaction);
 		

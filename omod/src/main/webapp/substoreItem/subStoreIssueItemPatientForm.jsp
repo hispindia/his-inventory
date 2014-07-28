@@ -26,7 +26,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <openmrs:globalProperty var="userLocation" key="hospital.location_user" defaultValue="false"/>
 <script type="text/javascript">
-String cat="General";
+var cat="General";
+
+function getValue()
+  {
+	var payMod=jQuery("#paymentMode").val();
+	ISSUE.processSlipItemPatient('0',payMod);
+  }
 </script>
 		<style>
 @media print {
@@ -190,11 +196,11 @@ String cat="General";
 	
 	<tr><td>&nbsp;</td></tr>
 	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
-		<td><spring:message code="inventory.receiptItem.total" text="Total" /></td>
 		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
+		<td><b><spring:message code="inventory.receiptItem.total" text="Total" /></b></td>
 		<td>	
 			<c:choose>
 				<c:when test ="${patientCategory == generalVar}">
@@ -207,7 +213,19 @@ String cat="General";
 				</c:otherwise>
 			</c:choose>
 		</td>						
-	</tr>	
+	</tr>
+	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><b>Payment Mode</b></td>
+		<td><select id="paymentMode" name="paymentMode">
+			<option value="Cash">Cash</option>
+			<option value="Card">Card</option>
+		</select>
+		</td>						
+	</tr>
 	</c:when>
 	</c:choose>
 </table>
@@ -216,7 +234,7 @@ String cat="General";
 		<tr>
 			<td>
 				<c:if  test="${not empty listItemDetail && not empty issueItemPatient}">
-					<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all"  id="bttprocess" value="<spring:message code="inventory.finish"/>" onclick="ISSUE.processSlipItemPatient('0');" />
+					<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all"  id="bttprocess" value="<spring:message code="inventory.finish"/>" onclick="getValue();" />
 					<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="bttprint" value="<spring:message code="inventory.print"/>" onClick="PURCHASE.printDiv();" />
 				</c:if>
 				<c:if  test="${not empty listItemDetail || not empty issueItemPatient}">

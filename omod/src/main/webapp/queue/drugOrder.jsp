@@ -49,7 +49,6 @@
 		return cp;
 	}
 </script>
-
 <script type="text/javascript">
 function process(drugId,formulationId){
 
@@ -134,8 +133,8 @@ function issueDrugOrder(listOfDrugQuantity) {
     }
 	if (preTotal == null){
 		var totalText =  "<div id='com_"+avaiableId+"_div'>"
-				 +"<input id='"+avaiableId+"_fTotal'  name='"+avaiableId+"_fTotal' type='text' size='20' value='Total'  readonly='readonly'/>&nbsp;"
-				 +"<input id='totalValue'  name='totalValue' type='text' size='11' value='"+totalValue+"'  readonly='readonly'/>&nbsp;"
+				 +"<td id='"+avaiableId+"_fTotal'  name='"+avaiableId+"_fTotal'><b>Total:</b></td>&nbsp;"
+				 +"<input id='totalValue'  name='totalValue' type='text' size='11' value='"+Math.round(totalValue)+"'  readonly='readonly'/>&nbsp;"
 				 +"</div>";  	
 	   var totalElement = document.createElement('div');
 	   totalElement.innerHTML = totalText;
@@ -290,6 +289,16 @@ return false;
 			style="background: #f6f6f6; border: 1px #808080 solid; padding: 0.3em; margin: 0.3em 0em; width: 100%;">
 			<div id="totalDiv" style="padding: 0.3em; margin: 0.3em 0em; width: 100%; display: none;">
 				
+			</div>
+			<div id="WaiverAmountField" class="cancelDraggable"
+				style="background: #f6f6f6; border: 1px #808080 solid; padding: 0.3em; margin: 0.3em 0em; width: 100%;">
+				<td><b>Payment Mode:</b>
+				<td><select id="paymentMode" name="paymentMode">
+						<option value="Cash">Cash</option>
+						<option value="Card">Card</option>
+					</select></td>	
+				</td>
+				<hr />
 			</div>
 			
 			<input type='text' size='20' value='Drug Name' readonly='readonly' />

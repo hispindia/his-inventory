@@ -143,7 +143,7 @@ String cat="General";
 	<table  class="spacer" style="margin-left: 60px; margin-top: 40px;">
 		<tr>
 			<td>PAYMENT MODE </td>
-			<td><b>:</b></td>
+			<td><b>:${paymentMode}</b></td>
 		</tr>
 		<tr>
 			<td>CASHIER </td>

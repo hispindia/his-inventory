@@ -897,7 +897,7 @@ ISSUE={
 				tb_show("Create account issue drug....",url,false);
 			}
 		},
-		processSlip : function(data){
+		processSlip : function(data,paymentMode){
 			if(data == 1){
 				if( confirm("Are you sure you want to clear this?")){
 					ACT.go("processIssueDrug.form?action="+data);
@@ -908,7 +908,8 @@ ISSUE={
 					jQuery("#bttprocess").attr("disabled","disabled");
 					jQuery("#bttclear").attr("disabled","disabled");
 					jQuery("#bttprint").attr("disabled","disabled");
-					ACT.go("processIssueDrug.form?action="+data);
+					
+					ACT.go("processIssueDrug.form?action="+data+"&paymentMode="+paymentMode);
 				}
 			}
 			
@@ -945,7 +946,7 @@ ISSUE={
 			}
 			
 		},
-		processSlipItemPatient : function(data){
+		processSlipItemPatient : function(data,paymentMode){
 			if(data == 1){
 				if( confirm("Are you sure you want to clear this?")){
 					ACT.go("processIssueItemPatient.form?action="+data);
@@ -956,7 +957,7 @@ ISSUE={
 					jQuery("#bttprocess").attr("disabled","disabled");
 					jQuery("#bttclear").attr("disabled","disabled");
 					jQuery("#bttprint").attr("disabled","disabled");
-					ACT.go("processIssueItemPatient.form?action="+data);
+					ACT.go("processIssueItemPatient.form?action="+data+"&paymentMode="+paymentMode);
 				}
 			}
 			

@@ -74,14 +74,22 @@ String cat="General";
 	</c:forEach>
 	<tr><td>&nbsp;</td></tr>
 	<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
-		<td><spring:message code="inventory.receiptDrug.total" text="Total" /></td>
 		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
-		<td><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/></td>						
+		<td><b><spring:message code="inventory.receiptDrug.total" text="Total" /></b></td>
+		<td><fmt:formatNumber value="${total}" type="number" pattern="#"/></td>						
 	</tr>	
+	<tr>
+			<td>PAYMENT MODE </td>
+			<td><b>:${paymentMode}</b></td>
+		</tr>
+		<tr>
+			<td>CASHIER </td>
+			<td><b>:${cashier}</b></td>
+		</tr>
 	</c:when>
 	</c:choose>
 </table>
@@ -89,7 +97,7 @@ String cat="General";
 <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.receiptItem.print"/>" onClick="INDENT.printDiv();" />
 
 <!-- PRINT DIV -->
-<div  id="printDiv" style="width: 1280px; font-size: 0.8em">
+<div  id="printDiv" style="display: none;  width: 1280px; font-size: 0.8em">
 <br/>
 <br/>     
 
@@ -141,10 +149,10 @@ String cat="General";
 		<td></td>
 		<td><b><spring:message code="inventory.receiptDrug.total" text="Total" /></b></td>
 		<c:if  test="${category!='General'}">
-			<td><fmt:formatNumber value="0.00" type="number" maxFractionDigits="2"/></td>
+			<td><fmt:formatNumber value="0.00" type="number" pattern="#"/></td>
 		</c:if>
 		<c:if  test="${category=='General'}">
-			<td><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/></td>
+			<td><fmt:formatNumber value="${total}" type="number" pattern="#"/></td>
 		</c:if>
 
 	</tr>	
@@ -155,7 +163,7 @@ String cat="General";
 	<table  class="spacer" style="margin-left: 60px; margin-top: 60px;">
 		<tr>
 			<td>PAYMENT MODE </td>
-			<td><b>:</b></td>
+			<td><b>:${paymentMode}</b></td>
 		</tr>
 		<tr>
 			<td>CASHIER </td>
