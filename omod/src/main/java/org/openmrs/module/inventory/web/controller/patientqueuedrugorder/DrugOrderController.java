@@ -111,6 +111,7 @@ public class DrugOrderController {
 		transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
 		transaction.setCreatedOn(date);
 		transaction.setPaymentMode(paymentMode);
+		transaction.setPatientCategory(patient.getAttribute(14).getValue());
 		transaction.setCreatedBy(Context.getAuthenticatedUser().getGivenName());
 		transaction = inventoryService.saveStoreDrugTransaction(transaction);
 		

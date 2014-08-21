@@ -633,6 +633,7 @@ public class AjaxController {
 			transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
 			transaction.setCreatedOn(date);
 			transaction.setPaymentMode(paymentMode);
+			transaction.setPatientCategory(issueDrugPatient.getPatient().getAttribute(14).getValue());
 			transaction.setCreatedBy(Context.getAuthenticatedUser()
 					.getGivenName());
 			transaction = inventoryService
@@ -1040,6 +1041,7 @@ public class AjaxController {
 			transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
 			transaction.setCreatedOn(date);
 			transaction.setPaymentMode(paymentMode);
+			transaction.setPatientCategory(issueItemPatient.getPatient().getAttribute(14).getValue());
 			transaction.setCreatedBy(Context.getAuthenticatedUser()
 					.getGivenName());
 			transaction = inventoryService
@@ -1230,21 +1232,32 @@ public class AjaxController {
 					.getStoreDrugPatient());
 			model.addAttribute("date", listDrugIssue.get(0)
 					.getStoreDrugPatient().getCreatedOn());
+			model.addAttribute("age", listDrugIssue.get(0)
+					.getStoreDrugPatient().getPatient().getAge());
+			if(listDrugIssue.get(0)
+					.getStoreDrugPatient().getPatient().getGender().equals("M")){
+				model.addAttribute("gender", "Male");
+			}
+			if(listDrugIssue.get(0)
+					.getStoreDrugPatient().getPatient().getGender().equals("F")){
+				model.addAttribute("gender", "Female");
+			}
+
 			model.addAttribute("cashier", listDrugIssue.get(0)
 					.getStoreDrugPatient().getCreatedBy());
 			model.addAttribute("paymentMode", listDrugIssue.get(0)
 					.getTransactionDetail().getTransaction().getPaymentMode());
 			model.addAttribute("category", listDrugIssue.get(0)
-					.getStoreDrugPatient().getPatient().getAttribute(14));
-
-			if (listDrugIssue.get(0).getStoreDrugPatient().getPatient()
-					.getAttribute(14).getValue() == "Waiver") {
+					.getTransactionDetail().getTransaction().getPatientCategory());
+			
+			if (listDrugIssue.get(0)
+					.getTransactionDetail().getTransaction().getPatientCategory().equals("Waiver")) {
 				model.addAttribute("exemption", listDrugIssue.get(0)
 						.getStoreDrugPatient().getPatient().getAttribute(32));
-			} else if (listDrugIssue.get(0).getStoreDrugPatient().getPatient()
-					.getAttribute(14).getValue() != "General"
-					&& listDrugIssue.get(0).getStoreDrugPatient().getPatient()
-							.getAttribute(14).getValue() != "Waiver") {
+			} else if (!listDrugIssue.get(0)
+					.getTransactionDetail().getTransaction().getPatientCategory().equals( "General")
+					&& !listDrugIssue.get(0)
+					.getTransactionDetail().getTransaction().getPatientCategory().equals("Waiver")) {
 				model.addAttribute("exemption", listDrugIssue.get(0)
 						.getStoreDrugPatient().getPatient().getAttribute(36));
 			} else {
@@ -1306,22 +1319,31 @@ public class AjaxController {
 					.getStoreItemPatient());
 			model.addAttribute("date", listItemIssue.get(0)
 					.getStoreItemPatient().getCreatedOn());
-
+			model.addAttribute("age", listItemIssue.get(0)
+					.getStoreItemPatient().getPatient().getAge());
+			if(listItemIssue.get(0)
+					.getStoreItemPatient().getPatient().getGender().equals("M")){
+				model.addAttribute("gender", "Male");
+			}
+			if(listItemIssue.get(0)
+					.getStoreItemPatient().getPatient().getGender().equals("F")){
+				model.addAttribute("gender", "Female");
+			}
 			model.addAttribute("cashier", listItemIssue.get(0)
 					.getStoreItemPatient().getCreatedBy());
 			model.addAttribute("paymentMode", listItemIssue.get(0)
 					.getTransactionDetail().getTransaction().getPaymentMode());
 			model.addAttribute("category", listItemIssue.get(0)
-					.getStoreItemPatient().getPatient().getAttribute(14));
+					.getTransactionDetail().getTransaction().getPatientCategory());
 
-			if (listItemIssue.get(0).getStoreItemPatient().getPatient()
-					.getAttribute(14).getValue() == "Waiver") {
+			if (listItemIssue.get(0)
+					.getTransactionDetail().getTransaction().getPatientCategory().equals("Waiver")) {
 				model.addAttribute("exemption", listItemIssue.get(0)
 						.getStoreItemPatient().getPatient().getAttribute(32));
-			} else if (listItemIssue.get(0).getStoreItemPatient().getPatient()
-					.getAttribute(14).getValue() != "General"
-					&& listItemIssue.get(0).getStoreItemPatient().getPatient()
-							.getAttribute(14).getValue() != "Waiver") {
+			} else if (!listItemIssue.get(0)
+					.getTransactionDetail().getTransaction().getPatientCategory().equals("General")
+					&& !listItemIssue.get(0)
+					.getTransactionDetail().getTransaction().getPatientCategory().equals("Waiver")) {
 				model.addAttribute("exemption", listItemIssue.get(0)
 						.getStoreItemPatient().getPatient().getAttribute(36));
 			} else {

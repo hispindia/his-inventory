@@ -112,8 +112,10 @@ String cat="General";
 <table class="spacer" style="margin-left: 60px;">
 	<tr><td>Date/Time: </td><td>:${date}</td></tr>
 	<tr><td>Name</td><td>:${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.familyName}&nbsp;${fn:replace(issueDrugPatient.patient.middleName,","," ")} </td></tr>
-	<tr><td>Identifier</td><td>:${issueDrugPatient.identifier }</td></tr>
-	<tr><td>Patient category</td><td>:${category}</td></tr>
+	<tr><td>Patient ID</td><td>:${issueDrugPatient.identifier }</td></tr>
+	<tr><td>Age</td><td>:${age}</td></tr>
+	<tr><td>Gender</td><td>:${gender}</td></tr>
+	<tr><td>Patient Category</td><td>:${category}</td></tr>
 	<tr><td>Waiver/Exempt. No.</td><td>:${exemption}</td></tr>
 	
 </table>
@@ -171,6 +173,6 @@ String cat="General";
 		</tr>
 	</table>
 <br/><br/><br/><br/><br/><br/>
-<span style="float:right;font-size: 1.5em">Signature of inventory clerk/ Stamp</span>
+<span style="float:right;font-size: 1.5em">Signature of Inventory Clerk/ Stamp</span>
 </div>
 <!-- END PRINT DIV -->   

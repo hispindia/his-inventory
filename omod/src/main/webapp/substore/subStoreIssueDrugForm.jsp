@@ -237,10 +237,6 @@ function getValue()
 							class="ui-button ui-widget ui-state-default ui-corner-all"
 							id="bttprocess" value="<spring:message code="inventory.finish"/>"
 							onclick="getValue();" />
-						<input type="button"
-							class="ui-button ui-widget ui-state-default ui-corner-all"
-							id="bttprint" value="<spring:message code="inventory.print"/>"
-							onClick="PURCHASE.printDiv();" />
 					</c:if> <c:if
 						test="${not empty listPatientDetail || not empty issueDrugPatient}">
 						<input type="button"
@@ -350,8 +346,8 @@ function getValue()
 		</tr>
 	</table>
 		<br /> <br /> <br /> <br /> <br /> <br /> <span
-			style="float: right; font-size: 1.5em">Signature of inventory
-			clerk/ Stamp</span>
+			style="float: right; font-size: 1.5em">Signature of Inventory
+			Clerk/ Stamp</span>
 	</div>
 </div>
 <!-- END PRINT DIV -->
