@@ -21,7 +21,7 @@ import org.openmrs.module.hospitalcore.model.InventoryStore;
 import org.openmrs.module.hospitalcore.util.ActionValue;
 
 /**
- * <p> Class: InventoryStoreDrugTransaction </p>
+ * <p> Class: InventoryStoreItemTransaction </p>
  * <p> Package: org.openmrs.module.inventory.model </p> 
  * <p> Author: Nguyen manh chuyen </p>
  * <p> Update by: Nguyen manh chuyen </p>
@@ -41,7 +41,15 @@ public class InventoryStoreItemTransaction implements  Serializable {
 	 private Date createdOn;
 	 private String createdBy;
 	 private String paymentMode;
-	 public String getPaymentMode() {
+	 private String patientCategory;
+	 
+	 public String getPatientCategory() {
+		return patientCategory;
+	}
+	public void setPatientCategory(String patientCategory) {
+		this.patientCategory = patientCategory;
+	}
+	public String getPaymentMode() {
 		return paymentMode;
 	}
 	public void setPaymentMode(String paymentMode) {
