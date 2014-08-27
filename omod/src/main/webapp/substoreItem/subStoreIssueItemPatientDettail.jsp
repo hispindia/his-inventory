@@ -81,7 +81,7 @@ String cat="General";
 <!-- PRINT DIV -->
 <div  id="printDiv" style="display: none; ">        		
 <div style="width: 1280px; font-size: 0.8em">
-<center><img width="100" height="100" align="center" title="OpenMRS" alt="OpenMRS" src="/kenya_openmrs/images/kenya_logo.bmp"><center>
+<center><img width="100" height="100" align="center" title="OpenMRS" alt="OpenMRS" src="${pageContext.request.contextPath}/moduleResources/inventory/kenya_logo.bmp"><center>
   <table  class="spacer" style="margin-left: 60px;"> 		
 <tr><h3><center><b><u>${userLocation}</u> </b></center></h3></tr>
 <tr><h5><b><center>CASH RECEIPT</center></b></h5></tr>
