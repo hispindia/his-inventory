@@ -85,15 +85,14 @@ public class IssueDrugFormController {
 			    ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
 			            .getValue());
 
-		
-			if(ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
-		            .getValue() == "Waiver"){
-				model.addAttribute("exemption", issueDrugPatient.getPatient().getAttribute(32));
+			if(ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY).getValue().equals("Waiver")){
+				model.addAttribute("exemption", ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_WAIVER_CATEGORY)
+			            .getValue());
 			}
-			else if(ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
-		            .getValue()!="General" && ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
-		            .getValue()!="Waiver"){
-				model.addAttribute("exemption", issueDrugPatient.getPatient().getAttribute(36));
+			else if(!ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY).getValue().equals("General") 
+					&& !ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY).getValue().equals("Waiver")){
+				model.addAttribute("exemption", ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_EXEMPTION_CATEGORY)
+			            .getValue());
 			}
 			else {
 				model.addAttribute("exemption", " ");
