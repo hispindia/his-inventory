@@ -21,7 +21,7 @@
 
 <table class="box">
 	<tr>
-		<th>#</th>
+		<th>S.No</th>
 		<th>Date of expiry</th>
 		<th title="Date of manufacturing">DM</th>
 		<th>Company name</th>

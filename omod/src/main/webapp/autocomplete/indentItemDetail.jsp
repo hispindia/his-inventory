@@ -24,7 +24,7 @@
 <span class="boxHeader"><spring:message code="inventory.indentItem.detail"/></span>
 <table width="100%" cellpadding="5" cellspacing="0">
 	<tr align="center">
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.indentItem.category"/></th>
 	<th><spring:message code="inventory.indentItem.name"/></th>
 	<th><spring:message code="inventory.indentItem.specification"/></th>
@@ -61,7 +61,7 @@
 <br />
 <table border="1" width="100%">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.item.category"/></th>
 	<th><spring:message code="inventory.item.name"/></th>
 	<th><spring:message code="inventory.item.specification"/></th>

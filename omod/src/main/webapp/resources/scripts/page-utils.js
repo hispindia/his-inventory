@@ -175,14 +175,14 @@ RECEIPT={
 		{
 			if(SESSION.checkSession()){
 				url = "drugReceiptDetail.form?receiptId="+receiptId+"&keepThis=false&TB_iframe=true&height=500&width=1000";
-				tb_show("Detail receipt drug....",url,false);
+				tb_show("Detail Receipt Drug....",url,false);
 			}
 		},
 		detailReceiptItem : function(receiptId)
 		{
 			if(SESSION.checkSession()){
 				url = "itemReceiptDetail.form?receiptId="+receiptId+"&keepThis=false&TB_iframe=true&height=500&width=1000";
-				tb_show("Detail receipt item....",url,false);
+				tb_show("Detail Receipt Item....",url,false);
 			}
 		},
 		onChangeCategoryItem : function(thiz)
@@ -546,14 +546,14 @@ INDENT={
 		{
 			if(SESSION.checkSession()){
 				url = "indentDrugDetail.form?indentId="+indentId+"&keepThis=false&TB_iframe=true&height=500&width=1000";
-				tb_show("Detail drug indent....",url,false);
+				tb_show("Detail Drug Indent....",url,false);
 			}
 		},
 		detailItemIndent : function(indentId)
 		{
 			if(SESSION.checkSession()){
 				url = "indentItemDetail.form?indentId="+indentId+"&keepThis=false&TB_iframe=true&height=500&width=1000";
-				tb_show("Detail item indent....",url,false);
+				tb_show("Detail Item Indent....",url,false);
 			}
 		},
 		sendToMainStore : function(indentId)
@@ -965,25 +965,25 @@ ISSUE={
 		detailIssueDrug : function(id){
 			if(SESSION.checkSession()){
 				url = "subStoreIssueDrugDettail.form?issueId="+id+"&keepThis=false&TB_iframe=true&height=500&width=800";
-				tb_show("Detail issue....",url,false);
+				tb_show("Detail Issue....",url,false);
 			}
 		},
 		detailIssueDrugAccount : function(id){
 			if(SESSION.checkSession()){
 				url = "subStoreIssueDrugAccountDettail.form?issueId="+id+"&keepThis=false&TB_iframe=true&height=500&width=800";
-				tb_show("Detail issue....",url,false);
+				tb_show("Detail Issue....",url,false);
 			}
 		},
 		detailIssueItem : function(id){
 			if(SESSION.checkSession()){
 				url = "subStoreIssueItemDettail.form?issueId="+id+"&keepThis=false&TB_iframe=true&height=500&width=800";
-				tb_show("Detail issue....",url,false);
+				tb_show("Detail Issue....",url,false);
 			}
 		},
 		detailIssueItemPatient : function(id){
 			if(SESSION.checkSession()){
 				url = "subStoreIssueItemPatientDettail.form?issueId="+id+"&keepThis=false&TB_iframe=true&height=500&width=800";
-				tb_show("Detail issue....",url,false);
+				tb_show("Detail Issue....",url,false);
 			}
 		}
 		

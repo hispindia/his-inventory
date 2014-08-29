@@ -34,7 +34,7 @@
 <form method="get"  id="form">
 <table >
 	<tr>
-		<td>Identifier/Name</td>
+		<td>Patient Name/ID</td>
 		<td>
 			<input type="text" name="issueName" id="issueName" value="${issueName }"/>
 		</td>
@@ -50,7 +50,7 @@
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.issueDrug.identifier"/></th>
 	<th>Name</th>
 	<th>Age</th>

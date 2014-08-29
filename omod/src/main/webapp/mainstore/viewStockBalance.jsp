@@ -59,7 +59,7 @@
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0">
 	<tr  align="center" >
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.viewStockBalance.name"/></th>
 	<th><spring:message code="inventory.viewStockBalance.category"/></th>
 	<th><spring:message code="inventory.viewStockBalance.formulation"/></th>

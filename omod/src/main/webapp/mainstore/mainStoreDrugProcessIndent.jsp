@@ -57,7 +57,7 @@
 <span class="boxHeader"><spring:message code="inventory.indent.processingIndent"/></span>
 <table  width="100%" id="tableIndent">
 	<tr align="center">
-		<th >#</th>
+		<th >S.No</th>
 		<th ><spring:message code="inventory.indent.drug"/></th>
 		<th  ><spring:message code="inventory.indent.formulation"/></th>
 		<th  ><spring:message code="inventory.indent.quantityIndent"/></th>

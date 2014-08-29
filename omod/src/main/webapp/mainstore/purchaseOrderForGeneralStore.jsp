@@ -32,7 +32,7 @@
 <br/>
 
 <table class="box">
-<tr><td><b>Drug info</b></td></tr>
+<tr><td><b>Drug Info</b></td></tr>
 <tr>
 		<td><spring:message code="inventory.drug.category"/><em>*</em></td>
 		<td>
@@ -82,7 +82,7 @@
 <div class="box">
 <table class="box" width="100%" cellpadding="5" cellspacing="0">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.drug.category"/></th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
@@ -125,7 +125,7 @@ Purchase Order For General Store
 </center>
 <table border="1">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.drug.category"/></th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
@@ -146,7 +146,7 @@ Purchase Order For General Store
 	</c:choose>
 </table>
 <br/><br/><br/><br/><br/><br/>
-<span style="float:right;font-size: 1.5em">Signature of inventory clerk/ Stamp</span>
+<span style="float:right;font-size: 1.5em">Signature of Inventory Clerk/ Stamp</span>
 </div>
 <!-- END PRINT DIV -->   
 

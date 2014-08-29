@@ -63,7 +63,7 @@
 <c:when test="${not empty items}">
 <table cellpadding="5" cellspacing="0" width="100%">
 <tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.item.name"/></th>
 	<th><spring:message code="inventory.item.unit"/></th>
 	<th><spring:message code="inventory.item.specification"/></th>

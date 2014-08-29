@@ -32,7 +32,7 @@
 <br/>
 
 <table class="box">
-<tr><td><b>Item info</b></td></tr>
+<tr><td><b>Item Info</b></td></tr>
 <tr>
 		<td><spring:message code="inventory.item.subCategory"/><em>*</em></td>
 		<td>
@@ -47,7 +47,7 @@
 
 	</tr>
 	<tr>
-		<td>Item<em>*</em></td>
+		<td>Item Name<em>*</em></td>
 		<td>
 			<div id="divItem">
 				<select id="itemId" name="itemId" onchange="RECEIPT.onBlurItem(this);"  style="width: 200px;">
@@ -117,7 +117,7 @@
 <div class="box">
 <table class="box" width="100%" cellpadding="5" cellspacing="0">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.item.category"/></th>
 	<th><spring:message code="inventory.item.name"/></th>
 	<th><spring:message code="inventory.item.specification"/></th>
@@ -177,7 +177,7 @@
 <br />
 <table border="1">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.item.category"/></th>
 	<th><spring:message code="inventory.item.name"/></th>
 	<th><spring:message code="inventory.item.specification"/></th>

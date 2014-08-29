@@ -24,7 +24,7 @@
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0">
 	<tr align="center">
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.item.subCategory"/></th>
 	<th><spring:message code="inventory.item.name"/></th>
 	<th><spring:message code="inventory.item.specification"/></th>
@@ -71,7 +71,7 @@
 <br />
 <table border="1">
 	<tr align="center">
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.item.subCategory"/></th>
 	<th><spring:message code="inventory.item.name"/></th>
 	<th><spring:message code="inventory.item.specification"/></th>
@@ -104,7 +104,7 @@
 	</c:choose>
 </table>
 <br/><br/><br/><br/><br/><br/>
-<span style="float:right;font-size: 1.5em">Signature of inventory clerk/ Stamp</span>
+<span style="float:right;font-size: 1.5em">Signature of Inventory Clerk/ Stamp</span>
 </div>
 </div>
 <!-- END PRINT DIV -->   

@@ -167,7 +167,7 @@ function getValue()
 	<div class="box">
 		<table class="box" width="100%" cellpadding="5" cellspacing="0">
 			<tr>
-				<th>#</th>
+				<th>S.No</th>
 				<th><spring:message code="inventory.drug.category" /></th>
 				<th><spring:message code="inventory.drug.name" /></th>
 				<th><spring:message code="inventory.drug.formulation" /></th>
@@ -295,7 +295,7 @@ function getValue()
 			style="margin-left: 60px; margin-top: 10px; font-family: 'Dot Matrix Normal', Arial, Helvetica, sans-serif; font-style: normal;"
 			width="80%">
 			<tr>
-				<th>#</th>
+				<th>S.No</th>
 				<th><spring:message code="inventory.drug.name" /></th>
 				<th><spring:message code="inventory.drug.formulation" /></th>
 				<th><spring:message code="inventory.receiptDrug.quantity" /></th>

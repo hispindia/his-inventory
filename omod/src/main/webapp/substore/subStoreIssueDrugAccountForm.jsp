@@ -75,7 +75,7 @@
 <!--<c:if  test="${not empty listReceiptDrug}">
 <table class="box">
 	<tr>
-		<th>#</th>
+		<th>S.No</th>
 		<th>Date of expiry</th>
 		<th>Date of manufacturing</th>
 		<th>Company name</th>
@@ -134,7 +134,7 @@
 <div class="box">
 <table class="box" width="100%" cellpadding="5" cellspacing="0">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.drug.category"/></th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
@@ -188,7 +188,7 @@
 </c:if>
 <table border="1">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.drug.category"/></th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>

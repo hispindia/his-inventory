@@ -25,7 +25,7 @@
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0">
 	<tr align="center">
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.viewStockBalance.category"/></th>
 	<th><spring:message code="inventory.viewStockBalance.item"/></th>
 	<th><spring:message code="inventory.viewStockBalance.specification"/></th>
@@ -64,7 +64,7 @@
 </c:if>
 <table border="1">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.item.subCategory"/></th>
 	<th><spring:message code="inventory.item.name"/></th>
 	<th><spring:message code="inventory.item.specification"/></th>

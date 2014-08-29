@@ -21,11 +21,11 @@
 <%@ include file="/WEB-INF/template/headerMinimal.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
 
-<span class="boxHeader">Issue drugs detail</span>
+<span class="boxHeader">Issue Drugs Detail</span>
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0">
 	<tr align="center">
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.viewStockBalance.category"/></th>
 	<th><spring:message code="inventory.viewStockBalance.drug"/></th>
 	<th><spring:message code="inventory.viewStockBalance.formulation"/></th>
@@ -66,7 +66,7 @@
 </c:if>
 <table border="1">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.drug.category"/></th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>

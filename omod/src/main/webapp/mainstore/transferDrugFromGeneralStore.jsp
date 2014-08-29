@@ -85,9 +85,9 @@
 <c:when test="${not empty listIndent}">
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr align="center">
-	<th >#</th>
+	<th >S.No</th>
 	<th align="center" ><spring:message code="inventory.indent.fromStore"/></th>
-	<th align="center" ><spring:message code="inventory.indent.name"/></th>
+	<th align="center" >Indent Name</th>
 	<th align="center" ><spring:message code="inventory.indent.createdOn"/></th>
 	<th align="center" ><spring:message code="inventory.indent.status"/></th>
 	<th></th>

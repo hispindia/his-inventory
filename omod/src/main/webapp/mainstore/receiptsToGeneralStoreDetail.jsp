@@ -24,7 +24,7 @@
 <div class="box">
 <table width="100%" border="1" cellpadding="5" cellspacing="0">
 	<tr align="center">
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.drug.category"/></th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
@@ -80,7 +80,7 @@
 <br />
 <table border="1">
 	<tr align="center">
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.drug.category"/></th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>

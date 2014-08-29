@@ -28,8 +28,8 @@
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0">
 	<tr align="center">
-	<th>#</th>
-	<th><spring:message code="inventory.viewStockBalance.name"/></th>
+	<th>S.No</th>
+	<th>Item Name</th>
 	<th><spring:message code="inventory.viewStockBalance.subCategory"/></th>
 	<th><spring:message code="inventory.viewStockBalance.specification"/></th>
 	<th><spring:message code="inventory.viewStockBalance.transaction"/></th>

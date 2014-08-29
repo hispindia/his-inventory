@@ -45,7 +45,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td>Item<em>*</em></td>
+		<td>Item Name<em>*</em></td>
 		<td>
 			<div id="divItem">
 				<select id="itemId" name="itemId" onchange="INDENT.onBlurItem(this);"  style="width: 250px;">
@@ -82,11 +82,11 @@
 </div>
 <!-- indent list -->
 <div style="width: 53%; float: right; margin-right: 16px; ">
-<b class="boxHeader">Item indent slip</b>
+<b class="boxHeader">Item Indent Slip</b>
 <div class="box">
 <table class="box" width="100%" cellpadding="5" cellspacing="0">
 	<tr align="center">
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.item.subCategory"/></th>
 	<th><spring:message code="inventory.item.name"/></th>
 	<th><spring:message code="inventory.item.specification"/></th>
@@ -136,7 +136,7 @@
 <br />
 <table border="1">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.item.subCategory"/></th>
 	<th><spring:message code="inventory.item.name"/></th>
 	<th><spring:message code="inventory.item.specification"/></th>

@@ -47,7 +47,7 @@ String cat="General";
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0" >
 	<tr align="center">
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.viewStockBalance.category"/></th>
 	<th><spring:message code="inventory.viewStockBalance.item"/></th>
 	<th><spring:message code="inventory.viewStockBalance.specification"/></th>
@@ -100,7 +100,7 @@ String cat="General";
 </c:if>
 <table class="spacer" style="margin-left: 60px; margin-top: 40px;">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.item.name"/></th>
 	<th><spring:message code="inventory.item.specification"/></th>
 	<th><spring:message code="inventory.receiptItem.quantity"/></th>

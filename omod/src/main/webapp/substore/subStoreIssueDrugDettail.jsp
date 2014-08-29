@@ -44,11 +44,11 @@ String cat="General";
 }
 </style>
 
-<span class="boxHeader">Issue drugs detail</span>
+<span class="boxHeader">Issue Drugs Detail</span>
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0">
 	<tr align="center">
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.viewStockBalance.category"/></th>
 	<th><spring:message code="inventory.viewStockBalance.drug"/></th>
 	<th><spring:message code="inventory.viewStockBalance.formulation"/></th>
@@ -124,7 +124,7 @@ String cat="General";
 			style="margin-left: 60px; margin-top: 10px; font-family: 'Dot Matrix Normal', Arial, Helvetica, sans-serif; font-style: normal;"
 			width="80%">
 		<tr align="center">
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.viewStockBalance.drug"/></th>
 	<th><spring:message code="inventory.viewStockBalance.formulation"/></th>
 	<th><spring:message code="inventory.issueDrug.quantity"/></th>

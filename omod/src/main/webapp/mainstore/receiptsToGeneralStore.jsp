@@ -57,7 +57,7 @@ VALIDATION={
 </c:if>
 <br/>
 <table width="100%">
-<tr><td><b>Drug info</b></td></tr>
+<tr><td><b>Drug Info</b></td></tr>
  <tr>
  
 
@@ -75,7 +75,7 @@ VALIDATION={
 	</tr>
 
 	<tr>
-		<td>Drug<em>*</em></td>
+		<td>Drug Name<em>*</em></td>
 		<td>
 			
 				<input id="drugName" name="drugName" onblur="RECEIPT.onBlur(this);" style="width: 80%;">
@@ -164,7 +164,7 @@ VALIDATION={
 <div class="box">
 <table class="box" width="100%" border="1" cellpadding="5" cellspacing="0">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.drug.category"/></th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
@@ -230,7 +230,7 @@ VALIDATION={
 <br />
 <table border="1">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.drug.category"/></th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
@@ -270,7 +270,7 @@ VALIDATION={
 	</c:choose>
 </table>
 <br/><br/><br/><br/><br/><br/>
-<span style="float:right;font-size: 1.5em">Signature of inventory clerk/ Stamp</span>
+<span style="float:right;font-size: 1.5em">Signature of Inventory Clerk/ Stamp</span>
 </div>
 </div>
 <!-- END PRINT DIV -->   

@@ -52,7 +52,7 @@
 <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" onclick="INVENTORY.checkValue();" value="<spring:message code='inventory.deleteSelected'/>"/>
 <table cellpadding="5" cellspacing="0" width="100%">
 <tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.drugCategory.name"/></th>
 	<th><spring:message code="inventory.drugCategory.description"/></th>
 	<th><spring:message code="inventory.drugCategory.createdDate"/></th>

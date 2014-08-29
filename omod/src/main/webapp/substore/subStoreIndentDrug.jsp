@@ -32,7 +32,7 @@
 <br/>
 
 <table class="box">
-<tr><td><b>Drug info</b></td></tr>
+<tr><td><b>Drug Info</b></td></tr>
 <tr>
 
 <%-- 	// Sagar Bele - 07-08-2012 New Requirement #302 [INVENTORY] Non Mandatory Drug Category filter for drug search  --%>
@@ -48,7 +48,7 @@
 	</tr>
 
 	<tr>
-		<td>Drug<em>*</em></td>
+		<td>Drug Name<em>*</em></td>
 		<td>
 			
 				<input id="drugName" name="drugName" onblur="INDENT.onBlur(this);" style="width: 200px;">
@@ -88,7 +88,7 @@
 <div class="box">
 <table class="box" width="100%" cellpadding="5" cellspacing="0">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.drug.category"/></th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
@@ -137,7 +137,7 @@
 <br />
 <table border="1">
 	<tr>
-	<th>#</th>
+	<th>S.No</th>
 	<th><spring:message code="inventory.drug.category"/></th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
