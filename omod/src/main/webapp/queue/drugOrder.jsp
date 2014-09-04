@@ -77,8 +77,9 @@ function issueDrugOrder(listOfDrugQuantity) {
    	var totalValue = 0;
 	var preTotal = document.getElementById('totalValue');
    for (var i = 0; i < availableIdArr.length-1; i++) {
-
+	
    var quantity=document.getElementById(availableIdArr[i].toString()+'_quantity').value;
+	
    //ghanshyam,5-july-2013, issue no # 1990, User is able to 'finish' without issuing a drug to patient
    if (quantity==null || quantity==""){
        alert("Please enter quantity");
@@ -91,18 +92,20 @@ function issueDrugOrder(listOfDrugQuantity) {
 	  }
 	 }
    if(quantity!="0"){
+  
    var drugName=document.getElementById(availableIdArr[i].toString()+'_drugName').value;
    var formulation=document.getElementById(availableIdArr[i].toString()+'_formulation').value;
    var formulationId=document.getElementById(availableIdArr[i].toString()+'_formulationId').value;
    var price=document.getElementById(availableIdArr[i].toString()+'_price').value;
-   totalValue = (totalValue + price*quantity).toFixed(2);
-	
+  
+  totalValue = (totalValue + price*quantity);
+  	
    if (preTotal != null){
 		totalValue = +totalValue + +preTotal.value;
 		preTotal.value = totalValue;
 		
 		}
-	
+
    var avaiableId=availableIdArr[i];
    var deleteString = 'deleteInput(\"'+avaiableId+'\")';
    var deleteString = 'deleteInput(\"'+avaiableId+'\")';
@@ -131,7 +134,8 @@ function issueDrugOrder(listOfDrugQuantity) {
    jQuery("#"+drugName).hide();
    jQuery("#processDrugOrder").hide();
     }
-	if (preTotal == null){
+  }
+  	if (preTotal == null){
 		var totalText =  "<div id='com_"+avaiableId+"_div'>"
 				 +"<td id='"+avaiableId+"_fTotal'  name='"+avaiableId+"_fTotal'><b>Total:</b></td>&nbsp;"
 				 +"<input id='totalValue'  name='totalValue' type='text' size='11' value='"+Math.round(totalValue)+"'  readonly='readonly'/>&nbsp;"
@@ -142,8 +146,6 @@ function issueDrugOrder(listOfDrugQuantity) {
 	   totalDiv.appendChild(totalElement);
 	   jQuery("#totalDiv").show();	
 	}   
-  }
-  
 }
 
 function deleteInput(avaiableId) {

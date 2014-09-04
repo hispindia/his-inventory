@@ -62,7 +62,7 @@
 <table border="1" width="100%">
 	<tr>
 	<th>S.No</th>
-	<th><spring:message code="inventory.item.category"/></th>
+	<th>Item Category</th>
 	<th><spring:message code="inventory.item.name"/></th>
 	<th><spring:message code="inventory.item.specification"/></th>
 	<th><spring:message code="inventory.indentItem.quantity"/></th>

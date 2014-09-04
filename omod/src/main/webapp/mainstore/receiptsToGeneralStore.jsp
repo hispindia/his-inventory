@@ -102,7 +102,7 @@ VALIDATION={
 		</td>
 	</tr>
 	<tr>
-		<td><spring:message code="inventory.receiptDrug.unitPrice"/><em>*</em></td>
+		<td>Unit Price<em>*</em></td>
 		<td>
 			<input type="text" id="unitPrice" name="unitPrice" />
 		</td>
@@ -169,7 +169,7 @@ VALIDATION={
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
 	<th><spring:message code="inventory.receiptDrug.quantity"/></th>
-	<th><spring:message code="inventory.receiptDrug.unitPrice"/></th>
+	<th>Unit Price</th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
 	<th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>

@@ -118,7 +118,7 @@
 <table class="box" width="100%" cellpadding="5" cellspacing="0">
 	<tr>
 	<th>S.No</th>
-	<th><spring:message code="inventory.item.category"/></th>
+	<th>Item Category</th>
 	<th><spring:message code="inventory.item.name"/></th>
 	<th><spring:message code="inventory.item.specification"/></th>
 	<th><spring:message code="inventory.receiptItem.quantity"/></th>
