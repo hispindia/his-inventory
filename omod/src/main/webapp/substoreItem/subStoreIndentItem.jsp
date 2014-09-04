@@ -32,7 +32,7 @@
 <br/>
 
 <table class="box">
-<tr><td><b>Item info</b></td></tr>
+<tr><td><b>Item Info</b></td></tr>
 <tr>
 		<td><spring:message code="inventory.item.subCategory"/><em>*</em></td>
 		<td>

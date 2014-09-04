@@ -84,7 +84,7 @@
 </div>
 <!-- indent list -->
 <div style="width: 53%; float: right; margin-right: 16px; ">
-<b class="boxHeader">indent slip of pharmacy</b>
+<b class="boxHeader">Indent Slip of Pharmacy</b>
 <div class="box">
 <table class="box" width="100%" cellpadding="5" cellspacing="0">
 	<tr>

@@ -59,12 +59,15 @@ public class IssueItemPatientFormController {
 		
 		if(ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
 	            .getValue() == "Waiver"){
-			model.addAttribute("exemption", issueItemPatient.getPatient().getAttribute(32));
+			model.addAttribute("exemption", ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_WAIVER_CATEGORY)
+		            .getValue());
 		}
 		else if(ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
 	            .getValue()!="General" && ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
 	            .getValue()!="Waiver"){
-			model.addAttribute("exemption", issueItemPatient.getPatient().getAttribute(36));
+			model.addAttribute("exemption", ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_EXEMPTION_CATEGORY)
+		            .getValue());
+
 		}
 		else {
 			model.addAttribute("exemption", " ");
