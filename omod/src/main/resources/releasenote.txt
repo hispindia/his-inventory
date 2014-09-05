@@ -1,3 +1,10 @@
+2.0.9
+Inventory & Pharmacy
+- #Billed pharmacy
+- #Issue items to patients
+- #Payment Mode
+- #Multiple mainstores
+
 2.0.8
 - #1990             User is able to 'finish' without issuing a drug to patient
 - #1984             User can issue drugs only from the first indent
