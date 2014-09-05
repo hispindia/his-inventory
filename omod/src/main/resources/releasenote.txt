@@ -4,6 +4,7 @@ Inventory & Pharmacy
 - #Issue items to patients
 - #Payment Mode
 - #Multiple mainstores
+- #module upgradation
 
 2.0.8
 - #1990             User is able to 'finish' without issuing a drug to patient
