@@ -99,12 +99,11 @@ public class DrugOrderController {
 		InventoryStoreDrugPatient inventoryStoreDrugPatient = new InventoryStoreDrugPatient();
 		inventoryStoreDrugPatient.setStore(store);
 		inventoryStoreDrugPatient.setPatient(patient);
-
-		if(patient.getMiddleName().equals(null)){
-			inventoryStoreDrugPatient.setName(patient.getGivenName()+" "+patient.getFamilyName());
+		if(patient.getMiddleName()!=null){
+			inventoryStoreDrugPatient.setName(patient.getGivenName()+" "+patient.getFamilyName()+" "+patient.getMiddleName().replace(",", " "));
 		}
 		else{
-			inventoryStoreDrugPatient.setName(patient.getGivenName()+" "+patient.getFamilyName()+" "+patient.getMiddleName().replace(","," "));	
+			inventoryStoreDrugPatient.setName(patient.getGivenName()+" "+patient.getFamilyName());
 		}
 		inventoryStoreDrugPatient.setIdentifier(patient.getPatientIdentifier().getIdentifier());
 		inventoryStoreDrugPatient.setCreatedBy(Context.getAuthenticatedUser().getGivenName());
