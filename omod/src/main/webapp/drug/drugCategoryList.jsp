@@ -54,7 +54,7 @@
 <tr>
 	<th>S.No</th>
 	<th><spring:message code="inventory.drugCategory.name"/></th>
-	<th><spring:message code="inventory.drugCategory.description"/></th>
+	<th><center><spring:message code="inventory.drugCategory.description"/></center></th>
 	<th><spring:message code="inventory.drugCategory.createdDate"/></th>
 	<th><spring:message code="inventory.drugCategory.createdBy"/></th>
 	<th></th>
@@ -62,11 +62,11 @@
 <c:forEach items="${drugCategories}" var="drugCategory" varStatus="varStatus">
 	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${(( pagingUtil.currentPage - 1  ) * pagingUtil.pageSize ) + varStatus.count }"/></td>	
-		<td><a href="#" onclick="ACT.go('drugCategory.form?drugCategoryId=${ drugCategory.id}');">${drugCategory.name}</a> </td>
-		<td>${drugCategory.description}</td>
-		<td><openmrs:formatDate date="${drugCategory.createdOn}" type="textbox"/></td>
-		<td>${drugCategory.createdBy}</td>
-		<td><input type="checkbox" name="ids" value="${drugCategory.id}"/></td>
+		<td style="width:30%"><a href="#" onclick="ACT.go('drugCategory.form?drugCategoryId=${ drugCategory.id}');">${drugCategory.name}</a> </td>
+		<td style="width:40%">${drugCategory.description}</td>
+		<td style="width:12%"><openmrs:formatDate date="${drugCategory.createdOn}" type="textbox"/></td>
+		<td style="width:13%">${drugCategory.createdBy}</td>
+		<td style="width:5%"><input type="checkbox" name="ids" value="${drugCategory.id}"/></td>
 	</tr>
 </c:forEach>
 
