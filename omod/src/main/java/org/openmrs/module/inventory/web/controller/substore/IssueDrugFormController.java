@@ -81,11 +81,10 @@ public class IssueDrugFormController {
 		        .get("issueDrug_" + userId);
 		if (issueDrugPatient != null) {
 			PatientService ps = (PatientService) Context.getService(PatientService.class);
-			model.addAttribute("patientCategory",
-			    ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
-			            .getValue());
 
-			if(ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY).getValue().equals("Waiver")){
+			model.addAttribute("patientCategory",ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY).getValue());
+
+/*			if(ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY).getValue().equals("Waiver")){
 				model.addAttribute("exemption", ps.getPatient(issueDrugPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_WAIVER_CATEGORY)
 			            .getValue());
 			}
@@ -97,7 +96,7 @@ public class IssueDrugFormController {
 			else {
 				model.addAttribute("exemption", " ");
 			}
-			
+*/			
 		}
 		model.addAttribute("listPatientDetail", list);
 		model.addAttribute("issueDrugPatient", issueDrugPatient);

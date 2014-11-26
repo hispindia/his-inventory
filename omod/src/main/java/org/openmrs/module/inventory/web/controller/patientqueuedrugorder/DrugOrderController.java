@@ -31,11 +31,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.openmrs.Patient;
 import org.openmrs.Role;
 import org.openmrs.api.PatientService;
+//new
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.InventoryCommonService;
 import org.openmrs.module.hospitalcore.PatientDashboardService;
-import org.openmrs.module.hospitalcore.model.InventoryDrug;
 import org.openmrs.module.hospitalcore.model.InventoryDrugFormulation;
 import org.openmrs.module.hospitalcore.model.InventoryStore;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatient;
@@ -74,7 +74,13 @@ public class DrugOrderController {
 		PatientSearch patientSearch = hospitalCoreService.getPatientByPatientId(patientId);
 		model.addAttribute("patientSearch", patientSearch);
 		model.addAttribute("date", dateStr);
-
+		model.addAttribute("doctor", drugOrderList.get(0).getCreator().getGivenName());
+		System.out.println("Name -  "+drugOrderList.get(0).getCreator().getGivenName());
+		
+		InventoryStoreDrugPatient inventoryStoreDrugPatient = new InventoryStoreDrugPatient();
+		model.addAttribute("pharmacist", Context.getAuthenticatedUser().getGivenName());
+                
+                
 		return "/module/inventory/queue/drugOrder";
 	}
 
@@ -153,6 +159,8 @@ public class DrugOrderController {
 			 transDetail.setVAT(inventoryStoreDrugTransactionDetail.getVAT());
 			 transDetail.setUnitPrice(inventoryStoreDrugTransactionDetail.getUnitPrice());
 			 transDetail.setDrug(inventoryStoreDrugTransactionDetail.getDrug());
+			 transDetail.setReorderPoint(inventoryStoreDrugTransactionDetail.getDrug().getReorderQty());
+			 transDetail.setAttribute(inventoryStoreDrugTransactionDetail.getDrug().getAttributeName());
 			 transDetail.setFormulation(inventoryDrugFormulation);
 			 transDetail.setBatchNo(inventoryStoreDrugTransactionDetail.getBatchNo());
 			 transDetail.setCompanyName(inventoryStoreDrugTransactionDetail.getCompanyName());

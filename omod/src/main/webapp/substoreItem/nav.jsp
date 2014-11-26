@@ -19,12 +19,14 @@
 --%> 
 <%@ include file="../includes/js_css.jsp" %>
 <br/>
-<b><a href="#" onclick="ACT.go('viewStockBalanceSubStore.form');">Drug</a>&nbsp;| Item </b>
+<!- 18/11/2014 Changing the navigation order-->
+<center><b><a href="#" onclick="ACT.go('patientQueueDrugOrder.form');">Drug</a>&nbsp;| Item </b></center>
 <br/><br/>
-<b><a href="#" onclick="ACT.go('itemViewStockBalanceSubStore.form');"><spring:message code="inventory.viewStockBalance"/></a></b>&nbsp;|
+<b><a href="#" onclick="ACT.go('subStoreIssueItemPatientList.form');"><spring:message code="inventory.substore.issueItemPatient"/></a></b>&nbsp;|
 <b><a href="#" onclick="ACT.go('subStoreIndentItemList.form');"><spring:message code="inventory.substore.indentItem"/></a></b>&nbsp;|
 <b><a href="#" onclick="ACT.go('subStoreIssueItemList.form');"><spring:message code="inventory.substore.issueItem"/></a></b>&nbsp;|
-<b><a href="#" onclick="ACT.go('subStoreIssueItemPatientList.form');"><spring:message code="inventory.substore.issueItemPatient"/></a></b>
+<b><a href="#" onclick="ACT.go('itemViewStockBalanceSubStore.form');"><spring:message code="inventory.substoreItem.viewitemStockBalance"/></a></b>
+
 <br/><br/>
 
 

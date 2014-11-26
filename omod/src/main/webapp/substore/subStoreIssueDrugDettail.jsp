@@ -44,6 +44,37 @@ String cat="General";
 }
 </style>
 
+<div style="max-height: 50px; max-width: 1800px;">
+	<b class="boxHeader">Detail Issue</b>
+</div>
+
+<div id="patientDetails">	
+	<table>
+		<tr>
+			<td>Patient ID :</td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+			<td>&nbsp;${identifier}</td>
+		</tr>
+		<tr>
+			<td>Name :</td><td>&nbsp;</td>
+			<td>&nbsp;${givenName}&nbsp;
+				${familyName}&nbsp;&nbsp;${fn:replace(middleName,","," ")}</td>
+		</tr>
+        <tr>
+        	<td>Age:</td><td>&nbsp;</td>
+        	<td>${age}</td>
+      </tr>
+        <tr>
+        	<td>Gender:</td><td>&nbsp;</td>
+        	<td>&nbsp;${gender}</td>
+        </tr>
+		<tr>
+			<td>Date :</td><td>&nbsp;</td>
+			<td>${date}</td>
+		</tr>
+	</table>
+</div>
+
 <span class="boxHeader">Issue Drugs Detail</span>
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0">
@@ -79,15 +110,15 @@ String cat="General";
 		<td></td>
 		<td></td>
 		<td></td>
-		<td><b><spring:message code="inventory.receiptDrug.total" text="Total" /></b></td>
+		<td><b><spring:message code="inventory.receiptDrug.total" text="Estimated Price" /></b></td>
 		<td><fmt:formatNumber value="${total}" type="number" pattern="#"/></td>						
 	</tr>	
 	<tr>
-			<td>PAYMENT MODE </td>
+			<td>Treating Doctor </td>
 			<td><b>:${paymentMode}</b></td>
 		</tr>
 		<tr>
-			<td>CASHIER </td>
+			<td>Attending Pharmacist</td>
 			<td><b>:${cashier}</b></td>
 		</tr>
 	</c:when>
@@ -149,7 +180,7 @@ String cat="General";
 		<td></td>
 		<td></td>
 		<td></td>
-		<td><b><spring:message code="inventory.receiptDrug.total" text="Total" /></b></td>
+		<td><b><spring:message code="inventory.receiptDrug.total" text="Estimated Price" /></b></td>
 		<c:if  test="${category!='General'}">
 			<td><fmt:formatNumber value="0.00" type="number" pattern="#"/></td>
 		</c:if>
@@ -164,11 +195,11 @@ String cat="General";
 	</table>
 	<table  class="spacer" style="margin-left: 60px; margin-top: 60px;">
 		<tr>
-			<td>PAYMENT MODE </td>
+			<td>Treating Doctor </td>
 			<td><b>:${paymentMode}</b></td>
 		</tr>
 		<tr>
-			<td>CASHIER </td>
+			<td>Attending Pharmacist</td>
 			<td><b>:${cashier}</b></td>
 		</tr>
 	</table>

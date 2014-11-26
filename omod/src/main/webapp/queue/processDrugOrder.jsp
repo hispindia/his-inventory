@@ -89,7 +89,7 @@
 			</c:otherwise>
 		</c:choose>
 	</table>
-	<!-- ghanshyam,4-july-2013, issue no # 1984, User can issue drugs only from the first indent -->
+
 	<br /> <input type="button"
 		class="ui-button ui-widget ui-state-default ui-corner-all"
 		value="Issue" onClick="issueDrugOrder('${listOfDrugQuantity}');"> <input

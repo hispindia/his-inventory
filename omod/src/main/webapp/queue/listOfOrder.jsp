@@ -33,15 +33,24 @@
 	<table>
 		<tr>
 			<td>Patient ID :</td>
-			<td>${patientSearch.identifier}</td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+			<td>&nbsp;${patientSearch.identifier}</td>
 		</tr>
 		<tr>
-			<td>Name of the patient:</td>
-			<td>${patientSearch.givenName}&nbsp;&nbsp;
+			<td>Name :</td><td>&nbsp;</td>
+			<td>&nbsp;${patientSearch.givenName}&nbsp;
 				${patientSearch.familyName}&nbsp;&nbsp;${fn:replace(patientSearch.middleName,","," ")}</td>
 		</tr>
+        <tr>
+        	<td>Age:</td><td>&nbsp;</td>
+        	<td>${patientSearch.age}</td>
+      </tr>
+        <tr>
+        	<td>Gender:</td><td>&nbsp;</td>
+        	<td>&nbsp;${patientSearch.gender}</td>
+        </tr>
 		<tr>
-			<td>Date :</td>
+			<td>Date :</td><td>&nbsp;</td>
 			<td>${date}</td>
 		</tr>
 	</table>
@@ -54,7 +63,9 @@
 		<tr align="center">
 			<th>S.No</th>
 			<th>Order Id</th>
-			<th>Date</th>
+			<th>Date</th>  
+			<th>Sent From</th>         
+            
 		</tr>
 	</thead>
 	<tbody>
@@ -72,6 +83,7 @@
 				<td><a href="drugorder.form?patientId=${patientId}&encounterId=${listOfOrder.encounter.encounterId}&date=${date}">${listOfOrder.encounter.encounterId}</a>
 				</td>
 				<td><openmrs:formatDate date="${listOfOrder.createdOn}" /></td>
+				<td>${listOfOrder.referralOpdName}</td>
 			</tr>
 		</c:forEach>
 	</tbody>

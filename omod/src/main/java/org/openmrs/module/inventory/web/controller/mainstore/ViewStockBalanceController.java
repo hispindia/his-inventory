@@ -28,6 +28,7 @@ public class ViewStockBalanceController {
 	public String list( @RequestParam(value="pageSize",required=false)  Integer pageSize, 
             @RequestParam(value="currentPage",required=false)  Integer currentPage,
             @RequestParam(value="categoryId",required=false)  Integer categoryId,
+            @RequestParam(value="attribute",required=false)  String attribute,
             @RequestParam(value="drugName",required=false)  String drugName,
             @RequestParam(value="fromDate",required=false)  String fromDate,
             @RequestParam(value="toDate",required=false)  String toDate,
@@ -36,7 +37,7 @@ public class ViewStockBalanceController {
 	 InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 	InventoryStore store = inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
 	 
-	 int total = inventoryService.countViewStockBalance(store.getId(), categoryId, drugName, fromDate, toDate , false);
+	 int total = inventoryService.countViewStockBalance(store.getId(), categoryId, drugName, attribute ,fromDate, toDate , false);
 	 String temp = "";
 		if(categoryId != null){	
 				temp = "?categoryId="+categoryId;
@@ -65,7 +66,7 @@ public class ViewStockBalanceController {
 	}
 		
 		PagingUtil pagingUtil = new PagingUtil( RequestUtil.getCurrentLink(request)+temp , pageSize, currentPage, total );
-		List<InventoryStoreDrugTransactionDetail> stockBalances = inventoryService.listViewStockBalance(store.getId(), categoryId, drugName, fromDate, toDate, false, pagingUtil.getStartPos(), pagingUtil.getPageSize());
+		List<InventoryStoreDrugTransactionDetail> stockBalances = inventoryService.listViewStockBalance(store.getId(), categoryId, drugName, attribute, fromDate, toDate, false, pagingUtil.getStartPos(), pagingUtil.getPageSize());
 		List<InventoryDrugCategory> listCategory = inventoryService.listDrugCategory("", 0, 0);
 		//03/07/2012: Kesavulu:sort Item Names  #300
 		//10/7/2012: Harsh checked for null before sorting #300

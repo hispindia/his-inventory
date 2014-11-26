@@ -37,11 +37,11 @@
 		<td><spring:message code="inventory.issueDrug.account"/></td>
 		<td>
 			<input type="text" name="issueName" id="issueName" value="${issueName }"/>
-		</td>
+		</td><td>&nbsp;&nbsp;</td>
 		<td><spring:message code="inventory.fromDate"/></td>
-		<td><input type="text" id="fromDate" class="date-pick left" readonly="readonly" name="fromDate" value="${fromDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td>
+		<td><input type="text" id="fromDate" class="date-pick left" readonly="readonly" name="fromDate" value="${fromDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td><td>&nbsp;&nbsp;</td>
 		<td><spring:message code="inventory.toDate"/></td>
-		<td><input type="text" id="toDate" class="date-pick left" readonly="readonly" name="toDate" value="${toDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td>
+		<td><input type="text" id="toDate" class="date-pick left" readonly="readonly" name="toDate" value="${toDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td><td>&nbsp;&nbsp;</td>
 		<td><input type="submit" class="ui-button ui-widget ui-state-default ui-corner-all" value="Search"/></td>
 	</tr>
 </table>

@@ -42,16 +42,22 @@
 					>${category.name}</option>
 				</c:forEach>
 	   		</select>
-		</td>
+		</td><td>&nbsp;&nbsp;</td>
 		<td><spring:message code="inventory.receiptDrug.drugName"/></td>
 		<td>
 			<input type="text"  name="drugName" id="drugName" value="${drugName }"/>
 		</td>
+		</td><td>&nbsp;&nbsp;</td>
+		<td><spring:message code="inventory.receiptDrug.attribute"/></td>
+		<td>
+			<input type="text"  name="attribute" id="attribute" value="${attribute }"/>
+		</td>
+
 		<!--<td><spring:message code="inventory.fromDate"/></td>
 		<td><input type="text" id="fromDate" class="date-pick left" readonly="readonly" name="fromDate" value="${fromDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td>
 		<td><spring:message code="inventory.toDate"/></td>
 		<td><input type="text" id="toDate" class="date-pick left" readonly="readonly" name="toDate" value="${toDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td>
-		--><td><input type="submit" class="ui-button ui-widget ui-state-default ui-corner-all" value="Search"/></td>
+		--><td>&nbsp;&nbsp;</td><td><input type="submit" class="ui-button ui-widget ui-state-default ui-corner-all" value="Search"/></td>
 	</tr>
 </table>
 <br />
@@ -63,11 +69,13 @@
 	<th><spring:message code="inventory.viewStockBalance.name"/></th>
 	<th><spring:message code="inventory.viewStockBalance.category"/></th>
 	<th><spring:message code="inventory.viewStockBalance.formulation"/></th>
+	<th><spring:message code="inventory.viewStockBalance.attribute"/></th>
 	<!--
 	<th ><spring:message code="inventory.viewStockBalance.receiptQty"/></th>
 	<th><spring:message code="inventory.viewStockBalance.STTSS"/></th>
 	-->
 	<th ><spring:message code="inventory.receiptDrug.currentQuantity"/></th>
+	<th><spring:message code="inventory.viewStockBalance.reorderQuntity"/></th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty stockBalances}">
@@ -77,11 +85,13 @@
 		<td><a href="#" onclick="STOCKBALLANCE.detailSubStoreDrug('${balance.drug.id}', '${balance.formulation.id}');" title="Detail all transactions of this drug">${balance.drug.name}</a></td>
 		<td>${balance.drug.category.name} </td>	
 		<td>${balance.formulation.name}-${balance.formulation.dozage}</td>
+		<td>${balance.attribute}</td>
 		<!--
 		<td>${balance.quantity}</td>
 		<td>${balance.issueQuantity}</td>
 		-->
 		<td>${balance.currentQuantity}</td>
+		<td>${balance.reorderPoint}</td>
 		</tr>
 	</c:forEach>
 	</c:when>

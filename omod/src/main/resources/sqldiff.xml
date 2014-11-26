@@ -38,7 +38,7 @@
 			CREATE TABLE IF NOT EXISTS inventory_store_drug_patient (id integer not null auto_increment, store_id integer, patient_id integer, name varchar(255), prescription varchar(255), identifier varchar(255), created_by varchar(255), created_on datetime, primary key (id));
 			CREATE TABLE IF NOT EXISTS inventory_store_drug_patient_detail (id integer not null auto_increment, store_drug_patient_id integer, transaction_detail_id integer, quantity integer, primary key (id));
 			CREATE TABLE IF NOT EXISTS inventory_store_drug_transaction (id integer not null auto_increment, store_id integer, type_transaction integer, status integer, description varchar(500), created_on datetime, created_by varchar(255), primary key (id));
-			CREATE TABLE IF NOT EXISTS inventory_store_drug_transaction_detail (id integer not null auto_increment, transaction_id integer, drug_id integer, formulation_id integer, quantity integer, current_quantity integer, issue_quantity integer, unit_price decimal(19,2), VAT decimal(19,2), total_price decimal(19,2), batch_no varchar(255), company_name varchar(255), date_manufacture datetime, date_expiry datetime, receipt_date datetime, created_on datetime, opening_balance bigint, closing_balance bigint, parent_id integer, primary key (id));
+			<!--  CREATE TABLE IF NOT EXISTS inventory_store_drug_transaction_detail (id integer not null auto_increment, transaction_id integer, drug_id integer, formulation_id integer, quantity integer, current_quantity integer, issue_quantity integer, unit_price decimal(19,2), VAT decimal(19,2), total_price decimal(19,2), batch_no varchar(255), company_name varchar(255), date_manufacture datetime, date_expiry datetime, receipt_date datetime, created_on datetime, opening_balance bigint, closing_balance bigint, parent_id integer, primary key (id)); -->
 			CREATE TABLE IF NOT EXISTS inventory_store_item (id integer not null auto_increment, store_id integer, item_id integer, specification_id integer, current_quantity bigint, receipt_quantity bigint, issue_quantity bigint, status_indent integer, reorder_qty integer, opening_balance bigint, closing_balance bigint, status integer, created_on datetime, primary key (id));
 			CREATE TABLE IF NOT EXISTS inventory_store_item_account (id integer not null auto_increment, store_id integer, name varchar(255), created_by varchar(255), created_on datetime, primary key (id));
 			CREATE TABLE IF NOT EXISTS inventory_store_item_account_detail (id integer not null auto_increment, item_account_id integer, transaction_detail_id integer, quantity integer, primary key (id));
@@ -70,7 +70,7 @@
 		</description>
 		<sql>
 			ALTER TABLE inventory_store_item_transaction_detail MODIFY VAT integer;
-			ALTER TABLE inventory_store_drug_transaction_detail MODIFY VAT integer;
+		<!-- 	ALTER TABLE inventory_store_drug_transaction_detail MODIFY VAT integer; -->
 		</sql>
 	</diff>
 	<diff>
@@ -118,7 +118,7 @@
 		</description>
 		<sql>
 			ALTER TABLE inventory_store_item_transaction_detail MODIFY VAT decimal(19,2);
-			ALTER TABLE inventory_store_drug_transaction_detail MODIFY VAT decimal(19,2);
+		<!--	ALTER TABLE inventory_store_drug_transaction_detail MODIFY VAT decimal(19,2); -->
 		</sql>
 	</diff>
 	<diff>
@@ -129,7 +129,7 @@
 			Update inventory_store_drug_transaction_detail
 		</description>
 		<sql>
-			ALTER TABLE inventory_store_drug_transaction_detail ADD receipt_from varchar(255);
+		<!-- 	ALTER TABLE inventory_store_drug_transaction_detail ADD receipt_from varchar(255); -->
 		</sql>
 	</diff>
 	<diff>

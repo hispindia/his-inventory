@@ -689,6 +689,8 @@ public class AjaxController {
 				transDetail.setReceiptDate(pDetail.getTransactionDetail()
 						.getReceiptDate());
 				transDetail.setCreatedOn(date1);
+				transDetail.setReorderPoint(pDetail.getTransactionDetail().getDrug().getReorderQty());
+				transDetail.setAttribute(pDetail.getTransactionDetail().getDrug().getAttributeName());
 				/*
 				 * Money moneyUnitPrice = new
 				 * Money(pDetail.getTransactionDetail().getUnitPrice()); Money
@@ -825,6 +827,9 @@ public class AjaxController {
 				transDetail.setReceiptDate(pDetail.getTransactionDetail()
 						.getReceiptDate());
 				transDetail.setCreatedOn(date1);
+				transDetail.setReorderPoint(pDetail.getTransactionDetail().getDrug().getReorderQty());
+				transDetail.setAttribute(pDetail.getTransactionDetail().getDrug().getAttributeName());
+
 				/*
 				 * Money moneyUnitPrice = new
 				 * Money(pDetail.getTransactionDetail().getUnitPrice()); Money
@@ -1229,11 +1234,26 @@ public class AjaxController {
 		model.addAttribute("listDrugIssue", listDrugIssue);
 		if (CollectionUtils.isNotEmpty(listDrugIssue)) {
 			model.addAttribute("issueDrugPatient", listDrugIssue.get(0)
-					.getStoreDrugPatient());
+					.getStoreDrugPatient());                     
+                        
 			model.addAttribute("date", listDrugIssue.get(0)
 					.getStoreDrugPatient().getCreatedOn());
 			model.addAttribute("age", listDrugIssue.get(0)
 					.getStoreDrugPatient().getPatient().getAge());
+                        
+                       
+                        model.addAttribute("identifier", listDrugIssue.get(0)
+					.getStoreDrugPatient().getPatient().getPatientIdentifier());
+                        model.addAttribute("givenName", listDrugIssue.get(0)
+					.getStoreDrugPatient().getPatient().getGivenName());
+                        model.addAttribute("familyName", listDrugIssue.get(0)
+					.getStoreDrugPatient().getPatient().getFamilyName());
+                        if(listDrugIssue.get(0).getStoreDrugPatient().getPatient().getMiddleName()!=null){
+                            model.addAttribute("middleName", listDrugIssue.get(0)
+                					.getStoreDrugPatient().getPatient().getMiddleName());                        	
+                        }
+
+                        
 			if(listDrugIssue.get(0)
 					.getStoreDrugPatient().getPatient().getGender().equals("M")){
 				model.addAttribute("gender", "Male");
@@ -1408,6 +1428,7 @@ public class AjaxController {
 			@RequestParam(value = "currentPage", required = false) Integer currentPage,
 			@RequestParam(value = "categoryId", required = false) Integer categoryId,
 			@RequestParam(value = "drugName", required = false) String drugName,
+			@RequestParam(value = "attribute", required = false) String attribute,
 			@RequestParam(value = "fromDate", required = false) String fromDate,
 			@RequestParam(value = "toDate", required = false) String toDate,
 			Map<String, Object> model, HttpServletRequest request) {
@@ -1420,7 +1441,7 @@ public class AjaxController {
 		// ghanshyam 7-august-2013 code review bug
 		if (store != null) {
 			int total = inventoryService.countViewStockBalance(store.getId(),
-					categoryId, drugName, fromDate, toDate, true);
+					categoryId, drugName, attribute, fromDate, toDate, true);
 			String temp = "";
 			if (categoryId != null) {
 				temp = "?categoryId=" + categoryId;
@@ -1452,7 +1473,7 @@ public class AjaxController {
 					RequestUtil.getCurrentLink(request) + temp, pageSize,
 					currentPage, total);
 			List<InventoryStoreDrugTransactionDetail> stockBalances = inventoryService
-					.listViewStockBalance(store.getId(), categoryId, drugName,
+					.listViewStockBalance(store.getId(), categoryId, drugName,attribute,
 							fromDate, toDate, true, pagingUtil.getStartPos(),
 							pagingUtil.getPageSize());
 			List<InventoryDrugCategory> listCategory = inventoryService

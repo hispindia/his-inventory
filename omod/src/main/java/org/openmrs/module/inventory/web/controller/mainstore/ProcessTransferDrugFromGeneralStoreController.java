@@ -189,6 +189,8 @@ public class ProcessTransferDrugFromGeneralStoreController {
 						inventoryService.saveStoreDrugTransactionDetail(trDetail);
 						
 						transDetail.setDrug(trDetail.getDrug());
+						transDetail.setReorderPoint(trDetail.getDrug().getReorderQty());
+						transDetail.setAttribute(trDetail.getDrug().getAttributeName());
 						transDetail.setDateExpiry(trDetail.getDateExpiry());
 						transDetail.setBatchNo(trDetail.getBatchNo());
 						transDetail.setCompanyName(trDetail.getCompanyName());
@@ -245,6 +247,7 @@ public class ProcessTransferDrugFromGeneralStoreController {
 						transDetail.setIssueQuantity(trDetail.getCurrentQuantity());
 						trDetail.setCurrentQuantity(0);
 						trDetail.setQuantity(0);
+
 						inventoryService.saveStoreDrugTransactionDetail(trDetail);
 						
 /*						 Money moneyUnitPrice = new Money(trDetail.getUnitPrice());
@@ -266,6 +269,8 @@ public class ProcessTransferDrugFromGeneralStoreController {
 						transDetail.setOpeningBalance(totalQuantity);
 						
 						transDetail.setDrug(trDetail.getDrug());
+						transDetail.setReorderPoint(trDetail.getDrug().getReorderQty());
+						transDetail.setAttribute(trDetail.getDrug().getAttributeName());
 						transDetail.setDateExpiry(trDetail.getDateExpiry());
 						transDetail.setBatchNo(trDetail.getBatchNo());
 						transDetail.setCompanyName(trDetail.getCompanyName());

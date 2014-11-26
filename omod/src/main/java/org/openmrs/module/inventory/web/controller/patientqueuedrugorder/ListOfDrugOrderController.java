@@ -27,8 +27,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import org.openmrs.EncounterType;
 
 import org.openmrs.Patient;
+import org.openmrs.api.EncounterService;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
@@ -45,7 +47,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/module/inventory/listoforder.form")
 public class ListOfDrugOrderController {
 	@RequestMapping(method = RequestMethod.GET)
-	public String main(Model model, @RequestParam("patientId") Integer patientId,
+	public String main(Model model, 
+                        @RequestParam("patientId") Integer patientId,
 			@RequestParam(value = "date", required = false) String dateStr) {
 		InventoryService inventoryService = Context
 				.getService(InventoryService.class);
@@ -66,6 +69,9 @@ public class ListOfDrugOrderController {
 		//model.addAttribute("serviceOrderSize", serviceOrderList.size());
 		model.addAttribute("patientId", patientId);
 		model.addAttribute("date", dateStr);
+                
+                
+                
 		return "/module/inventory/queue/listOfOrder";
 	}
 }

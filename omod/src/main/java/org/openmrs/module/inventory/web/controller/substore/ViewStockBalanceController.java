@@ -29,6 +29,7 @@ public class ViewStockBalanceController {
             @RequestParam(value="currentPage",required=false)  Integer currentPage,
             @RequestParam(value="categoryId",required=false)  Integer categoryId,
             @RequestParam(value="drugName",required=false)  String drugName,
+            @RequestParam(value="attribute",required=false)  String attribute,
             @RequestParam(value="fromDate",required=false)  String fromDate,
             @RequestParam(value="toDate",required=false)  String toDate,
             Map<String, Object> model, HttpServletRequest request
@@ -36,7 +37,7 @@ public class ViewStockBalanceController {
 	 InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 	InventoryStore store = inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
 	 
-	 int total = inventoryService.countViewStockBalance(store.getId(), categoryId, drugName,  fromDate, toDate , false);
+	 int total = inventoryService.countViewStockBalance(store.getId(), categoryId, drugName, attribute, fromDate, toDate , false);
 	 String temp = "";
 		if(categoryId != null){	
 				temp = "?categoryId="+categoryId;
@@ -49,6 +50,15 @@ public class ViewStockBalanceController {
 				temp +="&drugName="+drugName;
 			}
 	}
+		if(attribute != null){	
+			if(StringUtils.isBlank(temp)){
+				temp = "?attribute="+attribute;
+			}else{
+				temp +="&attribute="+attribute;
+			}
+	}
+
+		
 		if(fromDate != null){	
 			if(StringUtils.isBlank(temp)){
 				temp = "?fromDate="+fromDate;
@@ -65,7 +75,7 @@ public class ViewStockBalanceController {
 	}
 		
 		PagingUtil pagingUtil = new PagingUtil( RequestUtil.getCurrentLink(request)+temp , pageSize, currentPage, total );
-		List<InventoryStoreDrugTransactionDetail> stockBalances = inventoryService.listViewStockBalance(store.getId(), categoryId, drugName,  fromDate, toDate, false, pagingUtil.getStartPos(), pagingUtil.getPageSize());
+		List<InventoryStoreDrugTransactionDetail> stockBalances = inventoryService.listViewStockBalance(store.getId(), categoryId, drugName, attribute, fromDate, toDate, false, pagingUtil.getStartPos(), pagingUtil.getPageSize());
 		List<InventoryDrugCategory> listCategory = inventoryService.listDrugCategory("", 0, 0);
 		
 		if (stockBalances!=null){
@@ -73,6 +83,7 @@ public class ViewStockBalanceController {
 		}
 		model.put("categoryId", categoryId );
 		model.put("drugName", drugName );
+		model.put("attribute", attribute );
 		model.put("fromDate", fromDate );
 		model.put("toDate", toDate );
 		model.put("pagingUtil", pagingUtil );

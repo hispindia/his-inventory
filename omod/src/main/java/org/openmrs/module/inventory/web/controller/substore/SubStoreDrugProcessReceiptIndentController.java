@@ -97,6 +97,8 @@ public class SubStoreDrugProcessReceiptIndentController {
 				InventoryStoreDrugTransactionDetail transDetail = new InventoryStoreDrugTransactionDetail();
 				transDetail.setTransaction(transaction);
 				transDetail.setDrug(refund.getDrug());
+				transDetail.setReorderPoint(refund.getDrug().getReorderQty());
+				transDetail.setAttribute(refund.getDrug().getAttributeName());
 				transDetail.setDateExpiry(refund.getDateExpiry());
 				transDetail.setBatchNo(refund.getBatchNo());
 				transDetail.setCompanyName(refund.getCompanyName());

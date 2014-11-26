@@ -23,8 +23,9 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <openmrs:require privilege="Drug order queue" otherwise="/login.htm" redirect="/module/inventory/main.form" />
+<spring:message var="pageTitle" code="inventory.substore.patientQueueForDrugOrders.manage" scope="page"/>
 <%@ include file="../substore/nav.jsp" %>
-<h2><spring:message code="inventory.substore.patientQueueForDrugOrders"/></h2>	
+<h2><spring:message code="inventory.substore.patientQueueForDrugOrders.manage"/></h2>	
 <br />
 
 <script type="text/javascript">
@@ -41,7 +42,9 @@
 
 	currentPage = 1;
     jQuery(document).ready(function() {
-		jQuery('#date').datepicker({yearRange:'c-30:c+30', dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true});
+		jQuery('#date').datepicker({yearRange:'c-30:c+30', dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,showOn: "button",
+                buttonImage: "${pageContext.request.contextPath}/moduleResources/inventory/calendar.gif",
+                buttonImageOnly: true});
     });
 	
 	// get queue
@@ -86,7 +89,7 @@
 	<input id="searchKey"/>
 	<br/>
 	<input type="button" value="Get patients" onClick="getQueue(1);"/>
-	<input type="button" value="Reset" onClick="reset();"/>
+<!-- 	<input type="button" value="Reset" onClick="reset();"/> -->
 </div>
 
 <div id="queue">

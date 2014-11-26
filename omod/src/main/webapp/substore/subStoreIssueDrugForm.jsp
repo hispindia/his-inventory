@@ -123,12 +123,13 @@ function getValue()
 			<br /> <input type="submit"
 				class="ui-button ui-widget ui-state-default ui-corner-all"
 				value="<spring:message code="inventory.issueDrug.addToSlip"/>">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<c:if test="${empty issueDrugPatient}">
 				<input type="button"
 					class="ui-button ui-widget ui-state-default ui-corner-all"
 					value="<spring:message code="inventory.issueDrug.createPatient"/>"
 					onclick="ISSUE.createPatient();">
-			</c:if>
+			</c:if>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="button"
 				class="ui-button ui-widget ui-state-default ui-corner-all"
 				value="<spring:message code="inventory.back"/>"
@@ -147,6 +148,7 @@ function getValue()
 				  	<th>Category</th> 
 					<th>Name</th>
 					<th>Age</th>
+					<th>Gender</th>
 				</tr>
 				<tr>
 					<td>${issueDrugPatient.patient.patientIdentifier.identifier}</td>
@@ -156,6 +158,7 @@ function getValue()
 							<c:when test="${issueDrugPatient.patient.age == 0  }">&lt 1</c:when>
 							<c:otherwise>${issueDrugPatient.patient.age }</c:otherwise>
 						</c:choose></td>
+					<td>${issueDrugPatient.patient.gender}</td>	
 				</tr>
 
 			</table>
@@ -188,7 +191,7 @@ function getValue()
 							<td><a href="#" title="Remove this"
 								onclick="INVENTORY.removeObject('${varStatus.index}','5');">${issue.transactionDetail.drug.name}</a></td>
 							<td>${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
-							<td>${issue.quantity}</td>
+							<td><center>${issue.quantity}</center></td>
 							<td><fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/></td>
 						</tr>
 					</c:forEach>
@@ -198,18 +201,21 @@ function getValue()
 							<td></td>
 							<td></td>
 							<td></td>
-							<td><b><spring:message code="inventory.receiptDrug.total" text="Total" /></b></td>
+							<td><b>Estimated Price</b></td>
 							<td>	
-								<c:choose>
+                           <!-- <textarea readonly>-->
+                            <c:choose>
 									<c:when test ="${patientCategory == generalVar}">
 										<fmt:formatNumber value="${total}" type="number" pattern="#"/>
 									</c:when>
 									
 									<c:otherwise>
-										<strike><fmt:formatNumber value="${total}" type="number" pattern="#"/>
-										</strike>  0.00
+										<fmt:formatNumber value="${total}" type="number" pattern="#"/>
+										
 									</c:otherwise>
 								</c:choose>
+								
+                               
 							</td>						
 						</tr>
 						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
@@ -217,12 +223,7 @@ function getValue()
 							<td></td>
 							<td></td>
 							<td></td>
-							<td><b>Payment Mode</b></td>
-							<td><select id="paymentMode" name="paymentMode">
-								<option value="Cash">Cash</option>
-								<option value="Card">Card</option>
-							</select>
-							</td>						
+												
 						</tr>
 				</c:when>
 			</c:choose>
@@ -283,11 +284,11 @@ function getValue()
 					<td>Patient category</td>
 					<td>:${patientCategory }</td>
 				</tr>  
-				<tr>
+<!-- 				<tr>
 					<td>Waiver/Exempt. No.</td>
 					<td>:${exemption }</td>
 				</tr>  
-
+ -->
 			</table>
 			<br />
 		</c:if>

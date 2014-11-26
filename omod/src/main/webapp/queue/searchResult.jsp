@@ -82,8 +82,6 @@
 				</td>
 				<td><b>Gender</b>
 				</td>
-				<td><b>Birthdate</b>
-				</td>
 				<!--  
 				<td><b>Relative Name</b></td>
 				<td><b>Phone number</b></td>
@@ -112,17 +110,7 @@
 							<c:otherwise>${patient.age}</c:otherwise>
 						</c:choose>
 					</td>
-					<td><c:choose>
-							<c:when test="${patient.gender eq 'M'}">
-								<img src="${pageContext.request.contextPath}/images/male.gif" />
-							</c:when>
-							<c:otherwise>
-								<img src="${pageContext.request.contextPath}/images/female.gif" />
-							</c:otherwise>
-						</c:choose>
-					</td>
-					<td><openmrs:formatDate date="${patient.birthdate}" />
-					</td>
+					<td>${patient.gender}</td>
 
 				</tr>
 			</c:forEach>

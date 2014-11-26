@@ -20,10 +20,10 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 
 <openmrs:require privilege="Add/Edit substore" otherwise="/login.htm" redirect="/module/inventory/main.form" />
-<spring:message var="pageTitle" code="inventory.viewStockBalance.manage" scope="page"/>
+<spring:message var="pageTitle" code="inventory.viewStockBalanceExpiry.manage" scope="page"/>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="nav.jsp" %>
-<h2><spring:message code="inventory.viewStockBalance.manage"/></h2>	
+<h2><spring:message code="inventory.viewStockBalanceExpiry.manage"/></h2>	
 <br />
 <c:forEach items="${errors.allErrors}" var="error">
 	<span class="error"><spring:message code="${error.defaultMessage}" text="${error.defaultMessage}"/></span><
@@ -42,7 +42,7 @@
 					>${category.name}</option>
 				</c:forEach>
 	   		</select>
-		</td>
+		</td><td>&nbsp;&nbsp;</td>
 		<td><spring:message code="inventory.receiptDrug.drugName"/></td>
 		<td>
 			<input type="text"  name="drugName" id="drugName" value="${drugName }"/>
@@ -51,7 +51,7 @@
 		<td><input type="text" id="fromDate" class="date-pick left" readonly="readonly" name="fromDate" value="${fromDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td>
 		<td><spring:message code="inventory.toDate"/></td>
 		<td><input type="text" id="toDate" class="date-pick left" readonly="readonly" name="toDate" value="${toDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td>
-		-->
+		--><td>&nbsp;&nbsp;</td>
 		<td><input type="submit" class="ui-button ui-widget ui-state-default ui-corner-all" value="Search"/></td>
 	</tr>
 </table>

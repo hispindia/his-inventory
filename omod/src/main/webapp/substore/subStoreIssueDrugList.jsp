@@ -37,11 +37,11 @@
 		<td>Patient Name/ID</td>
 		<td>
 			<input type="text" name="issueName" id="issueName" value="${issueName }"/>
-		</td>
+		</td><td>&nbsp;&nbsp;</td>
 		<td><spring:message code="inventory.fromDate"/></td>
-		<td><input type="text" id="fromDate" class="date-pick left" readonly="readonly" name="fromDate" value="${fromDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td>
+		<td><input type="text" id="fromDate" class="date-pick left" readonly="readonly" name="fromDate" value="${fromDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td><td>&nbsp;&nbsp;</td>
 		<td><spring:message code="inventory.toDate"/></td>
-		<td><input type="text" id="toDate" class="date-pick left" readonly="readonly" name="toDate" value="${toDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td>
+		<td><input type="text" id="toDate" class="date-pick left" readonly="readonly" name="toDate" value="${toDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td><td>&nbsp;&nbsp;</td>
 		<td><input type="submit" class="ui-button ui-widget ui-state-default ui-corner-all" value="Search"/></td>
 	</tr>
 </table>
@@ -52,8 +52,11 @@
 	<tr>
 	<th>S.No</th>
 	<th><spring:message code="inventory.issueDrug.identifier"/></th>
+        <!-- 18/11/2014 New Requirment to get details -->
+	<th>Drug Regimen</th>
 	<th>Name</th>
 	<th>Age</th>
+	<th>Gender</th>
 	<th><spring:message code="inventory.issueDrug.createdOn"/></th>
 	</tr>
 	<c:choose>
@@ -61,14 +64,18 @@
 	<c:forEach items="${listIssue}" var="issue" varStatus="varStatus">
 	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${(( pagingUtil.currentPage - 1  ) * pagingUtil.pageSize ) + varStatus.count }"/></td>
-		<td> <a href="#" title="Detail issue drug to this patient" onclick="ISSUE.detailIssueDrug('${issue.id}');">${issue.identifier}</a> </td>
+		<td> ${issue.identifier}</td>
+                <!-- 18/11/2014 New Requirment to get details -->
+		<td> <a href="#" title="Detail issue drug to this patient" onclick="ISSUE.detailIssueDrug('${issue.id}');">View/Print</a> </td>
 		<td>${issue.patient.givenName}&nbsp;${issue.patient.familyName}&nbsp;${fn:replace(issue.patient.middleName,","," ")}</td>
-		<td>
+		<td><center>
               	<c:choose>
               		<c:when test="${issue.patient.age == 0  }">&lt 1</c:when>
               		<c:otherwise >${issue.patient.age }</c:otherwise>
               	</c:choose>
+              	</center>
         </td>	
+        <td><center>${issue.patient.gender }</center></td>
 		<td><openmrs:formatDate date="${issue.createdOn}" type="textbox"/></td>
 		</tr>
 	</c:forEach>

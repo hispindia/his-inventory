@@ -134,6 +134,8 @@ public class ReceiptFormController {
 		
 		InventoryStoreDrugTransactionDetail transactionDetail = new InventoryStoreDrugTransactionDetail();
 		transactionDetail.setDrug(drug);
+		transactionDetail.setAttribute(drug.getAttributeName());
+		transactionDetail.setReorderPoint(drug.getReorderQty());
 		transactionDetail.setFormulation(inventoryService.getDrugFormulationById(formulation));
 		transactionDetail.setBatchNo(batchNo);
 		transactionDetail.setCompanyName(companyName);
