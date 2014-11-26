@@ -537,19 +537,19 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 	}
 	
 	@Override
-	public Integer countViewStockBalance(Integer storeId, Integer categoryId, String drugName, String fromDate,
+	public Integer countViewStockBalance(Integer storeId, Integer categoryId, String drugName,String attribute, String fromDate,
 	                                     String toDate, boolean isExpiry) throws APIException {
 		// TODO Auto-generated method stub
-		return dao.countViewStockBalance(storeId, categoryId, drugName, fromDate, toDate, isExpiry);
+		return dao.countViewStockBalance(storeId, categoryId, drugName, attribute, fromDate, toDate, isExpiry);
 	}
 	
 	@Override
 	public List<InventoryStoreDrugTransactionDetail> listViewStockBalance(Integer storeId, Integer categoryId,
-	                                                                      String drugName, String fromDate, String toDate,
+	                                                                      String drugName,String attribute, String fromDate, String toDate,
 	                                                                      boolean isExpiry, int min, int max)
 	                                                                                                         throws APIException {
 		// TODO Auto-generated method stub
-		return dao.listViewStockBalance(storeId, categoryId, drugName, fromDate, toDate, isExpiry, min, max);
+		return dao.listViewStockBalance(storeId, categoryId, drugName, attribute, fromDate, toDate, isExpiry, min, max);
 	}
 	
 	@Override

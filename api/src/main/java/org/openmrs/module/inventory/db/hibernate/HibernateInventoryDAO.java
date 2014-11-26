@@ -1562,7 +1562,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 	}
 
 	public List<InventoryStoreDrugTransactionDetail> listViewStockBalance(
-			Integer storeId, Integer categoryId, String drugName,
+			Integer storeId, Integer categoryId, String drugName,String attribute,
 			String fromDate, String toDate, boolean isExpiry, int min, int max)
 			throws DAOException {
 		Criteria criteria = sessionFactory
@@ -1576,6 +1576,8 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		ProjectionList proList = Projections.projectionList();
 		proList.add(Projections.groupProperty("drug"))
 				.add(Projections.groupProperty("formulation"))
+				.add(Projections.groupProperty("attribute"))
+				.add(Projections.groupProperty("reorderPoint"))
 				.add(Projections.sqlProjection( "sum(current_quantity) as current_quantity", new String[] {"current_quantity"},new Type[] {StandardBasicTypes.INTEGER}))
 				.add(Projections.sqlProjection( "sum(quantity)  as quantity", new String[] {"quantity"},new Type[] {StandardBasicTypes.INTEGER}))
 				.add(Projections.sqlProjection( "sum(issue_quantity)  as issue_quantity", new String[] {"issue_quantity"},new Type[] {StandardBasicTypes.INTEGER} ));
@@ -1585,6 +1587,10 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		}
 		if (!StringUtils.isBlank(drugName)) {
 			criteria.add(Restrictions.like("drugAlias.name", "%" + drugName
+					+ "%"));
+		}
+		if (!StringUtils.isBlank(attribute)) {
+			criteria.add(Restrictions.like("transactionDetail.attribute", "%" + attribute
 					+ "%"));
 		}
 		if (!StringUtils.isBlank(fromDate) && StringUtils.isBlank(toDate)) {
@@ -1663,9 +1669,11 @@ public class HibernateInventoryDAO implements InventoryDAO {
 			InventoryStoreDrugTransactionDetail tDetail = new InventoryStoreDrugTransactionDetail();
 			tDetail.setDrug((InventoryDrug) row[0]);
 			tDetail.setFormulation((InventoryDrugFormulation) row[1]);
-			tDetail.setCurrentQuantity((Integer) row[2]);
-			tDetail.setQuantity((Integer) row[3]);
-			tDetail.setIssueQuantity((Integer) row[4]);
+			tDetail.setAttribute((String) row[2]);
+			tDetail.setCurrentQuantity((Integer) row[3]);
+			tDetail.setQuantity((Integer) row[4]);
+			tDetail.setIssueQuantity((Integer) row[5]);
+			tDetail.setReorderPoint((Integer) row[6]);
 			list.add(tDetail);
 		}
 
@@ -1673,7 +1681,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 	}
 
 	public Integer countViewStockBalance(Integer storeId, Integer categoryId,
-			String drugName, String fromDate, String toDate, boolean isExpiry)
+			String drugName,String attribute, String fromDate, String toDate, boolean isExpiry)
 			throws DAOException {
 		Criteria criteria = sessionFactory
 				.getCurrentSession()
@@ -1685,6 +1693,8 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		ProjectionList proList = Projections.projectionList();
 		proList.add(Projections.groupProperty("drug"))
 				.add(Projections.groupProperty("formulation"))
+				.add(Projections.groupProperty("attribute"))
+				.add(Projections.groupProperty("reorderPoint"))
 				.add(Projections.sum("currentQuantity"))
 				.add(Projections.sum("quantity"))
 				.add(Projections.sum("issueQuantity"));
@@ -1694,6 +1704,10 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		}
 		if (!StringUtils.isBlank(drugName)) {
 			criteria.add(Restrictions.like("drugAlias.name", "%" + drugName
+					+ "%"));
+		}
+		if (!StringUtils.isBlank(attribute)) {
+			criteria.add(Restrictions.like("transactionDetail.attribute", "%" + attribute
 					+ "%"));
 		}
 		if (!StringUtils.isBlank(fromDate) && StringUtils.isBlank(toDate)) {
@@ -4505,12 +4519,10 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String startDate = sdf.format(date) + " 00:00:00";
 		String endDate = sdf.format(date) + " 23:59:59";
-		String hql = "from PatientSearch ps where ps.patientId IN (SELECT o.patient FROM OpdDrugOrder o where o.createdOn BETWEEN '"
-				+ startDate
-				+ "' AND '"
-				+ endDate
-				+ "' AND o.orderStatus=0 AND o.cancelStatus=0 GROUP BY o.patient) AND (ps.identifier LIKE '%"
-				+ searchKey + "%' OR ps.fullname LIKE '" + searchKey + "%')";
+		String hql = "SELECT DISTINCT ps from PatientSearch ps,OpdDrugOrder o INNER JOIN o.patient p where ps.patientId=p.patientId " +
+		" AND o.createdOn BETWEEN '"+ startDate+ "' AND '" + endDate + "' " +
+		" AND o.orderStatus=0 AND o.cancelStatus=0 " +
+		" AND (ps.identifier LIKE '%" 	+ searchKey + "%' OR ps.fullname LIKE '" + searchKey + "%')";
 		int firstResult = (page - 1) * InventoryConstants.PAGESIZE;
 		Session session = sessionFactory.getCurrentSession();
 		Query q = session.createQuery(hql);

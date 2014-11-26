@@ -357,11 +357,11 @@ public interface InventoryService extends OpenmrsService {
 	
 	public Integer sumCurrentQuantityDrugOfStore(Integer storeId, Integer drugId, Integer formulationId) throws APIException;
 	
-	public Integer countViewStockBalance(Integer storeId, Integer categoryId, String drugName, String fromDate,
+	public Integer countViewStockBalance(Integer storeId, Integer categoryId, String drugName,String attribute, String fromDate,
 	                                     String toDate, boolean isExpiry) throws APIException;
 	
 	public List<InventoryStoreDrugTransactionDetail> listViewStockBalance(Integer storeId, Integer categoryId,
-	                                                                      String drugName, String fromDate, String toDate,
+	                                                                      String drugName,String attribute, String fromDate, String toDate,
 	                                                                      boolean isExpiry, int min, int max)
 	                                                                                                         throws APIException;
 	
