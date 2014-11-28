@@ -42,11 +42,14 @@
 					>${category.name}</option>
 				</c:forEach>
 	   		</select>
-		 <td>&nbsp;&nbsp;</td>
+		 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		</td>
 		<td><spring:message code="inventory.receiptItem.itemName"/></td>
 		<td>
-			<input type="text" name="itemName" id="itemName" value="${itemName }"/><td>&nbsp;&nbsp;</td>
+			<input type="text" name="itemName" id="itemName" value="${itemName }"/><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td>Attribute</td>
+		<td>
+			<input type="text" name="attribute" id="attribute" value="${attribute }"/><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		</td><!--
 		<td><spring:message code="inventory.fromDate"/></td>
 		<td><input type="text" id="fromDate" class="date-pick left" readonly="readonly" name="fromDate" value="${fromDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td>
@@ -69,7 +72,7 @@
 	<th><spring:message code="inventory.viewStockBalance.STTSS"/></th>
 	-->
 	<th ><spring:message code="inventory.receiptItem.currentQuantity"/></th>
-
+	<th >Attribute</th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty stockBalances}">
@@ -84,6 +87,7 @@
 		<td>${balance.issueQuantity}</td>
 		-->
 		<td>${balance.currentQuantity}</td>
+        <td>${balance.attribute}</td>
 		</tr>
 	</c:forEach>
 	</c:when>

@@ -46,6 +46,8 @@ public class PatientSearchForDrugQueueController {
 			@RequestParam(value = "date", required = false) String dateStr,
 			@RequestParam(value = "searchKey", required = false) String searchKey,
 			@RequestParam(value = "currentPage", required = false) Integer currentPage,
+                        // 26/11/2014 to work with size selector
+                        @RequestParam(value = "pgSize", required = false) Integer pgSize,
 			Model model) {
 		InventoryService inventoryService = Context
 				.getService(InventoryService.class);
@@ -56,12 +58,10 @@ public class PatientSearchForDrugQueueController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		List<PatientSearch> patientSearchResult = inventoryService
-				.searchListOfPatient(date, searchKey, currentPage);
-		currentPage = 1;
-		int total = patientSearchResult.size();
-		PagingUtil pagingUtil = new PagingUtil(InventoryConstants.PAGESIZE,
-				currentPage, total);
+		List<PatientSearch> patientSearchResult = inventoryService.searchListOfPatient(date, searchKey, currentPage,pgSize);
+		if (currentPage == null) currentPage = 1;
+		int total = inventoryService.countSearchListOfPatient(date, searchKey, currentPage);
+		PagingUtil pagingUtil = new PagingUtil(pgSize,	currentPage, total);
 		model.addAttribute("pagingUtil", pagingUtil);
 		model.addAttribute("patientList", patientSearchResult);
 		model.addAttribute("date", dateStr);

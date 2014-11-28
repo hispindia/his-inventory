@@ -23,8 +23,10 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <openmrs:require privilege="Drug order queue" otherwise="/login.htm" redirect="/module/inventory/main.form" />
+<body onLoad="reset()">
 <spring:message var="pageTitle" code="inventory.substore.patientQueueForDrugOrders.manage" scope="page"/>
 <%@ include file="../substore/nav.jsp" %>
+
 <h2><spring:message code="inventory.substore.patientQueueForDrugOrders.manage"/></h2>	
 <br />
 
@@ -49,19 +51,23 @@
 	
 	// get queue
 	function getQueue(currentPage){
+		jQuery("#selection").show(0);
 		this.currentPage = currentPage;
 		var date = jQuery("#date").val();
 		var searchKey = jQuery("#searchKey").val();
+		var pgSize = jQuery("#sizeSelector").val();
 		jQuery.ajax({
 			type : "GET",
 			url : getContextPath() + "/module/inventory/patientsearchdruggqueue.form",
 			data : ({
 				date			: date,
 				searchKey		: searchKey,
-				currentPage		: currentPage
+				currentPage		: currentPage,
+				pgSize			: pgSize
 			}),
 			success : function(data) {
-				jQuery("#queue").html(data);	
+				jQuery("#queue").html(data);
+				jQuery("#queue").show(0);	
 			},
 			
 		});
@@ -76,6 +82,9 @@
 	function reset(){
 		jQuery("#date").val("${currentDate}");
 		jQuery("#searchKey").val("");
+		jQuery("#sizeSelector").val(100);
+		jQuery("#selection").hide(0);
+		jQuery("#queue").hide(0);
 	}
 </script> 
 
@@ -94,5 +103,14 @@
 
 <div id="queue">
 </div>
-
+<div id="selection">
+Show 
+ <select name="sizeSelector" id="sizeSelector" onChange="getQueue(1)">
+    	<option value="50" id="1">50</option>
+      	<option value="100" id="2" selected>100</option>
+      	<option value="150" id="3">150</option>
+      	<option value="200" id="4">200</option>
+	</select>
+    entries 
+</div>
 <%@ include file="/WEB-INF/template/footer.jsp" %>

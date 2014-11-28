@@ -1454,6 +1454,15 @@ public class AjaxController {
 					temp += "&drugName=" + drugName;
 				}
 			}
+			//NEW 
+			if(attribute != null){	
+				if(StringUtils.isBlank(temp)){
+					temp = "?attribute="+attribute;
+				}else{
+					temp +="&attribute="+attribute;
+				}
+		}
+			
 			if (fromDate != null) {
 				if (StringUtils.isBlank(temp)) {
 					temp = "?fromDate=" + fromDate;
@@ -1484,6 +1493,8 @@ public class AjaxController {
 			}
 			model.put("categoryId", categoryId);
 			model.put("drugName", drugName);
+			//NEW
+			model.put("attribute", attribute );
 			model.put("fromDate", fromDate);
 			model.put("toDate", toDate);
 			model.put("pagingUtil", pagingUtil);

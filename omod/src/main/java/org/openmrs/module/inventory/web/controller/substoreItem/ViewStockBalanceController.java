@@ -29,6 +29,8 @@ public class ViewStockBalanceController {
             @RequestParam(value="currentPage",required=false)  Integer currentPage,
             @RequestParam(value="categoryId",required=false)  Integer categoryId,
             @RequestParam(value="itemName",required=false)  String itemName,
+            //new
+            @RequestParam(value="attribute",required=false)  String attribute,
             @RequestParam(value="fromDate",required=false)  String fromDate,
             @RequestParam(value="toDate",required=false)  String toDate,
             Map<String, Object> model, HttpServletRequest request
@@ -36,7 +38,7 @@ public class ViewStockBalanceController {
 	 InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 	InventoryStore store = inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
 	 
-	 int total = inventoryService.countStoreItemViewStockBalance(store.getId(), categoryId, itemName,  fromDate, toDate);
+	 int total = inventoryService.countStoreItemViewStockBalance(store.getId(), categoryId, itemName,attribute,  fromDate, toDate);
 	 String temp = "";
 		if(categoryId != null){	
 				temp = "?categoryId="+categoryId;
@@ -49,6 +51,15 @@ public class ViewStockBalanceController {
 				temp +="&itemName="+itemName;
 			}
 	}
+		//new
+		if(attribute != null){	
+			if(StringUtils.isBlank(temp)){
+				temp = "?attribute="+attribute;
+			}else{
+				temp +="&attribute="+attribute;
+			}
+	}
+		
 		if(fromDate != null){	
 			if(StringUtils.isBlank(temp)){
 				temp = "?fromDate="+fromDate;
@@ -65,7 +76,8 @@ public class ViewStockBalanceController {
 	}
 		
 		PagingUtil pagingUtil = new PagingUtil( RequestUtil.getCurrentLink(request)+temp , pageSize, currentPage, total );
-		List<InventoryStoreItemTransactionDetail> stockBalances = inventoryService.listStoreItemViewStockBalance(store.getId(), categoryId, itemName,  fromDate, toDate, pagingUtil.getStartPos(), pagingUtil.getPageSize());
+		//edited
+		List<InventoryStoreItemTransactionDetail> stockBalances = inventoryService.listStoreItemViewStockBalance(store.getId(), categoryId, itemName,attribute,  fromDate, toDate, pagingUtil.getStartPos(), pagingUtil.getPageSize());
 		List<InventoryItemSubCategory> listCategory = inventoryService.listItemSubCategory("", 0, 0);
 	if (stockBalances!=null){
 		Collections.sort(stockBalances);

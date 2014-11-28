@@ -32,6 +32,7 @@
 		
 		<property name="openingBalance" column="opening_balance"  />
 		<property name="closingBalance" column="closing_balance"  />
+		<property name="attribute" column="attribute"  />
 		
 		<many-to-one name="parent" class="org.openmrs.module.inventory.model.InventoryStoreItemTransactionDetail"
 	        column="parent_id"  lazy="false" />	 

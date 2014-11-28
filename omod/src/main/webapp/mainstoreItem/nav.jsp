@@ -19,7 +19,7 @@
 --%> 
 <%@ include file="../includes/js_css.jsp" %>
 <br/>
-<b><a href="#" onclick="ACT.go('viewStockBalance.form');">Drug</a>&nbsp;| Item </b>
+<center><b><a href="#" onclick="ACT.go('viewStockBalance.form');">Drug</a>&nbsp;| Item </b></center>
 <br/><br/>
 <b><a href="#" onclick="ACT.go('itemViewStockBalance.form');"><spring:message code="inventory.viewStockBalance"/></a></b>&nbsp;|
 <!-- 

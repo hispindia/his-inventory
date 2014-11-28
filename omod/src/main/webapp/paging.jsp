@@ -16,7 +16,29 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Inventory module.  If not, see <http://www.gnu.org/licenses/>.
  *
---%> 
+--%>
+
+<script type="text/javascript">
+
+	function sizeSelecting(size){
+		document.getElementsByName("sizeOfPage")[0].value=size;	
+	}
+
+	function getPaeSize(){		
+		var querystring = window.location.href.split('=');
+		var myValue = querystring[1];
+		return myValue;
+	}
+	
+	function sizeSeting(){
+		var size=getPaeSize();
+		sizeSelecting(size);	
+	}
+</script>
+
+<body onload="sizeSeting();">
+
+	<br>
 	
 	<c:set var="moduleId" value="inventory"/>
 	<c:set var="baseLink" value="${pagingUtil.baseLink}" />
@@ -27,14 +49,11 @@
 	
 	<input type="hidden" id="baseLink" value="${baseLink}"/>
 	<input type="hidden" id="currentPage" value="${currentPage}"/>
+
+
 	<c:if test="${numberOfPages > 0 }">
-		<ul class="pageSizeSelection">
-			<li><span><spring:message code="${moduleId}.paging.totalPage"/>:</span> ${numberOfPages}</li>
-		  	<li><span><spring:message code="${moduleId}.paging.pageSize"/>:</span>
-			 <input type="text" id="sizeOfPage" value="${pageSize}" style="width:50px" onchange="changePageSize('${baseLink}');"></li>
-			<li> <span ><spring:message code="${moduleId}.paging.jumpToPage"/>:</span>
-			 <input type="text" id="jumpToPage" value="${currentPage}" style="width:50px" onchange="jumpPage('${baseLink}');"></li>
-		</ul>
+		
+		
 		<div class="paging">
 		<c:choose>
 			<c:when test="${currentPage > 1}">
@@ -74,5 +93,15 @@
 				<span class="last" title="Last">&raquo;&raquo;</span>
 			</c:otherwise>
 		</c:choose>
-		</div>
+		</div><br>
+		<div id="selection">
+Show 
+ <select name="sizeOfPage" id="sizeOfPage" onChange="changePageSize('${baseLink}');">
+    	<option value="50" id="1">50</option>
+      	<option value="100" id="2">100</option>
+      	<option value="150" id="3">150</option>
+      	<option value="200" id="4">200</option>
+	</select>
+    entries 
+</div>
 	</c:if>

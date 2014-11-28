@@ -195,4 +195,15 @@
 			ALTER  TABLE inventory_store_item_transaction add COLUMN `patient_category` varchar(255) default NULL;
 		</sql>
 	</diff>
+	<diff>
+		<version>2.3.1</version>
+		<author>Sagar Bele</author>
+		<date>November 28, 2014</date>
+		<description>
+			ALTER  TABLE inventory_store_item_transaction_detail   
+		</description>
+		<sql>
+			ALTER  TABLE inventory_store_item_transaction_detail add COLUMN `attribute` varchar(10) NULL;
+		</sql>
+	</diff>
 </sqldiff>

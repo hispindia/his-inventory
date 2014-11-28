@@ -47,6 +47,11 @@
 		<td>
 			<input type="text"  name="drugName" id="drugName" value="${drugName }"/>
 		</td>
+        </td><td>&nbsp;&nbsp;</td>
+		<td><spring:message code="inventory.receiptDrug.attribute"/></td>
+		<td>
+			<input type="text"  name="attribute" id="attribute" value="${attribute }"/>
+		</td>
 		<!--<td><spring:message code="inventory.fromDate"/></td>
 		<td><input type="text" id="fromDate" class="date-pick left" readonly="readonly" name="fromDate" value="${fromDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td>
 		<td><spring:message code="inventory.toDate"/></td>
@@ -68,7 +73,8 @@
 		<th><spring:message code="inventory.viewStockBalance.STTSS"/></th>
 	-->
 	<th ><spring:message code="inventory.receiptDrug.currentQuantity"/></th>
-	<th ><spring:message code="inventory.viewStockBalance.reorderPoint"/></th>
+    <th><spring:message code="inventory.viewStockBalance.attribute"/></th>
+	
 	</tr>
 	<c:choose>
 	<c:when test="${not empty stockBalances}">
@@ -83,7 +89,8 @@
 		<td>${balance.issueQuantity}</td>
 		-->
 		<td>${balance.currentQuantity}</td>
-		<td>${balance.drug.reorderQty}</td>
+        <td>${balance.attribute}</td>
+		
 		</tr>
 	</c:forEach>
 	</c:when>

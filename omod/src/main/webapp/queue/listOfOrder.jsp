@@ -43,7 +43,11 @@
 		</tr>
         <tr>
         	<td>Age:</td><td>&nbsp;</td>
-        	<td>${patientSearch.age}</td>
+        	<td><c:choose>
+							<c:when test="${patientSearch.age == 0}">&lt 1</c:when>
+							<c:otherwise>${patientSearch.age}</c:otherwise>
+						</c:choose>
+					</td>
       </tr>
         <tr>
         	<td>Gender:</td><td>&nbsp;</td>
