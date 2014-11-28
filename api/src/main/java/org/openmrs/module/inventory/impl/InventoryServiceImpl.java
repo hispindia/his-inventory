@@ -788,17 +788,18 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 	                                                                                                      throws APIException {
 		return dao.listStoreItemTransactionDetail(transactionId);
 	}
-	
-	public Integer countStoreItemViewStockBalance(Integer storeId, Integer categoryId, String itemName, String fromDate,
+	//edited
+	public Integer countStoreItemViewStockBalance(Integer storeId, Integer categoryId, String itemName,String attribute, String fromDate,
 	                                              String toDate) throws APIException {
-		return dao.countStoreItemViewStockBalance(storeId, categoryId, itemName, fromDate, toDate);
+		return dao.countStoreItemViewStockBalance(storeId, categoryId, itemName,attribute, fromDate, toDate);
 	}
-	
+	//edited
 	public List<InventoryStoreItemTransactionDetail> listStoreItemViewStockBalance(Integer storeId, Integer categoryId,
-	                                                                               String itemName, String fromDate,
+	                                                                               String itemName,String attribute, String fromDate,
 	                                                                               String toDate, int min, int max)
-	                                                                                                               throws APIException {
-		return dao.listStoreItemViewStockBalance(storeId, categoryId, itemName, fromDate, toDate, min, max);
+	                                                                                                             throws APIException {
+		//edited 
+		return dao.listStoreItemViewStockBalance(storeId, categoryId, itemName,attribute, fromDate, toDate, min, max);
 	}
 	
 	public List<InventoryStoreItemTransactionDetail> listStoreItemTransactionDetail(Integer storeId, Integer itemId,
@@ -969,7 +970,17 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 	public List<PatientSearch> searchListOfPatient(Date date, String searchKey,int page) throws APIException {
 		return dao.searchListOfPatient(date,searchKey,page);
 	}
+        
+        // to work with size Selector
+        public List<PatientSearch> searchListOfPatient(Date date, String searchKey,int page,int pgSize) throws APIException {
+		return dao.searchListOfPatient(date,searchKey,page,pgSize);
+	}
 	
+        //to work with size Selector
+	public int countSearchListOfPatient(Date date, String searchKey,int page) throws APIException {
+		return dao.countSearchListOfPatient(date,searchKey,page);
+	}
+                
 	public List<OpdDrugOrder> listOfOrder(Integer patientId,Date date) throws APIException {
 		return dao.listOfOrder(patientId,date);
 	}

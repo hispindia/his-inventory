@@ -480,12 +480,13 @@ public interface InventoryDAO {
 	
 	public List<InventoryStoreItemTransactionDetail> listStoreItemTransactionDetail(Integer transactionId)
 	                                                                                                      throws DAOException;
-	
-	public Integer countStoreItemViewStockBalance(Integer storeId, Integer categoryId, String itemName, String fromDate,
+	//edited
+	public Integer countStoreItemViewStockBalance(Integer storeId, Integer categoryId, String itemName,String attribute, String fromDate,
 	                                              String toDate) throws DAOException;
 	
+	//edited
 	public List<InventoryStoreItemTransactionDetail> listStoreItemViewStockBalance(Integer storeId, Integer categoryId,
-	                                                                               String itemName, String fromDate,
+	                                                                               String itemName,String attribute, String fromDate,
 	                                                                               String toDate, int min, int max)
 	                                                                                                               throws DAOException;
 	
@@ -592,6 +593,11 @@ public interface InventoryDAO {
 	//ghanshyam 15-june-2013 New Requirement #1636 User is able to see and dispense drugs in patient queue for issuing drugs, as ordered from dashboard
 	public List<PatientSearch> searchListOfPatient(Date date, String searchKey,int page) throws DAOException;
 	
+        // to work with size Selector
+        public List<PatientSearch> searchListOfPatient(Date date, String searchKey,int page,int pgSize) throws DAOException;
+        //By Janaka to work with size Selector
+        public int countSearchListOfPatient(Date date, String searchKey,int page) throws DAOException;
+        
 	public List<OpdDrugOrder> listOfOrder(Integer patientId,Date date) throws DAOException;
 	
 	public List<OpdDrugOrder> listOfDrugOrder(Integer patientId, Integer encounterId) throws DAOException;

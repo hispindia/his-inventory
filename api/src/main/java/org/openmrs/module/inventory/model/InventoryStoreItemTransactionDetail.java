@@ -52,9 +52,19 @@ public class InventoryStoreItemTransactionDetail implements  Serializable , Comp
 	 private Set<InventoryStoreItemTransactionDetail> subDetails;
 	 
 	 private Date receiptDate;
+	 //new
+	 private String attribute;
 	 
 	 
-    public InventoryStoreItemTransactionDetail() {
+    public String getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
+	}
+
+	public InventoryStoreItemTransactionDetail() {
 	 
     }
 	 

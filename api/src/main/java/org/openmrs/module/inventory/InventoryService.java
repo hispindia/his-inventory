@@ -514,11 +514,11 @@ public interface InventoryService extends OpenmrsService {
 	public List<InventoryStoreItemTransactionDetail> listStoreItemTransactionDetail(Integer transactionId)
 	                                                                                                      throws APIException;
 	
-	public Integer countStoreItemViewStockBalance(Integer storeId, Integer categoryId, String itemName, String fromDate,
+	public Integer countStoreItemViewStockBalance(Integer storeId, Integer categoryId, String itemName,String attribute, String fromDate,
 	                                              String toDate) throws APIException;
 	
 	public List<InventoryStoreItemTransactionDetail> listStoreItemViewStockBalance(Integer storeId, Integer categoryId,
-	                                                                               String itemName, String fromDate,
+	                                                                               String itemName,String attribute, String fromDate,
 	                                                                               String toDate, int min, int max)
 	                                                                                                               throws APIException;
 	
@@ -630,7 +630,13 @@ public interface InventoryService extends OpenmrsService {
 	
 	//ghanshyam 15-june-2013 New Requirement #1636 User is able to see and dispense drugs in patient queue for issuing drugs, as ordered from dashboard
 	public List<PatientSearch> searchListOfPatient(Date date, String searchKey,int page) throws APIException;
+        
+        // to work with size Selector
+	public List<PatientSearch> searchListOfPatient(Date date, String searchKey,int page,int pgSize) throws APIException;
 	
+        // to work with size Selector
+	public int countSearchListOfPatient(Date date, String searchKey,int page) throws APIException;
+        
 	public List<OpdDrugOrder> listOfOrder(Integer patientId,Date date) throws APIException;
 	
 	public List<OpdDrugOrder> listOfDrugOrder(Integer patientId, Integer encounterId) throws APIException;
