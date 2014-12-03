@@ -54,34 +54,37 @@
 	<c:when test="${not empty patients}" >		
 	<table style="width:100%">
 		<tr>			
-			<td><b>Identifier</b></td>
-			<td><b>Name</b></td>
-			<td><b>Age</b></td>
-			<td><b>Gender</b></td>			
-			<td><b>Birthdate</b></td>
-			<td><b>Relative Name</b></td>
+			<td align="center"><b>Patient ID</b></td>
+			<td align="center"><b>Name</b></td>
+			<td align="center"><b>Age</b></td>
+			<td align="center"><b>Gender</b></td>			
+			<!-- <td><b>Birthdate</b></td>
+			<td><b>Relative Name</b></td> -->
 		</tr>
 		<c:forEach items="${patients}" var="patient" varStatus="varStatus">
 			<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } patientSearchRow' onclick="ISSUE.addPatient('createPatientIssueDrug.form?patientId=${patient.patientId}');">				
-				<td>
+				<td align="center">
 					${patient.patientIdentifier.identifier}
 				</td>
-				<td>${patient.givenName} ${patient.familyName}${fn:replace(patient.middleName,","," ")} </td>
-				<td> 
+				<td align="center">${patient.givenName} ${patient.familyName}${fn:replace(patient.middleName,","," ")} </td>
+				<td align="center"> 
                 	<c:choose>
                 		<c:when test="${patient.age == 0}">&lt 1</c:when>
                 		<c:otherwise >${patient.age}</c:otherwise>
                 	</c:choose>
                 </td>
-				<td>
+				<%-- <td>
 					<c:choose>
                 		<c:when test="${patient.gender eq 'M'}">
 							<img src="${pageContext.request.contextPath}/images/male.gif"/>
 						</c:when>
                 		<c:otherwise><img src="${pageContext.request.contextPath}/images/female.gif"/></c:otherwise>
                 	</c:choose>
+				</td> --%>
+				<td align="center">
+					${patient.gender}
 				</td>                
-				<td> 
+				<%-- <td> 
                 	<openmrs:formatDate date="${patient.birthdate}"/>
                 </td>
 				<td> 
@@ -93,7 +96,7 @@
 						if(relativeName!=null)
 							out.print(relativeName);
 					%>
-                </td>
+                </td> --%>
 			</tr>
 		</c:forEach>
 	</table>
