@@ -90,7 +90,8 @@ public class DrugOrderController {
 			@RequestParam("encounterId") Integer encounterId,
 			@RequestParam(value = "paymentMode", required = false) String paymentMode,
 			//ghanshyam,4-july-2013, issue no # 1984, User can issue drugs only from the first indent
-			@RequestParam(value="avaiableId",required=false) String[] avaiableId) throws Exception{
+			@RequestParam(value="avaiableId",required=false) String[] avaiableId,
+			@RequestParam("esTotalValue") Integer esTotalValue) throws Exception{
 
 		PatientService  patientService = Context.getPatientService();
 		Patient patient = patientService.getPatient(patientId);
@@ -101,6 +102,7 @@ public class DrugOrderController {
 		Integer formulationId;
 		Integer quantity;
 		Integer avlId;
+		
 		
 		InventoryStoreDrugPatient inventoryStoreDrugPatient = new InventoryStoreDrugPatient();
 		inventoryStoreDrugPatient.setStore(store);
@@ -171,8 +173,10 @@ public class DrugOrderController {
 				
 			 BigDecimal moneyUnitPrice = inventoryStoreDrugTransactionDetail.getUnitPrice().multiply(new BigDecimal(quantity));
 			 moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(inventoryStoreDrugTransactionDetail.getVAT().divide(new BigDecimal(100))));
-			 transDetail.setTotalPrice(moneyUnitPrice);
-				
+			// transDetail.setTotalPrice(moneyUnitPrice);
+			 BigDecimal updatedTotalPrice = new BigDecimal(esTotalValue);
+			 
+			 transDetail.setTotalPrice(updatedTotalPrice);
 			 transDetail.setParent(inventoryStoreDrugTransactionDetail);
 			 transDetail = inventoryService.saveStoreDrugTransactionDetail(transDetail);
 				
