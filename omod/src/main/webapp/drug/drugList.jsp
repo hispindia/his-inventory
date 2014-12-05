@@ -86,7 +86,7 @@
 		<td>${drug.unit.name}</td>
 		<td title="${drug.category.name}">${drug.category.nameShort}</td>
 		<td>${drug.attributeName}</td>
-		<td>${drug.reorderQty > 0 ? drug.reorderQty : ''}</td>
+		<td>${drug.reorderQty}</td>
 		<td><openmrs:formatDate date="${drug.createdOn}" type="textbox"/></td>
 		<td>${drug.createdBy}</td>
 		<td><input type="checkbox" name="ids" value="${drug.id}"/></td>

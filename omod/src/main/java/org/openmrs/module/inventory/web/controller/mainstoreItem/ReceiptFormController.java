@@ -101,6 +101,7 @@ public class ReceiptFormController {
 		transactionDetail.setIssueQuantity(0);
 		transactionDetail.setCreatedOn(new Date());
 		transactionDetail.setReceiptDate(DateUtils.getDateFromStr(receiptDate));
+
 		transactionDetail.setDateManufacture(DateUtils.getDateFromStr(dateManufacture));
 		/*Money moneyUnitPrice = new Money(unitPrice);
 		Money vATUnitPrice = new Money(VAT);

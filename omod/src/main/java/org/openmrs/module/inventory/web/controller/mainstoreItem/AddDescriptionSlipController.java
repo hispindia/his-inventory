@@ -100,6 +100,9 @@ public class AddDescriptionSlipController {
 				transactionDetail.setOpeningBalance(storeItem.getOpeningBalance());
 				transactionDetail.setClosingBalance(storeItem.getClosingBalance());
 				transactionDetail.setTransaction(transaction);
+				
+				transactionDetail.setAttribute(transactionDetail.getItem().getAttributeName());
+				
 				inventoryService.saveStoreItemTransactionDetail(transactionDetail);
 			}
 			StoreSingleton.getInstance().getHash().remove(fowardParam);

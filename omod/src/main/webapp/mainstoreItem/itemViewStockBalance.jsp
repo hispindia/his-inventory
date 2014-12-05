@@ -23,7 +23,7 @@
 <spring:message var="pageTitle" code="inventory.viewStockBalance.manage" scope="page"/>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="nav.jsp" %>
-<h2><spring:message code="inventory.viewStockBalance.manage"/></h2>	
+<h2><spring:message code="inventory.viewStockBalance.manageItem"/></h2>	
 <br />
 <c:forEach items="${errors.allErrors}" var="error">
 	<span class="error"><spring:message code="${error.defaultMessage}" text="${error.defaultMessage}"/></span><

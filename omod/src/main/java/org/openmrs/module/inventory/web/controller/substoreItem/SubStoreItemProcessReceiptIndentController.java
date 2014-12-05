@@ -100,6 +100,9 @@ public class SubStoreItemProcessReceiptIndentController {
 				transDetail.setTransaction(transaction);
 				transDetail.setItem(refund.getItem());
 				transDetail.setCompanyName(refund.getCompanyName());
+
+				transDetail.setAttribute(refund.getItem().getAttributeName());
+
 				transDetail.setCreatedOn(date);
 				transDetail.setDateManufacture(refund.getDateManufacture());
 				transDetail.setSpecification(refund.getSpecification());
@@ -167,6 +170,10 @@ public class SubStoreItemProcessReceiptIndentController {
 			transDetail.setParent(refund);
 			transDetail.setQuantity(refund.getIssueQuantity());
 			transDetail.setReceiptDate(date);
+			//added
+			transDetail.setAttribute(refund.getItem().getAttributeName());
+			//
+			
 			
 			 /*Money moneyUnitPrice = new Money(refund.getUnitPrice());
 			 Money vATUnitPrice = new Money(refund.getVAT());

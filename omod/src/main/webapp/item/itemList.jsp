@@ -88,7 +88,7 @@
 		<td>${item.category.name}</td>
 		<td>${item.subCategory.name}</td>
 		<td>${item.attributeName}</td>
-		<td>${item.reorderQty > 0 ? item.reorderQty : ''}</td>
+		<td>${item.reorderQty}</td>
 		<td><openmrs:formatDate date="${item.createdOn}" type="textbox"/></td>
 		<td>${item.createdBy}</td>
 		<td><input type="checkbox" name="ids" value="${item.id}"/></td>

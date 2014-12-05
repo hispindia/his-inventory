@@ -55,6 +55,7 @@ public class SubStoreDrugProcessReceiptIndentController {
 	 List<InventoryStoreDrugIndentDetail> listIndentDetail = inventoryService.listStoreDrugIndentDetail(indentId);
 	 
 	InventoryStore subStore =  inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
+
 	List<InventoryStoreDrugTransactionDetail> refundDrugList = inventoryService.listTransactionDetail(indent.getTransaction().getId());
 	 if("1".equals(request.getParameter("refuse"))){
 		if(indent != null){
@@ -159,6 +160,10 @@ public class SubStoreDrugProcessReceiptIndentController {
 			InventoryStoreDrugTransactionDetail transDetail = new InventoryStoreDrugTransactionDetail();
 			transDetail.setTransaction(transaction);
 			transDetail.setDrug(refund.getDrug());
+
+			transDetail.setAttribute(refund.getAttribute());
+			transDetail.setReorderPoint(refund.getReorderPoint());
+
 			transDetail.setDateExpiry(refund.getDateExpiry());
 			transDetail.setBatchNo(refund.getBatchNo());
 			transDetail.setCompanyName(refund.getCompanyName());

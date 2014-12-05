@@ -203,7 +203,7 @@
 			ALTER  TABLE inventory_store_item_transaction_detail   
 		</description>
 		<sql>
-			ALTER  TABLE inventory_store_item_transaction_detail add COLUMN `attribute` varchar(10) NULL;
+			ALTER  TABLE inventory_store_item_transaction_detail add COLUMN `attribute` varchar(50) NULL;
 		</sql>
 	</diff>
 </sqldiff>

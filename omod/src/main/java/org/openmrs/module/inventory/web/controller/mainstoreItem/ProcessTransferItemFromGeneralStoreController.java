@@ -248,6 +248,9 @@ public class ProcessTransferItemFromGeneralStoreController {
 						transDetail.setIssueQuantity(temp);
 						transDetail.setOpeningBalance(totalQuantity);
 						transDetail.setClosingBalance(totalQuantity - temp);
+						
+						transDetail.setAttribute(trDetail.getItem().getAttributeName());
+						
 						inventoryService.saveStoreItemTransactionDetail(transDetail);
 						
 						//save last to StoreDrug
@@ -300,6 +303,10 @@ public class ProcessTransferItemFromGeneralStoreController {
 						transDetail.setVAT(trDetail.getVAT());
 						transDetail.setParent(trDetail);
 						transDetail.setReceiptDate(date);
+						//NEW
+						transDetail.setAttribute(trDetail.getItem().getAttributeName());
+						//
+						
 						
 						transDetail.setClosingBalance(totalQuantity - transDetail.getIssueQuantity());
 						inventoryService.saveStoreItemTransactionDetail(transDetail);
