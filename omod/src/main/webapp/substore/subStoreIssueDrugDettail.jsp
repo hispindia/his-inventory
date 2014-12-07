@@ -91,7 +91,7 @@ String cat="General";
 	<c:when test="${not empty listDrugIssue}">
 	<c:set var="total" value="${0}"/>  
 	<c:forEach items="${listDrugIssue}" var="detail" varStatus="varStatus">
-	<c:set var="price" value="${detail.transactionDetail.totalPrice}" />
+	<c:set var="price" value="${ detail.quantity* (detail.transactionDetail.unitPrice + 0.01*detail.transactionDetail.VAT*detail.transactionDetail.unitPrice) }" />
 	<c:set var="total" value="${total + price}"/>
 	<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${varStatus.count }"/></td>
@@ -146,8 +146,8 @@ String cat="General";
 	<tr><td>Patient ID</td><td>:${issueDrugPatient.identifier }</td></tr>
 	<tr><td>Age</td><td>:${age}</td></tr>
 	<tr><td>Gender</td><td>:${gender}</td></tr>
-	<tr><td>Patient Category</td><td>:${category}</td></tr>
-	<tr><td>Waiver/Exempt. No.</td><td>:${exemption}</td></tr>
+	<tr><td>Payment Category</td><td>:${category}</td></tr>
+	<!-- <tr><td>Waiver/Exempt. No.</td><td>:${exemption}</td></tr> -->
 	
 </table>
 </c:if>
@@ -165,7 +165,7 @@ String cat="General";
 	<c:when test="${not empty listDrugIssue}">
 	<c:set var="total" value="${0}"/>  
 	<c:forEach items="${listDrugIssue}" var="detail" varStatus="varStatus">
-	<c:set var="price" value="${detail.transactionDetail.totalPrice}" />
+	<c:set var="price" value="${ detail.quantity* (detail.transactionDetail.unitPrice + 0.01*detail.transactionDetail.VAT*detail.transactionDetail.unitPrice) }" />
 	<c:set var="total" value="${total + price}"/>
 	<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${varStatus.count }"/></td>

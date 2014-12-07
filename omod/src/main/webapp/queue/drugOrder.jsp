@@ -99,7 +99,6 @@ jQuery.ajax({
 function issueDrugOrder(listOfDrugQuantity) {
    var availableIdArr=listOfDrugQuantity.split("."); 
    	var totalValue = 0;
-   	
 	var preTotal = document.getElementById('totalValue');
    for (var i = 0; i < availableIdArr.length-1; i++) {
 	
@@ -162,8 +161,7 @@ function issueDrugOrder(listOfDrugQuantity) {
   	if (preTotal == null){
 		var totalText =  "<div id='com_"+avaiableId+"_div'>"
 				 +"<td id='"+avaiableId+"_fTotal'  name='"+avaiableId+"_fTotal'><b>Estimated Price:</b></td>&nbsp;"
-				// +"<input id='totalValue'  name='totalValue' type='text' size='11' value='"+Math.round(totalValue)+"'  readonly='readonly'/>&nbsp;"
-				 +"<input id='esTotalValue'  name='esTotalValue' type='text' size='11'  />&nbsp;"
+				 +"<input id='totalValue'  name='totalValue' type='text' size='11' value='"+Math.round(totalValue)+"'  readonly='readonly'/>&nbsp;"
 				 +"</div>";  	
 	   var totalElement = document.createElement('div');
 	   totalElement.innerHTML = totalText;
@@ -220,8 +218,6 @@ return false;
 }
 
 if(confirm("Are you sure?")){
-var esTotalValue = document.getElementById('esTotalValue');
-   	alert("esTotalValue: "+$("#esTotalValue").val());
 printDiv2();
 return true;
 }
