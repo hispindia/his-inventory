@@ -23,6 +23,6 @@
 		<property name="createdOn" column="created_on"  />
 		<property name="createdBy" column="created_by" length="255" />
 		<property name="paymentMode" column="payment_mode" length="50" />
-		<property name="patientCategory" column="patient_category" length="255" />
+		<property name="paymentCategory" column="patient_category" length="255" />
 	</class>
 </hibernate-mapping>

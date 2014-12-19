@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.Patient;
+import org.openmrs.PersonAttribute;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.Role;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.model.InventoryDrug;
 import org.openmrs.module.hospitalcore.model.InventoryDrugCategory;
 import org.openmrs.module.hospitalcore.model.InventoryDrugFormulation;
@@ -952,6 +955,7 @@ public class AjaxController {
 				transDetail.setClosingBalance(t);
 				transDetail.setQuantity(0);
 				transDetail.setVAT(pDetail.getTransactionDetail().getVAT());
+				transDetail.setCostToPatient(pDetail.getTransactionDetail().getCostToPatient());
 				transDetail.setUnitPrice(pDetail.getTransactionDetail()
 						.getUnitPrice());
 				transDetail.setItem(pDetail.getTransactionDetail().getItem());
@@ -987,11 +991,11 @@ public class AjaxController {
 				 */
 
 				BigDecimal moneyUnitPrice = pDetail.getTransactionDetail()
-						.getUnitPrice()
+						.getCostToPatient()
 						.multiply(new BigDecimal(pDetail.getQuantity()));
-				moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice
+				/*moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice
 						.multiply(pDetail.getTransactionDetail().getVAT()
-								.divide(new BigDecimal(100))));
+								.divide(new BigDecimal(100))));*/
 				transDetail.setTotalPrice(moneyUnitPrice);
 
 				transDetail.setParent(pDetail.getTransactionDetail());
@@ -1046,7 +1050,8 @@ public class AjaxController {
 			transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
 			transaction.setCreatedOn(date);
 			transaction.setPaymentMode(paymentMode);
-			transaction.setPatientCategory(issueItemPatient.getPatient().getAttribute(14).getValue());
+			System.out.println("++++++++++++++++++++ "+issueItemPatient.getPatient().getAttribute(14).getValue());
+			transaction.setPaymentCategory(issueItemPatient.getPatient().getAttribute(14).getValue());
 			transaction.setCreatedBy(Context.getAuthenticatedUser()
 					.getGivenName());
 			transaction = inventoryService
@@ -1091,6 +1096,7 @@ public class AjaxController {
 				transDetail.setClosingBalance(t);
 				transDetail.setQuantity(0);
 				transDetail.setVAT(pDetail.getTransactionDetail().getVAT());
+				transDetail.setCostToPatient(pDetail.getTransactionDetail().getCostToPatient());
 				transDetail.setUnitPrice(pDetail.getTransactionDetail()
 						.getUnitPrice());
 				transDetail.setItem(pDetail.getTransactionDetail().getItem());
@@ -1126,14 +1132,15 @@ public class AjaxController {
 				 */
 
 				BigDecimal moneyUnitPrice = pDetail.getTransactionDetail()
-						.getUnitPrice()
+						.getCostToPatient()
 						.multiply(new BigDecimal(pDetail.getQuantity()));
-				moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice
+				/*moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice
 						.multiply(pDetail.getTransactionDetail().getVAT()
-								.divide(new BigDecimal(100))));
+								.divide(new BigDecimal(100))));*/
 				transDetail.setTotalPrice(moneyUnitPrice);
 
 				transDetail.setParent(pDetail.getTransactionDetail());
+				transDetail.setAttribute(pDetail.getTransactionDetail().getAttribute());
 				transDetail = inventoryService
 						.saveStoreItemTransactionDetail(transDetail);
 
@@ -1328,6 +1335,7 @@ public class AjaxController {
 	public String viewDetailIssueItemPatient(
 			@RequestParam(value = "issueId", required = false) Integer issueId,
 			Model model) {
+		
 		InventoryService inventoryService = (InventoryService) Context
 				.getService(InventoryService.class);
 		List<InventoryStoreItemPatientDetail> listItemIssue = inventoryService
@@ -1351,25 +1359,44 @@ public class AjaxController {
 			}
 			model.addAttribute("cashier", listItemIssue.get(0)
 					.getStoreItemPatient().getCreatedBy());
-			model.addAttribute("paymentMode", listItemIssue.get(0)
-					.getTransactionDetail().getTransaction().getPaymentMode());
-			model.addAttribute("category", listItemIssue.get(0)
-					.getTransactionDetail().getTransaction().getPatientCategory());
+			/*model.addAttribute("paymentMode", listItemIssue.get(0)
+					.getTransactionDetail().getTransaction().getPaymentMode());*/
+			HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+			List<PersonAttribute> pas = hcs.getPersonAttributes(listItemIssue.get(0)
+					.getStoreItemPatient().getPatient().getId());
+	        for (PersonAttribute pa : pas) {
+	            PersonAttributeType attributeType = pa.getAttributeType(); 
+	            PersonAttributeType personAttributePCT=hcs.getPersonAttributeTypeByName("Paying Category Type");
+	            PersonAttributeType personAttributeNPCT=hcs.getPersonAttributeTypeByName("Non-Paying Category Type");
+	            PersonAttributeType personAttributeSSCT=hcs.getPersonAttributeTypeByName("Special Scheme Category Type");
+	            if(attributeType.getPersonAttributeTypeId()==personAttributePCT.getPersonAttributeTypeId()){
+	            	model.addAttribute("paymentSubCategory",pa.getValue()); 
+	            }
+	            else if(attributeType.getPersonAttributeTypeId()==personAttributeNPCT.getPersonAttributeTypeId()){
+	            	 model.addAttribute("paymentSubCategory",pa.getValue()); 
+	            }
+	            else if(attributeType.getPersonAttributeTypeId()==personAttributeSSCT.getPersonAttributeTypeId()){
+	            	model.addAttribute("paymentSubCategory",pa.getValue()); 
+	            }
+	        }
+			/*model.addAttribute("category", listItemIssue.get(0)
+					.getTransactionDetail().getTransaction().getPaymentCategory());*/
 
-			if (listItemIssue.get(0)
-					.getTransactionDetail().getTransaction().getPatientCategory().equals("Waiver")) {
+		/*	if (listItemIssue.get(0)
+					.getTransactionDetail().getTransaction().getPaymentCategory().equals("Waiver")) {
 				model.addAttribute("exemption", listItemIssue.get(0)
 						.getStoreItemPatient().getPatient().getAttribute(32));
 			} else if (!listItemIssue.get(0)
-					.getTransactionDetail().getTransaction().getPatientCategory().equals("General")
+					.getTransactionDetail().getTransaction().getPaymentCategory().equals("General")
 					&& !listItemIssue.get(0)
-					.getTransactionDetail().getTransaction().getPatientCategory().equals("Waiver")) {
+					.getTransactionDetail().getTransaction().getPaymentCategory().equals("Waiver")) {
 				model.addAttribute("exemption", listItemIssue.get(0)
 						.getStoreItemPatient().getPatient().getAttribute(36));
 			} else {
 				model.addAttribute("exemption", " ");
-			}
-
+			}*/
+	        
+	     
 		}
 		return "/module/inventory/substoreItem/subStoreIssueItemPatientDettail";
 	}

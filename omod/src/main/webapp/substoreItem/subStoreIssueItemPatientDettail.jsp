@@ -43,7 +43,7 @@ String cat="General";
 	}
 }
 </style>
-<span class="boxHeader">Issue items detail</span>
+<span class="boxHeader">Issue items detail - my header</span>
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0" >
 	<tr align="center">
@@ -58,8 +58,12 @@ String cat="General";
 	<c:when test="${not empty listItemPatientIssue}">
 	<c:set var="total" value="${0}"/>
 	<c:forEach items="${listItemPatientIssue}" var="detail" varStatus="varStatus">
-		<c:set var="price" value="${ detail.quantity* (detail.transactionDetail.unitPrice + 0.01*detail.transactionDetail.VAT*detail.transactionDetail.unitPrice) }" />
-		<c:set var="generalVar" value="General"/>
+		<%-- <c:set var="price" value="${ detail.quantity* (detail.transactionDetail.unitPrice + 0.01*detail.transactionDetail.VAT*detail.transactionDetail.unitPrice) }" /> --%>
+		<c:set var="price" value="${ detail.quantity * detail.transactionDetail.costToPatient}" />
+		<c:set var="generalVar" value="GENERAL PATIENT"/>
+		<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
+		<c:set var="tbVar" value="TB PATIENT"/>
+		<c:set var="cccVar" value="CCC PATIENT"/>
 		<c:set var="total" value="${total + price}"/>	
 	
 	<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
@@ -93,7 +97,7 @@ String cat="General";
 	<tr><td>Patient ID</td><td>:${issueItemPatient.identifier }</td></tr>
 	<tr><td>Age</td><td>:${age}</td></tr>
 	<tr><td>Gender</td><td>:${gender}</td></tr>
-	<tr><td>Patient Category</td><td>:${category}</td></tr>
+	<tr><td>Payment Category</td><td>:${paymentSubCategory}</td></tr>
 	<tr><td>Waiver/Exempt. No.</td><td>:${exemption}</td></tr>
 	
 </table>
@@ -111,8 +115,12 @@ String cat="General";
 	<c:set var="total" value="${0}"/>
 	<c:forEach items="${listItemPatientIssue}" var="issue" varStatus="varStatus">
 	
-		<c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" />
-		<c:set var="generalVar" value="General"/>
+		<%-- <c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" /> --%>
+		<c:set var="price" value="${ issue.quantity * issue.transactionDetail.costToPatient}" />
+		<c:set var="generalVar" value="GENERAL PATIENT"/>
+		<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
+		<c:set var="tbVar" value="TB PATIENT"/>
+		<c:set var="cccVar" value="CCC PATIENT"/>
 		<c:set var="total" value="${total + price}"/>	
 			
 	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
@@ -129,12 +137,26 @@ String cat="General";
 		<td></td>
 		<td></td>
 		<td><b><spring:message text="Total" /></b></td>
-		<c:if  test="${category!='General'}">
-			<td><fmt:formatNumber value="0.00" type="number" maxFractionDigits="2"/></td>
-		</c:if>
-		<c:if  test="${category=='General'}">
-			<td><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/></td>
-		</c:if>
+		<td>	
+			<c:choose>
+				<c:when test ="${paymentSubCategory == generalVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:when test ="${paymentSubCategory == expectantVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:when test ="${paymentSubCategory == tbVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:when test ="${paymentSubCategory == cccVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:otherwise>
+					<strike><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+					</strike>  0.00
+				</c:otherwise>
+			</c:choose>
+		</td>	
 
 	</tr>	
 	
@@ -143,10 +165,10 @@ String cat="General";
 	</c:choose>
 </table>
 	<table  class="spacer" style="margin-left: 60px; margin-top: 40px;">
-		<tr>
+		<%-- <tr>
 			<td>PAYMENT MODE </td>
 			<td><b>:${paymentMode}</b></td>
-		</tr>
+		</tr> --%>
 		<tr>
 			<td>CASHIER </td>
 			<td><b>:${cashier}</b></td>

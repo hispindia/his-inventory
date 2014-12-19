@@ -40,6 +40,7 @@ public class InventoryStoreItemTransactionDetail implements  Serializable , Comp
 	 private BigDecimal unitPrice;
 	 private BigDecimal totalPrice;
 	 private BigDecimal VAT;
+	 private BigDecimal costToPatient;
 
 	 private String companyName ;
 	 private Date dateManufacture;
@@ -93,6 +94,13 @@ public class InventoryStoreItemTransactionDetail implements  Serializable , Comp
 	}
 	public void setVAT(BigDecimal vAT) {
 		VAT = vAT;
+	}
+	public BigDecimal getCostToPatient() {
+		return costToPatient;
+	}
+
+	public void setCostToPatient(BigDecimal costToPatient) {
+		this.costToPatient = costToPatient;
 	}
 	public String getCompanyName() {
 		return companyName;
@@ -193,5 +201,10 @@ public class InventoryStoreItemTransactionDetail implements  Serializable , Comp
 	 
 	    return (this.item).compareTo(i.item);
 	}
+
+	
+	 
+	 
+	 
 	 
 }

@@ -224,6 +224,7 @@ public class ProcessTransferItemFromGeneralStoreController {
 						transDetail.setSpecification(trDetail.getSpecification());
 						transDetail.setUnitPrice(trDetail.getUnitPrice());
 						transDetail.setVAT(trDetail.getVAT());
+						transDetail.setCostToPatient(trDetail.getCostToPatient());
 						transDetail.setParent(trDetail);
 						transDetail.setReceiptDate(date);
 						
@@ -239,8 +240,8 @@ public class ProcessTransferItemFromGeneralStoreController {
 						totl = totl.plus(totl.times(trDetail.getVAT().divide(new BigDecimal(100))));
 						transDetail.setTotalPrice(totl.getAmount());*/
 						
-						BigDecimal moneyUnitPrice = trDetail.getUnitPrice().multiply(new BigDecimal(temp));
-						moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(trDetail.getVAT().divide(new BigDecimal(100))));
+						BigDecimal moneyUnitPrice = trDetail.getCostToPatient().multiply(new BigDecimal(temp));
+						//moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(trDetail.getVAT().divide(new BigDecimal(100))));
 						transDetail.setTotalPrice(moneyUnitPrice);
 						
 						 transDetail.setQuantity(0);
@@ -287,8 +288,8 @@ public class ProcessTransferItemFromGeneralStoreController {
 						totl = totl.plus(totl.times(trDetail.getVAT().divide(new BigDecimal(100))));
 						transDetail.setTotalPrice(totl.getAmount());*/
 						
-						BigDecimal moneyUnitPrice = trDetail.getUnitPrice().multiply(new BigDecimal(transDetail.getIssueQuantity()));
-						moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(trDetail.getVAT().divide(new BigDecimal(100))));
+						BigDecimal moneyUnitPrice = trDetail.getCostToPatient().multiply(new BigDecimal(transDetail.getIssueQuantity()));
+						/*moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(trDetail.getVAT().divide(new BigDecimal(100))));*/
 						transDetail.setTotalPrice(moneyUnitPrice);
 						 
 						transDetail.setCurrentQuantity(0);
@@ -301,6 +302,7 @@ public class ProcessTransferItemFromGeneralStoreController {
 						transDetail.setSpecification(trDetail.getSpecification());
 						transDetail.setUnitPrice(trDetail.getUnitPrice());
 						transDetail.setVAT(trDetail.getVAT());
+						transDetail.setCostToPatient(trDetail.getCostToPatient());
 						transDetail.setParent(trDetail);
 						transDetail.setReceiptDate(date);
 						//NEW

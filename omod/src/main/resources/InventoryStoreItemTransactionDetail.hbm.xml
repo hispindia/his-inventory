@@ -23,6 +23,7 @@
 		
 		<property name="unitPrice" column="unit_price" />
 		<property name="VAT" column="VAT" />
+		<property name="costToPatient" column="cost_to_patient" />
 		<property name="totalPrice" column="total_price" />
 		
 		<property name="companyName" column="company_name" />

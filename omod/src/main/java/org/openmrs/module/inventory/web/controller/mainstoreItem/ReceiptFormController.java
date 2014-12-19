@@ -53,6 +53,8 @@ public class ReceiptFormController {
 	}
 	@RequestMapping(method = RequestMethod.POST)
 	public String submit(HttpServletRequest request, Model model) {
+		
+		System.out.println(" in submit of ReceiptFormController ******  ");
 		List<String> errors = new ArrayList<String>();
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		 List<InventoryItemSubCategory> listCategory = inventoryService.listItemSubCategory("", 0, 0);
@@ -62,6 +64,8 @@ public class ReceiptFormController {
 		int itemId = NumberUtils.toInt(request.getParameter("itemId"), 0 );
 		int quantity = NumberUtils.toInt(request.getParameter("quantity"),0);
 		BigDecimal VAT = NumberUtils.createBigDecimal(request.getParameter("VAT"));
+		BigDecimal costToPatient = NumberUtils.createBigDecimal(request.getParameter("costToPatient"));
+		System.out.println(" costToPatient ******  "+costToPatient);
 		BigDecimal unitPrice =  NumberUtils.createBigDecimal(request.getParameter("unitPrice"));
 		String batchNo = request.getParameter("batchNo");
 		String companyName = request.getParameter("companyName");
@@ -77,6 +81,7 @@ public class ReceiptFormController {
 			model.addAttribute("ItemId", itemId);
 			model.addAttribute("quantity", quantity);
 			model.addAttribute("VAT", VAT);
+			model.addAttribute("costToPatient", costToPatient);
 			model.addAttribute("batchNo", batchNo);
 			model.addAttribute("unitPrice", unitPrice);
 			model.addAttribute("companyName", companyName);
@@ -98,6 +103,7 @@ public class ReceiptFormController {
 		transactionDetail.setQuantity(quantity);
 		transactionDetail.setUnitPrice(unitPrice);
 		transactionDetail.setVAT(VAT);
+		transactionDetail.setCostToPatient(costToPatient);
 		transactionDetail.setIssueQuantity(0);
 		transactionDetail.setCreatedOn(new Date());
 		transactionDetail.setReceiptDate(DateUtils.getDateFromStr(receiptDate));
@@ -113,9 +119,11 @@ public class ReceiptFormController {
 		Money totl = moneyUnitPrice.times(quantity);
 		totl = totl.plus(totl.times(VAT.divide(new BigDecimal(100) , 2)));*/
 		
+		;
 		
-		BigDecimal moneyUnitPrice = unitPrice.multiply(new BigDecimal(quantity));
-		moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(VAT.divide(new BigDecimal(100))));
+		System.out.println("transactionDetail.getCostToPatient : "+transactionDetail.getCostToPatient());
+		BigDecimal moneyUnitPrice = costToPatient.multiply(new BigDecimal(quantity));
+	//	moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(VAT.divide(new BigDecimal(100))));
 		transactionDetail.setTotalPrice(moneyUnitPrice);
 		
 		int userId = Context.getAuthenticatedUser().getId();

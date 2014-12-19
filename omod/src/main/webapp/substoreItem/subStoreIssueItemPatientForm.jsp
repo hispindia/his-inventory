@@ -26,7 +26,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <openmrs:globalProperty var="userLocation" key="hospital.location_user" defaultValue="false"/>
 <script type="text/javascript">
-var cat="General";
 
 function getValue()
   {
@@ -151,7 +150,7 @@ function getValue()
 			</tr>
 			<tr>
 				<td>${issueItemPatient.patient.patientIdentifier.identifier}</td>
-				<td>${patientCategory}</td>
+				<td>${paymentSubCategory}</td>
 				<td>${issueItemPatient.patient.givenName}&nbsp;${issueItemPatient.patient.familyName}&nbsp;${fn:replace(issueItemPatient.patient.middleName,","," ")} </td>
 				<td><c:choose>
 						<c:when test="${issueItemPatient.patient.age == 0  }">&lt 1</c:when>
@@ -180,8 +179,12 @@ function getValue()
 	<c:when test="${not empty listItemDetail}">
 	<c:set var="total" value="${0}"/>
 	<c:forEach items="${listItemDetail}" var="issue" varStatus="varStatus">
-		<c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" />
-		<c:set var="generalVar" value="General"/>
+		<%-- <c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" /> --%>
+		<c:set var="price" value="${ issue.quantity * issue.transactionDetail.costToPatient}" />
+		<c:set var="generalVar" value="GENERAL PATIENT"/>
+		<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
+		<c:set var="tbVar" value="TB PATIENT"/>
+		<c:set var="cccVar" value="CCC PATIENT"/>
 		<c:set var="total" value="${total + price}"/>
 		
 	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
@@ -203,10 +206,18 @@ function getValue()
 		<td><b><spring:message code="inventory.receiptItem.total" text="Total" /></b></td>
 		<td>	
 			<c:choose>
-				<c:when test ="${patientCategory == generalVar}">
+				<c:when test ="${paymentSubCategory == generalVar}">
 					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
 				</c:when>
-				
+				<c:when test ="${paymentSubCategory == expectantVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:when test ="${paymentSubCategory == tbVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:when test ="${paymentSubCategory == cccVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
 				<c:otherwise>
 					<strike><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
 					</strike>  0.00
@@ -219,12 +230,12 @@ function getValue()
 		<td></td>
 		<td></td>
 		<td></td>
-		<td><b>Payment Mode</b></td>
+		<!-- <td><b>Payment Mode</b></td>
 		<td><select id="paymentMode" name="paymentMode">
 			<option value="Cash">Cash</option>
 			<option value="Card">Card</option>
-		</select>
-		</td>						
+		</select> 
+		</td>	-->					
 	</tr>
 	</c:when>
 	</c:choose>
@@ -276,8 +287,8 @@ function getValue()
 					<td>:${issueDrugPatient.identifier }</td>
 				</tr>
 				<tr>
-					<td>Patient category</td>
-					<td>:${patientCategory }</td>
+					<td>payment category</td>
+					<td>:${paymentSubCategory }</td>
 				</tr>  
 				<tr>
 					<td>Waiver/Exempt. No.</td>
@@ -301,8 +312,12 @@ function getValue()
 	<c:when test="${not empty listItemDetail}">
 	<c:set var="total" value="${0}"/>
 	<c:forEach items="${listItemDetail}" var="issue" varStatus="varStatus">
-		<c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" />
-		<c:set var="generalVar" value="General"/>
+		<%-- <c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" /> --%>
+		<c:set var="price" value="${ issue.quantity * issue.transactionDetail.costToPatient}" />
+		<c:set var="generalVar" value="GENERAL PATIENT"/>
+		<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
+		<c:set var="tbVar" value="TB PATIENT"/>
+		<c:set var="cccVar" value="CCC PATIENT"/>
 		<c:set var="total" value="${total + price}"/>
 		
 	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
@@ -323,8 +338,17 @@ function getValue()
 		<td><spring:message code="inventory.receiptItem.total" text="Total" /></td>
 			
 			<c:choose>
-				<c:when test ="${patientCategory == generalVar}">
+				<c:when test ="${paymentSubCategory == generalVar}">
 					<td><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/></td>
+				</c:when>
+				<c:when test ="${paymentSubCategory == expectantVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:when test ="${paymentSubCategory == tbVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:when test ="${paymentSubCategory == cccVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
 				</c:when>
 				
 				<c:otherwise>
@@ -338,12 +362,12 @@ function getValue()
 	</c:choose>
 </table>
 <br/><br/>
-<table  class="spacer" style="margin-left: 60px; margin-top: 60px;">
+<!-- <table  class="spacer" style="margin-left: 60px; margin-top: 60px;">
 		<tr>
 			<td>PAYMENT MODE </td>
 			<td><b>:</b></td>
 		</tr>
-	</table>
+	</table> -->
 
 <br/><br/><br/><br/>
 <span style="float:right;font-size: 1.5em">Signature of Inventory Clerk/ Stamp</span>

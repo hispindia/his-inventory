@@ -8,16 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.openmrs.PersonAttribute;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.Role;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.model.InventoryStore;
 import org.openmrs.module.hospitalcore.util.PatientUtils;
 import org.openmrs.module.inventory.InventoryService;
 import org.openmrs.module.inventory.model.InventoryItem;
 import org.openmrs.module.inventory.model.InventoryItemSubCategory;
 import org.openmrs.module.inventory.model.InventoryStoreItemAccount;
-import org.openmrs.module.inventory.model.InventoryStoreItemAccountDetail;
 import org.openmrs.module.inventory.model.InventoryStoreItemPatient;
 import org.openmrs.module.inventory.model.InventoryStoreItemPatientDetail;
 import org.openmrs.module.inventory.model.InventoryStoreItemTransactionDetail;
@@ -36,6 +38,7 @@ public class IssueItemPatientFormController {
 	public String firstView(
 			@RequestParam(value="categoryId",required=false)  Integer categoryId,
 			Model model) {
+		
 	 InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 	 List<InventoryItemSubCategory> listCategory = inventoryService.listItemSubCategory("", 0, 0);
 	 model.addAttribute("listCategory", listCategory);
@@ -56,24 +59,26 @@ public class IssueItemPatientFormController {
 		model.addAttribute("patientCategory",
 		    ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
 		            .getValue());
-		/*
-		if(ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
-	            .getValue() == "Waiver"){
-			model.addAttribute("exemption", ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_WAIVER_CATEGORY)
-		            .getValue());
-		}
-		else if(ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
-	            .getValue()!="General" && ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_CATEGORY)
-	            .getValue()!="Waiver"){
-			model.addAttribute("exemption", ps.getPatient(issueItemPatient.getPatient().getId()).getAttribute(PatientUtils.PATIENT_ATTRIBUTE_EXEMPTION_CATEGORY)
-		            .getValue());
-
-		}
-		else {
-			model.addAttribute("exemption", " ");
-		}
-
-		*/
+		
+		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+		List<PersonAttribute> pas = hcs.getPersonAttributes(issueItemPatient.getPatient().getId());
+        for (PersonAttribute pa : pas) {
+            PersonAttributeType attributeType = pa.getAttributeType(); 
+            PersonAttributeType personAttributePCT=hcs.getPersonAttributeTypeByName("Paying Category Type");
+            PersonAttributeType personAttributeNPCT=hcs.getPersonAttributeTypeByName("Non-Paying Category Type");
+            PersonAttributeType personAttributeSSCT=hcs.getPersonAttributeTypeByName("Special Scheme Category Type");
+            if(attributeType.getPersonAttributeTypeId()==personAttributePCT.getPersonAttributeTypeId()){
+            	model.addAttribute("paymentSubCategory",pa.getValue()); 
+            }
+            else if(attributeType.getPersonAttributeTypeId()==personAttributeNPCT.getPersonAttributeTypeId()){
+            	 model.addAttribute("paymentSubCategory",pa.getValue()); 
+            }
+            else if(attributeType.getPersonAttributeTypeId()==personAttributeSSCT.getPersonAttributeTypeId()){
+            	model.addAttribute("paymentSubCategory",pa.getValue()); 
+            }
+        }
+		
+		
 	}
 	 model.addAttribute("listItemDetail", list);
 	 model.addAttribute("issueItemPatient", issueItemPatient);
