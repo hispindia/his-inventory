@@ -54,7 +54,6 @@ public class ReceiptFormController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String submit(HttpServletRequest request, Model model) {
 		
-		System.out.println(" in submit of ReceiptFormController ******  ");
 		List<String> errors = new ArrayList<String>();
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		 List<InventoryItemSubCategory> listCategory = inventoryService.listItemSubCategory("", 0, 0);
@@ -65,7 +64,6 @@ public class ReceiptFormController {
 		int quantity = NumberUtils.toInt(request.getParameter("quantity"),0);
 		BigDecimal VAT = NumberUtils.createBigDecimal(request.getParameter("VAT"));
 		BigDecimal costToPatient = NumberUtils.createBigDecimal(request.getParameter("costToPatient"));
-		System.out.println(" costToPatient ******  "+costToPatient);
 		BigDecimal unitPrice =  NumberUtils.createBigDecimal(request.getParameter("unitPrice"));
 		String batchNo = request.getParameter("batchNo");
 		String companyName = request.getParameter("companyName");
@@ -121,7 +119,6 @@ public class ReceiptFormController {
 		
 		;
 		
-		System.out.println("transactionDetail.getCostToPatient : "+transactionDetail.getCostToPatient());
 		BigDecimal moneyUnitPrice = costToPatient.multiply(new BigDecimal(quantity));
 	//	moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(VAT.divide(new BigDecimal(100))));
 		transactionDetail.setTotalPrice(moneyUnitPrice);
