@@ -225,7 +225,7 @@ function getValue()
 			</c:choose>
 		</td>						
 	</tr>
-	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+<!-- <tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -236,7 +236,7 @@ function getValue()
 			<option value="Card">Card</option>
 		</select> 
 		</td>	-->					
-	</tr>
+	</tr>-->
 	</c:when>
 	</c:choose>
 </table>
@@ -368,7 +368,7 @@ function getValue()
 			<td><b>:</b></td>
 		</tr>
 	</table> -->
-
+ -->
 <br/><br/><br/><br/>
 <span style="float:right;font-size: 1.5em">Signature of Inventory Clerk/ Stamp</span>
 </div>

@@ -341,10 +341,10 @@ function getValue()
 			</c:choose>
 		</table   class="spacer" style="margin-left: 60px; margin-top: 60px;">
 			<table  class="spacer" style="margin-left: 60px; margin-top: 60px;">
-		<tr>
+	<!-- 	<tr>
 			<td>PAYMENT MODE </td>
 			<td><b>:</b></td>
-		</tr>
+		</tr> -->
 	</table>
 		<br /> <br /> <br /> <br /> <br /> <br /> <span
 			style="float: right; font-size: 1.5em">Signature of Inventory
