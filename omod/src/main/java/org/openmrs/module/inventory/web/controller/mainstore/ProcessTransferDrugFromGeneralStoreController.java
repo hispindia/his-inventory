@@ -199,6 +199,7 @@ public class ProcessTransferDrugFromGeneralStoreController {
 						transDetail.setFormulation(trDetail.getFormulation());
 						transDetail.setUnitPrice(trDetail.getUnitPrice());
 						transDetail.setVAT(trDetail.getVAT());
+						transDetail.setCostToPatient(trDetail.getCostToPatient());
 						transDetail.setParent(trDetail);
 						transDetail.setReceiptDate(date);
 						//------------
@@ -215,8 +216,8 @@ public class ProcessTransferDrugFromGeneralStoreController {
 						transDetail.setTotalPrice(totl.getAmount());
 						
 						*/
-						BigDecimal moneyUnitPrice = trDetail.getUnitPrice().multiply(new BigDecimal(temp));
-						moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(trDetail.getVAT().divide(new BigDecimal(100))));
+						BigDecimal moneyUnitPrice = trDetail.getCostToPatient().multiply(new BigDecimal(temp));
+						//moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(trDetail.getVAT().divide(new BigDecimal(100))));
 						transDetail.setTotalPrice(moneyUnitPrice);
 						
 						 transDetail.setQuantity(0);
@@ -279,6 +280,7 @@ public class ProcessTransferDrugFromGeneralStoreController {
 						transDetail.setFormulation(trDetail.getFormulation());
 						transDetail.setUnitPrice(trDetail.getUnitPrice());
 						transDetail.setVAT(trDetail.getVAT());
+						transDetail.setCostToPatient(trDetail.getCostToPatient());
 						transDetail.setParent(trDetail);
 						transDetail.setReceiptDate(date);
 						

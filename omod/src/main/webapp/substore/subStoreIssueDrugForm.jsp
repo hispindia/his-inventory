@@ -152,7 +152,7 @@ function getValue()
 				</tr>
 				<tr>
 					<td>${issueDrugPatient.patient.patientIdentifier.identifier}</td>
-				    <td>${patientCategory}</td>
+				    <td>${paymentSubCategory}</td>
 					<td>${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.familyName}&nbsp;${fn:replace(issueDrugPatient.patient.middleName,","," ")} </td>
 					<td><c:choose>
 							<c:when test="${issueDrugPatient.patient.age == 0  }">&lt 1</c:when>
@@ -182,8 +182,12 @@ function getValue()
 					<c:set var="total" value="${0}"/>   
 					<c:forEach items="${listPatientDetail}" var="issue"
 						varStatus="varStatus">
-						<c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" />
-						<c:set var="generalVar" value="General"/>
+						<%-- <c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" /> --%>
+						<c:set var="price" value="${ issue.quantity * issue.transactionDetail.costToPatient}" />
+						<c:set var="generalVar" value="GENERAL PATIENT"/>
+						<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
+						<c:set var="tbVar" value="TB PATIENT"/>
+						<c:set var="cccVar" value="CCC PATIENT"/>
 						<c:set var="total" value="${total + price}"/>	
 						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 							<td><c:out value="${varStatus.count }" /></td>
@@ -201,22 +205,27 @@ function getValue()
 							<td></td>
 							<td></td>
 							<td></td>
-							<td><b>Estimated Price</b></td>
-							<td>	
-                           <!-- <textarea readonly>-->
-                            <c:choose>
-									<c:when test ="${patientCategory == generalVar}">
-										<fmt:formatNumber value="${total}" type="number" pattern="#"/>
-									</c:when>
-									
-									<c:otherwise>
-										<fmt:formatNumber value="${total}" type="number" pattern="#"/>
-										
-									</c:otherwise>
-								</c:choose>
-								
-                               
-							</td>						
+							<td><b>Total Price</b></td>
+                          <td align="left">	
+							<c:choose>
+								<c:when test ="${paymentSubCategory == generalVar}">
+									<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+								</c:when>
+								<c:when test ="${paymentSubCategory == expectantVar}">
+									<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+								</c:when>
+								<c:when test ="${paymentSubCategory == tbVar}">
+									<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+								</c:when>
+								<c:when test ="${paymentSubCategory == cccVar}">
+									<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+								</c:when>
+								<c:otherwise>
+									<strike><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+									</strike>  0.00
+								</c:otherwise>
+							</c:choose>
+						</td>						
 						</tr>
 						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 							<td></td>
@@ -281,8 +290,8 @@ function getValue()
 					<td>:${issueDrugPatient.identifier }</td>
 				</tr>
 				<tr>
-					<td>Patient category</td>
-					<td>:${patientCategory }</td>
+					<td>Payment category</td>
+					<td>:${paymentSubCategory }</td>
 				</tr>  
 <!-- 				<tr>
 					<td>Waiver/Exempt. No.</td>
@@ -307,7 +316,12 @@ function getValue()
 				<c:set var="total" value="${0}"/>
 					<c:forEach items="${listPatientDetail}" var="issue"
 						varStatus="varStatus">
-						<c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" />
+						<%-- <c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" /> --%>
+						<c:set var="price" value="${ issue.quantity * issue.transactionDetail.costToPatient}" />
+						<c:set var="generalVar" value="GENERAL PATIENT"/>
+						<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
+						<c:set var="tbVar" value="TB PATIENT"/>
+						<c:set var="cccVar" value="CCC PATIENT"/>
 						<c:set var="total" value="${total + price}"/>
 						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 							<td><center><c:out value="${varStatus.count }" /></center></td>
@@ -326,15 +340,23 @@ function getValue()
 							<td><spring:message code="inventory.receiptDrug.total" text="Total" /></td>
 								
 								<c:choose>
-									<c:when test ="${patientCategory == generalVar}">
-										<td><fmt:formatNumber value="${total}" type="number" pattern="#"/></td>
-									</c:when>
-									
-									<c:otherwise>
-										<td><fmt:formatNumber value="0.00" type="number" pattern="#"/></td>
-										
-									</c:otherwise>
-								</c:choose>
+								<c:when test ="${paymentSubCategory == generalVar}">
+									<td><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/></td>
+								</c:when>
+								<c:when test ="${paymentSubCategory == expectantVar}">
+									<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+								</c:when>
+								<c:when test ="${paymentSubCategory == tbVar}">
+									<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+								</c:when>
+								<c:when test ="${paymentSubCategory == cccVar}">
+									<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+								</c:when>
+								
+								<c:otherwise>
+									<td><fmt:formatNumber value="0.00" type="number" maxFractionDigits="2"/></td>
+								</c:otherwise>
+							</c:choose>
 							</td>						
 						</tr>
 				</c:when>

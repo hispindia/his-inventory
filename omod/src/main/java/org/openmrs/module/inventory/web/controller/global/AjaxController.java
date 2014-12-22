@@ -636,7 +636,7 @@ public class AjaxController {
 			transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
 			transaction.setCreatedOn(date);
 			transaction.setPaymentMode(paymentMode);
-			transaction.setPatientCategory(issueDrugPatient.getPatient().getAttribute(14).getValue());
+			transaction.setPaymentCategory(issueDrugPatient.getPatient().getAttribute(14).getValue());
 			transaction.setCreatedBy(Context.getAuthenticatedUser()
 					.getGivenName());
 			transaction = inventoryService
@@ -676,6 +676,7 @@ public class AjaxController {
 				transDetail.setClosingBalance(t);
 				transDetail.setQuantity(0);
 				transDetail.setVAT(pDetail.getTransactionDetail().getVAT());
+				transDetail.setCostToPatient(pDetail.getTransactionDetail().getCostToPatient());
 				transDetail.setUnitPrice(pDetail.getTransactionDetail()
 						.getUnitPrice());
 				transDetail.setDrug(pDetail.getTransactionDetail().getDrug());
@@ -716,11 +717,11 @@ public class AjaxController {
 				 */
 
 				BigDecimal moneyUnitPrice = pDetail.getTransactionDetail()
-						.getUnitPrice()
+						.getCostToPatient()
 						.multiply(new BigDecimal(pDetail.getQuantity()));
-				moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice
+				/*moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice
 						.multiply(pDetail.getTransactionDetail().getVAT()
-								.divide(new BigDecimal(100))));
+								.divide(new BigDecimal(100))));*/
 				transDetail.setTotalPrice(moneyUnitPrice);
 
 				transDetail.setParent(pDetail.getTransactionDetail());
@@ -814,6 +815,7 @@ public class AjaxController {
 				transDetail.setClosingBalance(t);
 				transDetail.setQuantity(0);
 				transDetail.setVAT(pDetail.getTransactionDetail().getVAT());
+				transDetail.setCostToPatient(pDetail.getTransactionDetail().getCostToPatient());
 				transDetail.setUnitPrice(pDetail.getTransactionDetail()
 						.getUnitPrice());
 				transDetail.setDrug(pDetail.getTransactionDetail().getDrug());
@@ -854,11 +856,11 @@ public class AjaxController {
 				 * transDetail.setTotalPrice(totl.getAmount());
 				 */
 				BigDecimal moneyUnitPrice = pDetail.getTransactionDetail()
-						.getUnitPrice()
+						.getCostToPatient()
 						.multiply(new BigDecimal(pDetail.getQuantity()));
-				moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice
+				/*moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice
 						.multiply(pDetail.getTransactionDetail().getVAT()
-								.divide(new BigDecimal(100))));
+								.divide(new BigDecimal(100))));*/
 				transDetail.setTotalPrice(moneyUnitPrice);
 
 				transDetail.setParent(pDetail.getTransactionDetail());
@@ -1272,24 +1274,42 @@ public class AjaxController {
 
 			model.addAttribute("cashier", listDrugIssue.get(0)
 					.getStoreDrugPatient().getCreatedBy());
-			model.addAttribute("paymentMode", listDrugIssue.get(0)
-					.getTransactionDetail().getTransaction().getPaymentMode());
-			model.addAttribute("category", listDrugIssue.get(0)
-					.getTransactionDetail().getTransaction().getPatientCategory());
+			HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+			List<PersonAttribute> pas = hcs.getPersonAttributes(listDrugIssue.get(0)
+					.getStoreDrugPatient().getPatient().getId());
+	        for (PersonAttribute pa : pas) {
+	            PersonAttributeType attributeType = pa.getAttributeType(); 
+	            PersonAttributeType personAttributePCT=hcs.getPersonAttributeTypeByName("Paying Category Type");
+	            PersonAttributeType personAttributeNPCT=hcs.getPersonAttributeTypeByName("Non-Paying Category Type");
+	            PersonAttributeType personAttributeSSCT=hcs.getPersonAttributeTypeByName("Special Scheme Category Type");
+	            if(attributeType.getPersonAttributeTypeId()==personAttributePCT.getPersonAttributeTypeId()){
+	            	model.addAttribute("paymentSubCategory",pa.getValue()); 
+	            }
+	            else if(attributeType.getPersonAttributeTypeId()==personAttributeNPCT.getPersonAttributeTypeId()){
+	            	 model.addAttribute("paymentSubCategory",pa.getValue()); 
+	            }
+	            else if(attributeType.getPersonAttributeTypeId()==personAttributeSSCT.getPersonAttributeTypeId()){
+	            	model.addAttribute("paymentSubCategory",pa.getValue()); 
+	            }
+	        }
+			/*model.addAttribute("paymentMode", listDrugIssue.get(0)
+					.getTransactionDetail().getTransaction().getPaymentMode());*/
+			/*model.addAttribute("category", listDrugIssue.get(0)
+					.getTransactionDetail().getTransaction().getPaymentCategory());*/
 			
-			if (listDrugIssue.get(0)
-					.getTransactionDetail().getTransaction().getPatientCategory().equals("Waiver")) {
+			/*if (listDrugIssue.get(0)
+					.getTransactionDetail().getTransaction().getPaymentCategory().equals("Waiver")) {
 				model.addAttribute("exemption", listDrugIssue.get(0)
 						.getStoreDrugPatient().getPatient().getAttribute(32));
 			} else if (!listDrugIssue.get(0)
-					.getTransactionDetail().getTransaction().getPatientCategory().equals( "General")
+					.getTransactionDetail().getTransaction().getPaymentCategory().equals( "General")
 					&& !listDrugIssue.get(0)
-					.getTransactionDetail().getTransaction().getPatientCategory().equals("Waiver")) {
+					.getTransactionDetail().getTransaction().getPaymentCategory().equals("Waiver")) {
 				model.addAttribute("exemption", listDrugIssue.get(0)
 						.getStoreDrugPatient().getPatient().getAttribute(36));
 			} else {
 				model.addAttribute("exemption", " ");
-			}
+			}*/
 
 		}
 		return "/module/inventory/substore/subStoreIssueDrugDettail";

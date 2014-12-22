@@ -31,7 +31,8 @@
 	<th><spring:message code="inventory.receiptDrug.receiptQuantity"/></th>
 	<th>Unit Price</th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
-	<th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
+	<th><spring:message code="inventory.receiptDrug.costToPatient"/></th>
+	<!-- <th><spring:message code="inventory.receiptDrug.totalPrice"/></th> -->
 	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
 	<th title="<spring:message code="inventory.receiptDrug.companyName"/>">CN</th>
 	<th title="<spring:message code="inventory.receiptDrug.dateManufacture"/>">DM</th>
@@ -51,7 +52,8 @@
 		<td>${receipt.quantity}</td>
 		<td>${receipt.unitPrice}</td>
 		<td>${receipt.VAT}</td>
-		<td>${receipt.totalPrice}</td>
+		<td>${receipt.costToPatient}</td>
+		<%-- <td>${receipt.totalPrice}</td> --%>
 		<td>${receipt.batchNo}</td>
 		<td>${receipt.companyName}</td>
 		<td><openmrs:formatDate date="${receipt.dateManufacture}" type="textbox"/></td>
@@ -87,7 +89,8 @@
 	<th><spring:message code="inventory.receiptDrug.quantity"/></th>
 	<th>Unit Price</th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
-	<th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
+	<th><spring:message code="inventory.receiptDrug.costToPatient"/></th>
+	<!-- <th><spring:message code="inventory.receiptDrug.totalPrice"/></th> -->
 	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
 	<th>CN</th>
 	<th>DM</th>
@@ -106,7 +109,8 @@
 		<td>${receipt.quantity}</td>
 		<td>${receipt.unitPrice}</td>
 		<td>${receipt.VAT}</td>
-		<td>${receipt.totalPrice}</td>
+		<td>${receipt.costToPatient}</td>
+		<%-- <td>${receipt.totalPrice}</td> --%>
 		<td>${receipt.batchNo}</td>
 		<td>${receipt.companyName}</td>
 		<td><openmrs:formatDate date="${receipt.dateManufacture}" type="textbox"/></td>

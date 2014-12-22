@@ -290,10 +290,10 @@ function getValue()
 					<td>payment category</td>
 					<td>:${paymentSubCategory }</td>
 				</tr>  
-				<tr>
+<%-- 				<tr>
 					<td>Waiver/Exempt. No.</td>
 					<td>:${exemption }</td>
-				</tr>  
+				</tr>  --%> 
 
 			</table>
 			<br />

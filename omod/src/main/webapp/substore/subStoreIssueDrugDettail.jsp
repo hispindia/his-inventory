@@ -68,6 +68,10 @@ String cat="General";
         	<td>Gender:</td><td>&nbsp;</td>
         	<td>&nbsp;${gender}</td>
         </tr>
+        <tr>
+        	<td>Payment Category</td>
+        	<td>:${paymentSubCategory}</td>
+        </tr>
 		<tr>
 			<td>Date :</td><td>&nbsp;</td>
 			<td>${date}</td>
@@ -91,7 +95,12 @@ String cat="General";
 	<c:when test="${not empty listDrugIssue}">
 	<c:set var="total" value="${0}"/>  
 	<c:forEach items="${listDrugIssue}" var="detail" varStatus="varStatus">
-	<c:set var="price" value="${ detail.quantity* (detail.transactionDetail.unitPrice + 0.01*detail.transactionDetail.VAT*detail.transactionDetail.unitPrice) }" />
+	<%-- <c:set var="price" value="${ detail.quantity* (detail.transactionDetail.unitPrice + 0.01*detail.transactionDetail.VAT*detail.transactionDetail.unitPrice) }" /> --%>
+	<c:set var="price" value="${ detail.quantity * detail.transactionDetail.costToPatient}" />
+	<c:set var="generalVar" value="GENERAL PATIENT"/>
+	<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
+	<c:set var="tbVar" value="TB PATIENT"/>
+	<c:set var="cccVar" value="CCC PATIENT"/>
 	<c:set var="total" value="${total + price}"/>
 	<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${varStatus.count }"/></td>
@@ -110,13 +119,32 @@ String cat="General";
 		<td></td>
 		<td></td>
 		<td></td>
-		<td><b><spring:message code="inventory.receiptDrug.total" text="Estimated Price" /></b></td>
-		<td><fmt:formatNumber value="${total}" type="number" pattern="#"/></td>						
+		<td><b><spring:message code="inventory.receiptDrug.total" text="Total Price" /></b></td>
+		<td>
+		<c:choose>
+				<c:when test ="${paymentSubCategory == generalVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:when test ="${paymentSubCategory == expectantVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:when test ="${paymentSubCategory == tbVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:when test ="${paymentSubCategory == cccVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:otherwise>
+					<strike><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+					</strike>  0.00
+				</c:otherwise>
+			</c:choose>
+		</td>						
 	</tr>	
-	<tr>
+	<%-- <tr>
 			<td>Treating Doctor </td>
 			<td><b>:${paymentMode}</b></td>
-		</tr>
+		</tr> --%>
 		<tr>
 			<td>Attending Pharmacist</td>
 			<td><b>:${cashier}</b></td>
@@ -146,7 +174,7 @@ String cat="General";
 	<tr><td>Patient ID</td><td>:${issueDrugPatient.identifier }</td></tr>
 	<tr><td>Age</td><td>:${age}</td></tr>
 	<tr><td>Gender</td><td>:${gender}</td></tr>
-	<tr><td>Payment Category</td><td>:${category}</td></tr>
+	<tr><td>Payment Category</td><td>:${paymentSubCategory}</td></tr>
 	<!-- <tr><td>Waiver/Exempt. No.</td><td>:${exemption}</td></tr> -->
 	
 </table>
@@ -165,14 +193,19 @@ String cat="General";
 	<c:when test="${not empty listDrugIssue}">
 	<c:set var="total" value="${0}"/>  
 	<c:forEach items="${listDrugIssue}" var="detail" varStatus="varStatus">
-	<c:set var="price" value="${ detail.quantity* (detail.transactionDetail.unitPrice + 0.01*detail.transactionDetail.VAT*detail.transactionDetail.unitPrice) }" />
+	<%-- <c:set var="price" value="${ detail.quantity* (detail.transactionDetail.unitPrice + 0.01*detail.transactionDetail.VAT*detail.transactionDetail.unitPrice) }" /> --%>
+	<c:set var="price" value="${ detail.quantity * detail.transactionDetail.costToPatient}" />
+	<c:set var="generalVar" value="GENERAL PATIENT"/>
+	<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
+	<c:set var="tbVar" value="TB PATIENT"/>
+	<c:set var="cccVar" value="CCC PATIENT"/>
 	<c:set var="total" value="${total + price}"/>
 	<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${varStatus.count }"/></td>
 		<td>${detail.transactionDetail.drug.name} </td>	
 		<td>${detail.transactionDetail.formulation.name}-${detail.transactionDetail.formulation.dozage}</td>
-		<td>${detail.quantity }</td>
-		<td><fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/></td>
+		<td align="center" >${detail.quantity }</td>
+		<td align="center" ><fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/></td>
 		</tr>
 	</c:forEach>
 	<tr><td>&nbsp;</td></tr>
@@ -180,13 +213,27 @@ String cat="General";
 		<td></td>
 		<td></td>
 		<td></td>
-		<td><b><spring:message code="inventory.receiptDrug.total" text="Estimated Price" /></b></td>
-		<c:if  test="${category!='General'}">
-			<td><fmt:formatNumber value="0.00" type="number" pattern="#"/></td>
-		</c:if>
-		<c:if  test="${category=='General'}">
-			<td><fmt:formatNumber value="${total}" type="number" pattern="#"/></td>
-		</c:if>
+		<td><b><spring:message code="inventory.receiptDrug.total" text="Total Price" /></b></td>
+		<td>	
+			<c:choose>
+				<c:when test ="${paymentSubCategory == generalVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:when test ="${paymentSubCategory == expectantVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:when test ="${paymentSubCategory == tbVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:when test ="${paymentSubCategory == cccVar}">
+					<fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+				</c:when>
+				<c:otherwise>
+					<strike><fmt:formatNumber value="${total}" type="number" maxFractionDigits="2"/>
+					</strike>  0.00
+				</c:otherwise>
+			</c:choose>
+		</td>
 
 	</tr>	
 	<br />
@@ -194,10 +241,10 @@ String cat="General";
 	</c:choose>
 	</table>
 	<table  class="spacer" style="margin-left: 60px; margin-top: 60px;">
-		<tr>
+		<%-- <tr>
 			<td>Treating Doctor </td>
 			<td><b>:${paymentMode}</b></td>
-		</tr>
+		</tr> --%>
 		<tr>
 			<td>Attending Pharmacist</td>
 			<td><b>:${cashier}</b></td>

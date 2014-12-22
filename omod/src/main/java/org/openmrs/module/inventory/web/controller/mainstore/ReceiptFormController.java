@@ -87,6 +87,7 @@ public class ReceiptFormController {
 		}
 		int quantity = NumberUtils.toInt(request.getParameter("quantity"),0);
 		BigDecimal VAT = NumberUtils.createBigDecimal(request.getParameter("VAT"));
+		BigDecimal costToPatient = NumberUtils.createBigDecimal(request.getParameter("costToPatient"));
 		BigDecimal unitPrice =  NumberUtils.createBigDecimal(request.getParameter("unitPrice"));
 		String batchNo = request.getParameter("batchNo");
 		String companyName = request.getParameter("companyName");
@@ -121,6 +122,7 @@ public class ReceiptFormController {
 			model.addAttribute("drugId", drugId);
 			model.addAttribute("quantity", quantity);
 			model.addAttribute("VAT", VAT);
+			model.addAttribute("costToPatient", costToPatient);
 			model.addAttribute("batchNo", batchNo);
 			model.addAttribute("unitPrice", unitPrice);
 			model.addAttribute("companyName", companyName);
@@ -143,6 +145,7 @@ public class ReceiptFormController {
 		transactionDetail.setQuantity(quantity);
 		transactionDetail.setUnitPrice(unitPrice);
 		transactionDetail.setVAT(VAT);
+		transactionDetail.setCostToPatient(costToPatient);
 		transactionDetail.setIssueQuantity(0);
 		transactionDetail.setCreatedOn(new Date());
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -162,8 +165,8 @@ public class ReceiptFormController {
 		totl = totl.plus(totl.times((double)VAT/100));
 		transactionDetail.setTotalPrice(totl.getAmount());*/
 		
-		BigDecimal moneyUnitPrice = unitPrice.multiply(new BigDecimal(quantity));
-		moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(VAT.divide(new BigDecimal(100))));
+		BigDecimal moneyUnitPrice = costToPatient.multiply(new BigDecimal(quantity));
+		//moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(VAT.divide(new BigDecimal(100))));
 		transactionDetail.setTotalPrice(moneyUnitPrice);
 		
 		int userId = Context.getAuthenticatedUser().getId();

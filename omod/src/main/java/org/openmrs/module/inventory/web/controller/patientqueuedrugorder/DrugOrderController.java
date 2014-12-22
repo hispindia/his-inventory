@@ -122,7 +122,7 @@ public class DrugOrderController {
 		transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
 		transaction.setCreatedOn(date);
 		transaction.setPaymentMode(paymentMode);
-		transaction.setPatientCategory(patient.getAttribute(14).getValue());
+		transaction.setPaymentCategory(patient.getAttribute(14).getValue());
 		transaction.setCreatedBy(Context.getAuthenticatedUser().getGivenName());
 		transaction = inventoryService.saveStoreDrugTransaction(transaction);
 		
@@ -157,6 +157,7 @@ public class DrugOrderController {
 			 transDetail.setClosingBalance(t);
 			 transDetail.setQuantity(0);
 			 transDetail.setVAT(inventoryStoreDrugTransactionDetail.getVAT());
+			 transDetail.setCostToPatient(inventoryStoreDrugTransactionDetail.getCostToPatient());
 			 transDetail.setUnitPrice(inventoryStoreDrugTransactionDetail.getUnitPrice());
 			 transDetail.setDrug(inventoryStoreDrugTransactionDetail.getDrug());
 			 transDetail.setReorderPoint(inventoryStoreDrugTransactionDetail.getDrug().getReorderQty());
@@ -169,8 +170,8 @@ public class DrugOrderController {
 			 transDetail.setReceiptDate(inventoryStoreDrugTransactionDetail.getReceiptDate());
 			 transDetail.setCreatedOn(date);
 				
-			 BigDecimal moneyUnitPrice = inventoryStoreDrugTransactionDetail.getUnitPrice().multiply(new BigDecimal(quantity));
-			 moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(inventoryStoreDrugTransactionDetail.getVAT().divide(new BigDecimal(100))));
+			 BigDecimal moneyUnitPrice = inventoryStoreDrugTransactionDetail.getCostToPatient().multiply(new BigDecimal(quantity));
+			// moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(inventoryStoreDrugTransactionDetail.getVAT().divide(new BigDecimal(100))));
 			 transDetail.setTotalPrice(moneyUnitPrice);
 				
 			 transDetail.setParent(inventoryStoreDrugTransactionDetail);
