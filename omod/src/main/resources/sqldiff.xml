@@ -211,9 +211,11 @@
 		<author>Amit Sharma</author>
 		<date>December 17, 2014</date>
 		<description>
-			ALTER  TABLE inventory_store_item_transaction_detail   
+			ALTER  TABLE inventory_store_drug_transaction_detail   
+			ALTER  TABLE inventory_store_item_transaction_detail  
 		</description>
 		<sql>
+			ALTER  TABLE inventory_store_drug_transaction_detail add COLUMN `cost_to_patient` decimal(19,2);
 			ALTER  TABLE inventory_store_item_transaction_detail add COLUMN `cost_to_patient` decimal(19,2);
 		</sql>
 	</diff>
