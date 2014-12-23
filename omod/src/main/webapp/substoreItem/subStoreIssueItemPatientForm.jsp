@@ -236,7 +236,6 @@ function getValue()
 			<option value="Card">Card</option>
 		</select> 
 		</td>	-->					
-	</tr>-->
 	</c:when>
 	</c:choose>
 </table>
@@ -290,10 +289,7 @@ function getValue()
 					<td>payment category</td>
 					<td>:${paymentSubCategory }</td>
 				</tr>  
-<%-- 				<tr>
-					<td>Waiver/Exempt. No.</td>
-					<td>:${exemption }</td>
-				</tr>  --%> 
+
 
 			</table>
 			<br />
@@ -362,13 +358,7 @@ function getValue()
 	</c:choose>
 </table>
 <br/><br/>
-<!-- <table  class="spacer" style="margin-left: 60px; margin-top: 60px;">
-		<tr>
-			<td>PAYMENT MODE </td>
-			<td><b>:</b></td>
-		</tr>
-	</table> -->
- -->
+
 <br/><br/><br/><br/>
 <span style="float:right;font-size: 1.5em">Signature of Inventory Clerk/ Stamp</span>
 </div>
