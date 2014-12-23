@@ -608,6 +608,8 @@ public class AjaxController {
 			@RequestParam(value = "action", required = false) Integer action,
 			@RequestParam(value = "paymentMode", required = false) String paymentMode,
 			Model model) {
+		
+		System.out.println("in processIssueDrug method ******************************");
 		InventoryService inventoryService = (InventoryService) Context
 				.getService(InventoryService.class);
 		int userId = Context.getAuthenticatedUser().getId();

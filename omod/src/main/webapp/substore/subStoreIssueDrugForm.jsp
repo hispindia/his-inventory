@@ -195,7 +195,7 @@ function getValue()
 							<td><a href="#" title="Remove this"
 								onclick="INVENTORY.removeObject('${varStatus.index}','5');">${issue.transactionDetail.drug.name}</a></td>
 							<td>${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
-							<td><center>${issue.quantity}</center></td>
+							<td>${issue.quantity}</td>
 							<td><fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/></td>
 						</tr>
 					</c:forEach>
