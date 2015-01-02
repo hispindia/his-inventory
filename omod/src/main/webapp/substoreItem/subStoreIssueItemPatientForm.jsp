@@ -29,8 +29,10 @@
 
 function getValue()
   {
-	var payMod=jQuery("#paymentMode").val();
-	ISSUE.processSlipItemPatient('0',payMod);
+	
+	var patientType = $("#patientType").val();
+	alert("patientType:"+patientType);
+	ISSUE.processSlipItemPatient('0',patientType);
   }
 </script>
 		<style>
@@ -53,7 +55,7 @@ function getValue()
 </style>
 
 <div style="width: 40%; float: left; margin-left: 4px; ">
-
+<input type="hidden" id="patientType" value="${patientType}">
 <b class="boxHeader">Item</b>
 <div class="box">
 
@@ -181,7 +183,7 @@ function getValue()
 	<c:forEach items="${listItemDetail}" var="issue" varStatus="varStatus">
 		<%-- <c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" /> --%>
 		<c:set var="price" value="${ issue.quantity * issue.transactionDetail.costToPatient}" />
-		<c:set var="generalVar" value="GENERAL PATIENT"/>
+		<c:set var="generalVar" value="GENERAL"/>
 		<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
 		<c:set var="tbVar" value="TB PATIENT"/>
 		<c:set var="cccVar" value="CCC PATIENT"/>
@@ -310,7 +312,7 @@ function getValue()
 	<c:forEach items="${listItemDetail}" var="issue" varStatus="varStatus">
 		<%-- <c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" /> --%>
 		<c:set var="price" value="${ issue.quantity * issue.transactionDetail.costToPatient}" />
-		<c:set var="generalVar" value="GENERAL PATIENT"/>
+		<c:set var="generalVar" value="GENERAL"/>
 		<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
 		<c:set var="tbVar" value="TB PATIENT"/>
 		<c:set var="cccVar" value="CCC PATIENT"/>

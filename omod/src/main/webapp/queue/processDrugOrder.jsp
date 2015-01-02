@@ -67,7 +67,7 @@
 							name="${avaiable.id }_formulationId" type='hidden'
 							value="${avaiable.formulation.id }" />
 						</td>
-						<c:set var="price" value="${avaiable.unitPrice + 0.01*avaiable.VAT*avaiable.unitPrice}" />
+						<c:set var="price" value="${avaiable.costToPatient}" />
 						<td><input id="${avaiable.id }_price"
 							name="${avaiable.id }_price" type='hidden'
 							value=<fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/>

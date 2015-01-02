@@ -89,6 +89,10 @@ public class IssueDrugFormController {
 
 			HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 			List<PersonAttribute> pas = hcs.getPersonAttributes(issueDrugPatient.getPatient().getId());
+			
+			String patientType = hcs.getPatientType(issueDrugPatient.getPatient());
+			model.addAttribute("patientType", patientType);
+			
 	        for (PersonAttribute pa : pas) {
 	            PersonAttributeType attributeType = pa.getAttributeType(); 
 	            PersonAttributeType personAttributePCT=hcs.getPersonAttributeTypeByName("Paying Category Type");

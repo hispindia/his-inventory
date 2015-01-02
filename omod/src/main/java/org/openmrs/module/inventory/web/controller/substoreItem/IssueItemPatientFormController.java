@@ -61,6 +61,9 @@ public class IssueItemPatientFormController {
 		            .getValue());
 		
 		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+		String patientType = hcs.getPatientType(issueItemPatient.getPatient());
+		model.addAttribute("patientType", patientType);
+		
 		List<PersonAttribute> pas = hcs.getPersonAttributes(issueItemPatient.getPatient().getId());
         for (PersonAttribute pa : pas) {
             PersonAttributeType attributeType = pa.getAttributeType(); 

@@ -11,12 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.openmrs.Encounter;
+import org.openmrs.EncounterType;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.Role;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.BillingService;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
+import org.openmrs.module.hospitalcore.model.IndoorPatientServiceBill;
+import org.openmrs.module.hospitalcore.model.IndoorPatientServiceBillItem;
 import org.openmrs.module.hospitalcore.model.InventoryDrug;
 import org.openmrs.module.hospitalcore.model.InventoryDrugCategory;
 import org.openmrs.module.hospitalcore.model.InventoryDrugFormulation;
@@ -606,10 +611,10 @@ public class AjaxController {
 	@RequestMapping("/module/inventory/processIssueDrug.form")
 	public String processIssueDrug(
 			@RequestParam(value = "action", required = false) Integer action,
-			@RequestParam(value = "paymentMode", required = false) String paymentMode,
+			@RequestParam(value = "patientType", required = false) String patientType,
 			Model model) {
 		
-		System.out.println("in processIssueDrug method ******************************");
+	
 		InventoryService inventoryService = (InventoryService) Context
 				.getService(InventoryService.class);
 		int userId = Context.getAuthenticatedUser().getId();
@@ -628,7 +633,7 @@ public class AjaxController {
 		InventoryStoreDrugPatient issueDrugPatient = (InventoryStoreDrugPatient) StoreSingleton
 				.getInstance().getHash().get("issueDrug_" + userId);
 		if (issueDrugPatient != null && list != null && list.size() > 0) {
-
+			
 			Date date = new Date();
 			// create transaction issue from substore
 			InventoryStoreDrugTransaction transaction = new InventoryStoreDrugTransaction();
@@ -637,7 +642,7 @@ public class AjaxController {
 			transaction.setStore(store);
 			transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
 			transaction.setCreatedOn(date);
-			transaction.setPaymentMode(paymentMode);
+			//transaction.setPaymentMode(paymentMode);
 			transaction.setPaymentCategory(issueDrugPatient.getPatient().getAttribute(14).getValue());
 			transaction.setCreatedBy(Context.getAuthenticatedUser()
 					.getGivenName());
@@ -647,6 +652,7 @@ public class AjaxController {
 			issueDrugPatient = inventoryService
 					.saveStoreDrugPatient(issueDrugPatient);
 			for (InventoryStoreDrugPatientDetail pDetail : list) {
+				
 				Date date1 = new Date();
 				try {
 					Thread.sleep(2000);
@@ -697,6 +703,7 @@ public class AjaxController {
 				transDetail.setCreatedOn(date1);
 				transDetail.setReorderPoint(pDetail.getTransactionDetail().getDrug().getReorderQty());
 				transDetail.setAttribute(pDetail.getTransactionDetail().getDrug().getAttributeName());
+				transDetail.setPatientType(patientType);
 				/*
 				 * Money moneyUnitPrice = new
 				 * Money(pDetail.getTransactionDetail().getUnitPrice()); Money
@@ -836,7 +843,7 @@ public class AjaxController {
 				transDetail.setCreatedOn(date1);
 				transDetail.setReorderPoint(pDetail.getTransactionDetail().getDrug().getReorderQty());
 				transDetail.setAttribute(pDetail.getTransactionDetail().getDrug().getAttributeName());
-
+				transDetail.setPatientType(pDetail.getTransactionDetail().getPatientType());
 				/*
 				 * Money moneyUnitPrice = new
 				 * Money(pDetail.getTransactionDetail().getUnitPrice()); Money
@@ -1025,8 +1032,9 @@ public class AjaxController {
 	@RequestMapping("/module/inventory/processIssueItemPatient.form")
 	public String processIssueItemPatient(
 			@RequestParam(value = "action", required = false) Integer action,
-			@RequestParam(value = "paymentMode", required = false) String paymentMode,
+			@RequestParam(value = "patientType", required = false) String patientType,
 			Model model) {
+		
 		InventoryService inventoryService = (InventoryService) Context
 				.getService(InventoryService.class);
 		int userId = Context.getAuthenticatedUser().getId();
@@ -1053,8 +1061,6 @@ public class AjaxController {
 			transaction.setStore(store);
 			transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
 			transaction.setCreatedOn(date);
-			transaction.setPaymentMode(paymentMode);
-			System.out.println("++++++++++++++++++++ "+issueItemPatient.getPatient().getAttribute(14).getValue());
 			transaction.setPaymentCategory(issueItemPatient.getPatient().getAttribute(14).getValue());
 			transaction.setCreatedBy(Context.getAuthenticatedUser()
 					.getGivenName());
@@ -1086,8 +1092,6 @@ public class AjaxController {
 				pDetail.getTransactionDetail().setCurrentQuantity(
 						itemTransactionDetail.getCurrentQuantity()
 								- pDetail.getQuantity());
-				// System.out.println("get current quantity: "+pDetail.getTransactionDetail().getCurrentQuantity());
-				// System.out.println("total quantity: "+totalQuantity);
 				inventoryService.saveStoreItemTransactionDetail(pDetail
 						.getTransactionDetail());
 
@@ -1145,6 +1149,7 @@ public class AjaxController {
 
 				transDetail.setParent(pDetail.getTransactionDetail());
 				transDetail.setAttribute(pDetail.getTransactionDetail().getAttribute());
+				transDetail.setPatientType(patientType);
 				transDetail = inventoryService
 						.saveStoreItemTransactionDetail(transDetail);
 
@@ -1749,5 +1754,308 @@ public class AjaxController {
 		}
 
 		return "/module/inventory/queue/processDrugOrder";
+	}
+	
+	
+	@RequestMapping("/module/inventory/processIssueDrugForIpdPatient.form")
+	public String processIssueDrugForIpdPatient(
+			@RequestParam(value = "action", required = false) Integer action,
+			@RequestParam(value = "patientType", required = false) String patientType,
+			Model model) {
+		BigDecimal moneyUnitPrice = null;
+		InventoryService inventoryService = (InventoryService) Context
+				.getService(InventoryService.class);
+		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+		int userId = Context.getAuthenticatedUser().getId();
+		String fowardParam = "issueDrugDetail_" + userId;
+		InventoryStore store = inventoryService
+				.getStoreByCollectionRole(new ArrayList<Role>(Context
+						.getAuthenticatedUser().getAllRoles()));
+		if (action == 1) {
+			StoreSingleton.getInstance().getHash().remove(fowardParam);
+			StoreSingleton.getInstance().getHash()
+					.remove("issueDrug_" + userId);
+			return "redirect:/module/inventory/subStoreIssueDrugForm.form";
+		}
+		List<InventoryStoreDrugPatientDetail> list = (List<InventoryStoreDrugPatientDetail>) StoreSingleton
+				.getInstance().getHash().get(fowardParam);
+		InventoryStoreDrugPatient issueDrugPatient = (InventoryStoreDrugPatient) StoreSingleton
+				.getInstance().getHash().get("issueDrug_" + userId);
+		if (issueDrugPatient != null && list != null && list.size() > 0) {
+			
+			List<EncounterType> types = new ArrayList<EncounterType>();
+			EncounterType eType = new EncounterType(10);
+			types.add(eType);
+			Encounter lastVisitEncounter = hcs.getLastVisitEncounter(issueDrugPatient.getPatient(), types);
+			Date date = new Date();
+			// create transaction issue from substore
+			InventoryStoreDrugTransaction transaction = new InventoryStoreDrugTransaction();
+			transaction.setDescription("ISSUE DRUG TO PATIENT "
+					+ DateUtils.getDDMMYYYY());
+			transaction.setStore(store);
+			transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
+			transaction.setCreatedOn(date);
+			//transaction.setPaymentMode(paymentMode);
+			transaction.setPaymentCategory(issueDrugPatient.getPatient().getAttribute(14).getValue());
+			transaction.setCreatedBy(Context.getAuthenticatedUser()
+					.getGivenName());
+			transaction = inventoryService
+					.saveStoreDrugTransaction(transaction);
+
+			issueDrugPatient = inventoryService
+					.saveStoreDrugPatient(issueDrugPatient);
+			for (InventoryStoreDrugPatientDetail pDetail : list) {
+				
+				Date date1 = new Date();
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Integer totalQuantity = inventoryService
+						.sumCurrentQuantityDrugOfStore(store.getId(), pDetail
+								.getTransactionDetail().getDrug().getId(),
+								pDetail.getTransactionDetail().getFormulation()
+										.getId());
+				int t = totalQuantity - pDetail.getQuantity();
+				InventoryStoreDrugTransactionDetail drugTransactionDetail = inventoryService
+						.getStoreDrugTransactionDetailById(pDetail
+								.getTransactionDetail().getId());
+				pDetail.getTransactionDetail().setCurrentQuantity(
+						drugTransactionDetail.getCurrentQuantity()
+								- pDetail.getQuantity());
+				inventoryService.saveStoreDrugTransactionDetail(pDetail
+						.getTransactionDetail());
+
+				// save transactiondetail first
+				InventoryStoreDrugTransactionDetail transDetail = new InventoryStoreDrugTransactionDetail();
+				transDetail.setTransaction(transaction);
+				transDetail.setCurrentQuantity(0);
+				transDetail.setIssueQuantity(pDetail.getQuantity());
+				transDetail.setOpeningBalance(totalQuantity);
+				transDetail.setClosingBalance(t);
+				transDetail.setQuantity(0);
+				transDetail.setVAT(pDetail.getTransactionDetail().getVAT());
+				transDetail.setCostToPatient(pDetail.getTransactionDetail().getCostToPatient());
+				transDetail.setUnitPrice(pDetail.getTransactionDetail()
+						.getUnitPrice());
+				transDetail.setDrug(pDetail.getTransactionDetail().getDrug());
+				transDetail.setFormulation(pDetail.getTransactionDetail()
+						.getFormulation());
+				transDetail.setBatchNo(pDetail.getTransactionDetail()
+						.getBatchNo());
+				transDetail.setCompanyName(pDetail.getTransactionDetail()
+						.getCompanyName());
+				transDetail.setDateManufacture(pDetail.getTransactionDetail()
+						.getDateManufacture());
+				transDetail.setDateExpiry(pDetail.getTransactionDetail()
+						.getDateExpiry());
+				transDetail.setReceiptDate(pDetail.getTransactionDetail()
+						.getReceiptDate());
+				transDetail.setCreatedOn(date1);
+				transDetail.setReorderPoint(pDetail.getTransactionDetail().getDrug().getReorderQty());
+				transDetail.setAttribute(pDetail.getTransactionDetail().getDrug().getAttributeName());
+				transDetail.setPatientType(patientType);
+				
+
+				moneyUnitPrice = pDetail.getTransactionDetail()
+						.getCostToPatient()
+						.multiply(new BigDecimal(pDetail.getQuantity()));
+				/*moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice
+						.multiply(pDetail.getTransactionDetail().getVAT()
+								.divide(new BigDecimal(100))));*/
+				transDetail.setTotalPrice(moneyUnitPrice);
+
+				transDetail.setParent(pDetail.getTransactionDetail());
+				transDetail = inventoryService
+						.saveStoreDrugTransactionDetail(transDetail);
+
+				pDetail.setStoreDrugPatient(issueDrugPatient);
+				pDetail.setTransactionDetail(transDetail);
+				// save issue to patient detail
+				inventoryService.saveStoreDrugPatientDetail(pDetail);
+				// save issues transaction detail
+		
+				BillingService billingService = Context.getService(BillingService.class);
+				IndoorPatientServiceBill bill = new IndoorPatientServiceBill();
+				bill.setActualAmount(moneyUnitPrice);
+				bill.setAmount(moneyUnitPrice);
+				bill.setEncounter(lastVisitEncounter);
+				bill.setCreatedDate(new Date());
+				bill.setPatient(issueDrugPatient.getPatient());
+				bill.setCreator(Context.getAuthenticatedUser());
+
+				
+				IndoorPatientServiceBillItem item = new IndoorPatientServiceBillItem();
+				item.setUnitPrice(pDetail.getTransactionDetail().getCostToPatient());
+				item.setAmount(moneyUnitPrice);
+				item.setQuantity(pDetail.getQuantity());
+				item.setName(pDetail.getTransactionDetail().getDrug().getName());
+				item.setCreatedDate(new Date());
+				//item.setOrder();
+				item.setIndoorPatientServiceBill(bill);
+				item.setActualAmount(moneyUnitPrice);
+				item.setOrderType("DRUG");
+				bill.addBillItem(item);
+				bill = billingService.saveIndoorPatientServiceBill(bill);
+				
+			}
+
+			
+			
+			StoreSingleton.getInstance().getHash().remove(fowardParam);
+			StoreSingleton.getInstance().getHash()
+					.remove("issueDrug_" + userId);
+		}
+
+		return "redirect:/module/inventory/subStoreIssueDrugList.form";
+	}
+	
+	
+	@RequestMapping("/module/inventory/processIssueItemPatientForIpdPatient.form")
+	public String processIssueItemPatientForIpdPatient(
+			@RequestParam(value = "action", required = false) Integer action,
+			@RequestParam(value = "patientType", required = false) String patientType,
+			Model model) {
+		
+		InventoryService inventoryService = (InventoryService) Context
+				.getService(InventoryService.class);
+		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+		int userId = Context.getAuthenticatedUser().getId();
+		String fowardParam = "issueItemDetailPatient_" + userId;
+		InventoryStore store = inventoryService
+				.getStoreByCollectionRole(new ArrayList<Role>(Context
+						.getAuthenticatedUser().getAllRoles()));
+		if (action == 1) {
+			StoreSingleton.getInstance().getHash().remove(fowardParam);
+			StoreSingleton.getInstance().getHash()
+					.remove("issueItemPatient_" + userId);
+			return "redirect:/module/inventory/subStoreIssueItemPatientForm.form";
+		}
+		List<InventoryStoreItemPatientDetail> list = (List<InventoryStoreItemPatientDetail>) StoreSingleton
+				.getInstance().getHash().get(fowardParam);
+		InventoryStoreItemPatient issueItemPatient = (InventoryStoreItemPatient) StoreSingleton
+				.getInstance().getHash().get("issueItemPatient_" + userId);
+		if (issueItemPatient != null && list != null && list.size() > 0) {
+
+			List<EncounterType> types = new ArrayList<EncounterType>();
+			EncounterType eType = new EncounterType(10);
+			types.add(eType);
+			Encounter lastVisitEncounter = hcs.getLastVisitEncounter(issueItemPatient.getPatient(), types);
+			Date date = new Date();
+			// create transaction issue from substore
+			InventoryStoreItemTransaction transaction = new InventoryStoreItemTransaction();
+			transaction.setDescription("ISSUE ITEM " + DateUtils.getDDMMYYYY());
+			transaction.setStore(store);
+			transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
+			transaction.setCreatedOn(date);
+			transaction.setPaymentCategory(issueItemPatient.getPatient().getAttribute(14).getValue());
+			transaction.setCreatedBy(Context.getAuthenticatedUser()
+					.getGivenName());
+			transaction = inventoryService
+					.saveStoreItemTransaction(transaction);
+
+			issueItemPatient = inventoryService
+					.saveStoreItemPatient(issueItemPatient);
+			for (InventoryStoreItemPatientDetail pDetail : list) {
+				Date date1 = new Date();
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Integer specificationId = pDetail.getTransactionDetail()
+						.getSpecification() != null ? pDetail
+						.getTransactionDetail().getSpecification().getId()
+						: null;
+				Integer totalQuantity = inventoryService
+						.sumStoreItemCurrentQuantity(store.getId(), pDetail
+								.getTransactionDetail().getItem().getId(),
+								specificationId);
+				int t = totalQuantity - pDetail.getQuantity();
+				InventoryStoreItemTransactionDetail itemTransactionDetail = inventoryService
+						.getStoreItemTransactionDetailById(pDetail
+								.getTransactionDetail().getId());
+				pDetail.getTransactionDetail().setCurrentQuantity(
+						itemTransactionDetail.getCurrentQuantity()
+								- pDetail.getQuantity());
+					inventoryService.saveStoreItemTransactionDetail(pDetail
+						.getTransactionDetail());
+
+				// save transactiondetail first
+				InventoryStoreItemTransactionDetail transDetail = new InventoryStoreItemTransactionDetail();
+				transDetail.setTransaction(transaction);
+				transDetail.setCurrentQuantity(0);
+				transDetail.setIssueQuantity(pDetail.getQuantity());
+				transDetail.setOpeningBalance(totalQuantity);
+				transDetail.setClosingBalance(t);
+				transDetail.setQuantity(0);
+				transDetail.setVAT(pDetail.getTransactionDetail().getVAT());
+				transDetail.setCostToPatient(pDetail.getTransactionDetail().getCostToPatient());
+				transDetail.setUnitPrice(pDetail.getTransactionDetail()
+						.getUnitPrice());
+				transDetail.setItem(pDetail.getTransactionDetail().getItem());
+				transDetail.setSpecification(pDetail.getTransactionDetail()
+						.getSpecification());
+				transDetail.setCompanyName(pDetail.getTransactionDetail()
+						.getCompanyName());
+				transDetail.setDateManufacture(pDetail.getTransactionDetail()
+						.getDateManufacture());
+				transDetail.setReceiptDate(pDetail.getTransactionDetail()
+						.getReceiptDate());
+				transDetail.setCreatedOn(date1);
+
+				BigDecimal moneyUnitPrice = pDetail.getTransactionDetail()
+						.getCostToPatient()
+						.multiply(new BigDecimal(pDetail.getQuantity()));
+				/*moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice
+						.multiply(pDetail.getTransactionDetail().getVAT()
+								.divide(new BigDecimal(100))));*/
+				transDetail.setTotalPrice(moneyUnitPrice);
+
+				transDetail.setParent(pDetail.getTransactionDetail());
+				transDetail.setAttribute(pDetail.getTransactionDetail().getAttribute());
+				transDetail.setPatientType(patientType);
+				transDetail = inventoryService
+						.saveStoreItemTransactionDetail(transDetail);
+
+				pDetail.setStoreItemPatient(issueItemPatient);
+				pDetail.setTransactionDetail(transDetail);
+				// save issue to patient detail
+				inventoryService.saveStoreItemPatientDetail(pDetail);
+				// save issues transaction detail
+				BillingService billingService = Context.getService(BillingService.class);
+				IndoorPatientServiceBill bill = new IndoorPatientServiceBill();
+				bill.setActualAmount(moneyUnitPrice);
+				bill.setAmount(moneyUnitPrice);
+				bill.setEncounter(lastVisitEncounter);
+				bill.setCreatedDate(new Date());
+				bill.setPatient(issueItemPatient.getPatient());
+				bill.setCreator(Context.getAuthenticatedUser());
+
+				
+				IndoorPatientServiceBillItem item = new IndoorPatientServiceBillItem();
+				item.setUnitPrice(pDetail.getTransactionDetail().getCostToPatient());
+				item.setAmount(moneyUnitPrice);
+				item.setQuantity(pDetail.getQuantity());
+				item.setName(pDetail.getTransactionDetail().getItem().getName());
+				item.setCreatedDate(new Date());
+				//item.setOrder();
+				item.setIndoorPatientServiceBill(bill);
+				item.setActualAmount(moneyUnitPrice);
+				item.setOrderType("ITEM");
+				bill.addBillItem(item);
+				bill = billingService.saveIndoorPatientServiceBill(bill);
+			
+			}
+
+			StoreSingleton.getInstance().getHash().remove(fowardParam);
+			StoreSingleton.getInstance().getHash()
+					.remove("issueItemPatient_" + userId);
+		}
+
+		return "redirect:/module/inventory/subStoreIssueItemPatientList.form";
 	}
 }

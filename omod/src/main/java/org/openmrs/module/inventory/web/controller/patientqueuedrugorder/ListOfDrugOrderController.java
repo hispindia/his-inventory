@@ -64,6 +64,11 @@ public class ListOfDrugOrderController {
 		List<OpdDrugOrder> listOfOrders = inventoryService.listOfOrder(patientId,date);
 		HospitalCoreService hospitalCoreService = Context.getService(HospitalCoreService.class);
 		PatientSearch patientSearch = hospitalCoreService.getPatientByPatientId(patientId);
+		Patient p = new Patient(patientId);
+	
+		String patientType = hospitalCoreService.getPatientType(p);
+		
+		model.addAttribute("patientType", patientType);
 		model.addAttribute("patientSearch", patientSearch);
 		model.addAttribute("listOfOrders", listOfOrders);
 		//model.addAttribute("serviceOrderSize", serviceOrderList.size());

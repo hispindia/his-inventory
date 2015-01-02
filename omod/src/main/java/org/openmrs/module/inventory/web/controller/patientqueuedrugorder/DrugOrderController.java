@@ -28,14 +28,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+
+import org.openmrs.Encounter;
+import org.openmrs.EncounterType;
 import org.openmrs.Patient;
 import org.openmrs.Role;
 import org.openmrs.api.PatientService;
 //new
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.BillingService;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.InventoryCommonService;
 import org.openmrs.module.hospitalcore.PatientDashboardService;
+import org.openmrs.module.hospitalcore.model.IndoorPatientServiceBill;
+import org.openmrs.module.hospitalcore.model.IndoorPatientServiceBillItem;
 import org.openmrs.module.hospitalcore.model.InventoryDrugFormulation;
 import org.openmrs.module.hospitalcore.model.InventoryStore;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatient;
@@ -60,12 +66,15 @@ public class DrugOrderController {
 	public String main(Model model,
 			@RequestParam("patientId") Integer patientId,
 			@RequestParam("encounterId") Integer encounterId,
-			@RequestParam(value = "date", required = false) String dateStr) {
+			@RequestParam(value = "date", required = false) String dateStr, 
+			@RequestParam(value = "patientType", required = false) String patientType) {
 		InventoryService inventoryService = Context
 				.getService(InventoryService.class);
 
 		List<OpdDrugOrder> drugOrderList = inventoryService.listOfDrugOrder(
 				patientId, encounterId);
+		
+		
 		model.addAttribute("drugOrderList", drugOrderList);
 		model.addAttribute("drugOrderSize", drugOrderList.size());
 		model.addAttribute("patientId", patientId);
@@ -73,6 +82,7 @@ public class DrugOrderController {
 		HospitalCoreService hospitalCoreService = Context.getService(HospitalCoreService.class);
 		PatientSearch patientSearch = hospitalCoreService.getPatientByPatientId(patientId);
 		model.addAttribute("patientSearch", patientSearch);
+		model.addAttribute("patientType", patientType);
 		model.addAttribute("date", dateStr);
 		model.addAttribute("doctor", drugOrderList.get(0).getCreator().getGivenName());
 		System.out.println("Name -  "+drugOrderList.get(0).getCreator().getGivenName());
@@ -89,6 +99,7 @@ public class DrugOrderController {
 			@RequestParam("patientId") Integer patientId,
 			@RequestParam("encounterId") Integer encounterId,
 			@RequestParam(value = "paymentMode", required = false) String paymentMode,
+			@RequestParam(value = "patientType", required = false) String patientType,
 			//ghanshyam,4-july-2013, issue no # 1984, User can issue drugs only from the first indent
 			@RequestParam(value="avaiableId",required=false) String[] avaiableId) throws Exception{
 
@@ -121,11 +132,17 @@ public class DrugOrderController {
 		transaction.setStore(store);
 		transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
 		transaction.setCreatedOn(date);
-		transaction.setPaymentMode(paymentMode);
+		//transaction.setPaymentMode(paymentMode);
 		transaction.setPaymentCategory(patient.getAttribute(14).getValue());
 		transaction.setCreatedBy(Context.getAuthenticatedUser().getGivenName());
+		
 		transaction = inventoryService.saveStoreDrugTransaction(transaction);
 		
+		List<EncounterType> types = new ArrayList<EncounterType>();
+		EncounterType eType = new EncounterType(10);
+		types.add(eType);
+		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+		Encounter lastVisitEncounter = hcs.getLastVisitEncounter(patient, types);
 		if(avaiableId!=null){
 		for (String avId : avaiableId) {
 			InventoryCommonService inventoryCommonService = Context.getService(InventoryCommonService.class);
@@ -169,6 +186,7 @@ public class DrugOrderController {
 			 transDetail.setDateExpiry(inventoryStoreDrugTransactionDetail.getDateExpiry());
 			 transDetail.setReceiptDate(inventoryStoreDrugTransactionDetail.getReceiptDate());
 			 transDetail.setCreatedOn(date);
+			 transDetail.setPatientType(patientType);
 				
 			 BigDecimal moneyUnitPrice = inventoryStoreDrugTransactionDetail.getCostToPatient().multiply(new BigDecimal(quantity));
 			// moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(inventoryStoreDrugTransactionDetail.getVAT().divide(new BigDecimal(100))));
@@ -182,8 +200,31 @@ public class DrugOrderController {
 			 pDetail.setTransactionDetail(transDetail);
 			 //save issue to patient detail
 			 inventoryService.saveStoreDrugPatientDetail(pDetail);
+			 
+			 BillingService billingService = Context.getService(BillingService.class);
+				IndoorPatientServiceBill bill = new IndoorPatientServiceBill();
+				bill.setActualAmount(moneyUnitPrice);
+				bill.setAmount(moneyUnitPrice);
+				bill.setEncounter(lastVisitEncounter);
+				bill.setCreatedDate(new Date());
+				bill.setPatient(patient);
+				bill.setCreator(Context.getAuthenticatedUser());
+
 				
-			 OpdDrugOrder opdDrugOrder = inventoryService.getOpdDrugOrder(patientId,encounterId,inventoryStoreDrugTransactionDetail.getDrug().getId(),formulationId);
+				IndoorPatientServiceBillItem item = new IndoorPatientServiceBillItem();
+				item.setUnitPrice(pDetail.getTransactionDetail().getCostToPatient());
+				item.setAmount(moneyUnitPrice);
+				item.setQuantity(pDetail.getQuantity());
+				item.setName(pDetail.getTransactionDetail().getDrug().getName());
+				item.setCreatedDate(new Date());
+				item.setIndoorPatientServiceBill(bill);
+				item.setActualAmount(moneyUnitPrice);
+				item.setOrderType("DRUG");
+				bill.addBillItem(item);
+				bill = billingService.saveIndoorPatientServiceBill(bill);
+				
+			 OpdDrugOrder opdDrugOrder = inventoryService.getOpdDrugOrder(patientId,encounterId,
+					 inventoryStoreDrugTransactionDetail.getDrug().getId(),formulationId);
 			 PatientDashboardService patientDashboardService = Context.getService(PatientDashboardService.class);
 			 opdDrugOrder.setOrderStatus(1);
 			 patientDashboardService.saveOrUpdateOpdDrugOrder(opdDrugOrder);

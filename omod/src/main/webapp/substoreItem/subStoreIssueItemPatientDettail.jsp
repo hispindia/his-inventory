@@ -60,7 +60,7 @@ String cat="General";
 	<c:forEach items="${listItemPatientIssue}" var="detail" varStatus="varStatus">
 		<%-- <c:set var="price" value="${ detail.quantity* (detail.transactionDetail.unitPrice + 0.01*detail.transactionDetail.VAT*detail.transactionDetail.unitPrice) }" /> --%>
 		<c:set var="price" value="${ detail.quantity * detail.transactionDetail.costToPatient}" />
-		<c:set var="generalVar" value="GENERAL PATIENT"/>
+		<c:set var="generalVar" value="GENERAL"/>
 		<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
 		<c:set var="tbVar" value="TB PATIENT"/>
 		<c:set var="cccVar" value="CCC PATIENT"/>
@@ -117,7 +117,7 @@ String cat="General";
 	
 		<%-- <c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" /> --%>
 		<c:set var="price" value="${ issue.quantity * issue.transactionDetail.costToPatient}" />
-		<c:set var="generalVar" value="GENERAL PATIENT"/>
+		<c:set var="generalVar" value="GENERAL"/>
 		<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
 		<c:set var="tbVar" value="TB PATIENT"/>
 		<c:set var="cccVar" value="CCC PATIENT"/>

@@ -160,7 +160,7 @@ function issueDrugOrder(listOfDrugQuantity) {
   }
   	if (preTotal == null){
 		var totalText =  "<div id='com_"+avaiableId+"_div'>"
-				 +"<td id='"+avaiableId+"_fTotal'  name='"+avaiableId+"_fTotal'><b>Estimated Price:</b></td>&nbsp;"
+				 +"<td id='"+avaiableId+"_fTotal'  name='"+avaiableId+"_fTotal'><b>Total Price:</b></td>&nbsp;"
 				 +"<input id='totalValue'  name='totalValue' type='text' size='11' value='"+Math.round(totalValue)+"'  readonly='readonly'/>&nbsp;"
 				 +"</div>";  	
 	   var totalElement = document.createElement('div');
@@ -230,7 +230,7 @@ return false;
 	<b class="boxHeader">List of drug</b>
 </div>
 <br />
-
+<input type="hidden" id="patientType" value="${patientType}">
 <div id="patientDetails">
 	<!--
 <div id="patientDetails" style="margin: 10px auto; width: 981px;">
@@ -309,7 +309,7 @@ return false;
 <!-- Right side div for drug process -->
 <div id="finishDrugOrderDiv">
 	<form id="finishDrugOrderForm"
-		action="drugorder.form?patientId=${patientId}&encounterId=${encounterId}"
+		action="drugorder.form?patientId=${patientId}&encounterId=${encounterId}&patientType=${patientType}"
 		method="POST" onsubmit="javascript:return finishDrugOrder();">
 		<div>
 			<input type="submit" id="subm" name="subm"

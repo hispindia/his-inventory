@@ -28,7 +28,7 @@
 <div style="max-height: 50px; max-width: 1800px;">
 	<b class="boxHeader">List of Order</b>
 </div>
-
+<input type="hidden" id="patientType" value="${patientType}">
 <div>	
 	<table>
 		<tr>
@@ -84,7 +84,8 @@
 			</c:choose>
 			<tr class="${klass}">
 				<td>${index.count}</td>
-				<td><a href="drugorder.form?patientId=${patientId}&encounterId=${listOfOrder.encounter.encounterId}&date=${date}">${listOfOrder.encounter.encounterId}</a>
+				<td><a href="drugorder.form?patientId=${patientId}&encounterId=${listOfOrder.encounter.encounterId}
+				&date=${date}&patientType=${patientType}">${listOfOrder.encounter.encounterId}</a>
 				</td>
 				<td><openmrs:formatDate date="${listOfOrder.createdOn}" /></td>
 				<td>${listOfOrder.referralOpdName}</td>

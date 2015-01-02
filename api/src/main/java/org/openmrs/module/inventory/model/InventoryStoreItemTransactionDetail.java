@@ -56,6 +56,8 @@ public class InventoryStoreItemTransactionDetail implements  Serializable , Comp
 	 //new
 	 private String attribute;
 	 
+	 private String patientType;
+	 
 	 
     public String getAttribute() {
 		return attribute;
@@ -200,6 +202,14 @@ public class InventoryStoreItemTransactionDetail implements  Serializable , Comp
 	public int compareTo(InventoryStoreItemTransactionDetail i) {
 	 
 	    return (this.item).compareTo(i.item);
+	}
+
+	public String getPatientType() {
+		return patientType;
+	}
+
+	public void setPatientType(String patientType) {
+		this.patientType = patientType;
 	}
 
 	

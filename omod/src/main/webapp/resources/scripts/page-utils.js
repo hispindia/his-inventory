@@ -897,7 +897,7 @@ ISSUE={
 				tb_show("Create account issue drug....",url,false);
 			}
 		},
-		processSlip : function(data,paymentMode){
+		processSlip : function(data,patientType){
 			if(data == 1){
 				if( confirm("Are you sure you want to clear this?")){
 					ACT.go("processIssueDrug.form?action="+data);
@@ -908,8 +908,16 @@ ISSUE={
 					jQuery("#bttprocess").attr("disabled","disabled");
 					jQuery("#bttclear").attr("disabled","disabled");
 					jQuery("#bttprint").attr("disabled","disabled");
+					//check for patientType here then decide the url ..... 
+					if(patientType == "opdPatient")
+					{
+						ACT.go("processIssueDrug.form?action="+data+"&patientType="+patientType);
+					}
+					else
+					{
+						ACT.go("processIssueDrugForIpdPatient.form?action="+data+"&patientType="+patientType);
+					}
 					
-					ACT.go("processIssueDrug.form?action="+data+"&paymentMode="+paymentMode);
 				}
 			}
 			
@@ -946,7 +954,7 @@ ISSUE={
 			}
 			
 		},
-		processSlipItemPatient : function(data,paymentMode){
+		processSlipItemPatient : function(data,patientType){
 			if(data == 1){
 				if( confirm("Are you sure you want to clear this?")){
 					ACT.go("processIssueItemPatient.form?action="+data);
@@ -957,7 +965,15 @@ ISSUE={
 					jQuery("#bttprocess").attr("disabled","disabled");
 					jQuery("#bttclear").attr("disabled","disabled");
 					jQuery("#bttprint").attr("disabled","disabled");
-					ACT.go("processIssueItemPatient.form?action="+data+"&paymentMode="+paymentMode);
+					if(patientType == "opdPatient")
+					{
+						ACT.go("processIssueItemPatient.form?action="+data+"&patientType="+patientType);
+					}
+					else
+					{
+						ACT.go("processIssueItemPatientForIpdPatient.form?action="+data+"&patientType="+patientType);
+					}
+					
 				}
 			}
 			
