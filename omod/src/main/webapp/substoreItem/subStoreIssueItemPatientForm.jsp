@@ -31,7 +31,6 @@ function getValue()
   {
 	
 	var patientType = $("#patientType").val();
-	alert("patientType:"+patientType);
 	ISSUE.processSlipItemPatient('0',patientType);
   }
 </script>
