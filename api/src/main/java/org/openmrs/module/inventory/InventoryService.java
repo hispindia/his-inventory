@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.openmrs.Encounter;
 import org.openmrs.Role;
 import org.openmrs.api.APIException;
 import org.openmrs.api.OpenmrsService;
@@ -667,5 +668,7 @@ public interface InventoryService extends OpenmrsService {
 	                                                                                                                         throws APIException;
 	
 	public InventoryStoreItemPatientDetail getStoreItemPatientDetailById(Integer id) throws APIException;
+	
+	public List<OpdDrugOrder> listOfNotDispensedOrder(Integer patientId,Date date,Encounter encounterId ) throws APIException;
 	
 }

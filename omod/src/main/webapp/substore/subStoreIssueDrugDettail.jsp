@@ -112,6 +112,26 @@ String cat="General";
 		<td><fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/></td>
 		</tr>
 	</c:forEach>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td><span class="boxHeader">Drugs not issued</span></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<c:forEach items="${listOfNotDispensedOrder}" var="nonDispensed" varStatus="varStatus">
+		<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+		<td><c:out value="${varStatus.count }"/></td>
+		<td>${nonDispensed.inventoryDrug.category.name} </td>	
+		<td>${nonDispensed.inventoryDrug.name} </td>	
+		<td></td>
+		<td></td>
+		<td>Stock Not Available</td>
+		<td>N.A.</td>
+		</tr>
+	</c:forEach>
 	<tr><td>&nbsp;</td></tr>
 	<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td></td>
@@ -209,6 +229,31 @@ String cat="General";
 		</tr>
 	</c:forEach>
 	<tr><td>&nbsp;</td></tr>
+	
+	<tr>
+	<td></td>
+	<td></td>
+	<td>Drugs Not Issued</td>
+	<td></td>
+	<td></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<c:forEach items="${listOfNotDispensedOrder}" var="nonDispensed" varStatus="varStatus">
+		<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+		<td><c:out value="${varStatus.count }"/></td>
+		<td>${nonDispensed.inventoryDrug.name} </td>	
+		<td>N.A.</td>
+		<td>Stock Not Available</td>
+		<td>N.A.</td>
+		</tr>
+	</c:forEach>
+	
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	
 	<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td></td>
 		<td></td>

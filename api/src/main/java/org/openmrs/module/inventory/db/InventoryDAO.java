@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.openmrs.Encounter;
 import org.openmrs.Role;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.hospitalcore.model.InventoryDrug;
@@ -627,5 +628,6 @@ public interface InventoryDAO {
 	
 	public InventoryStoreItemPatientDetail getStoreItemPatientDetailById(Integer id) throws DAOException;
 
-	
+	public List<OpdDrugOrder> listOfNotDispensedOrder(Integer patientId,Date date, Encounter encounterId) throws DAOException;
+		
 }

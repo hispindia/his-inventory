@@ -187,6 +187,7 @@ public class DrugOrderController {
 			 transDetail.setReceiptDate(inventoryStoreDrugTransactionDetail.getReceiptDate());
 			 transDetail.setCreatedOn(date);
 			 transDetail.setPatientType(patientType);
+			 transDetail.setEncounter(Context.getEncounterService().getEncounter(encounterId));
 				
 			 BigDecimal moneyUnitPrice = inventoryStoreDrugTransactionDetail.getCostToPatient().multiply(new BigDecimal(quantity));
 			// moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(inventoryStoreDrugTransactionDetail.getVAT().divide(new BigDecimal(100))));
@@ -212,9 +213,12 @@ public class DrugOrderController {
 
 				
 				IndoorPatientServiceBillItem item = new IndoorPatientServiceBillItem();
+			//	System.out.println("pDetail.getTransactionDetail().getCostToPatient():"+pDetail.getTransactionDetail().getCostToPatient());
 				item.setUnitPrice(pDetail.getTransactionDetail().getCostToPatient());
 				item.setAmount(moneyUnitPrice);
 				item.setQuantity(pDetail.getQuantity());
+		    //  System.out.println("pDetail.getQuantity():"+pDetail.getQuantity());
+				
 				item.setName(pDetail.getTransactionDetail().getDrug().getName());
 				item.setCreatedDate(new Date());
 				item.setIndoorPatientServiceBill(bill);

@@ -241,5 +241,16 @@
 			ALTER  TABLE inventory_store_item_transaction_detail add COLUMN `patient_type` varchar(10);
 		</sql>
 	</diff>
+	<diff>
+		<version>2.3.5</version>
+		<author>Amit Sharma</author>
+		<date>January 07, 2015</date>
+		<description>
+			to add new filed encounter
+		</description>
+		<sql>
+			ALTER  TABLE inventory_store_drug_transaction_detail add COLUMN `encounter_id` integer;
+		</sql>
+	</diff>
 	
 </sqldiff>

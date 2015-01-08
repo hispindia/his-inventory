@@ -4,8 +4,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.Patient;
+import org.openmrs.PatientIdentifier;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.Role;
@@ -31,6 +35,7 @@ import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatient;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatientDetail;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransaction;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransactionDetail;
+import org.openmrs.module.hospitalcore.model.OpdDrugOrder;
 import org.openmrs.module.hospitalcore.util.ActionValue;
 import org.openmrs.module.inventory.InventoryService;
 import org.openmrs.module.inventory.model.InventoryItem;
@@ -1243,10 +1248,16 @@ public class AjaxController {
 	public String viewDetailIssueDrug(
 			@RequestParam(value = "issueId", required = false) Integer issueId,
 			Model model) {
+		
+		System.out.println("in viewDetailIssueDrug, issueId "+issueId);
 		InventoryService inventoryService = (InventoryService) Context
 				.getService(InventoryService.class);
+		
 		List<InventoryStoreDrugPatientDetail> listDrugIssue = inventoryService
 				.listStoreDrugPatientDetail(issueId);
+
+          
+          
 		model.addAttribute("listDrugIssue", listDrugIssue);
 		if (CollectionUtils.isNotEmpty(listDrugIssue)) {
 			model.addAttribute("issueDrugPatient", listDrugIssue.get(0)
@@ -1256,8 +1267,33 @@ public class AjaxController {
 					.getStoreDrugPatient().getCreatedOn());
 			model.addAttribute("age", listDrugIssue.get(0)
 					.getStoreDrugPatient().getPatient().getAge());
-                        
-                       
+             //TODO starts here 
+			
+            PatientIdentifier pi = listDrugIssue.get(0).getStoreDrugPatient().getPatient().getPatientIdentifier();    
+           
+            int patientId = pi.getPatient().getPatientId();
+            Date issueDate = listDrugIssue.get(0).getStoreDrugPatient().getCreatedOn();
+            Encounter encounterId = listDrugIssue.get(0).getTransactionDetail().getEncounter();
+    		List<OpdDrugOrder> listOfNotDispensedOrder = inventoryService.listOfNotDispensedOrder(patientId,issueDate,encounterId);
+            
+    		/*Iterator<OpdDrugOrder>  itr = listOfNotDispensedOrder.iterator();
+             System.out.println("listOfNotDispensedOrder:"+ listOfNotDispensedOrder.size());
+             while(itr.hasNext())
+             {
+            	 System.out.println("drugs: "+itr.next().getInventoryDrug().getId());
+             }
+             for(int i = 0, n = listOfNotDispensedOrder.size(); i < n; i++) {
+                 System.out.println(listOfNotDispensedOrder.get(i).getInventoryDrug().getId());
+                 System.out.println(listOfNotDispensedOrder.get(i).getInventoryDrug().getFormulations().iterator().next().getName());
+                 System.out.println(listOfNotDispensedOrder.get(i).getEncounter());
+             }*/
+          
+           
+          //TODO ends here 
+            
+             
+             
+            
                         model.addAttribute("identifier", listDrugIssue.get(0)
 					.getStoreDrugPatient().getPatient().getPatientIdentifier());
                         model.addAttribute("givenName", listDrugIssue.get(0)
@@ -1281,6 +1317,7 @@ public class AjaxController {
 
 			model.addAttribute("cashier", listDrugIssue.get(0)
 					.getStoreDrugPatient().getCreatedBy());
+			model.addAttribute("listOfNotDispensedOrder", listOfNotDispensedOrder);
 			HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 			List<PersonAttribute> pas = hcs.getPersonAttributes(listDrugIssue.get(0)
 					.getStoreDrugPatient().getPatient().getId());
@@ -1299,24 +1336,7 @@ public class AjaxController {
 	            	model.addAttribute("paymentSubCategory",pa.getValue()); 
 	            }
 	        }
-			/*model.addAttribute("paymentMode", listDrugIssue.get(0)
-					.getTransactionDetail().getTransaction().getPaymentMode());*/
-			/*model.addAttribute("category", listDrugIssue.get(0)
-					.getTransactionDetail().getTransaction().getPaymentCategory());*/
 			
-			/*if (listDrugIssue.get(0)
-					.getTransactionDetail().getTransaction().getPaymentCategory().equals("Waiver")) {
-				model.addAttribute("exemption", listDrugIssue.get(0)
-						.getStoreDrugPatient().getPatient().getAttribute(32));
-			} else if (!listDrugIssue.get(0)
-					.getTransactionDetail().getTransaction().getPaymentCategory().equals( "General")
-					&& !listDrugIssue.get(0)
-					.getTransactionDetail().getTransaction().getPaymentCategory().equals("Waiver")) {
-				model.addAttribute("exemption", listDrugIssue.get(0)
-						.getStoreDrugPatient().getPatient().getAttribute(36));
-			} else {
-				model.addAttribute("exemption", " ");
-			}*/
 
 		}
 		return "/module/inventory/substore/subStoreIssueDrugDettail";

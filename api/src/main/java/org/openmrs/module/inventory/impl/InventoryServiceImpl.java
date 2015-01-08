@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.openmrs.Encounter;
 import org.openmrs.Role;
 import org.openmrs.api.APIException;
 import org.openmrs.api.db.DAOException;
@@ -1029,5 +1030,9 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 	public InventoryStoreItemPatientDetail getStoreItemPatientDetailById(Integer id) throws APIException {
 		return dao.getStoreItemPatientDetailById(id);
 	}
+
 	
+	public List<OpdDrugOrder> listOfNotDispensedOrder(Integer patientId,Date date, Encounter encounterId) throws APIException {
+		return dao.listOfNotDispensedOrder(patientId,date,encounterId);
+	}
 }

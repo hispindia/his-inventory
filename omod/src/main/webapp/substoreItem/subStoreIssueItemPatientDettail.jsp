@@ -43,7 +43,7 @@ String cat="General";
 	}
 }
 </style>
-<span class="boxHeader">Issue items detail - my header</span>
+<span class="boxHeader">Issue items detail</span>
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0" >
 	<tr align="center">

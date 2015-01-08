@@ -35,6 +35,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
+import org.openmrs.Encounter;
 import org.openmrs.Role;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.hospitalcore.model.InventoryDrug;
@@ -89,7 +90,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 
 	/**
 	 * Set session factory
-	 * 
+	 *
 	 * @param sessionFactory
 	 */
 	public void setSessionFactory(SessionFactory sessionFactory) {
@@ -181,7 +182,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 			boolean bothMainStore) throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(
 				InventoryStore.class, "store").createAlias("parentStores", "parent");
-	        
+
 		if (bothMainStore) {
 			criteria.add(Restrictions.or(
 					Restrictions.eq("parent.id", mainStoreid),
@@ -698,7 +699,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 	/**
 	 * Implement for InventoryDAO interface - Get All Drugs (Order with
 	 * drug.name)
-	 * 
+	 *
 	 * @support feature#174
 	 * @author Thai Chuong
 	 * @date <dd/mm/yyyy>08/05/2012
@@ -3319,7 +3320,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 			criteria.add(Restrictions.like("transactionDetail.attribute", "%" + attribute
 					+ "%"));
 		}
-		
+
 		if (!StringUtils.isBlank(fromDate) && StringUtils.isBlank(toDate)) {
 			String startFromDate = fromDate + " 00:00:00";
 			String endFromDate = fromDate + " 23:59:59";
@@ -3426,8 +3427,8 @@ public class HibernateInventoryDAO implements InventoryDAO {
 			criteria.add(Restrictions.like("transactionDetail.attribute", "%" + attribute
 					+ "%"));
 		}
-		
-		
+
+
 		if (!StringUtils.isBlank(fromDate) && StringUtils.isBlank(toDate)) {
 			String startFromDate = fromDate + " 00:00:00";
 			String endFromDate = fromDate + " 23:59:59";
@@ -4547,7 +4548,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		List<PatientSearch> list = q.list();
 		return list;
 	}
-        
+
         //  to work with size Selector
 	public List<PatientSearch> searchListOfPatient(Date date, String searchKey,
 			int page,int pgSize) throws DAOException {
@@ -4564,7 +4565,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		List<PatientSearch> list = q.list();
 		return list;
 	}
-        
+
          //  to work with size Selector
 	public int countSearchListOfPatient(Date date, String searchKey,
 			int page) throws DAOException {
@@ -4606,7 +4607,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		List<OpdDrugOrder> list = q.list();
 		return list;
 	}
-	
+
 	public List<OpdDrugOrder> listOfDrugOrder(Integer patientId,
 			Integer encounterId) throws DAOException {
 		String hql = "from OpdDrugOrder o where o.patient='" + patientId
@@ -4617,7 +4618,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		List<OpdDrugOrder> list = q.list();
 		return list;
 	}
-	
+
 	public OpdDrugOrder getOpdDrugOrder(Integer patientId,Integer encounterId,Integer inventoryDrugId,Integer formulationId) throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(
 				OpdDrugOrder.class);
@@ -4628,7 +4629,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 
 		return (OpdDrugOrder) criteria.uniqueResult();
 	}
-	
+
 	/**
 	 * InventoryStoreItemPatient
 	 */
@@ -4817,5 +4818,28 @@ public class HibernateInventoryDAO implements InventoryDAO {
 
 		return (InventoryStoreItemPatientDetail) criteria.uniqueResult();
 	}
+
+	public List<OpdDrugOrder> listOfNotDispensedOrder(Integer patientId, Date date,Encounter encounterId)
+	throws DAOException {
+
+		Integer id= encounterId.getEncounterId();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String startDate = sdf.format(date) + " 00:00:00";
+		String endDate = sdf.format(date) + " 23:59:59";
+		String hql = "from OpdDrugOrder o where o.patient='"
+				+ patientId
+				+ "' AND o.createdOn BETWEEN '"
+				+ startDate
+				+ "' AND '"
+				+ endDate
+				+ "' AND o.orderStatus = 0 "
+				+ " AND o.encounter = "
+				+ id ;
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.createQuery(hql);
+		List<OpdDrugOrder> list = q.list();
+		return list;
+		}
+
 
 }

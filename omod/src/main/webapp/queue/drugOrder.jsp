@@ -415,7 +415,7 @@ return false;
 				<th style="text-align: center;">Days</th>
 				<th style="text-align: center;">Frequency</th>
 				<th style="text-align: center;">Comments</th>
-				<th style="text-align: center;">Quantity</th>
+				<!-- <th style="text-align: center;">Quantity</th> -->
 			</tr>
 		</thead>
 		<tbody>
@@ -434,7 +434,6 @@ return false;
 					<td align="center">${dol.inventoryDrugFormulation.name}-${dol.inventoryDrugFormulation.dozage}</td>
 					<td align="center">${dol.noOfDays}</td>
 					<td align="center">${dol.frequency.name}</td>
-					<td align="center">${dol.comments}</td>
 					<td align="center">${dol.comments}</td>
 				</tr>
 			</c:forEach>
