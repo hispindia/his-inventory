@@ -42,6 +42,8 @@
 		<td><input type="text" id="fromDate" class="date-pick left" readonly="readonly" name="fromDate" value="${fromDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td><td>&nbsp;&nbsp;</td>
 		<td><spring:message code="inventory.toDate"/></td>
 		<td><input type="text" id="toDate" class="date-pick left" readonly="readonly" name="toDate" value="${toDate}" title="Double Click to Clear" ondblclick="this.value='';"/></td><td>&nbsp;&nbsp;</td>
+		<td>Receipt No.</td>
+		<td><input type="text" name="receiptId" id="receiptId" value="${receiptId }"/>
 		<td><input type="submit" class="ui-button ui-widget ui-state-default ui-corner-all" value="Search"/></td>
 	</tr>
 </table>
@@ -51,9 +53,9 @@
 <table width="100%" cellpadding="5" cellspacing="0">
 	<tr>
 	<th>S.No</th>
+	<th>Receipt No.</th>
 	<th><spring:message code="inventory.issueDrug.identifier"/></th>
-        <!-- 18/11/2014 New Requirment to get details -->
-	<th>Drug Regimen</th>
+    <th>Drug Regimen</th>
 	<th>Name</th>
 	<th>Age</th>
 	<th>Gender</th>
@@ -64,9 +66,9 @@
 	<c:forEach items="${listIssue}" var="issue" varStatus="varStatus">
 	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${(( pagingUtil.currentPage - 1  ) * pagingUtil.pageSize ) + varStatus.count }"/></td>
+		<td> ${issue.id}</td>
 		<td> ${issue.identifier}</td>
-                <!-- 18/11/2014 New Requirment to get details -->
-		<td> <a href="#" title="Detail issue drug to this patient" onclick="ISSUE.detailIssueDrug('${issue.id}');">View/Print</a> </td>
+       	<td> <a href="#" title="Detail issue drug to this patient" onclick="ISSUE.detailIssueDrug('${issue.id}');">View/Print</a> </td>
 		<td>${issue.patient.givenName}&nbsp;${issue.patient.familyName}&nbsp;${fn:replace(issue.patient.middleName,","," ")}</td>
 		<td><center>
               	<c:choose>

@@ -2451,7 +2451,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 	 * InventoryStoreDrugPatient
 	 */
 	public List<InventoryStoreDrugPatient> listStoreDrugPatient(
-			Integer storeId, String name, String fromDate, String toDate,
+			Integer storeId, Integer receiptId, String name, String fromDate, String toDate,
 			int min, int max) throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession()
 				.createCriteria(InventoryStoreDrugPatient.class, "bill")
@@ -2515,6 +2515,10 @@ public class HibernateInventoryDAO implements InventoryDAO {
 						+ e.toString());
 				e.printStackTrace();
 			}
+		}
+		if (receiptId != null) {
+
+			criteria.add(Restrictions.eq("bill.id", receiptId));
 		}
 		criteria.addOrder(Order.desc("bill.createdOn"));
 		criteria.setFirstResult(min).setMaxResults(max);
@@ -4634,7 +4638,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 	 * InventoryStoreItemPatient
 	 */
 	public List<InventoryStoreItemPatient> listStoreItemPatient(
-			Integer storeId, String name, String fromDate, String toDate,
+			Integer storeId,  Integer receiptId, String name, String fromDate, String toDate,
 			int min, int max) throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession()
 				.createCriteria(InventoryStoreItemPatient.class, "bill")
@@ -4700,6 +4704,10 @@ public class HibernateInventoryDAO implements InventoryDAO {
 			}
 		}
 		criteria.addOrder(Order.desc("bill.createdOn"));
+		if (receiptId != null) {
+
+			criteria.add(Restrictions.eq("bill.id", receiptId));
+		}
 		criteria.setFirstResult(min).setMaxResults(max);
 		List<InventoryStoreItemPatient> l = criteria.list();
 		return l;

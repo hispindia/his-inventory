@@ -653,9 +653,9 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 	/**
 	 * InventoryStoreDrugPatient
 	 */
-	public List<InventoryStoreDrugPatient> listStoreDrugPatient(Integer storeId, String name, String fromDate,
+	public List<InventoryStoreDrugPatient> listStoreDrugPatient(Integer storeId, Integer receiptId, String name, String fromDate,
 	                                                            String toDate, int min, int max) throws APIException {
-		return dao.listStoreDrugPatient(storeId, name, fromDate, toDate, min, max);
+		return dao.listStoreDrugPatient(storeId,receiptId, name, fromDate, toDate, min, max);
 	}
 	
 	public int countStoreDrugPatient(Integer storeId, String name, String fromDate, String toDate) throws APIException {
@@ -997,9 +997,9 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 	/**
 	 * InventoryStoreItemPatient
 	 */
-	public List<InventoryStoreItemPatient> listStoreItemPatient(Integer storeId, String name, String fromDate,
+	public List<InventoryStoreItemPatient> listStoreItemPatient(Integer storeId,Integer receiptId,  String name, String fromDate,
 	                                                            String toDate, int min, int max) throws APIException {
-		return dao.listStoreItemPatient(storeId, name, fromDate, toDate, min, max);
+		return dao.listStoreItemPatient(storeId,receiptId, name, fromDate, toDate, min, max);
 	}
 	
 	public int countStoreItemPatient(Integer storeId, String name, String fromDate, String toDate) throws APIException {

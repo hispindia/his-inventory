@@ -424,7 +424,7 @@ public interface InventoryService extends OpenmrsService {
 	/**
 	 * InventoryStoreDrugPatient
 	 */
-	public List<InventoryStoreDrugPatient> listStoreDrugPatient(Integer storeId, String name, String fromDate,
+	public List<InventoryStoreDrugPatient> listStoreDrugPatient(Integer storeId, Integer receiptId, String name, String fromDate,
 	                                                            String toDate, int min, int max) throws APIException;
 	
 	public int countStoreDrugPatient(Integer storeId, String name, String fromDate, String toDate) throws APIException;
@@ -647,7 +647,7 @@ public interface InventoryService extends OpenmrsService {
 	/**
 	 * InventoryStoreItemPatient
 	 */
-	public List<InventoryStoreItemPatient> listStoreItemPatient(Integer storeId, String name, String fromDate,
+	public List<InventoryStoreItemPatient> listStoreItemPatient(Integer storeId, Integer receiptId,  String name, String fromDate,
 	                                                            String toDate, int min, int max) throws APIException;
 	
 	public int countStoreItemPatient(Integer storeId, String name, String fromDate, String toDate) throws APIException;

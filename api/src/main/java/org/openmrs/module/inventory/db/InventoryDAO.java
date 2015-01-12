@@ -395,7 +395,7 @@ public interface InventoryDAO {
 	/**
 	 * InventoryStoreDrugPatient
 	 */
-	public List<InventoryStoreDrugPatient> listStoreDrugPatient(Integer storeId, String name, String fromDate,
+	public List<InventoryStoreDrugPatient> listStoreDrugPatient(Integer storeId,Integer receiptId, String name, String fromDate,
 	                                                            String toDate, int min, int max) throws DAOException;
 	
 	public int countStoreDrugPatient(Integer storeId, String name, String fromDate, String toDate) throws DAOException;
@@ -608,7 +608,7 @@ public interface InventoryDAO {
 	/**
 	 * InventoryStoreItemPatient
 	 */
-	public List<InventoryStoreItemPatient> listStoreItemPatient(Integer storeId, String name, String fromDate,
+	public List<InventoryStoreItemPatient> listStoreItemPatient(Integer storeId, Integer receiptId,  String name, String fromDate,
 	                                                            String toDate, int min, int max) throws DAOException;
 	
 	public int countStoreItemPatient(Integer storeId, String name, String fromDate, String toDate) throws DAOException;

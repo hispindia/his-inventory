@@ -29,9 +29,10 @@ public class IssueItemPatientListController {
             @RequestParam(value="issueName",required=false)  String issueName,
             @RequestParam(value="fromDate",required=false)  String fromDate,
             @RequestParam(value="toDate",required=false)  String toDate,
+            @RequestParam(value="receiptId",required=false)  Integer receiptId,
             Map<String, Object> model, HttpServletRequest request
 	) {
-	 InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
+		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 	InventoryStore store = inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
 	
 	/*if(store != null && store.getParent() != null && store.getIsItem() != 1){
@@ -62,10 +63,18 @@ public class IssueItemPatientListController {
 				temp +="&toDate="+toDate;
 			}
 	}
+	if(receiptId != null){	
+			if(StringUtils.isBlank(temp)){
+				temp = "?receiptId="+receiptId;
+			}else{
+				temp +="&receiptId="+receiptId;
+			}
+	}
 		
 		PagingUtil pagingUtil = new PagingUtil( RequestUtil.getCurrentLink(request)+temp , pageSize, currentPage, total );
-		List<InventoryStoreItemPatient> listIssue = inventoryService.listStoreItemPatient(store.getId(), issueName,fromDate, toDate, pagingUtil.getStartPos(), pagingUtil.getPageSize());
+		List<InventoryStoreItemPatient> listIssue = inventoryService.listStoreItemPatient(store.getId(),receiptId, issueName,fromDate, toDate, pagingUtil.getStartPos(), pagingUtil.getPageSize());
 		model.put("issueName", issueName );
+		model.put("receiptId", receiptId );
 		model.put("toDate", toDate );
 		model.put("fromDate", fromDate );
 		model.put("pagingUtil", pagingUtil );
