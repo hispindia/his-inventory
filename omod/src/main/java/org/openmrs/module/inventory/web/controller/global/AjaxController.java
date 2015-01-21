@@ -1274,8 +1274,12 @@ public class AjaxController {
             int patientId = pi.getPatient().getPatientId();
             Date issueDate = listDrugIssue.get(0).getStoreDrugPatient().getCreatedOn();
             Encounter encounterId = listDrugIssue.get(0).getTransactionDetail().getEncounter();
-    		List<OpdDrugOrder> listOfNotDispensedOrder = inventoryService.listOfNotDispensedOrder(patientId,issueDate,encounterId);
-            
+            System.out.println("encounterId:"+ encounterId);
+            if(encounterId!= null )
+            {
+            	List<OpdDrugOrder> listOfNotDispensedOrder = inventoryService.listOfNotDispensedOrder(patientId,issueDate,encounterId);
+            	model.addAttribute("listOfNotDispensedOrder", listOfNotDispensedOrder);
+            }
     		/*Iterator<OpdDrugOrder>  itr = listOfNotDispensedOrder.iterator();
              System.out.println("listOfNotDispensedOrder:"+ listOfNotDispensedOrder.size());
              while(itr.hasNext())
@@ -1317,7 +1321,7 @@ public class AjaxController {
 
 			model.addAttribute("cashier", listDrugIssue.get(0)
 					.getStoreDrugPatient().getCreatedBy());
-			model.addAttribute("listOfNotDispensedOrder", listOfNotDispensedOrder);
+			
 			HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 			List<PersonAttribute> pas = hcs.getPersonAttributes(listDrugIssue.get(0)
 					.getStoreDrugPatient().getPatient().getId());
