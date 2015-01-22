@@ -22,10 +22,7 @@
 <%@ include file="../includes/js_css.jsp" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <openmrs:globalProperty var="userLocation" key="hospital.location_user" defaultValue="false"/>
-<script type="text/javascript">
-String cat="General";
-</script>
-		<style>
+<style>
 @media print {
 	.donotprint {
 		display: none;
@@ -62,15 +59,20 @@ String cat="General";
 		</tr>
         <tr>
         	<td>Age:</td><td>&nbsp;</td>
-        	<td>${age}</td>
+        	<td>&nbsp;
+        	<c:choose>
+				<c:when test ="${age < 1}"> < 1 </c:when>
+				<c:otherwise> ${age}</c:otherwise>	
+			</c:choose>
+			</td>
       </tr>
         <tr>
         	<td>Gender:</td><td>&nbsp;</td>
         	<td>&nbsp;${gender}</td>
         </tr>
         <tr>
-        	<td>Payment Category</td>
-        	<td>:${paymentSubCategory}</td>
+        	<td>Payment Category:</td><td>&nbsp;</td>
+        	<td>&nbsp;${paymentSubCategory}</td>
         </tr>
 		<tr>
 			<td>Date :</td><td>&nbsp;</td>
@@ -98,7 +100,7 @@ String cat="General";
 	<%-- <c:set var="price" value="${ detail.quantity* (detail.transactionDetail.unitPrice + 0.01*detail.transactionDetail.VAT*detail.transactionDetail.unitPrice) }" /> --%>
 	<c:set var="price" value="${ detail.quantity * detail.transactionDetail.costToPatient}" />
 	<c:set var="generalVar" value="GENERAL"/>
-	<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
+	<c:set var="expectantVar" value="EXPECTANT MOTHER"/>
 	<c:set var="tbVar" value="TB PATIENT"/>
 	<c:set var="cccVar" value="CCC PATIENT"/>
 	<c:set var="total" value="${total + price}"/>
@@ -126,8 +128,8 @@ String cat="General";
 		<td><c:out value="${varStatus.count }"/></td>
 		<td>${nonDispensed.inventoryDrug.category.name} </td>	
 		<td>${nonDispensed.inventoryDrug.name} </td>	
-		<td></td>
-		<td></td>
+		<td>${nonDispensed.inventoryDrugFormulation.name}-${nonDispensed.inventoryDrugFormulation.dozage} </td>
+		<td>N.A.</td>
 		<td>Stock Not Available</td>
 		<td>N.A.</td>
 		</tr>
@@ -192,7 +194,15 @@ String cat="General";
 	<tr><td>Date/Time: </td><td>:${date}</td></tr>
 	<tr><td>Name</td><td>:${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.familyName}&nbsp;${fn:replace(issueDrugPatient.patient.middleName,","," ")} </td></tr>
 	<tr><td>Patient ID</td><td>:${issueDrugPatient.identifier }</td></tr>
-	<tr><td>Age</td><td>:${age}</td></tr>
+	<tr><tr>
+        	<td>Age</td>
+        	<td>:
+        	<c:choose>
+				<c:when test ="${age < 1}"> < 1 </c:when>
+				<c:otherwise> ${age}</c:otherwise>	
+			</c:choose>
+			</td>
+      </tr></tr>
 	<tr><td>Gender</td><td>:${gender}</td></tr>
 	<tr><td>Payment Category</td><td>:${paymentSubCategory}</td></tr>
 	<!-- <tr><td>Waiver/Exempt. No.</td><td>:${exemption}</td></tr> -->
@@ -216,7 +226,7 @@ String cat="General";
 	<%-- <c:set var="price" value="${ detail.quantity* (detail.transactionDetail.unitPrice + 0.01*detail.transactionDetail.VAT*detail.transactionDetail.unitPrice) }" /> --%>
 	<c:set var="price" value="${ detail.quantity * detail.transactionDetail.costToPatient}" />
 	<c:set var="generalVar" value="GENERAL"/>
-	<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
+	<c:set var="expectantVar" value="EXPECTANT MOTHER"/>
 	<c:set var="tbVar" value="TB PATIENT"/>
 	<c:set var="cccVar" value="CCC PATIENT"/>
 	<c:set var="total" value="${total + price}"/>
@@ -244,7 +254,7 @@ String cat="General";
 		<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${varStatus.count }"/></td>
 		<td>${nonDispensed.inventoryDrug.name} </td>	
-		<td>N.A.</td>
+		<td>${nonDispensed.inventoryDrugFormulation.name}-${nonDispensed.inventoryDrugFormulation.dozage} </td>
 		<td>Stock Not Available</td>
 		<td>N.A.</td>
 		</tr>

@@ -1274,10 +1274,10 @@ public class AjaxController {
             int patientId = pi.getPatient().getPatientId();
             Date issueDate = listDrugIssue.get(0).getStoreDrugPatient().getCreatedOn();
             Encounter encounterId = listDrugIssue.get(0).getTransactionDetail().getEncounter();
-            System.out.println("encounterId:"+ encounterId);
-            if(encounterId!= null )
+             if(encounterId!= null )
             {
             	List<OpdDrugOrder> listOfNotDispensedOrder = inventoryService.listOfNotDispensedOrder(patientId,issueDate,encounterId);
+            	
             	model.addAttribute("listOfNotDispensedOrder", listOfNotDispensedOrder);
             }
     		/*Iterator<OpdDrugOrder>  itr = listOfNotDispensedOrder.iterator();
