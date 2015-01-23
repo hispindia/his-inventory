@@ -1249,7 +1249,6 @@ public class AjaxController {
 			@RequestParam(value = "issueId", required = false) Integer issueId,
 			Model model) {
 		
-		System.out.println("in viewDetailIssueDrug, issueId "+issueId);
 		InventoryService inventoryService = (InventoryService) Context
 				.getService(InventoryService.class);
 		
@@ -1901,10 +1900,40 @@ public class AjaxController {
 				inventoryService.saveStoreDrugPatientDetail(pDetail);
 				// save issues transaction detail
 		
+				List<PersonAttribute> pas = hcs.getPersonAttributes(issueDrugPatient.getPatient().getId());
+						String patientSubCatergory = null;
+		        for (PersonAttribute pa : pas) {
+		            PersonAttributeType attributeType = pa.getAttributeType(); 
+		            PersonAttributeType personAttributePCT=hcs.getPersonAttributeTypeByName("Paying Category Type");
+		            PersonAttributeType personAttributeNPCT=hcs.getPersonAttributeTypeByName("Non-Paying Category Type");
+		            PersonAttributeType personAttributeSSCT=hcs.getPersonAttributeTypeByName("Special Scheme Category Type");
+		            if(attributeType.getPersonAttributeTypeId()==personAttributePCT.getPersonAttributeTypeId()){
+		            	patientSubCatergory =  pa.getValue();
+		            }
+		            else if(attributeType.getPersonAttributeTypeId()==personAttributeNPCT.getPersonAttributeTypeId()){
+		            	patientSubCatergory =  pa.getValue(); 
+		            }
+		            else if(attributeType.getPersonAttributeTypeId()==personAttributeSSCT.getPersonAttributeTypeId()){
+		            	patientSubCatergory =  pa.getValue();
+		            }
+		        }
+				
+		        
 				BillingService billingService = Context.getService(BillingService.class);
 				IndoorPatientServiceBill bill = new IndoorPatientServiceBill();
-				bill.setActualAmount(moneyUnitPrice);
-				bill.setAmount(moneyUnitPrice);
+				
+				if(patientSubCatergory == "GENERAL" || patientSubCatergory == "EXPECTANT MOTHER" 
+					|| patientSubCatergory == "TB PATIENT" || patientSubCatergory == "CCC PATIENT")
+				{
+					bill.setActualAmount(moneyUnitPrice);
+					bill.setAmount(moneyUnitPrice);
+				}
+				else
+				{
+					bill.setActualAmount(new BigDecimal(0));
+					bill.setAmount(new BigDecimal(0));
+				}
+				
 				bill.setEncounter(lastVisitEncounter);
 				bill.setCreatedDate(new Date());
 				bill.setPatient(issueDrugPatient.getPatient());
@@ -1912,8 +1941,18 @@ public class AjaxController {
 
 				
 				IndoorPatientServiceBillItem item = new IndoorPatientServiceBillItem();
-				item.setUnitPrice(pDetail.getTransactionDetail().getCostToPatient());
-				item.setAmount(moneyUnitPrice);
+				if(patientSubCatergory == "GENERAL" || patientSubCatergory == "EXPECTANT MOTHER" 
+					|| patientSubCatergory == "TB PATIENT" || patientSubCatergory == "CCC PATIENT")
+				{
+					item.setUnitPrice(pDetail.getTransactionDetail().getCostToPatient());
+					item.setAmount(moneyUnitPrice);
+				}
+				else
+				{
+					item.setUnitPrice(new BigDecimal(0));
+					item.setAmount(new BigDecimal(0));
+				}
+				
 				item.setQuantity(pDetail.getQuantity());
 				item.setName(pDetail.getTransactionDetail().getDrug().getName());
 				item.setCreatedDate(new Date());
@@ -2050,10 +2089,41 @@ public class AjaxController {
 				// save issue to patient detail
 				inventoryService.saveStoreItemPatientDetail(pDetail);
 				// save issues transaction detail
-				BillingService billingService = Context.getService(BillingService.class);
+				
+				List<PersonAttribute> pas = hcs.getPersonAttributes(issueItemPatient.getPatient().getId());
+				String patientSubCatergory = null;
+        for (PersonAttribute pa : pas) {
+            PersonAttributeType attributeType = pa.getAttributeType(); 
+            PersonAttributeType personAttributePCT=hcs.getPersonAttributeTypeByName("Paying Category Type");
+            PersonAttributeType personAttributeNPCT=hcs.getPersonAttributeTypeByName("Non-Paying Category Type");
+            PersonAttributeType personAttributeSSCT=hcs.getPersonAttributeTypeByName("Special Scheme Category Type");
+            if(attributeType.getPersonAttributeTypeId()==personAttributePCT.getPersonAttributeTypeId()){
+            	patientSubCatergory =  pa.getValue();
+            }
+            else if(attributeType.getPersonAttributeTypeId()==personAttributeNPCT.getPersonAttributeTypeId()){
+            	patientSubCatergory =  pa.getValue(); 
+            }
+            else if(attributeType.getPersonAttributeTypeId()==personAttributeSSCT.getPersonAttributeTypeId()){
+            	patientSubCatergory =  pa.getValue();
+            }
+        }
+		
+        		BillingService billingService = Context.getService(BillingService.class);
 				IndoorPatientServiceBill bill = new IndoorPatientServiceBill();
-				bill.setActualAmount(moneyUnitPrice);
-				bill.setAmount(moneyUnitPrice);
+				
+
+				if(patientSubCatergory == "GENERAL" || patientSubCatergory == "EXPECTANT MOTHER" 
+					|| patientSubCatergory == "TB PATIENT" || patientSubCatergory == "CCC PATIENT")
+				{
+					bill.setActualAmount(moneyUnitPrice);
+					bill.setAmount(moneyUnitPrice);
+				}
+				else
+				{
+					bill.setActualAmount(new BigDecimal(0));
+					bill.setAmount(new BigDecimal(0));
+				}
+				
 				bill.setEncounter(lastVisitEncounter);
 				bill.setCreatedDate(new Date());
 				bill.setPatient(issueItemPatient.getPatient());
@@ -2061,8 +2131,17 @@ public class AjaxController {
 
 				
 				IndoorPatientServiceBillItem item = new IndoorPatientServiceBillItem();
-				item.setUnitPrice(pDetail.getTransactionDetail().getCostToPatient());
-				item.setAmount(moneyUnitPrice);
+				if(patientSubCatergory == "GENERAL" || patientSubCatergory == "EXPECTANT MOTHER" 
+					|| patientSubCatergory == "TB PATIENT" || patientSubCatergory == "CCC PATIENT")
+				{
+					item.setUnitPrice(pDetail.getTransactionDetail().getCostToPatient());
+					item.setAmount(moneyUnitPrice);
+				}
+				else
+				{
+					item.setUnitPrice(new BigDecimal(0));
+					item.setAmount(new BigDecimal(0));
+				}
 				item.setQuantity(pDetail.getQuantity());
 				item.setName(pDetail.getTransactionDetail().getItem().getName());
 				item.setCreatedDate(new Date());

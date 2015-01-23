@@ -187,7 +187,7 @@ function getValue()
 						<%-- <c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" /> --%>
 						<c:set var="price" value="${ issue.quantity * issue.transactionDetail.costToPatient}" />
 						<c:set var="generalVar" value="GENERAL"/>
-						<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
+						<c:set var="expectantVar" value="EXPECTANT MOTHER"/>
 						<c:set var="tbVar" value="TB PATIENT"/>
 						<c:set var="cccVar" value="CCC PATIENT"/>
 						<c:set var="total" value="${total + price}"/>	
@@ -321,7 +321,7 @@ function getValue()
 						<%-- <c:set var="price" value="${ issue.quantity* (issue.transactionDetail.unitPrice + 0.01*issue.transactionDetail.VAT*issue.transactionDetail.unitPrice) }" /> --%>
 						<c:set var="price" value="${ issue.quantity * issue.transactionDetail.costToPatient}" />
 						<c:set var="generalVar" value="GENERAL"/>
-						<c:set var="expectantVar" value="EXPACTANT MOTHER"/>
+						<c:set var="expectantVar" value="EXPECTANT MOTHER"/>
 						<c:set var="tbVar" value="TB PATIENT"/>
 						<c:set var="cccVar" value="CCC PATIENT"/>
 						<c:set var="total" value="${total + price}"/>
