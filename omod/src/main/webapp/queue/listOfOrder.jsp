@@ -88,7 +88,7 @@
 				&date=${date}&patientType=${patientType}">${listOfOrder.encounter.encounterId}</a>
 				</td>
 				<td><openmrs:formatDate date="${listOfOrder.createdOn}" /></td>
-				<td>${listOfOrder.referralOpdName}</td>
+				<td>${listOfOrder.referralWardName}</td>
 			</tr>
 		</c:forEach>
 	</tbody>
