@@ -36,10 +36,14 @@ VALIDATION={
 	checkRecieptDate : function() {
 		var recieptDate = new Date(STRING.convertDateFormat(jQuery('#receiptDate').val()));
 		var expiryDate = new Date(STRING.convertDateFormat(jQuery('#dateExpiry').val()));
-
+		var currentDate = new Date();
 		if (recieptDate > expiryDate){
 			jQuery('#receiptDate').val("");
 			alert("You can not receipt an expired drug");
+		}
+		if (recieptDate > currentDate){
+			jQuery('#receiptDate').val("");
+			alert("You can not receipt on future date");
 		}
 	}
 }
