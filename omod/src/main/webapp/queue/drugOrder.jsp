@@ -136,7 +136,7 @@ function issueDrugOrder(listOfDrugQuantity) {
 	       	 +"<input id='"+avaiableId+"_fName'  name='"+avaiableId+"_fName' type='text' size='20' value='"+drugName+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fFormulationName'  name='"+avaiableId+"_fFormulationName' type='text' size='11' value='"+formulation+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fQuantity'  name='"+avaiableId+"_fQuantity' type='text' size='3' value='"+quantity+"'  readonly='readonly'/>&nbsp;"
-	       	 //+"<input id='"+avaiableId+"_fPrice'  name='"+avaiableId+"_fPrice' type='text' size='3' type='hidden' value='"+price+"'  readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fPrice'  name='"+avaiableId+"_fPrice' type='text' size='3' type='hidden' value='"+price+"'  readonly='readonly'/>&nbsp;"
 			 +"<input id='"+avaiableId+"_fFormulationId'  name='"+avaiableId+"_fFormulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fAavaiableId'  name='avaiableId' type='hidden' value='"+avaiableId+"'/>&nbsp;"
 	       	 +"<input id='drugProcessName'  name='drugProcessName' type='hidden' value='"+drugName+"'/>&nbsp;"
