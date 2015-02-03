@@ -57,8 +57,19 @@ VALIDATION={
 	}
 }
 
-</script>
 
+</script>
+<script type="text/javascript">
+function checkCompany()
+{
+
+if($("#companyName").val().length > 100)
+{
+	$('#companyName').val("");
+	alert("The company's name exceeds the maximum limit of 100 characters");
+}
+}
+</script>
 <div style="width: 20%; float: left; margin-left: 4px; ">
 <b class="boxHeader">Drug</b>
 <div class="box">
@@ -141,7 +152,7 @@ VALIDATION={
 	<tr>
 		<td><spring:message code="inventory.receiptDrug.companyName"/><em>*</em></td>
 		<td>
-			<input type="text" id="companyName" name="companyName" />
+			<input type="text" id="companyName" name="companyName" onblur="checkCompany();" />
 		</td>
 	</tr>
 	<tr>
