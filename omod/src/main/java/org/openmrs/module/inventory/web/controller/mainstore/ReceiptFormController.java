@@ -86,9 +86,17 @@ public class ReceiptFormController {
 		 drugId = drug.getId();
 		}
 		int quantity = NumberUtils.toInt(request.getParameter("quantity"),0);
-		BigDecimal VAT = NumberUtils.createBigDecimal(request.getParameter("VAT"));
+		BigDecimal VAT  = new BigDecimal(0);
+		BigDecimal unitPrice  = new BigDecimal(0);
+		if(null!=request.getParameter("VAT") && ""!=request.getParameter("VAT"))
+		{
+			VAT = NumberUtils.createBigDecimal(request.getParameter("VAT"));
+		}
 		BigDecimal costToPatient = NumberUtils.createBigDecimal(request.getParameter("costToPatient"));
-		BigDecimal unitPrice =  NumberUtils.createBigDecimal(request.getParameter("unitPrice"));
+		if(null!=request.getParameter("unitPrice") && ""!=request.getParameter("unitPrice"))
+		{
+			unitPrice =  NumberUtils.createBigDecimal(request.getParameter("unitPrice"));
+		}
 		String batchNo = request.getParameter("batchNo");
 		String companyName = request.getParameter("companyName");
 		// Sagar Bele : Date - 22-01-2013 Issue Number 660 : [Inventory] Add receipt from field in Table and front end	

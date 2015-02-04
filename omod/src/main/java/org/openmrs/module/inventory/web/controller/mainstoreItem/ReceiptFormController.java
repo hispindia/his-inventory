@@ -62,9 +62,17 @@ public class ReceiptFormController {
 		int specification = NumberUtils.toInt(request.getParameter("specification"),0);
 		int itemId = NumberUtils.toInt(request.getParameter("itemId"), 0 );
 		int quantity = NumberUtils.toInt(request.getParameter("quantity"),0);
-		BigDecimal VAT = NumberUtils.createBigDecimal(request.getParameter("VAT"));
+		BigDecimal VAT  = new BigDecimal(0);
+		BigDecimal unitPrice  = new BigDecimal(0);
+		if(null!=request.getParameter("VAT") && ""!=request.getParameter("VAT"))
+		{
+			VAT = NumberUtils.createBigDecimal(request.getParameter("VAT"));
+		}
 		BigDecimal costToPatient = NumberUtils.createBigDecimal(request.getParameter("costToPatient"));
-		BigDecimal unitPrice =  NumberUtils.createBigDecimal(request.getParameter("unitPrice"));
+		if(null!=request.getParameter("unitPrice") && ""!=request.getParameter("unitPrice"))
+		{
+			unitPrice =  NumberUtils.createBigDecimal(request.getParameter("unitPrice"));
+		}
 		String batchNo = request.getParameter("batchNo");
 		String companyName = request.getParameter("companyName");
 		String dateManufacture = request.getParameter("dateManufacture");

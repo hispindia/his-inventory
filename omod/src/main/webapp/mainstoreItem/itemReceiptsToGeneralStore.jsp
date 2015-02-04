@@ -102,13 +102,13 @@ VALIDATION={
 		</td>
 	</tr>
 	<tr>
-		<td><spring:message code="inventory.receiptItem.unitPrice"/><em>*</em></td>
+		<td><spring:message code="inventory.receiptItem.unitPrice"/></td>
 		<td>
 			<input type="text" id="unitPrice" name="unitPrice" />
 		</td>
 	</tr>
 	<tr>
-		<td><spring:message code="inventory.receiptItem.VAT"/><em>*</em></td>
+		<td><spring:message code="inventory.receiptItem.VAT"/></td>
 		<td>
 			<input type="text" id="VAT" name="VAT" />
 		</td>

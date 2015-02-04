@@ -50,7 +50,7 @@ VALIDATION={
 			jQuery('#receiptDate').val("");
 			alert("Receiept Date can not be before than manufacture Date");
 		}
-		if (recieptDate = expiryDate){
+		if (recieptDate == expiryDate){
 			jQuery('#receiptDate').val("");
 			alert("Receiept Date of drug should be less than Expiry Date");
 		}
@@ -126,13 +126,13 @@ if($("#companyName").val().length > 100)
 		</td>
 	</tr>
 	<tr>
-		<td>Unit Price<em>*</em></td>
+		<td>Unit Price</td>
 		<td>
 			<input type="text" id="unitPrice" name="unitPrice" />
 		</td>
 	</tr>
 	<tr>
-		<td><spring:message code="inventory.receiptDrug.VAT"/><em>*</em></td>
+		<td><spring:message code="inventory.receiptDrug.VAT"/></td>
 		<td>
 			<input type="text" id="VAT" name="VAT" />
 		</td>
