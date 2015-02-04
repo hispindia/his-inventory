@@ -140,7 +140,7 @@ function issueDrugOrder(listOfDrugQuantity) {
 			 +"<input id='"+avaiableId+"_fFormulationId'  name='"+avaiableId+"_fFormulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fAavaiableId'  name='avaiableId' type='hidden' value='"+avaiableId+"'/>&nbsp;"
 	       	 +"<input id='drugProcessName'  name='drugProcessName' type='hidden' value='"+drugName+"'/>&nbsp;"
-	       	 +"<a style='color:red' href='#' onclick='"+deleteString+"' >[X]</a>"	
+	       	 //+"<a style='color:red' href='#' onclick='"+deleteString+"' >[X]</a>"	
 	       	 +"</div>";
 	
 
