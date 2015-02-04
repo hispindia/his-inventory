@@ -23,7 +23,34 @@
 <spring:message var="pageTitle" code="inventory.receiptItem.manage" scope="page"/>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	
+	jQuery("#receiptDate").change(function() {
+		VALIDATION.checkRecieptDate();
+	});
+	});
 
+VALIDATION={
+	checkRecieptDate : function() {
+		var recieptDate = new Date(STRING.convertDateFormat(jQuery('#receiptDate').val()));
+		var dateManufacture = new Date(STRING.convertDateFormat(jQuery('#dateManufacture').val()));
+		var currentDate = new Date();
+		
+		if (recieptDate > currentDate){
+			jQuery('#receiptDate').val("");
+			alert("You can not receipt on future date");
+		}
+		if (recieptDate < dateManufacture){
+			jQuery('#receiptDate').val("");
+			alert("Receiept Date can not be before than manufacture Date");
+		}
+		
+	}
+}
+
+
+</script>
 <div style="width: 25%; float: left; margin-left: 4px; ">
 <b class="boxHeader">Item</b>
 <div class="box">
