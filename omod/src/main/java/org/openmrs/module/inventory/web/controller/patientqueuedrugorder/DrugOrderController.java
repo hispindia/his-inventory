@@ -151,27 +151,18 @@ public class DrugOrderController {
 		for (String avId : avaiableId) {
 			InventoryCommonService inventoryCommonService = Context.getService(InventoryCommonService.class);
 			
-			System.out.println(" in onSubmit *******************************************************");
-			
 			formulationId = Integer.parseInt(request.getParameter(avId
 					+ "_fFormulationId"));
-			System.out.println("formulationId:"+formulationId);
 			quantity = Integer.parseInt(request.getParameter(avId
 					+ "_fQuantity"));
-			System.out.println("quantity:"+quantity);
-		
 			
 			frequencyName = request.getParameter(avId + "_fFrequencyName");
 			noOfDays = Integer.parseInt(request.getParameter(avId + "_fnoOfDays"));
 			comments = request.getParameter(avId + "_fcomments");
 			
-			System.out.println("frequencyName:"+frequencyName);
-			System.out.println("noOfDays:"+noOfDays);
-			System.out.println("comments:"+comments);
 			
 			Concept fCon = Context.getConceptService().getConcept(frequencyName);
 			
-			System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 			if(quantity!=0){
 			 avlId = Integer.parseInt(avId);
 			 InventoryDrugFormulation inventoryDrugFormulation = inventoryCommonService.getDrugFormulationById(formulationId);
