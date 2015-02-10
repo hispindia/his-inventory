@@ -85,13 +85,15 @@
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0">
 	<tr align="center">
-	<th>S.No</th>
-	<th><spring:message code="inventory.viewStockBalance.category"/></th>
-	<th><spring:message code="inventory.viewStockBalance.drug"/></th>
-	<th><spring:message code="inventory.viewStockBalance.formulation"/></th>
-	<th ><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
-	<th><spring:message code="inventory.issueDrug.quantity"/></th>
-	<th><spring:message code="inventory.receiptDrug.price" text="Price" /></th>
+	<th style="width:10px">S.No</th>
+	<th style="width:10px"><spring:message code="inventory.viewStockBalance.drug"/></th>
+	<th style="width:10px"><spring:message code="inventory.viewStockBalance.formulation"/></th>
+	<th style="width:10px"><spring:message code="inventory.viewStockBalance.frequency"/></th>
+	<th style="width:10px"><spring:message code="inventory.issueDrug.noOfDays"/></th>
+	<th style="width:10px"><spring:message code="inventory.issueDrug.comments"/></th>
+	<th style="width:10px"><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
+	<th style="width:10px"><spring:message code="inventory.issueDrug.quantity"/></th>
+	<th style="width:10px"><spring:message code="inventory.receiptDrug.price" text="Price" /></th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty listDrugIssue}">
@@ -105,37 +107,50 @@
 	<c:set var="cccVar" value="CCC PATIENT"/>
 	<c:set var="total" value="${total + price}"/>
 	<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
-		<td><c:out value="${varStatus.count }"/></td>
-		<td>${detail.transactionDetail.drug.category.name} </td>	
-		<td>${detail.transactionDetail.drug.name} </td>	
-		<td>${detail.transactionDetail.formulation.name}-${detail.transactionDetail.formulation.dozage}</td>
-		<td><openmrs:formatDate date="${detail.transactionDetail.dateExpiry}" type="textbox"/></td>
-		<td>${detail.quantity }</td>
-		<td><fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/></td>
+		<td style="width:10px"><c:out value="${varStatus.count }"/></td>
+		<td style="width:10px">${detail.transactionDetail.drug.name} </td>	
+		<td style="width:10px">${detail.transactionDetail.formulation.name}-${detail.transactionDetail.formulation.dozage}</td>
+		<td style="width:10px">${detail.transactionDetail.frequency.name} </td>	
+		<td style="width:10px">${detail.transactionDetail.noOfDays} </td>	
+		<td style="width:10px">${detail.transactionDetail.comments} </td>
+		<td style="width:10px"><openmrs:formatDate date="${detail.transactionDetail.dateExpiry}" type="textbox"/></td>
+		<td style="width:10px">${detail.quantity }</td>
+		<td style="width:10px"><fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/></td>
 		</tr>
 	</c:forEach>
 	<tr>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
-		<td><span class="boxHeader">Drugs not issued</span></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<c:choose>
+            <c:when test="${ not empty listOfNotDispensedOrder }">
+			<td width="100%"><span class="boxHeader">Drugs not issued</span></td>
+		   </c:when>
+		</c:choose>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
 	</tr>
 	<c:forEach items="${listOfNotDispensedOrder}" var="nonDispensed" varStatus="varStatus">
 		<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
-		<td><c:out value="${varStatus.count }"/></td>
-		<td>${nonDispensed.inventoryDrug.category.name} </td>	
-		<td>${nonDispensed.inventoryDrug.name} </td>	
-		<td>${nonDispensed.inventoryDrugFormulation.name}-${nonDispensed.inventoryDrugFormulation.dozage} </td>
-		<td>N.A.</td>
-		<td>Stock Not Available</td>
-		<td>N.A.</td>
+		<td style="width:10px"><c:out value="${varStatus.count }"/></td>
+		<td style="width:10px">${nonDispensed.inventoryDrug.name} </td>	
+		<td style="width:10px">${nonDispensed.inventoryDrugFormulation.name}-${nonDispensed.inventoryDrugFormulation.dozage} </td>
+		<td style="width:10px">${nonDispensed.frequency.name}</td>
+		<td style="width:10px">${nonDispensed.noOfDays}</td>
+		<td style="width:10px">${nonDispensed.comments}</td>
+		<td style="width:10px">N.A.</td>
+		<td style="width:10px">N.A.</td>
+		<td style="width:10px">N.A.</td>
 		</tr>
 	</c:forEach>
 	<tr><td>&nbsp;</td></tr>
 	<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+		<td></td>
+		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -212,12 +227,16 @@
 <table class="printfont"
 			style="margin-left: 60px; margin-top: 10px; font-family: 'Dot Matrix Normal', Arial, Helvetica, sans-serif; font-style: normal;"
 			width="80%">
-		<tr align="center">
-	<th>S.No</th>
-	<th><spring:message code="inventory.viewStockBalance.drug"/></th>
-	<th><spring:message code="inventory.viewStockBalance.formulation"/></th>
-	<th><spring:message code="inventory.issueDrug.quantity"/></th>
-	<th><spring:message text="Amount" /></th>
+	<tr align="center">
+	<th style="width:10px">S.No</th>
+	<th style="width:10px"><spring:message code="inventory.viewStockBalance.drug"/></th>
+	<th style="width:10px"><spring:message code="inventory.viewStockBalance.formulation"/></th>
+	<th style="width:10px"><spring:message code="inventory.viewStockBalance.frequency"/></th>
+	<th style="width:10px"><spring:message code="inventory.issueDrug.noOfDays"/></th>
+	<th style="width:10px"><spring:message code="inventory.issueDrug.comments"/></th>
+	<th style="width:10px"><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
+	<th style="width:10px"><spring:message code="inventory.issueDrug.quantity"/></th>
+	<th style="width:10px"><spring:message code="inventory.receiptDrug.price" text="Price" /></th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty listDrugIssue}">
@@ -231,11 +250,15 @@
 	<c:set var="cccVar" value="CCC PATIENT"/>
 	<c:set var="total" value="${total + price}"/>
 	<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
-		<td><c:out value="${varStatus.count }"/></td>
-		<td>${detail.transactionDetail.drug.name} </td>	
-		<td>${detail.transactionDetail.formulation.name}-${detail.transactionDetail.formulation.dozage}</td>
-		<td align="center" >${detail.quantity }</td>
-		<td align="center" ><fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/></td>
+		<td style="width:10px"><c:out value="${varStatus.count }"/></td>
+		<td style="width:10px">${detail.transactionDetail.drug.name} </td>	
+		<td style="width:10px">${detail.transactionDetail.formulation.name}-${detail.transactionDetail.formulation.dozage}</td>
+		<td style="width:10px">${detail.transactionDetail.frequency.name} </td>	
+		<td style="width:10px">${detail.transactionDetail.noOfDays} </td>	
+		<td style="width:10px">${detail.transactionDetail.comments} </td>
+		<td style="width:10px"><openmrs:formatDate date="${detail.transactionDetail.dateExpiry}" type="textbox"/></td>
+		<td style="width:10px">${detail.quantity }</td>
+		<td style="width:10px"><fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/></td>
 		</tr>
 	</c:forEach>
 	<tr><td>&nbsp;</td></tr>
@@ -243,20 +266,26 @@
 	<tr>
 	<td></td>
 	<td></td>
-	<td>Drugs Not Issued</td>
 	<td></td>
-	<td></td>
-	</tr>
+	<c:choose>
+            <c:when test="${ not empty listOfNotDispensedOrder }">
+			<td width="100%"><b>Drugs not issued</b></td>
+		   </c:when>
+		</c:choose></tr>
 	<tr>
 		<td>&nbsp;</td>
 	</tr>
 	<c:forEach items="${listOfNotDispensedOrder}" var="nonDispensed" varStatus="varStatus">
 		<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
-		<td><c:out value="${varStatus.count }"/></td>
-		<td>${nonDispensed.inventoryDrug.name} </td>	
-		<td>${nonDispensed.inventoryDrugFormulation.name}-${nonDispensed.inventoryDrugFormulation.dozage} </td>
-		<td>Stock Not Available</td>
-		<td>N.A.</td>
+		<td style="width:10px"><c:out value="${varStatus.count }"/></td>
+		<td style="width:10px">${nonDispensed.inventoryDrug.name} </td>	
+		<td style="width:10px">${nonDispensed.inventoryDrugFormulation.name}-${nonDispensed.inventoryDrugFormulation.dozage} </td>
+		<td style="width:10px">${nonDispensed.frequency.name}</td>
+		<td style="width:10px">${nonDispensed.noOfDays}</td>
+		<td style="width:10px">${nonDispensed.comments}</td>
+		<td style="width:10px">N.A.</td>
+		<td style="width:10px">N.A.</td>
+		<td style="width:10px">N.A.</td>
 		</tr>
 	</c:forEach>
 	
@@ -265,6 +294,10 @@
 	</tr>
 	
 	<tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>

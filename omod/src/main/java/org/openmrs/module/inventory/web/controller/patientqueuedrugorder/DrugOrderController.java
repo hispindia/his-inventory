@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
+import org.openmrs.Concept;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.Patient;
@@ -110,7 +111,10 @@ public class DrugOrderController {
 		
 		Date date = new Date();
 		Integer formulationId;
+		String frequencyName;
+		String comments;
 		Integer quantity;
+		Integer noOfDays;
 		Integer avlId;
 		
 		InventoryStoreDrugPatient inventoryStoreDrugPatient = new InventoryStoreDrugPatient();
@@ -146,16 +150,32 @@ public class DrugOrderController {
 		if(avaiableId!=null){
 		for (String avId : avaiableId) {
 			InventoryCommonService inventoryCommonService = Context.getService(InventoryCommonService.class);
-		
+			
+			System.out.println(" in onSubmit *******************************************************");
+			
 			formulationId = Integer.parseInt(request.getParameter(avId
 					+ "_fFormulationId"));
+			System.out.println("formulationId:"+formulationId);
 			quantity = Integer.parseInt(request.getParameter(avId
 					+ "_fQuantity"));
+			System.out.println("quantity:"+quantity);
+		
 			
+			frequencyName = request.getParameter(avId + "_fFrequencyName");
+			noOfDays = Integer.parseInt(request.getParameter(avId + "_fnoOfDays"));
+			comments = request.getParameter(avId + "_fcomments");
+			
+			System.out.println("frequencyName:"+frequencyName);
+			System.out.println("noOfDays:"+noOfDays);
+			System.out.println("comments:"+comments);
+			
+			Concept fCon = Context.getConceptService().getConcept(frequencyName);
+			
+			System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 			if(quantity!=0){
 			 avlId = Integer.parseInt(avId);
 			 InventoryDrugFormulation inventoryDrugFormulation = inventoryCommonService.getDrugFormulationById(formulationId);
-			 
+			
 			 InventoryStoreDrugPatientDetail pDetail = new InventoryStoreDrugPatientDetail();
 			 
 			 InventoryStoreDrugTransactionDetail inventoryStoreDrugTransactionDetail = inventoryService.getStoreDrugTransactionDetailById(avlId);
@@ -188,7 +208,12 @@ public class DrugOrderController {
 			 transDetail.setCreatedOn(date);
 			 transDetail.setPatientType(patientType);
 			 transDetail.setEncounter(Context.getEncounterService().getEncounter(encounterId));
-				
+			
+			 transDetail.setFrequency(fCon);
+			 transDetail.setNoOfDays(noOfDays);
+			 transDetail.setComments(comments);
+			
+			 
 			 BigDecimal moneyUnitPrice = inventoryStoreDrugTransactionDetail.getCostToPatient().multiply(new BigDecimal(quantity));
 			// moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(inventoryStoreDrugTransactionDetail.getVAT().divide(new BigDecimal(100))));
 			 transDetail.setTotalPrice(moneyUnitPrice);

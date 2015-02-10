@@ -252,5 +252,18 @@
 			ALTER  TABLE inventory_store_drug_transaction_detail add COLUMN `encounter_id` integer;
 		</sql>
 	</diff>
+	<diff>
+		<version>2.3.6</version>
+		<author>Amit Sharma</author>
+		<date>Feb 09, 2015</date>
+		<description>
+			to add new fields
+		</description>
+		<sql>
+			ALTER  TABLE inventory_store_drug_transaction_detail ADD COLUMN (`frequency_concept_id` INT(11) DEFAULT NULL,
+                        `no_of_days` INT(11) DEFAULT NULL,
+                        `comments` VARCHAR(200) DEFAULT NULL);
+		</sql>
+	</diff>
 	
 </sqldiff>

@@ -67,6 +67,18 @@
 							name="${avaiable.id }_formulationId" type='hidden'
 							value="${avaiable.formulation.id }" />
 						</td>
+						<td><input id="${avaiable.id }_frequencyName"
+							name="${avaiable.id }_frequencyName" type='hidden'
+							value="${frequencyName}" />
+						</td>
+						<td><input id="${avaiable.id }_noOfDays"
+							name="${avaiable.id }_noOfDays" type='hidden'
+							value="${noOfDays}" />
+						</td>
+						<td><input id="${avaiable.id }_comments"
+							name="${avaiable.id }_comments" type='hidden'
+							value="${comments}" />
+						</td>
 						<c:set var="price" value="${avaiable.costToPatient}" />
 						<td><input id="${avaiable.id }_price"
 							name="${avaiable.id }_price" type='hidden'

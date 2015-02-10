@@ -74,14 +74,18 @@
 
 
 <script type="text/javascript">
-function process(drugId,formulationId){
+function process(drugId,formulationId,frequencyName,days,comments){
 
+	
 jQuery.ajax({
 			type : "GET",
 			url : getContextPath() + "/module/inventory/processDrugOrder.form",
 			data : ({
 				drugId			: drugId,
-				formulationId		: formulationId
+				formulationId		: formulationId,
+				frequencyName		: frequencyName,
+				days		: days,
+				comments		: comments
 			}),
 			success : function(data) {
 				jQuery("#processDrugOrder").html(data);	
@@ -120,6 +124,9 @@ function issueDrugOrder(listOfDrugQuantity) {
    var drugName=document.getElementById(availableIdArr[i].toString()+'_drugName').value;
    var formulation=document.getElementById(availableIdArr[i].toString()+'_formulation').value;
    var formulationId=document.getElementById(availableIdArr[i].toString()+'_formulationId').value;
+   var frequencyName=document.getElementById(availableIdArr[i].toString()+'_frequencyName').value;
+   var noOfDays=document.getElementById(availableIdArr[i].toString()+'_noOfDays').value;
+   var comments=document.getElementById(availableIdArr[i].toString()+'_comments').value;
    var price=document.getElementById(availableIdArr[i].toString()+'_price').value;
   
   totalValue = (totalValue + price*quantity);
@@ -138,7 +145,10 @@ function issueDrugOrder(listOfDrugQuantity) {
 	       	 +"<input id='"+avaiableId+"_fQuantity'  name='"+avaiableId+"_fQuantity' type='text' size='3' value='"+quantity+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fPrice'  name='"+avaiableId+"_fPrice' type='text' size='3' type='hidden' value='"+price+"'  readonly='readonly'/>&nbsp;"
 			 +"<input id='"+avaiableId+"_fFormulationId'  name='"+avaiableId+"_fFormulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
-	       	 +"<input id='"+avaiableId+"_fAavaiableId'  name='avaiableId' type='hidden' value='"+avaiableId+"'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fAvaiableId'  name='avaiableId' type='hidden' value='"+avaiableId+"'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fFrequencyName'  name='"+avaiableId+"_fFrequencyName' type='hidden' value='"+frequencyName+"'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fnoOfDays'  name='"+avaiableId+"_fnoOfDays' type='hidden' value='"+noOfDays+"'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fcomments'  name='"+avaiableId+"_fcomments' type='hidden' value='"+comments+"'/>&nbsp;"
 	       	 +"<input id='drugProcessName'  name='drugProcessName' type='hidden' value='"+drugName+"'/>&nbsp;"
 	       	 //+"<a style='color:red' href='#' onclick='"+deleteString+"' >[X]</a>"	
 	       	 +"</div>";
@@ -275,6 +285,7 @@ return false;
 				<th style="text-align: center;">Formulation</th>
 				<th style="text-align: center;">Frequency</th>
 				<th style="text-align: center;">Days</th>
+				<th style="text-align: center;">Comments</th>
 				<th style="text-align: center;">Action</th>
 			</tr>
 		</thead>
@@ -294,8 +305,9 @@ return false;
 					<td align="center">${dol.inventoryDrugFormulation.name}-${dol.inventoryDrugFormulation.dozage}</td>
 					<td align="center">${dol.frequency.name}</td>
 					<td align="center">${dol.noOfDays}</td>
+					<td align="center">${dol.comments}</td>
 					<td align="center"><input type="button"
-						onclick="process(${dol.inventoryDrug.id},${dol.inventoryDrugFormulation.id});"
+						onclick="process(${dol.inventoryDrug.id},${dol.inventoryDrugFormulation.id},'${dol.frequency.name}',${dol.noOfDays},'${dol.comments}');"
 						value="Process">
 					</td>
 				</tr>

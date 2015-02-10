@@ -1273,9 +1273,10 @@ public class AjaxController {
             int patientId = pi.getPatient().getPatientId();
             Date issueDate = listDrugIssue.get(0).getStoreDrugPatient().getCreatedOn();
             Encounter encounterId = listDrugIssue.get(0).getTransactionDetail().getEncounter();
+            List<OpdDrugOrder> listOfNotDispensedOrder = null;
              if(encounterId!= null )
             {
-            	List<OpdDrugOrder> listOfNotDispensedOrder = inventoryService.listOfNotDispensedOrder(patientId,issueDate,encounterId);
+            	listOfNotDispensedOrder = inventoryService.listOfNotDispensedOrder(patientId,issueDate,encounterId);
             	
             	model.addAttribute("listOfNotDispensedOrder", listOfNotDispensedOrder);
             }
@@ -1289,6 +1290,9 @@ public class AjaxController {
                  System.out.println(listOfNotDispensedOrder.get(i).getInventoryDrug().getId());
                  System.out.println(listOfNotDispensedOrder.get(i).getInventoryDrug().getFormulations().iterator().next().getName());
                  System.out.println(listOfNotDispensedOrder.get(i).getEncounter());
+                 System.out.println(listOfNotDispensedOrder.get(i).getComments());
+                 System.out.println(listOfNotDispensedOrder.get(i).getNoOfDays());
+                 System.out.println(listOfNotDispensedOrder.get(i).getFrequency());
              }*/
           
            
@@ -1699,7 +1703,11 @@ public class AjaxController {
 	public String listReceiptDrugAvailablee(
 			@RequestParam(value = "drugId", required = false) Integer drugId,
 			@RequestParam(value = "formulationId", required = false) Integer formulationId,
+			@RequestParam(value = "frequencyName", required = false) String frequencyName,
+			@RequestParam(value = "days", required = false) Integer days,
+			@RequestParam(value = "comments", required = false) String comments,
 			Model model) {
+
 		InventoryService inventoryService = (InventoryService) Context
 				.getService(InventoryService.class);
 		InventoryDrug drug = inventoryService.getDrugById(drugId);
@@ -1774,6 +1782,9 @@ public class AjaxController {
 			}
 
 			model.addAttribute("listOfDrugQuantity", listOfDrugQuantity);
+			model.addAttribute("frequencyName", frequencyName);
+			model.addAttribute("noOfDays", days);
+			model.addAttribute("comments", comments);
 		}
 
 		return "/module/inventory/queue/processDrugOrder";
