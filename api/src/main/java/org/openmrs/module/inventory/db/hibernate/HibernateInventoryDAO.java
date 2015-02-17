@@ -4579,7 +4579,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		String hql = "SELECT DISTINCT ps from PatientSearch ps,OpdDrugOrder o INNER JOIN o.patient p where ps.patientId=p.patientId " +
 		" AND o.createdOn BETWEEN '"+ startDate+ "' AND '" + endDate + "' " +
 		" AND o.orderStatus=0 AND o.cancelStatus=0 " +
-		" AND (ps.identifier LIKE '%" 	+ searchKey + "%' OR ps.fullname LIKE '" + searchKey + "%')";
+		" AND (ps.identifier LIKE '%" 	+ searchKey + "%' OR ps.fullname LIKE '%" + searchKey + "%')";
 		Session session = sessionFactory.getCurrentSession();
 		Query q = session.createQuery(hql);
 		List<PatientSearch> list = q.list();
