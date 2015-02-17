@@ -94,7 +94,7 @@
 <div class="box">
 	Date:
 	<input id="date" value="${currentDate}" style="text-align:right;"/>
-	Patient ID/Name:
+	Patient ID/First Name:
 	<input id="searchKey"/>
 	<br/>
 	<input type="button" value="Get patients" onClick="getQueue(1);"/>
