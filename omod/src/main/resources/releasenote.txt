@@ -1,3 +1,9 @@
+2.0.10
+- #Various validation has been implemented in receipt page like: company name validation , expiry date validation.
+- #Unit price and Institutional costs are optional now.
+- #Cost to patient column in receipt to General store. All the calculations against drugs and items will be done on this column.
+   This value is mandatory for all the drugs and items at the time of indexing.
+
 2.0.9
 Inventory & Pharmacy
 - #Billed pharmacy
