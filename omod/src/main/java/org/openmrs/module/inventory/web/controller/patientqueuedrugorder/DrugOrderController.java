@@ -86,7 +86,7 @@ public class DrugOrderController {
 		model.addAttribute("patientType", patientType);
 		model.addAttribute("date", dateStr);
 		model.addAttribute("doctor", drugOrderList.get(0).getCreator().getGivenName());
-		System.out.println("Name -  "+drugOrderList.get(0).getCreator().getGivenName());
+		
 		
 		InventoryStoreDrugPatient inventoryStoreDrugPatient = new InventoryStoreDrugPatient();
 		model.addAttribute("pharmacist", Context.getAuthenticatedUser().getGivenName());
@@ -222,6 +222,7 @@ public class DrugOrderController {
 				IndoorPatientServiceBill bill = new IndoorPatientServiceBill();
 				bill.setActualAmount(moneyUnitPrice);
 				bill.setAmount(moneyUnitPrice);
+				
 				bill.setEncounter(lastVisitEncounter);
 				bill.setCreatedDate(new Date());
 				bill.setPatient(patient);
@@ -233,6 +234,7 @@ public class DrugOrderController {
 				item.setUnitPrice(pDetail.getTransactionDetail().getCostToPatient());
 				item.setAmount(moneyUnitPrice);
 				item.setQuantity(pDetail.getQuantity());
+				
 		    //  System.out.println("pDetail.getQuantity():"+pDetail.getQuantity());
 				
 				item.setName(pDetail.getTransactionDetail().getDrug().getName());

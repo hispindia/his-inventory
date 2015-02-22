@@ -1933,8 +1933,8 @@ public class AjaxController {
 				BillingService billingService = Context.getService(BillingService.class);
 				IndoorPatientServiceBill bill = new IndoorPatientServiceBill();
 				
-				if(patientSubCatergory == "GENERAL" || patientSubCatergory == "EXPECTANT MOTHER" 
-					|| patientSubCatergory == "TB PATIENT" || patientSubCatergory == "CCC PATIENT")
+				if(patientSubCatergory.equals("GENERAL")  || patientSubCatergory.equals("EXPECTANT MOTHER") 
+						|| patientSubCatergory.equals("TB PATIENT") || patientSubCatergory.equals("CCC PATIENT"))
 				{
 					bill.setActualAmount(moneyUnitPrice);
 					bill.setAmount(moneyUnitPrice);
@@ -1952,11 +1952,12 @@ public class AjaxController {
 
 				
 				IndoorPatientServiceBillItem item = new IndoorPatientServiceBillItem();
-				if(patientSubCatergory == "GENERAL" || patientSubCatergory == "EXPECTANT MOTHER" 
-					|| patientSubCatergory == "TB PATIENT" || patientSubCatergory == "CCC PATIENT")
+				if(patientSubCatergory.equals("GENERAL")  || patientSubCatergory.equals("EXPECTANT MOTHER") 
+					|| patientSubCatergory.equals("TB PATIENT") || patientSubCatergory.equals("CCC PATIENT"))
 				{
 					item.setUnitPrice(pDetail.getTransactionDetail().getCostToPatient());
 					item.setAmount(moneyUnitPrice);
+				
 				}
 				else
 				{
@@ -2123,8 +2124,8 @@ public class AjaxController {
 				IndoorPatientServiceBill bill = new IndoorPatientServiceBill();
 				
 
-				if(patientSubCatergory == "GENERAL" || patientSubCatergory == "EXPECTANT MOTHER" 
-					|| patientSubCatergory == "TB PATIENT" || patientSubCatergory == "CCC PATIENT")
+				if(patientSubCatergory.equals("GENERAL")  || patientSubCatergory.equals("EXPECTANT MOTHER") 
+						|| patientSubCatergory.equals("TB PATIENT") || patientSubCatergory.equals("CCC PATIENT"))
 				{
 					bill.setActualAmount(moneyUnitPrice);
 					bill.setAmount(moneyUnitPrice);
@@ -2134,7 +2135,7 @@ public class AjaxController {
 					bill.setActualAmount(new BigDecimal(0));
 					bill.setAmount(new BigDecimal(0));
 				}
-				
+	
 				bill.setEncounter(lastVisitEncounter);
 				bill.setCreatedDate(new Date());
 				bill.setPatient(issueItemPatient.getPatient());
@@ -2142,8 +2143,8 @@ public class AjaxController {
 
 				
 				IndoorPatientServiceBillItem item = new IndoorPatientServiceBillItem();
-				if(patientSubCatergory == "GENERAL" || patientSubCatergory == "EXPECTANT MOTHER" 
-					|| patientSubCatergory == "TB PATIENT" || patientSubCatergory == "CCC PATIENT")
+				if(patientSubCatergory.equals("GENERAL")  || patientSubCatergory.equals("EXPECTANT MOTHER") 
+						|| patientSubCatergory.equals("TB PATIENT") || patientSubCatergory.equals("CCC PATIENT"))
 				{
 					item.setUnitPrice(pDetail.getTransactionDetail().getCostToPatient());
 					item.setAmount(moneyUnitPrice);
@@ -2153,6 +2154,7 @@ public class AjaxController {
 					item.setUnitPrice(new BigDecimal(0));
 					item.setAmount(new BigDecimal(0));
 				}
+
 				item.setQuantity(pDetail.getQuantity());
 				item.setName(pDetail.getTransactionDetail().getItem().getName());
 				item.setCreatedDate(new Date());
