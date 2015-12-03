@@ -23,17 +23,7 @@
 
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
-<script type="text/javascript">
-function fun()
-{
- var ddl = document.getElementById("${sFormulation.id}");
- var selectedValue = ddl.options[ddl.selectedIndex].value;
-    if (selectedValue == "${sFormulation.id}")
-   {
-    alert("Please select a card type");
-   }
-}
-</script>
+
 
 <h2><spring:message code="inventory.drug.manage"/></h2>
 
