@@ -23,6 +23,18 @@
 
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
+<script type="text/javascript">
+function fun()
+{
+ var ddl = document.getElementById("${sFormulation.id}");
+ var selectedValue = ddl.options[ddl.selectedIndex].value;
+    if (selectedValue == "${sFormulation.id}")
+   {
+    alert("Please select a card type");
+   }
+}
+</script>
+
 <h2><spring:message code="inventory.drug.manage"/></h2>
 
 <c:forEach items="${errors.allErrors}" var="error">
@@ -67,22 +79,26 @@
 	<tr>
 		<td><spring:message code="inventory.drug.formulation"/><em>*</em></td>
 		<td><spring:bind path="drug.formulations">
-			<select ${not empty  delete? 'disabled="disabled"' : ''}   name="${status.expression }" id="${status.expression }"  multiple="multiple"  size="10" style="width:150px">
+		<select    name="${status.expression}" id="${status.expression}"  multiple="multiple"  size="10" style="width:150px"> 
 				<c:forEach items="${formulations}" var="sFormulation">
+									
+				 
 					<option value="${sFormulation.id}"
 						<c:forEach items="${status.value}" var="formulation">
-							<c:if test="${sFormulation.id == formulation.id}"> selected</c:if>
-						</c:forEach>
+						
+						    	<c:if test="${sFormulation.id == formulation.id}"> selected</c:if>
+						</c:forEach> 
 					>${sFormulation.name}-${sFormulation.dozage}
 					</option>
 				</c:forEach>
 			</select>
-			${not empty  delete? 'Formulation field is read only in this case' : ''}
+			${not empty add ? 'Please do not remove the selected option':'Please do not remove the selected option' }
 			<c:if test="${status.errorMessage != ''}"><span class="error">${status.errorMessage}</span></c:if>
 			</spring:bind>
 		</td>
 
 	</tr>
+
 	<tr>
 		<td><spring:message code="inventory.drug.unit"/><em>*</em></td>
 		<td>

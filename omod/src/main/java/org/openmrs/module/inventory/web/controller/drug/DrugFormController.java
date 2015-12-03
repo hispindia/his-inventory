@@ -41,19 +41,25 @@ public class DrugFormController {
 Log log = LogFactory.getLog(this.getClass());
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String firstView(@ModelAttribute("drug") InventoryDrug drug, @RequestParam(value="drugId",required=false) Integer id, Model model) {
+	public String firstView(@ModelAttribute("drug") InventoryDrug drug, HttpServletRequest request, @RequestParam(value="drugId",required=false) Integer id, Model model) {
 		if( id != null ){
 			InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 			int  countDrugInTransactionDetail = inventoryService.checkExistDrugTransactionDetail(id);
-			int  countDrugInIndentDetail = inventoryService.checkExistDrugIndentDetail(id);
 			
-			if(countDrugInIndentDetail > 0 || countDrugInTransactionDetail >0){
-				model.addAttribute("delete", "This drug is used in receipt or issue , you can't edit it");
+			int  countDrugInIndentDetail = inventoryService.checkExistDrugIndentDetail(id);
+		
+			if(countDrugInIndentDetail >0 || countDrugInTransactionDetail >0){
+				model.addAttribute("add", "You can edit this drug");
+				
 			}
 			
 			drug = Context.getService(InventoryService.class).getDrugById(id);
 			model.addAttribute("drug",drug);
-		}
+			System.out.println("formulations"+inventoryService.getDrugById(drug.getId()).getFormulations());
+			/*if(drug.getFormulations()!= inventoryService.getDrugById(drug.getId()).getFormulations() ){
+				drug.setFormulations(inventoryService.getDrugById(drug.getId()).getFormulations());
+			}*/
+					}
 		return "/module/inventory/drug/drug";
 	}
 	@ModelAttribute("categories")
@@ -68,6 +74,8 @@ Log log = LogFactory.getLog(this.getClass());
  
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		List<InventoryDrugFormulation> formulations = inventoryService.findDrugFormulation("");
+
+		//System.out.println()
 		return formulations;
 	}
 	@ModelAttribute("units")
@@ -102,16 +110,22 @@ Log log = LogFactory.getLog(this.getClass());
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public String onSubmit(@ModelAttribute("drug") InventoryDrug drug, BindingResult bindingResult, HttpServletRequest request, SessionStatus status) {
+		   
 		new DrugValidator().validate(drug, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return "/module/inventory/drug/drug";
 			
-		}else{
+		}
+		else{
 			InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 			drug.setCreatedBy(Context.getAuthenticatedUser().getGivenName());
 			drug.setCreatedOn(new Date());
+			
 			inventoryService.saveDrug(drug);
-			status.setComplete();
+		
+
+						status.setComplete();
+			
 			return "redirect:/module/inventory/drugList.form";
 		}
 	}
