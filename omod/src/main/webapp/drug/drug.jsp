@@ -67,7 +67,8 @@
 	<tr>
 		<td><spring:message code="inventory.drug.formulation"/><em>*</em></td>
 		<td><spring:bind path="drug.formulations">
-			<select ${not empty  delete? 'disabled="disabled"' : ''}   name="${status.expression }" id="${status.expression }"  multiple="multiple"  size="10" style="width:150px">
+		<%--New Requirement "UnFreeze Formulation" --%>
+			<select name="${status.expression }" id="${status.expression }"  multiple="multiple"  size="10" style="width:150px">
 				<c:forEach items="${formulations}" var="sFormulation">
 					<option value="${sFormulation.id}"
 						<c:forEach items="${status.value}" var="formulation">
@@ -77,7 +78,8 @@
 					</option>
 				</c:forEach>
 			</select>
-			${not empty  delete? 'Formulation field is read only in this case' : ''}
+			<%--New Requirement "UnFreeze Formulation" --%>
+			${not empty add ? 'Please do not remove the selected option':'Please do not remove the selected option' }
 			<c:if test="${status.errorMessage != ''}"><span class="error">${status.errorMessage}</span></c:if>
 			</spring:bind>
 		</td>
