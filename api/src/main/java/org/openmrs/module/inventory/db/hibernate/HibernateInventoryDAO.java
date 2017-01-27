@@ -1195,6 +1195,15 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		return (InventoryStoreDrugTransactionDetail) criteria.uniqueResult();
 	}
 	
+	public List<InventoryStoreDrugTransactionDetail> getStoreDrugTransactionDetailByIdAndFormulation(InventoryDrug inventoryDrug,InventoryDrugFormulation formulation){
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(InventoryStoreDrugTransactionDetail.class,
+	    "transactionDetail");
+	   criteria.add(Restrictions.eq("transactionDetail.drug", inventoryDrug));	
+	   criteria.add(Restrictions.eq("transactionDetail.formulation", formulation));	
+	   criteria.add(Restrictions.lt("transactionDetail.dateExpiry", new Date()));	
+	   return criteria.list();
+	}
+	
 	public List<InventoryStoreDrugTransactionDetail> listStoreDrugTransactionDetail(Integer storeId, Integer drugId,
 	                                                                                Integer formulationId,
 	                                                                                boolean haveQuantity)
@@ -1312,7 +1321,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		ProjectionList proList = Projections.projectionList();
 		proList.add(Projections.groupProperty("drug")).add(Projections.groupProperty("formulation"))
 		        .add(Projections.sum("currentQuantity")).add(Projections.sum("quantity"))
-		        .add(Projections.sum("issueQuantity"));
+		        .add(Projections.sum("issueQuantity")).add(Projections.property("id"));
 		criteria.add(Restrictions.eq("transaction.store.id", storeId));
 		if (categoryId != null) {
 			criteria.add(Restrictions.eq("drugAlias.category.id", categoryId));
@@ -1365,8 +1374,9 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		}
 		
 		
-/*Sagar Bele : 13-08-2012  Bug #330 ( [INVENTORY]-error in Current quantity of pharmacy )*/
 		criteria.add(Restrictions.ge("transactionDetail.currentQuantity", 0));
+		
+		criteria.add(Restrictions.eq("transactionDetail.expireStatus", 0));
 	
 		
 		criteria.setProjection(proList);
@@ -1385,6 +1395,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 			tDetail.setCurrentQuantity((Integer) row[2]);
 			tDetail.setQuantity((Integer) row[3]);
 			tDetail.setIssueQuantity((Integer) row[4]);
+			tDetail.setId((Integer) row[5]);
 			list.add(tDetail);
 		}
 		

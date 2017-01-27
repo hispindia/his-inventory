@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.openmrs.Patient;
 import org.openmrs.Role;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.InventoryCommonService;
 import org.openmrs.module.hospitalcore.model.InventoryDrug;
 import org.openmrs.module.hospitalcore.model.InventoryDrugCategory;
 import org.openmrs.module.hospitalcore.model.InventoryDrugFormulation;
@@ -852,10 +853,10 @@ public class AjaxController {
 		PagingUtil pagingUtil = new PagingUtil( RequestUtil.getCurrentLink(request)+temp , pageSize, currentPage, total );
 		List<InventoryStoreDrugTransactionDetail> stockBalances = inventoryService.listViewStockBalance(store.getId(), categoryId, drugName,  fromDate, toDate, true, pagingUtil.getStartPos(), pagingUtil.getPageSize());
 		List<InventoryDrugCategory> listCategory = inventoryService.listDrugCategory("", 0, 0);
-		//03/07/2012: Kesavulu:sort Item Names  #300
 		if (stockBalances!=null){
 		Collections.sort(stockBalances);
 		}
+		
 		model.put("categoryId", categoryId );
 		model.put("drugName", drugName );
 		model.put("fromDate", fromDate );
@@ -872,6 +873,24 @@ public class AjaxController {
 		}
 	 
 	}
+	
+	@RequestMapping(value="/module/inventory/expireDrug.form",method = RequestMethod.GET)
+	public String expireDrug(@RequestParam(value="transactionIdList",required=false)  String transactionIdList){
+	InventoryCommonService inventoryCommonService = (InventoryCommonService) Context.getService(InventoryCommonService.class);
+	InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
+	for(String transactionId:transactionIdList.split(",")){
+	InventoryStoreDrugTransactionDetail isdtd=inventoryService.getStoreDrugTransactionDetailById(Integer.parseInt(transactionId));
+	isdtd.getDrug();
+	isdtd.getBatchNo();
+	List<InventoryStoreDrugTransactionDetail> isdtds=inventoryService.getStoreDrugTransactionDetailByIdAndFormulation(isdtd.getDrug(),isdtd.getFormulation());
+	for(InventoryStoreDrugTransactionDetail isdt:isdtds){
+	isdt.setExpireStatus(1);
+	inventoryCommonService.expireInventoryStoreDrugTransactionDetail(isdt);
+	}
+	}
+	return "redirect:/module/inventory/viewStockBalanceExpiry.form";
+	}
+			
 	@RequestMapping("/module/inventory/removeObjectFromList.form")
 	public String removeObjectFromList( @RequestParam(value="position")  Integer position,@RequestParam(value="check")  Integer check, Model model) {
 		int userId = Context.getAuthenticatedUser().getId();
