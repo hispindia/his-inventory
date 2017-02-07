@@ -49,7 +49,7 @@
 <span class="boxHeader"><spring:message code="inventory.receiptItem.receiptItemList"/></span>
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0">
-	<tr align="center">
+	<tr align="left">
 	<th>#</th>
 	<th><spring:message code="inventory.receiptItem.description"/></th>
 	<th><spring:message code="inventory.receiptItem.createdOn"/></th>
@@ -58,7 +58,7 @@
 	<c:choose>
 	<c:when test="${not empty transactions}">
 	<c:forEach items="${transactions}" var="receipt" varStatus="varStatus">
-	<tr align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+	<tr align="left" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${(( pagingUtil.currentPage - 1  ) * pagingUtil.pageSize ) + varStatus.count }"/></td>
 		<td><a href="#" title="Detail indent" onclick="RECEIPT.detailReceiptItem('${ receipt.id}');">
 		

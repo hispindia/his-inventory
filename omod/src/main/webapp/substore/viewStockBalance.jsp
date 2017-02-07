@@ -58,7 +58,7 @@
 <span class="boxHeader"><spring:message code="inventory.viewStockBalance.list"/></span>
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0">
-	<tr align="center">
+	<tr align="left">
 	<th>#</th>
 	<th><spring:message code="inventory.viewStockBalance.name"/></th>
 	<th><spring:message code="inventory.viewStockBalance.category"/></th>
@@ -72,7 +72,7 @@
 	<c:choose>
 	<c:when test="${not empty stockBalances}">
 	<c:forEach items="${stockBalances}" var="balance" varStatus="varStatus">
-	<tr align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" }' >
+	<tr align="left" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" }' >
 		<td><c:out value="${(( pagingUtil.currentPage - 1  ) * pagingUtil.pageSize ) + varStatus.count }"/></td>
 		<td><a href="#" onclick="STOCKBALLANCE.detailSubStoreDrug('${balance.drug.id}', '${balance.formulation.id}');" title="Detail all transactions of this drug">${balance.drug.name}</a></td>
 		<td>${balance.drug.category.name} </td>	

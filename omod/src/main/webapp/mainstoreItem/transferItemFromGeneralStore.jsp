@@ -82,22 +82,22 @@
 
 <c:when test="${not empty listIndent}">
 <table width="100%" cellpadding="0" cellspacing="0">
-<tr align="center">
+<tr align="left">
 	<th >#</th>
-	<th align="center" ><spring:message code="inventory.indentItem.fromStore"/></th>
-	<th align="center" ><spring:message code="inventory.indentItem.name"/></th>
-	<th align="center" ><spring:message code="inventory.indentItem.createdOn"/></th>
-	<th align="center" ><spring:message code="inventory.indentItem.status"/></th>
+	<th><spring:message code="inventory.indentItem.fromStore"/></th>
+	<th><spring:message code="inventory.indentItem.name"/></th>
+	<th><spring:message code="inventory.indentItem.createdOn"/></th>
+	<th><spring:message code="inventory.indentItem.status"/></th>
 	<th></th>
 	
 </tr>
 <c:forEach items="${listIndent}" var="indent" varStatus="varStatus">
-	<tr align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+	<tr align="left" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${(( pagingUtil.currentPage - 1  ) * pagingUtil.pageSize ) + varStatus.count }"/></td>
 		<td>${indent.store.name}</td>
-		<td align="center"><a href="#" title="Detail indent" onclick="INDENT.detailItemIndent('${ indent.id}');">${indent.name}</a> </td>
-		<td align="center"><openmrs:formatDate date="${indent.createdOn}" type="textbox"/> </td>
-		<td align="center">${indent.mainStoreStatusName} </td>
+		<td><a href="#" title="Detail indent" onclick="INDENT.detailItemIndent('${ indent.id}');">${indent.name}</a> </td>
+		<td><openmrs:formatDate date="${indent.createdOn}" type="textbox"/> </td>
+		<td>${indent.mainStoreStatusName} </td>
 		<td>
 		<c:if test="${indent.mainStoreStatus == 1 }">
 			<a href="#" onclick="ACT.go('mainStoreItemProcessIndent.form?indentId=${ indent.id}');"><spring:message code="inventory.indentItem.process"/></a>
