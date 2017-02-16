@@ -23,6 +23,46 @@
 <spring:message var="pageTitle" code="inventory.viewStockBalance.manage" scope="page"/>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="nav.jsp" %>
+
+<script type="text/javascript">
+var transactionIdList = new Array();
+
+function selectAll(){
+if(jQuery("#select").attr('checked')){
+transactionIdList = new Array();
+<c:forEach var="stockBalance" items="${stockBalances}">
+var drugCheck="#drugCheck"+"${stockBalance.id}";
+jQuery(drugCheck).attr('checked','checked');
+transactionIdList.push(${stockBalance.id}); 
+</c:forEach>  
+}
+else{
+transactionIdList = new Array();
+<c:forEach var="stockBalance" items="${stockBalances}">
+var drugCheck="#drugCheck"+"${stockBalance.id}";
+jQuery(drugCheck).attr('checked',false);
+</c:forEach>  
+}
+}
+
+
+function selectDrug(addId){
+var drugCheck="#drugCheck"+addId.toString();
+if(jQuery(drugCheck).attr('checked')){
+transactionIdList.push(addId);
+}
+else{
+transactionIdList = jQuery.grep(transactionIdList, function(value) {
+  return value != addId;
+});
+}
+}
+
+function disableDeleteButton(){
+jQuery("#delete").attr('disabled',true);
+}
+</script>
+
 <h2><spring:message code="inventory.viewStockBalance.manage"/></h2>	
 <br />
 <c:forEach items="${errors.allErrors}" var="error">
@@ -69,6 +109,8 @@
 	-->
 	<th ><spring:message code="inventory.receiptDrug.currentQuantity"/></th>
 	<th ><spring:message code="inventory.viewStockBalance.reorderPoint"/></th>
+	<th><input type="checkbox" id="select" value="select" onClick="selectAll();" />Select All</th>
+	<th><input type="button" style="float: right" id="delete" name="delete" value="Delete" onclick="disableDeleteButton();javascript:window.location.href='expireDrug.form?transactionIdList='+transactionIdList"  /></th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty stockBalances}">
@@ -84,6 +126,8 @@
 		-->
 		<td>${balance.currentQuantity}</td>
 		<td>${balance.drug.reorderQty}</td>
+		<td><input type="checkbox"  id="drugCheck${balance.id}" name="drugCheck${balance.id}" onclick="selectDrug(${balance.id});"/>
+		</td>
 		</tr>
 	</c:forEach>
 	</c:when>
