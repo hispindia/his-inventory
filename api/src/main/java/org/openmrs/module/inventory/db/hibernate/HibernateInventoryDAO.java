@@ -1195,12 +1195,14 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		return (InventoryStoreDrugTransactionDetail) criteria.uniqueResult();
 	}
 	
-	public List<InventoryStoreDrugTransactionDetail> getStoreDrugTransactionDetailByIdAndFormulation(InventoryDrug inventoryDrug,InventoryDrugFormulation formulation){
+	public List<InventoryStoreDrugTransactionDetail> getStoreDrugTransactionDetailByIdAndFormulation(Integer inventoryDrugId,Integer formulationId,Integer storeId){
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(InventoryStoreDrugTransactionDetail.class,
-	    "transactionDetail");
-	   criteria.add(Restrictions.eq("transactionDetail.drug", inventoryDrug));	
-	   criteria.add(Restrictions.eq("transactionDetail.formulation", formulation));	
+	    "transactionDetail").createAlias("transactionDetail.transaction", "transaction");
+	   criteria.add(Restrictions.eq("transactionDetail.drug.id", inventoryDrugId));	
+	   criteria.add(Restrictions.eq("transactionDetail.formulation.id", formulationId));	
 	   criteria.add(Restrictions.lt("transactionDetail.dateExpiry", new Date()));	
+	   //criteria.add(Restrictions.eq("transaction.store",storeId));
+	   criteria.add(Restrictions.eq("transaction.store.id", storeId));
 	   return criteria.list();
 	}
 	
@@ -1321,7 +1323,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		ProjectionList proList = Projections.projectionList();
 		proList.add(Projections.groupProperty("drug")).add(Projections.groupProperty("formulation"))
 		        .add(Projections.sum("currentQuantity")).add(Projections.sum("quantity"))
-		        .add(Projections.sum("issueQuantity")).add(Projections.property("id"));
+		        .add(Projections.sum("issueQuantity"));
 		criteria.add(Restrictions.eq("transaction.store.id", storeId));
 		if (categoryId != null) {
 			criteria.add(Restrictions.eq("drugAlias.category.id", categoryId));
@@ -1395,7 +1397,6 @@ public class HibernateInventoryDAO implements InventoryDAO {
 			tDetail.setCurrentQuantity((Integer) row[2]);
 			tDetail.setQuantity((Integer) row[3]);
 			tDetail.setIssueQuantity((Integer) row[4]);
-			tDetail.setId((Integer) row[5]);
 			list.add(tDetail);
 		}
 		

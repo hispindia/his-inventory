@@ -505,8 +505,8 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 		return dao.getStoreDrugTransactionDetailById(id);
 	}
 	
-	public List<InventoryStoreDrugTransactionDetail> getStoreDrugTransactionDetailByIdAndFormulation(InventoryDrug InventoryDrug,InventoryDrugFormulation formulation) throws APIException {
-		return dao.getStoreDrugTransactionDetailByIdAndFormulation(InventoryDrug,formulation);
+	public List<InventoryStoreDrugTransactionDetail> getStoreDrugTransactionDetailByIdAndFormulation(Integer inventoryDrugId,Integer formulationId,Integer storeId) throws APIException {
+		return dao.getStoreDrugTransactionDetailByIdAndFormulation(inventoryDrugId,formulationId,storeId);
 	}
 	
 	public List<InventoryStoreDrugTransactionDetail> listStoreDrugTransactionDetail(Integer storeId, Integer drugId,

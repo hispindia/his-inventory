@@ -25,35 +25,36 @@
 <%@ include file="nav.jsp" %>
 
 <script type="text/javascript">
-var transactionIdList = new Array();
+var drugIdList = new Array();
+var storeId = ${store.id};
 
 function selectAll(){
 if(jQuery("#select").attr('checked')){
-transactionIdList = new Array();
+drugIdList = new Array();
 <c:forEach var="stockBalance" items="${stockBalances}">
-var drugCheck="#drugCheck"+"${stockBalance.id}";
+var drugCheck="#drugCheck"+"${stockBalance.drug.id}-${stockBalance.formulation.id}";
 jQuery(drugCheck).attr('checked','checked');
-transactionIdList.push(${stockBalance.id}); 
+drugIdList.push('${stockBalance.drug.id}-${stockBalance.formulation.id}'); 
 </c:forEach>  
 }
 else{
-transactionIdList = new Array();
+drugIdList = new Array();
 <c:forEach var="stockBalance" items="${stockBalances}">
-var drugCheck="#drugCheck"+"${stockBalance.id}";
+var drugCheck="#drugCheck"+"${stockBalance.drug.id}-${stockBalance.formulation.id}";
 jQuery(drugCheck).attr('checked',false);
 </c:forEach>  
 }
 }
 
 
-function selectDrug(addId){
-var drugCheck="#drugCheck"+addId.toString();
+function selectDrug(drugIdAndformulationId){
+var drugCheck="#drugCheck"+drugIdAndformulationId;
 if(jQuery(drugCheck).attr('checked')){
-transactionIdList.push(addId);
+drugIdList.push(drugIdAndformulationId);
 }
 else{
-transactionIdList = jQuery.grep(transactionIdList, function(value) {
-  return value != addId;
+drugIdList = jQuery.grep(drugIdList, function(value) {
+  return value != drugIdAndformulationId;
 });
 }
 }
@@ -110,7 +111,7 @@ jQuery("#delete").attr('disabled',true);
 	<th ><spring:message code="inventory.receiptDrug.currentQuantity"/></th>
 	<th ><spring:message code="inventory.viewStockBalance.reorderPoint"/></th>
 	<th><input type="checkbox" id="select" value="select" onClick="selectAll();" />Select All</th>
-	<th><input type="button" style="float: right" id="delete" name="delete" value="Delete" onclick="disableDeleteButton();javascript:window.location.href='expireDrug.form?transactionIdList='+transactionIdList"  /></th>
+	<th><input type="button" style="float: right" id="delete" name="delete" value="Delete" onclick="disableDeleteButton();javascript:window.location.href='expireDrug.form?drugIdList='+drugIdList+'&storeId='+storeId"  /></th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty stockBalances}">
@@ -126,7 +127,7 @@ jQuery("#delete").attr('disabled',true);
 		-->
 		<td>${balance.currentQuantity}</td>
 		<td>${balance.drug.reorderQty}</td>
-		<td><input type="checkbox"  id="drugCheck${balance.id}" name="drugCheck${balance.id}" onclick="selectDrug(${balance.id});"/>
+		<td><input type="checkbox"  id="drugCheck${balance.drug.id}-${balance.formulation.id}" name="drugCheck${balance.drug.id}-${balance.formulation.id}" onclick="selectDrug('${balance.drug.id}-${balance.formulation.id}');"/>
 		</td>
 		</tr>
 	</c:forEach>

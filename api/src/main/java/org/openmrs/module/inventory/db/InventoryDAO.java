@@ -312,7 +312,7 @@ public interface InventoryDAO {
 	
 	public InventoryStoreDrugTransactionDetail getStoreDrugTransactionDetailById(Integer id) throws DAOException;
 	
-	public List<InventoryStoreDrugTransactionDetail> getStoreDrugTransactionDetailByIdAndFormulation(InventoryDrug InventoryDrug,InventoryDrugFormulation formulation) throws DAOException;
+	public List<InventoryStoreDrugTransactionDetail> getStoreDrugTransactionDetailByIdAndFormulation(Integer inventoryDrugId,Integer formulationId,Integer storeId) throws DAOException;
 	
 	public List<InventoryStoreDrugTransactionDetail> listStoreDrugTransactionDetail(Integer storeId, Integer drugId,
 	                                                                                Integer formulationId,

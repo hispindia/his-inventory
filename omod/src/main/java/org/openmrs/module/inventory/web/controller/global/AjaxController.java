@@ -875,17 +875,16 @@ public class AjaxController {
 	}
 	
 	@RequestMapping(value="/module/inventory/expireDrug.form",method = RequestMethod.GET)
-	public String expireDrug(@RequestParam(value="transactionIdList",required=false)  String transactionIdList){
+	public String expireDrug(@RequestParam(value="drugIdList",required=false)  String drugIdList,
+			@RequestParam(value="storeId",required=false)  Integer storeId){
 	InventoryCommonService inventoryCommonService = (InventoryCommonService) Context.getService(InventoryCommonService.class);
 	InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
-	for(String transactionId:transactionIdList.split(",")){
-	InventoryStoreDrugTransactionDetail isdtd=inventoryService.getStoreDrugTransactionDetailById(Integer.parseInt(transactionId));
-	isdtd.getDrug();
-	isdtd.getBatchNo();
-	List<InventoryStoreDrugTransactionDetail> isdtds=inventoryService.getStoreDrugTransactionDetailByIdAndFormulation(isdtd.getDrug(),isdtd.getFormulation());
+	for(String drugIdAndFormulationId:drugIdList.split(",")){
+	String[] drugAndFormulation=drugIdAndFormulationId.split("-");
+	List<InventoryStoreDrugTransactionDetail> isdtds=inventoryService.getStoreDrugTransactionDetailByIdAndFormulation(Integer.parseInt(drugAndFormulation[0]),Integer.parseInt(drugAndFormulation[1]),storeId);
 	for(InventoryStoreDrugTransactionDetail isdt:isdtds){
 	isdt.setExpireStatus(1);
-	inventoryCommonService.expireInventoryStoreDrugTransactionDetail(isdt);
+	InventoryStoreDrugTransactionDetail ip=inventoryCommonService.expireInventoryStoreDrugTransactionDetail(isdt);
 	}
 	}
 	return "redirect:/module/inventory/viewStockBalanceExpiry.form";
