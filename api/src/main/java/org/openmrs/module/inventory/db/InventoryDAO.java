@@ -334,6 +334,9 @@ public interface InventoryDAO {
 	                                                                      String drugName, String fromDate, String toDate,
 	                                                                      boolean isExpiry, int min, int max)
 	                                                                                                         throws DAOException;
+    public InventoryStoreDrugTransactionDetail viewStockBalance(Integer inventoryDrugId,Integer formulationId,Integer storeId) throws DAOException;;
+	
+	public InventoryStoreDrugTransactionDetail viewStockBalanceExpiry(Integer inventoryDrugId,Integer formulationId,Integer storeId) throws DAOException;;
 	
 	public List<InventoryStoreDrugTransactionDetail> listStoreDrugTransactionDetail(Integer storeId, Integer drugId,
 	                                                                                Integer formulationId, Integer isExpriry)

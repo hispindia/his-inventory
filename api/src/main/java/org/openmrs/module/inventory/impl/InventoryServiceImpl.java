@@ -551,6 +551,14 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 		return dao.listViewStockBalance(storeId, categoryId, drugName, fromDate, toDate, isExpiry, min, max);
 	}
 	
+	public InventoryStoreDrugTransactionDetail viewStockBalance(Integer inventoryDrugId,Integer formulationId,Integer storeId) throws APIException{
+		return dao.viewStockBalance(inventoryDrugId,formulationId,storeId);
+	}
+	
+	public InventoryStoreDrugTransactionDetail viewStockBalanceExpiry(Integer inventoryDrugId,Integer formulationId,Integer storeId) throws APIException{
+		return dao.viewStockBalanceExpiry(inventoryDrugId,formulationId,storeId);
+	}
+	
 	@Override
 	public List<InventoryStoreDrugTransactionDetail> listStoreDrugTransactionDetail(Integer storeId, Integer drugId,
 	                                                                                Integer formulationId, Integer isExpriry)

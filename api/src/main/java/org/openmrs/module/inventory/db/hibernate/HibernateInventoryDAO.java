@@ -1403,6 +1403,30 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		return list;
 	}
 	
+	public InventoryStoreDrugTransactionDetail viewStockBalance(Integer inventoryDrugId,Integer formulationId,Integer storeId){
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(InventoryStoreDrugTransactionDetail.class,
+	    "transactionDetail").createAlias("transactionDetail.transaction", "transaction");
+	   criteria.add(Restrictions.eq("transactionDetail.drug.id", inventoryDrugId));	
+	   criteria.add(Restrictions.eq("transactionDetail.formulation.id", formulationId));	
+	   criteria.add(Restrictions.ge("transactionDetail.dateExpiry", new Date()));	
+	   criteria.add(Restrictions.eq("transaction.store.id", storeId));
+	   criteria.addOrder(Order.desc("createdOn"));
+	   criteria.setMaxResults(1);
+	   return (InventoryStoreDrugTransactionDetail) criteria.uniqueResult();
+	}
+	
+	public InventoryStoreDrugTransactionDetail viewStockBalanceExpiry(Integer inventoryDrugId,Integer formulationId,Integer storeId){
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(InventoryStoreDrugTransactionDetail.class,
+	    "transactionDetail").createAlias("transactionDetail.transaction", "transaction");
+	   criteria.add(Restrictions.eq("transactionDetail.drug.id", inventoryDrugId));	
+	   criteria.add(Restrictions.eq("transactionDetail.formulation.id", formulationId));	
+	   criteria.add(Restrictions.lt("transactionDetail.dateExpiry", new Date()));	
+	   criteria.add(Restrictions.eq("transaction.store.id", storeId));
+	   criteria.addOrder(Order.desc("createdOn"));
+	   criteria.setMaxResults(1);
+	   return (InventoryStoreDrugTransactionDetail) criteria.uniqueResult();
+	}
+	
 	public Integer countViewStockBalance(Integer storeId, Integer categoryId, String drugName, String fromDate,
 	                                     String toDate, boolean isExpiry) throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession()
