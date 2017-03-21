@@ -46,7 +46,7 @@ Log log = LogFactory.getLog(this.getClass());
 			int  countDrugInIndentDetail = inventoryService.checkExistDrugIndentDetail(id);
 			
 			if(countDrugInIndentDetail > 0 || countDrugInTransactionDetail >0){
-				model.addAttribute("delete", "This drug is used in receipt or issue , you can't edit it");
+				model.addAttribute("add", "You can edit this drug");
 			}
 			
 			drug = Context.getService(InventoryService.class).getDrugById(id);

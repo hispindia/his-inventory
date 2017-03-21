@@ -39,11 +39,11 @@ public class DrugValidator {
     	InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
     	InventoryDrug drugE = inventoryService.getDrugByName(drug.getName());
     	if(drug.getId() != null){
-    		int  countDrugInTransactionDetail = inventoryService.checkExistDrugTransactionDetail(drug.getId());
+    		/*int  countDrugInTransactionDetail = inventoryService.checkExistDrugTransactionDetail(drug.getId());
 			int  countDrugInIndentDetail = inventoryService.checkExistDrugIndentDetail(drug.getId());
 			if(countDrugInIndentDetail > 0 || countDrugInTransactionDetail >0){
 				drug.setFormulations(inventoryService.getDrugById(drug.getId()).getFormulations());
-			}
+			}*/
     		if(drugE != null ){
     			if(drugE.getId().intValue() != drug.getId().intValue()){
     				error.reject("inventory.drug.name.existed");
