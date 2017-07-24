@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.Query;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -42,7 +44,10 @@ import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatient;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatientDetail;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransaction;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransactionDetail;
+import org.openmrs.module.hospitalcore.model.OpdDrugOrder;
+import org.openmrs.module.hospitalcore.model.PatientSearch;
 import org.openmrs.module.hospitalcore.util.ActionValue;
+import org.openmrs.module.inventory.InventoryConstants;
 import org.openmrs.module.inventory.db.InventoryDAO;
 import org.openmrs.module.inventory.model.InventoryItem;
 import org.openmrs.module.inventory.model.InventoryItemCategory;
@@ -1445,6 +1450,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		if (!StringUtils.isBlank(drugName)) {
 			criteria.add(Restrictions.like("drugAlias.name", "%" + drugName + "%"));
 		}
+		System.out.println("bcvbcbcbcbc");
 		if (!StringUtils.isBlank(fromDate) && StringUtils.isBlank(toDate)) {
 			String startFromDate = fromDate + " 00:00:00";
 			String endFromDate = fromDate + " 23:59:59";
@@ -3681,5 +3687,89 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		
 		return (InventoryStoreDrugAccountDetail) criteria.uniqueResult();
 	}
+	//order from opd
+	public List<OpdDrugOrder> listOfDrugOrder(Integer patientId,
+			Integer encounterId) throws DAOException {
+		String hql = "from OpdDrugOrder o where o.patient='" + patientId
+				+ "' AND o.encounter='" + encounterId
+				+ "' AND o.orderStatus=0 AND o.cancelStatus=0";
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.createQuery(hql);
+		List<OpdDrugOrder> list = q.list();
+		return list;
+	}
+	public OpdDrugOrder getOpdDrugOrder(Integer patientId,Integer encounterId,Integer inventoryDrugId,Integer formulationId) throws DAOException {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(
+				OpdDrugOrder.class);
+		criteria.add(Restrictions.eq("patient.id", patientId));
+		criteria.add(Restrictions.eq("encounter.encounterId", encounterId));
+		criteria.add(Restrictions.eq("inventoryDrug.id", inventoryDrugId));
+		criteria.add(Restrictions.eq("inventoryDrugFormulation.id", formulationId));
+
+		return (OpdDrugOrder) criteria.uniqueResult();
+	}
+	public List<OpdDrugOrder> listOfOrder(Integer patientId, Date date)
+			throws DAOException {
 	
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String startDate = sdf.format(date) + " 00:00:00";
+		String endDate = sdf.format(date) + " 23:59:59";
+		String hql = "from OpdDrugOrder o where o.patient='"
+				+ patientId
+				+ "' AND o.createdOn BETWEEN '"
+				+ startDate
+				+ "' AND '"
+				+ endDate
+				+ "' AND o.orderStatus=0 AND o.cancelStatus=0 GROUP BY encounter";
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.createQuery(hql);
+		List<OpdDrugOrder> list = q.list();
+		return list;
+	}
+	public int countSearchListOfPatient(Date date, String searchKey,
+			int page) throws DAOException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String startDate = sdf.format(date) + " 00:00:00";
+		String endDate = sdf.format(date) + " 23:59:59";
+		String hql = "SELECT DISTINCT ps from PatientSearch ps,OpdDrugOrder o INNER JOIN o.patient p where ps.patientId=p.patientId " +
+		" AND o.createdOn BETWEEN '"+ startDate+ "' AND '" + endDate + "' " +
+		" AND o.orderStatus=0 AND o.cancelStatus=0 " +
+		" AND (ps.identifier LIKE '%" 	+ searchKey + "%' OR ps.fullname LIKE '%" + searchKey + "%')";
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.createQuery(hql);
+		List<PatientSearch> list = q.list();
+		return list.size();
+	}
+	
+	public List<PatientSearch> searchListOfPatient(Date date, String searchKey,
+			int page) throws DAOException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String startDate = sdf.format(date) + " 00:00:00";
+		String endDate = sdf.format(date) + " 23:59:59";
+		String hql = "SELECT DISTINCT ps from PatientSearch ps,OpdDrugOrder o INNER JOIN o.patient p where ps.patientId=p.patientId " +
+		" AND o.createdOn BETWEEN '"+ startDate+ "' AND '" + endDate + "' " +
+		" AND o.orderStatus=0 AND o.cancelStatus=0 " +
+		" AND (ps.identifier LIKE '%" 	+ searchKey + "%' OR ps.fullname LIKE '" + searchKey + "%')";
+		int firstResult = (page - 1) * InventoryConstants.PAGESIZE;
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.createQuery(hql);
+		List<PatientSearch> list = q.list();
+		return list;
+	}
+	public List<PatientSearch> searchListOfPatient(Date date, String searchKey,
+			int page,int pgSize) throws DAOException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String startDate = sdf.format(date) + " 00:00:00";
+		String endDate = sdf.format(date) + " 23:59:59";
+		String hql = "SELECT DISTINCT ps from PatientSearch ps,OpdDrugOrder o INNER JOIN o.patient p where ps.patientId=p.patientId " +
+		" AND o.createdOn BETWEEN '"+ startDate+ "' AND '" + endDate + "' " +
+		" AND o.orderStatus=0 AND o.cancelStatus=0 " +
+		" AND (ps.identifier LIKE '%" 	+ searchKey + "%' OR ps.fullname LIKE '%"  + searchKey + "%')";
+		int firstResult = (page - 1) * pgSize;
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.createQuery(hql).setMaxResults(pgSize).setFirstResult(firstResult);
+		List<PatientSearch> list = q.list();
+		return list;
+	}
+
 }

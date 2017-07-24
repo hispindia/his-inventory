@@ -132,4 +132,15 @@
 			ALTER TABLE inventory_store_drug_transaction_detail ADD COLUMN expire_status  TINYINT(1) DEFAULT 0;
 		</sql>
 	</diff>
+		<diff>
+		<version>2.2.6</version>
+		<author>Ambika Tripathi</author>
+		<date>July 24,2017</date>
+		<description>
+			ALTER  TABLE inventory_store_drug_transaction and inventory_store_item_transaction
+		</description>
+		<sql>
+			ALTER  TABLE inventory_store_drug_transaction add COLUMN `patient_category` varchar(255) default NULL;
+		</sql>
+	</diff>
 </sqldiff>

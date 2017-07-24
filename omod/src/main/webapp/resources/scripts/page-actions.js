@@ -234,6 +234,7 @@ var CHECK =
 						"dateManufacture" : { required : true},
 						"quantity" : { required : true,digits : true,min : 1},
 						"unitPrice" : { required : true,number : true,min : 0},
+						"costToPatient" : { required : true,number : true,min : 0},
 						"VAT" : { required : true,number : true,min : 0},
 						"dateExpiry" : { required : true},
 						"receiptDate" : { required : true}
@@ -264,6 +265,7 @@ var CHECK =
 						"specification" : { required : true},
 						"quantity" : { required : true,digits : true,min : 1},
 						"unitPrice" : { required : true,number : true,min : 0},
+						"costToPatient" : { required : true,number : true,min : 0},
 						"VAT" : { required : true,number : true,min : 0},
 						"receiptDate" : { required : true}
 					

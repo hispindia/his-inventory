@@ -195,6 +195,7 @@ public class ProcessTransferDrugFromGeneralStoreController {
 						transDetail.setDateManufacture(trDetail.getDateManufacture());
 						transDetail.setFormulation(trDetail.getFormulation());
 						transDetail.setUnitPrice(trDetail.getUnitPrice());
+						transDetail.setCostToPatient(trDetail.getCostToPatient());
 						transDetail.setVAT(trDetail.getVAT());
 						transDetail.setParent(trDetail);
 						transDetail.setReceiptDate(date);
@@ -272,6 +273,7 @@ public class ProcessTransferDrugFromGeneralStoreController {
 						transDetail.setDateManufacture(trDetail.getDateManufacture());
 						transDetail.setFormulation(trDetail.getFormulation());
 						transDetail.setUnitPrice(trDetail.getUnitPrice());
+						transDetail.setCostToPatient(trDetail.getCostToPatient());
 						transDetail.setVAT(trDetail.getVAT());
 						transDetail.setParent(trDetail);
 						transDetail.setReceiptDate(date);

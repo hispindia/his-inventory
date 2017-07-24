@@ -27,7 +27,7 @@ public class InventoryConstants {
 	
 	public static final String STORE_DELETE = "Delete Store";
 	
-	
+	public static final Integer PAGESIZE = 20;
 
 }
 

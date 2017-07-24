@@ -107,6 +107,12 @@ VALIDATION={
 		</td>
 	</tr>
 	<tr>
+		<td><spring:message code="inventory.receiptDrug.costToPatient"/><em>*</em></td>
+		<td>
+			<input type="text" id="costToPatient" name="costToPatient" />
+		</td>
+	</tr>
+	<tr>
 		<td><spring:message code="inventory.receiptDrug.VAT"/><em>*</em></td>
 		<td>
 			<input type="text" id="VAT" name="VAT" />
@@ -161,6 +167,7 @@ VALIDATION={
 	<th><spring:message code="inventory.drug.formulation"/></th>
 	<th><spring:message code="inventory.receiptDrug.quantity"/></th>
 	<th><spring:message code="inventory.receiptDrug.unitPrice"/></th>
+	<th><spring:message code="inventory.receiptDrug.costToPatient"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
 	<th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
@@ -179,6 +186,7 @@ VALIDATION={
 		<td>${receipt.formulation.name}-${receipt.formulation.dozage}</td>
 		<td>${receipt.quantity}</td>
 		<td>${receipt.unitPrice}</td>
+		<td>${receipt.costToPatient}</td>
 		<td>${receipt.VAT}</td>
 		<td>${receipt.totalPrice}</td>
 		<td>${receipt.batchNo}</td>
@@ -225,6 +233,7 @@ VALIDATION={
 	<th><spring:message code="inventory.drug.formulation"/></th>
 	<th><spring:message code="inventory.receiptDrug.quantity"/></th>
 	<th><spring:message code="inventory.receiptDrug.unitPrice"/></th>
+	<th><spring:message code="inventory.receiptDrug.costToPatient"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
 	<th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
@@ -243,6 +252,7 @@ VALIDATION={
 		<td>${receipt.formulation.name}-${receipt.formulation.dozage}</td>
 		<td>${receipt.quantity}</td>
 		<td>${receipt.unitPrice}</td>
+		<td>${receipt.costToPatient}</td>
 		<td>${receipt.VAT}</td>
 		<td>${receipt.totalPrice}</td>
 		<td>${receipt.batchNo}</td>

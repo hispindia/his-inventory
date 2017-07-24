@@ -85,6 +85,7 @@ public class ReceiptFormController {
 		}else{
 		 drugId = drug.getId();
 		}
+		
 		int quantity = NumberUtils.toInt(request.getParameter("quantity"),0);
 		BigDecimal VAT = NumberUtils.createBigDecimal(request.getParameter("VAT"));
 		BigDecimal unitPrice =  NumberUtils.createBigDecimal(request.getParameter("unitPrice"));
@@ -93,6 +94,7 @@ public class ReceiptFormController {
 		String dateManufacture = request.getParameter("dateManufacture");
 		String dateExpiry = request.getParameter("dateExpiry");
 		String receiptDate = request.getParameter("receiptDate");
+		BigDecimal costToPatient = NumberUtils.createBigDecimal(request.getParameter("costToPatient"));
 		if(!StringUtils.isBlank(dateManufacture)){
 			Date dateManufac = DateUtils.getDateFromStr(dateManufacture);
 			Date dateExpi = DateUtils.getDateFromStr(dateExpiry);
@@ -121,6 +123,7 @@ public class ReceiptFormController {
 			model.addAttribute("VAT", VAT);
 			model.addAttribute("batchNo", batchNo);
 			model.addAttribute("unitPrice", unitPrice);
+			model.addAttribute("costToPatient", costToPatient);
 			model.addAttribute("companyName", companyName);
 			model.addAttribute("dateManufacture", dateManufacture);
 			model.addAttribute("companyName", companyName);
@@ -137,6 +140,7 @@ public class ReceiptFormController {
 		transactionDetail.setCurrentQuantity(quantity);
 		transactionDetail.setQuantity(quantity);
 		transactionDetail.setUnitPrice(unitPrice);
+		transactionDetail.setCostToPatient(costToPatient);
 		transactionDetail.setVAT(VAT);
 		transactionDetail.setIssueQuantity(0);
 		transactionDetail.setCreatedOn(new Date());
@@ -154,7 +158,7 @@ public class ReceiptFormController {
 		Money totl = moneyUnitPrice.times(quantity);
 		totl = totl.plus(totl.times((double)VAT/100));
 		transactionDetail.setTotalPrice(totl.getAmount());*/
-		
+		//BigDecimal moneyUnitPrice = costToPatient.multiply(new BigDecimal(quantity));
 		BigDecimal moneyUnitPrice = unitPrice.multiply(new BigDecimal(quantity));
 		moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(VAT.divide(new BigDecimal(100))));
 		transactionDetail.setTotalPrice(moneyUnitPrice);

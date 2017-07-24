@@ -23,11 +23,12 @@
 <b>Drug&nbsp;| <a href="#" onclick="ACT.go('itemViewStockBalanceSubStore.form');">Item </a></b>
 <br/><br/>
 </c:if>
-<b><a href="#" onclick="ACT.go('viewStockBalanceSubStore.form');"><spring:message code="inventory.viewStockBalance"/></a></b>&nbsp;|
-<b><a href="#" onclick="ACT.go('viewStockBalanceExpiry.form');"><spring:message code="inventory.viewStockBalanceExpiry"/></a></b>&nbsp;|
-<b><a href="#" onclick="ACT.go('subStoreIndentDrugList.form');"><spring:message code="inventory.substore.indentDrug"/></a></b>&nbsp;|
+<b><a href="#" onclick="ACT.go('patientQueueDrugOrder.form');"><spring:message code="inventory.substore.patientQueueForDrugOrders"/></a></b>&nbsp;|
 <b><a href="#" onclick="ACT.go('subStoreIssueDrugList.form');"><spring:message code="inventory.substore.issueDrugPatient"/></a></b>&nbsp;|
-<b><a href="#" onclick="ACT.go('subStoreIssueDrugAccountList.form');"><spring:message code="inventory.substore.issueDrugAccount"/></a></b>
+<b><a href="#" onclick="ACT.go('subStoreIssueDrugAccountList.form');"><spring:message code="inventory.substore.issueDrugAccount"/></a></b>&nbsp;|
+<b><a href="#" onclick="ACT.go('subStoreIndentDrugList.form');"><spring:message code="inventory.substore.indentDrug"/></a></b>&nbsp;|
+<b><a href="#" onclick="ACT.go('viewStockBalanceSubStore.form');"><spring:message code="inventory.viewStockBalance"/></a></b>&nbsp;|
+<b><a href="#" onclick="ACT.go('viewStockBalanceExpiry.form');"><spring:message code="inventory.viewStockBalanceExpiry"/></a></b>&nbsp;
 <br/><br/>
 
 

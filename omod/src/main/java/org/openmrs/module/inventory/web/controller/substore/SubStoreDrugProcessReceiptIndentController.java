@@ -97,6 +97,7 @@ public class SubStoreDrugProcessReceiptIndentController {
 				transDetail.setDateManufacture(refund.getDateManufacture());
 				transDetail.setFormulation(refund.getFormulation());
 				transDetail.setUnitPrice(refund.getUnitPrice());
+				transDetail.setCostToPatient(refund.getCostToPatient());
 				transDetail.setVAT(refund.getVAT());
 				transDetail.setParent(refund);
 				transDetail.setReceiptDate(date);
@@ -157,6 +158,7 @@ public class SubStoreDrugProcessReceiptIndentController {
 			transDetail.setDateManufacture(refund.getDateManufacture());
 			transDetail.setFormulation(refund.getFormulation());
 			transDetail.setUnitPrice(refund.getUnitPrice());
+			transDetail.setCostToPatient(refund.getCostToPatient());
 			transDetail.setVAT(refund.getVAT());
 			transDetail.setParent(refund);
 			transDetail.setReceiptDate(date);
