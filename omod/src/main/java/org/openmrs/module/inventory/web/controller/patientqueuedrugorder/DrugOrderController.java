@@ -250,7 +250,7 @@ public class DrugOrderController {
 				item.setCreatedDate(new Date());
 				item.setIndoorPatientServiceBill(bill);
 				item.setActualAmount(moneyUnitPrice);
-				item.setOrderType("DRUG");
+				//item.setOrderType("DRUG");
 				bill.addBillItem(item);
 				bill = billingService.saveIndoorPatientServiceBill(bill);
 				
