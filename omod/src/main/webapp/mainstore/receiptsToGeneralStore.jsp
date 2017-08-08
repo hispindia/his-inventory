@@ -74,7 +74,7 @@ VALIDATION={
 	--%>
 
 	<tr>
-		<td>Drug<em>*</em></td>
+		<td>Brand Name<em>*</em></td>
 		<td>
 			
 				<input id="drugName" name="drugName" onblur="RECEIPT.onBlur(this);" style="width: 200px;">
@@ -101,21 +101,21 @@ VALIDATION={
 		</td>
 	</tr>
 	<tr>
-		<td><spring:message code="inventory.receiptDrug.unitPrice"/><em>*</em></td>
+		<td><spring:message code="inventory.receiptDrug.VAT"/><em>*</em></td>
+		<td>
+			<input type="text" id="VAT" name="VAT" />
+		</td>
+	</tr>
+	<tr>
+		<td><spring:message code="inventory.receiptDrug.MRP"/><em>*</em></td>
 		<td>
 			<input type="text" id="unitPrice" name="unitPrice" />
 		</td>
 	</tr>
 	<tr>
-		<td><spring:message code="inventory.receiptDrug.costToPatient"/><em>*</em></td>
+		<td><spring:message code="inventory.receiptDrug.Discount"/></td>
 		<td>
-			<input type="text" id="costToPatient" name="costToPatient" />
-		</td>
-	</tr>
-	<tr>
-		<td><spring:message code="inventory.receiptDrug.VAT"/><em>*</em></td>
-		<td>
-			<input type="text" id="VAT" name="VAT" />
+			<input type="text" id="Discount" name="Discount" />
 		</td>
 	</tr>
 	<tr>
@@ -166,9 +166,9 @@ VALIDATION={
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
 	<th><spring:message code="inventory.receiptDrug.quantity"/></th>
-	<th><spring:message code="inventory.receiptDrug.unitPrice"/></th>
-	<th><spring:message code="inventory.receiptDrug.costToPatient"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
+	<th><spring:message code="inventory.receiptDrug.MRP"/></th>
+    <th><spring:message code="inventory.receiptDrug.Discount"/></th>
 	<th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
 	<th title="<spring:message code="inventory.receiptDrug.companyName"/>">CN</th>
@@ -185,9 +185,9 @@ VALIDATION={
 		<td><a href="#" title="Remove this" onclick="INVENTORY.removeObject('${varStatus.index}','7');">${receipt.drug.name}</a></td>
 		<td>${receipt.formulation.name}-${receipt.formulation.dozage}</td>
 		<td>${receipt.quantity}</td>
-		<td>${receipt.unitPrice}</td>
-		<td>${receipt.costToPatient}</td>
 		<td>${receipt.VAT}</td>
+        <td>${receipt.unitPrice}</td>
+         <td>${receipt.discount}</td>
 		<td>${receipt.totalPrice}</td>
 		<td>${receipt.batchNo}</td>
 		<td>${receipt.companyName}</td>
@@ -232,9 +232,9 @@ VALIDATION={
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
 	<th><spring:message code="inventory.receiptDrug.quantity"/></th>
-	<th><spring:message code="inventory.receiptDrug.unitPrice"/></th>
-	<th><spring:message code="inventory.receiptDrug.costToPatient"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
+    <th><spring:message code="inventory.receiptDrug.MRP"/></th>
+    <th><spring:message code="inventory.receiptDrug.Discount"/></th>
 	<th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
 	<th><spring:message code="inventory.receiptDrug.companyName"/></th>
@@ -251,9 +251,8 @@ VALIDATION={
 		<td>${receipt.drug.name}</td>
 		<td>${receipt.formulation.name}-${receipt.formulation.dozage}</td>
 		<td>${receipt.quantity}</td>
-		<td>${receipt.unitPrice}</td>
-		<td>${receipt.costToPatient}</td>
 		<td>${receipt.VAT}</td>
+		<td>${receipt.unitPrice}</td>
 		<td>${receipt.totalPrice}</td>
 		<td>${receipt.batchNo}</td>
 		<td>${receipt.companyName}</td>

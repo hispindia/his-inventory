@@ -30,6 +30,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.openmrs.Concept;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
@@ -116,7 +117,7 @@ public class DrugOrderController {
 		Integer quantity;
 		Integer noOfDays;
 		Integer avlId;
-		
+		BigDecimal Discount;
 		InventoryStoreDrugPatient inventoryStoreDrugPatient = new InventoryStoreDrugPatient();
 		inventoryStoreDrugPatient.setStore(store);
 		inventoryStoreDrugPatient.setPatient(patient);
@@ -165,6 +166,9 @@ public class DrugOrderController {
 			quantity = Integer.parseInt(request.getParameter(avId
 					+ "_fQuantity"));
 			
+			Discount =  NumberUtils.createBigDecimal(request.getParameter(avId
+					+ "_fDiscount"));
+			
 			frequencyName = request.getParameter(avId + "_fFrequencyName");
 			noOfDays = Integer.parseInt(request.getParameter(avId + "_fnoOfDays"));
 			comments = request.getParameter(avId + "_fcomments");
@@ -194,8 +198,9 @@ public class DrugOrderController {
 			 transDetail.setClosingBalance(t);
 			 transDetail.setQuantity(0);
 			 transDetail.setVAT(inventoryStoreDrugTransactionDetail.getVAT());
-			 transDetail.setCostToPatient(inventoryStoreDrugTransactionDetail.getCostToPatient());
+			 transDetail.setCostToPatient(inventoryStoreDrugTransactionDetail.getUnitPrice());
 			 transDetail.setUnitPrice(inventoryStoreDrugTransactionDetail.getUnitPrice());
+			 transDetail.setDiscount(Discount);
 			 transDetail.setDrug(inventoryStoreDrugTransactionDetail.getDrug());
 			 transDetail.setReorderPoint(inventoryStoreDrugTransactionDetail.getDrug().getReorderQty());
 			 transDetail.setAttribute(inventoryStoreDrugTransactionDetail.getDrug().getAttributeName());
@@ -214,14 +219,21 @@ public class DrugOrderController {
 			 transDetail.setComments(comments);
 			
 			 System.out.println("quantity"+quantity);
-			 BigDecimal moneyUnitPrice = inventoryStoreDrugTransactionDetail.getCostToPatient().multiply(new BigDecimal(quantity));
+			 BigDecimal moneyUnitPrice = inventoryStoreDrugTransactionDetail.getUnitPrice().multiply(new BigDecimal(quantity));
 			// moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(inventoryStoreDrugTransactionDetail.getVAT().divide(new BigDecimal(100))));
 			 transDetail.setTotalPrice(moneyUnitPrice);
-				
+				if(!(Discount.equals(BigDecimal.ZERO)))
+				{
+					moneyUnitPrice =moneyUnitPrice.subtract(moneyUnitPrice.multiply(Discount.divide(new BigDecimal(100))));
+					
+					transDetail.setTotPriceAfterDiscount(moneyUnitPrice);
+				}
+			
 			 transDetail.setParent(inventoryStoreDrugTransactionDetail);
 			 transDetail = inventoryService.saveStoreDrugTransactionDetail(transDetail);
 				
 			 pDetail.setQuantity(quantity);
+			 
 			 pDetail.setStoreDrugPatient(inventoryStoreDrugPatient);
 			 pDetail.setTransactionDetail(transDetail);
 			 //save issue to patient detail

@@ -89,6 +89,7 @@ public class ReceiptFormController {
 		int quantity = NumberUtils.toInt(request.getParameter("quantity"),0);
 		BigDecimal VAT = NumberUtils.createBigDecimal(request.getParameter("VAT"));
 		BigDecimal unitPrice =  NumberUtils.createBigDecimal(request.getParameter("unitPrice"));
+		BigDecimal Discount =  NumberUtils.createBigDecimal(request.getParameter("Discount"));
 		String batchNo = request.getParameter("batchNo");
 		String companyName = request.getParameter("companyName");
 		String dateManufacture = request.getParameter("dateManufacture");
@@ -123,7 +124,8 @@ public class ReceiptFormController {
 			model.addAttribute("VAT", VAT);
 			model.addAttribute("batchNo", batchNo);
 			model.addAttribute("unitPrice", unitPrice);
-			model.addAttribute("costToPatient", costToPatient);
+			model.addAttribute("Discount", Discount);
+			
 			model.addAttribute("companyName", companyName);
 			model.addAttribute("dateManufacture", dateManufacture);
 			model.addAttribute("companyName", companyName);
@@ -140,7 +142,8 @@ public class ReceiptFormController {
 		transactionDetail.setCurrentQuantity(quantity);
 		transactionDetail.setQuantity(quantity);
 		transactionDetail.setUnitPrice(unitPrice);
-		transactionDetail.setCostToPatient(costToPatient);
+		transactionDetail.setDiscount(Discount);
+		
 		transactionDetail.setVAT(VAT);
 		transactionDetail.setIssueQuantity(0);
 		transactionDetail.setCreatedOn(new Date());
@@ -161,7 +164,17 @@ public class ReceiptFormController {
 		//BigDecimal moneyUnitPrice = costToPatient.multiply(new BigDecimal(quantity));
 		BigDecimal moneyUnitPrice = unitPrice.multiply(new BigDecimal(quantity));
 		moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(VAT.divide(new BigDecimal(100))));
-		transactionDetail.setTotalPrice(moneyUnitPrice);
+		if(Discount.equals(BigDecimal.ZERO))
+		{
+			transactionDetail.setTotalPrice(moneyUnitPrice);
+			
+		}
+		else
+		{
+			moneyUnitPrice =moneyUnitPrice.subtract(moneyUnitPrice.multiply(Discount.divide(new BigDecimal(100))));
+			
+			transactionDetail.setTotalPrice(moneyUnitPrice);
+		}
 		
 		int userId = Context.getAuthenticatedUser().getId();
 		String fowardParam = "reipt_"+userId;
