@@ -393,7 +393,108 @@ return false;
 
 	</form>
 </div>
+	<div id="printDiv" style="display: none;"
+		style="width: 1280px; font-size: 0.8em">
 
+		<style>
+@media print {
+	.donotprint {
+		display: none;
+	}
+	.spacer {
+		margin-top: 50px;
+		font-family: "Dot Matrix Normal", Arial, Helvetica, sans-serif;
+		font-style: normal;
+		font-size: 14px;
+	}
+	.printfont {
+		font-family: "Dot Matrix Normal", Arial, Helvetica, sans-serif;
+		font-style: normal;
+		font-size: 14px;
+	}
+}
+</style>
+
+
+<br><br>
+		<table align='Center'>
+		<tr>
+			<td>Patient ID :</td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+			<td>&nbsp;${patientSearch.identifier}</td>
+		</tr>
+		<tr>
+			<td>Name :</td><td>&nbsp;</td>
+			<td>&nbsp;${patientSearch.givenName}&nbsp;
+				${patientSearch.familyName}&nbsp;&nbsp;${fn:replace(patientSearch.middleName,","," ")}</td>
+		</tr>
+        <tr>
+        	<td>Age:</td><td>&nbsp;</td>
+			<td><c:choose>
+							<c:when test="${patientSearch.age == 0}">&lt 1</c:when>
+							<c:otherwise>${patientSearch.age}</c:otherwise>
+						</c:choose>
+					</td>
+        	
+      </tr>
+        <tr>
+        	<td>Gender:</td><td>&nbsp;</td>
+        	<td>&nbsp;${patientSearch.gender}</td>
+        </tr>
+		<tr>
+			<td>Date :</td><td>&nbsp;</td>
+			<td>${date}</td>
+		</tr>
+		</table>
+
+
+<table id="myTablee" class="tablesorter" class="thickbox" style="width:100%; margin-top:30px">
+		<thead>
+			<tr>
+				<th style="text-align: center;">S.No</th>
+				<th style="text-align: center;">Drug Name</th>
+				<th style="text-align: center;">Formulation</th>
+				<th style="text-align: center;">Days</th>
+				<th style="text-align: center;">Frequency</th>
+				<th style="text-align: center;">Comments</th>
+				<!-- <th style="text-align: center;">Quantity</th> -->
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="dol" items="${drugOrderList}" varStatus="index">
+				<c:choose>
+					<c:when test="${index.count mod 2 == 0}">
+						<c:set var="klass" value="odd" />
+					</c:when>
+					<c:otherwise>
+						<c:set var="klass" value="even" />
+					</c:otherwise>
+				</c:choose>
+				<tr class="${klass}" id="${dol.inventoryDrug.name}">
+					<td align="center">${index.count}</td>
+					<td align="center">${dol.inventoryDrug.name}</td>
+					<td align="center">${dol.inventoryDrugFormulation.name}-${dol.inventoryDrugFormulation.dozage}</td>
+					<td align="center">${dol.noOfDays}</td>
+					<td align="center">${dol.frequency.name}</td>
+					<td align="center">${dol.comments}</td>
+				</tr>
+			</c:forEach>
+			
+
+		</tbody>
+</table>
+<br><br><br><br><br><br><br>
+<table  class="spacer" style="margin-left: 60px;width:100%;">
+				<tr>
+					<td width="20%"><b>Treating Doctor</b></td><td>:${doctor}</td>
+				</tr>
+				<tr>
+					<td width="20%"><b>Treating Paharmacist</b></td><td>:${pharmacist}</td>
+				</tr>
+</table>
+
+
+</div>
 
 
 
