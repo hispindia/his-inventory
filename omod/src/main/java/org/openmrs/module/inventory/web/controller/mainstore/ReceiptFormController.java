@@ -142,7 +142,7 @@ public class ReceiptFormController {
 		transactionDetail.setCurrentQuantity(quantity);
 		transactionDetail.setQuantity(quantity);
 		transactionDetail.setUnitPrice(unitPrice);
-		transactionDetail.setDiscount(Discount);
+		//transactionDetail.setDiscount(Discount);
 		
 		transactionDetail.setVAT(VAT);
 		transactionDetail.setIssueQuantity(0);

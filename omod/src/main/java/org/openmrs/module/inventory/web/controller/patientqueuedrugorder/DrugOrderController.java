@@ -103,8 +103,13 @@ public class DrugOrderController {
 			@RequestParam("encounterId") Integer encounterId,
 			@RequestParam(value = "paymentMode", required = false) String paymentMode,
 			@RequestParam(value = "patientType", required = false) String patientType,
-			//ghanshyam,4-july-2013, issue no # 1984, User can issue drugs only from the first indent
-			@RequestParam(value="avaiableId",required=false) String[] avaiableId) throws Exception{
+			@RequestParam(value="avaiableId",required=false) String[] avaiableId,
+			@RequestParam(value = "totalValue", required = false) float totalValue,
+			@RequestParam(value = "waiverPercentage", required = false) float waiverPercentage,
+            @RequestParam(value= "waiverComment", required = false) String waiverComment,
+			@RequestParam(value = "totalAmountPayable", required = false) BigDecimal totalAmountPayable,
+			@RequestParam(value = "amountGiven", required = false) Integer amountGiven,
+			@RequestParam(value = "amountReturned", required = false) Integer amountReturned) throws Exception{
 		PatientService  patientService = Context.getPatientService();
 		Patient patient = patientService.getPatient(patientId);
 		InventoryService inventoryService = Context.getService(InventoryService.class);
@@ -200,7 +205,6 @@ public class DrugOrderController {
 			 transDetail.setVAT(inventoryStoreDrugTransactionDetail.getVAT());
 			 transDetail.setCostToPatient(inventoryStoreDrugTransactionDetail.getUnitPrice());
 			 transDetail.setUnitPrice(inventoryStoreDrugTransactionDetail.getUnitPrice());
-			 transDetail.setDiscount(Discount);
 			 transDetail.setDrug(inventoryStoreDrugTransactionDetail.getDrug());
 			 transDetail.setReorderPoint(inventoryStoreDrugTransactionDetail.getDrug().getReorderQty());
 			 transDetail.setAttribute(inventoryStoreDrugTransactionDetail.getDrug().getAttributeName());
@@ -218,17 +222,16 @@ public class DrugOrderController {
 			 transDetail.setNoOfDays(noOfDays);
 			 transDetail.setComments(comments);
 			
-			 System.out.println("quantity"+quantity);
 			 BigDecimal moneyUnitPrice = inventoryStoreDrugTransactionDetail.getUnitPrice().multiply(new BigDecimal(quantity));
 			// moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(inventoryStoreDrugTransactionDetail.getVAT().divide(new BigDecimal(100))));
 			 transDetail.setTotalPrice(moneyUnitPrice);
-				if(!(Discount.equals(BigDecimal.ZERO)))
-				{
-					moneyUnitPrice =moneyUnitPrice.subtract(moneyUnitPrice.multiply(Discount.divide(new BigDecimal(100))));
-					
-					transDetail.setTotPriceAfterDiscount(moneyUnitPrice);
-				}
-			
+				
+			 transDetail.setWaiverPercentage(waiverPercentage);
+			 float waiverAmount=totalValue*waiverPercentage/100;
+			 transDetail.setWaiverAmount(waiverAmount);
+			 transDetail.setAmountPayable(totalAmountPayable);
+			 transDetail.setAmountGiven(amountGiven);
+			 transDetail.setAmountReturned(amountReturned);
 			 transDetail.setParent(inventoryStoreDrugTransactionDetail);
 			 transDetail = inventoryService.saveStoreDrugTransactionDetail(transDetail);
 				

@@ -35,7 +35,6 @@
 			<th>Batch no</th>
 			<th title="Quantity available">Qty available</th>
 			<th title="Issue quantity">Issue qty</th>
-			<th><spring:message code="inventory.receiptDrug.Discount"/></th>
 		</tr>
 		<c:choose>
 			<c:when test="${not empty listReceiptDrug}">
@@ -56,11 +55,6 @@
 							${!varStatus.first ? 'value=0' : ''} onchange="INVENTORY.checkValueExt(this, '${avaiable.currentQuantity}');"
 							name="${avaiable.id }_quantity" class="required digits" size="5" />
 						</td>
-						
-		                
-		               <td>
-			            <input type="text" id="${avaiable.id }_discount" name="${avaiable.id }_discount" />
-		                </td>
 	
 						<td><input id="${avaiable.id }_drugName"
 							name="${avaiable.id }_drugName" type='hidden'

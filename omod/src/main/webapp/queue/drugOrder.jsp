@@ -93,6 +93,8 @@ jQuery.ajax({
 			},
 			
 		});
+		
+		jQuery("#process"+drugId).attr("disabled", "disabled");
 }
 
 </script>
@@ -107,9 +109,6 @@ function issueDrugOrder(listOfDrugQuantity) {
    for (var i = 0; i < availableIdArr.length-1; i++) {
 	
    var quantity=document.getElementById(availableIdArr[i].toString()+'_quantity').value;
-   
-	
-	var discount=document.getElementById(availableIdArr[i].toString()+'_discount').value;
 	
    //ghanshyam,5-july-2013, issue no # 1990, User is able to 'finish' without issuing a drug to patient
    if (quantity==null || quantity==""){
@@ -131,17 +130,9 @@ function issueDrugOrder(listOfDrugQuantity) {
    var noOfDays=document.getElementById(availableIdArr[i].toString()+'_noOfDays').value;
    var comments=document.getElementById(availableIdArr[i].toString()+'_comments').value;
    var price=document.getElementById(availableIdArr[i].toString()+'_price').value;
-   var discount= document.getElementById(availableIdArr[i].toString()+'_discount').value;
   
-
-
   		totalValue = (totalValue + price*quantity);
-  		if(discount!="")
-  		{
-  		 var disValue=(price)*(discount/100);
-  		 var afterDis=price-disValue;
-  		 totalDisValue = totalDisValue + afterDis*quantity;
-  		}
+ 
    if (preTotal != null){
 		totalValue = +totalValue + +preTotal.value;
 		preTotal.value = totalValue;
@@ -155,9 +146,6 @@ function issueDrugOrder(listOfDrugQuantity) {
 	       	 +"<input id='"+avaiableId+"_fFormulationName'  name='"+avaiableId+"_fFormulationName' type='text' size='11' value='"+formulation+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fQuantity'  name='"+avaiableId+"_fQuantity' type='text' size='3' value='"+quantity+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fPrice'  name='"+avaiableId+"_fPrice' type='text' size='3' type='hidden' value='"+price+"'  readonly='readonly'/>&nbsp;"
-	       	+"<input id='"+avaiableId+"_fDiscount'  name='"+avaiableId+"_fDiscount' type='text' size='3' value='"+discount+"'  readonly='readonly'/>&nbsp;"
-	       	 
-	       	 
 	       	 
 	       	 +"<input id='"+avaiableId+"_fFormulationId'  name='"+avaiableId+"_fFormulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fAvaiableId'  name='avaiableId' type='hidden' value='"+avaiableId+"'/>&nbsp;"
@@ -168,16 +156,12 @@ function issueDrugOrder(listOfDrugQuantity) {
 	       	 //+"<a style='color:red' href='#' onclick='"+deleteString+"' >[X]</a>"	
 	       	 +"</div>";
 	
-
-     	
    var newElement = document.createElement('div');
    
    newElement.setAttribute("id", avaiableId);   
    newElement.innerHTML = htmlText;
    var fieldsArea = document.getElementById('headerValue');
    fieldsArea.appendChild(newElement);
-   
-
    
    jQuery("#"+drugName).hide();
    jQuery("#processDrugOrder").hide();
@@ -189,9 +173,7 @@ function issueDrugOrder(listOfDrugQuantity) {
 				 +"<td id='"+avaiableId+"_fTotal'  name='"+avaiableId+"_fTotal'><b>Total Price:</b>"
 				 +"<input id='totalValue'  name='totalValue' type='text' size='6' value='"+Math.round(totalValue)+"'  readonly='readonly'/>&nbsp;"
 				 +"</td>"
-				 +"<td id='"+avaiableId+"_fdisTotal'  name='"+avaiableId+"_fdisTotal'><b>Total Price After Discount:</b>"
-				 +"<input id='totalDisValue'  name='totalDisValue' type='text' size='6' value='"+Math.round(totalDisValue)+"'  readonly='readonly'/>&nbsp;"
-				 +"</td>"+"</tr>"
+				 +"</tr>"
 				 +"</div>";  	
 	   var totalElement = document.createElement('div');
 	   totalElement.innerHTML = totalText;
@@ -200,14 +182,15 @@ function issueDrugOrder(listOfDrugQuantity) {
 	   totalDiv.appendChild(totalElement);
 	   jQuery("#totalDiv").show();	
 	   jQuery("#totalDisValue").show();	
-		  	
-	  		
-	  		
-	  		
-
 	} 
 	
 	jQuery("#estTotal").val(jQuery("#totalValue").val());
+	
+	var total=jQuery("#totalValue").val();
+    var waiverPercentage=jQuery("#waiverPercentage").val();
+    var totalAmountPay=total-(total*waiverPercentage)/100;
+    var tap=Math.round(totalAmountPay);
+    jQuery("#totalAmountPayable").val(tap);
 
 }
 
@@ -253,12 +236,74 @@ alert("Please select atleast one drug");
 return false;
 }
 
+if(jQuery("#waiverPercentage").val() ==""){
+alert("Please enter Discount Percentage");
+return false;
+}
+
+if(jQuery("#waiverPercentage").val() < 0 ){
+alert("Please enter correct Discount Percentage");
+return false;
+}
+
+                
+/*if(jQuery("#waiverPercentage").val()>0 && jQuery("#waiverComment").val() ==""){
+alert("Please enter comment");
+return false;
+}
+*/
+
+if(jQuery("#amountGiven").val() ==""){
+alert("Please enter Amount Given");
+return false;
+}
+
+if(jQuery("#amountGiven").val() < 0 || !StringUtils.isDigit(jQuery("#amountGiven").val())){
+alert("Please enter correct Amount Given");
+return false;
+}
+var amgiv=jQuery("#amountGiven").val();
+var tamp=jQuery("#totalAmountPayable").val();
+
+if(amgiv-tamp < 0 ){
+alert("Amount Given must be greater than Total Amount Payable");
+return false;
+}
+
+if(jQuery("#amountReturned").val() ==""){
+alert("Please enter Amount Returned");
+return false;
+}
+
+if(jQuery("#amountReturned").val() < 0 || !StringUtils.isDigit(jQuery("#amountReturned").val())){
+alert("Please enter correct Amount Returned");
+return false;
+}
+                
 if(confirm("Are you sure?")){
+jQuery("#subm").attr("disabled", "disabled");
 printDiv2();
 return true;
 }
 
 return false;
+}
+</script>
+
+<script type="text/javascript">
+function totalAmountToPay(){
+var total=jQuery("#totalValue").val();
+var waiverPercentage=jQuery("#waiverPercentage").val();
+var totalAmountPay=total-(total*waiverPercentage)/100;
+var tap=Math.round(totalAmountPay);
+jQuery("#totalAmountPayable").val(tap);
+}
+
+function amountReturnedToPatient(){
+var totalAmountToPay=jQuery("#totalAmountPayable").val();
+var amountGiven=jQuery("#amountGiven").val();
+var amountReturned=amountGiven-totalAmountToPay;
+jQuery("#amountReturned").val(amountReturned);
 }
 </script>
 
@@ -332,7 +377,7 @@ return false;
 					<td align="center">${dol.frequency.name}</td>
 					<td align="center">${dol.noOfDays}</td>
 					<td align="center">${dol.comments}</td>
-					<td align="center"><input type="button"
+					<td align="center"><input type="button" id="process${dol.inventoryDrug.id}" name="process${dol.inventoryDrug.id}"
 						onclick="process(${dol.inventoryDrug.id},${dol.inventoryDrugFormulation.id},'${dol.frequency.name}',${dol.noOfDays},'${dol.comments}');"
 						value="Process">
 					</td>
@@ -367,30 +412,47 @@ return false;
 				onclick="toogleFinishDrugOrder(this);" class="min" style="float: right" />
 		</div>
 
+		<div id="totalDiv" style="padding: 0.3em; margin: 0.3em 0em; width: 50%; display:none;">
+				
+		</div>
+		
 		<div id="headerValue" class="cancelDraggable"
 			style="background: #f6f6f6; border: 1px #808080 solid; padding: 0.3em; margin: 0.3em 0em; width:100%;">
-			
-			<div id="totalDiv" style="padding: 0.3em; margin: 0.3em 0em; width: 50%; display:none;">
-				
-			</div>
-			
-
-			
-			<div id="WaiverAmountField" class="cancelDraggable"
-				style="background: #f6f6f6; border: 1px #808080 solid; padding: 0.3em; margin: 0.3em 0em; width: 100%;">
-				
-			</div>
-			
-			<input type='text' size='20' value='Drug Name' readonly='readonly' />
+		    <input type='text' size='20' value='Drug Name' readonly='readonly' />
 			<input type='text' size="11" value='Formulation' readonly="readonly" />
 			<input type='text' size="3" value='Qty' readonly="readonly" />
 			<input type='text' size="3" value='MRP' readonly="readonly" />
-			<input type='text' size="11" value='Discount(%)' readonly="readonly" />
+			<hr />	
+			</div>
 			
-			<hr />
+		<div id="waiverDiv"
+			style="background: #f6f6f6; border: 1px #808080 solid; padding: 0.3em; margin: 0.3em 0em; width: 100%;">
+			<div>
+			Discount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="text" id="waiverPercentage" name="waiverPercentage"
+				size="11" value="0" class="cancelDraggable" onkeyup="totalAmountToPay();"/>%
 		</div>
-
-
+		<div>
+		Total amount payable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="text" id="totalAmountPayable" name="totalAmountPayable"
+				size="11" readOnly="true"/>
+		</div>
+		<div>
+		Comment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="text" id="waiverComment" name="waiverComment" size="11" class="cancelDraggable"/>
+		</div>
+		<div>
+		Amount Given&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="text" id="amountGiven" name="amountGiven" size="11" class="cancelDraggable" onkeyup="amountReturnedToPatient();">
+		</div>
+		<div>
+		Amount Returned to Patient&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="text" id="amountReturned" name="amountReturned" size="11" readOnly="true"/>
+		</div>
+		</div>
+			
 	</form>
 </div>
 	<div id="printDiv" style="display: none;"
@@ -498,7 +560,7 @@ return false;
 
 
 
-<script>
+<script type="text/javascript">
 	function printDivNoJQuery() {
 		var divToPrint = document.getElementById('printDiv');
 		var newWin = window

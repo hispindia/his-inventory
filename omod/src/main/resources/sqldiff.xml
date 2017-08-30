@@ -154,27 +154,16 @@
 	ALTER TABLE inventory_store_drug_transaction_detail  ADD COLUMN  `cost_to_patient` decimal(19,2);
 	</sql>
 	</diff>
-		<diff>
+<diff>
 		<version>2.2.8</version>
-		<author>Ambika</author>
-		<date>July 31 2017</date>
+		<author>ghanshyan</author>
+		<date>August 31st 2017</date>
 		<description>
-			Alter inventory_store_drug_transaction_detail and add discount 
+			ALTER inventory_store_drug_transaction_detail
 		</description>
 		<sql>
-	ALTER TABLE inventory_store_drug_transaction_detail  ADD COLUMN discount decimal(19,2);
-	</sql>
+		ALTER TABLE inventory_store_drug_transaction_detail ADD COLUMN(waiver_percetage float(11,2),waiver_amount float(11,2),amount_payable decimal(11,2),amount_given int(11),amount_returned int(11));
+		</sql>
 	</diff>
-			<diff>
-		<version>2.2.9</version>
-		<author>Ambika</author>
-		<date>July 31 2017</date>
-		<description>
-			Alter inventory_store_drug_transaction_detail and add tot_price_after_discount 
-		</description>
-		<sql>
-	ALTER TABLE inventory_store_drug_transaction_detail  ADD COLUMN tot_price_after_discount decimal(19,2); 
-	</sql>
-</diff>
 	
 </sqldiff>
