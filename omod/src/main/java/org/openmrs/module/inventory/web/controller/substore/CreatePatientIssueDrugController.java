@@ -3,6 +3,8 @@ package org.openmrs.module.inventory.web.controller.substore;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.openmrs.Patient;
 import org.openmrs.Role;
 import org.openmrs.api.context.Context;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CreatePatientIssueDrugController {
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String firstView(Model model, @RequestParam(value="patientId",required=false)  Integer patientId) {
+	public String firstView(HttpServletRequest request,Model model, @RequestParam(value="patientId",required=false)  Integer patientId) {
 		
 		if(patientId != null && patientId > 0){
 			Patient patient = Context.getPatientService().getPatient(patientId);
@@ -38,7 +40,13 @@ public class CreatePatientIssueDrugController {
 				issue.setPatient(patient);
 				String fowardParam = "issueDrug_"+userId;
 				StoreSingleton.getInstance().getHash().put(fowardParam,issue);
-				return "redirect:/module/inventory/subStoreIssueDrugForm.form";
+				String totalValue=request.getParameter("totalValue");
+				Float totalValu=Float.parseFloat(totalValue);
+				String waiverPercentage=request.getParameter("waiverPercentage");
+				Float waiverPercentge=Float.parseFloat(waiverPercentage);
+				String totalAmountPay=request.getParameter("totalAmountPayable");
+				Float totalAmountPy=Float.parseFloat(totalAmountPay);
+				return "redirect:/module/inventory/subStoreIssueDrugForm.form?totalValue=" + totalValu + "&waiverPercentage=" + waiverPercentge +"&totalAmountPayable=" + totalAmountPy;
 			}
 			
 		}

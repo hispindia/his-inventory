@@ -89,7 +89,7 @@ public class ReceiptFormController {
 		int quantity = NumberUtils.toInt(request.getParameter("quantity"),0);
 		BigDecimal VAT = NumberUtils.createBigDecimal(request.getParameter("VAT"));
 		BigDecimal unitPrice =  NumberUtils.createBigDecimal(request.getParameter("unitPrice"));
-		BigDecimal Discount =  NumberUtils.createBigDecimal(request.getParameter("Discount"));
+		float waiverPercentage =  Float.parseFloat(request.getParameter("waiverPercentage"));
 		String batchNo = request.getParameter("batchNo");
 		String companyName = request.getParameter("companyName");
 		String dateManufacture = request.getParameter("dateManufacture");
@@ -124,7 +124,7 @@ public class ReceiptFormController {
 			model.addAttribute("VAT", VAT);
 			model.addAttribute("batchNo", batchNo);
 			model.addAttribute("unitPrice", unitPrice);
-			model.addAttribute("Discount", Discount);
+			model.addAttribute("Discount", waiverPercentage);
 			
 			model.addAttribute("companyName", companyName);
 			model.addAttribute("dateManufacture", dateManufacture);
@@ -142,7 +142,7 @@ public class ReceiptFormController {
 		transactionDetail.setCurrentQuantity(quantity);
 		transactionDetail.setQuantity(quantity);
 		transactionDetail.setUnitPrice(unitPrice);
-		//transactionDetail.setDiscount(Discount);
+		transactionDetail.setWaiverPercentage(waiverPercentage);
 		
 		transactionDetail.setVAT(VAT);
 		transactionDetail.setIssueQuantity(0);
@@ -164,14 +164,15 @@ public class ReceiptFormController {
 		//BigDecimal moneyUnitPrice = costToPatient.multiply(new BigDecimal(quantity));
 		BigDecimal moneyUnitPrice = unitPrice.multiply(new BigDecimal(quantity));
 		moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(VAT.divide(new BigDecimal(100))));
-		if(Discount.equals(BigDecimal.ZERO))
+		if(waiverPercentage==0)
 		{
 			transactionDetail.setTotalPrice(moneyUnitPrice);
 			
 		}
 		else
 		{
-			moneyUnitPrice =moneyUnitPrice.subtract(moneyUnitPrice.multiply(Discount.divide(new BigDecimal(100))));
+			BigDecimal wper=BigDecimal.valueOf(waiverPercentage/100);
+			moneyUnitPrice =moneyUnitPrice.subtract(moneyUnitPrice.multiply(wper));
 			
 			transactionDetail.setTotalPrice(moneyUnitPrice);
 		}

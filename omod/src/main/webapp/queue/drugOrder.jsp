@@ -131,7 +131,7 @@ function issueDrugOrder(listOfDrugQuantity) {
    var comments=document.getElementById(availableIdArr[i].toString()+'_comments').value;
    var price=document.getElementById(availableIdArr[i].toString()+'_price').value;
   
-  		totalValue = (totalValue + price*quantity);
+  	totalValue = (totalValue + price*quantity);
  
    if (preTotal != null){
 		totalValue = +totalValue + +preTotal.value;
@@ -232,7 +232,7 @@ function finishDrugOrder() {
 
 var drugProcessName=document.getElementById("drugProcessName");
 if (drugProcessName==null){
-alert("Please select atleast one drug");
+alert("Please select at least one drug");
 return false;
 }
 

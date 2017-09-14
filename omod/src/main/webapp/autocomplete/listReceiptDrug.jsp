@@ -41,6 +41,10 @@
 		<td>${avaiable.currentQuantity}</td>
 		<td><em>*</em><input type="text" id="${avaiable.id }" ${!varStatus.first ? 'value=0' : ''} onchange="INVENTORY.checkValueExt(this, '${avaiable.currentQuantity}');" name="${avaiable.id }" class="required digits" size="5"/></td>
 		</tr>
+		<tr>
+		<td><input type="hidden" id="drgId" name="drgId" value="${avaiable.id}"> </td>
+		<td><input type="hidden" id="unitPrice" name="unitPrice" value="${avaiable.unitPrice}"> </td>
+		</tr>
 	</c:forEach>
 	
 	</c:when>

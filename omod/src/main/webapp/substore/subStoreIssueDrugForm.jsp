@@ -26,12 +26,97 @@
 	scope="page" />
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <%@ include file="../includes/js_css.jsp"%>
+<script type="text/javascript">
+jQuery(document).ready(function(){ 
+var tot=parseFloat(${total});
+jQuery("#totalValue").val("");
+jQuery("#totalValue").val(tot);
 
+var waiverPercentage=parseFloat(${waiverPercentage});
+jQuery("#waiverPercentage").val("");
+jQuery("#waiverPercentage").val(waiverPercentage);
+
+var totalAmountPay=parseFloat(${totalAmountPayable});
+jQuery("#totalAmountPayable").val("");
+jQuery("#totalAmountPayable").val(totalAmountPay);
+});
+</script>
+
+<script type="text/javascript">
+function totalAmountToPay(){
+var total=jQuery("#totalValue").val();
+var waiverPercentage=jQuery("#waiverPercentage").val();
+var totalAmountPay=total-(total*waiverPercentage)/100;
+var tap=Math.round(totalAmountPay);
+jQuery("#totalAmountPayable").val(tap);
+}
+
+function amountReturnedToPatient(){
+var totalAmountToPay=jQuery("#totalAmountPayable").val();
+var amountGiven=jQuery("#amountGiven").val();
+var amountReturned=amountGiven-totalAmountToPay;
+jQuery("#amountReturned").val(amountReturned);
+}
+</script>
+
+<script type="text/javascript">
+function finishDrugOrder() {
+
+if(jQuery("#waiverPercentage").val() ==""){
+alert("Please enter Discount Percentage");
+return false;
+}
+
+if(jQuery("#waiverPercentage").val() < 0 ){
+alert("Please enter correct Discount Percentage");
+return false;
+}
+
+                
+/*if(jQuery("#waiverPercentage").val()>0 && jQuery("#waiverComment").val() ==""){
+alert("Please enter comment");
+return false;
+}
+*/
+
+if(jQuery("#amountGiven").val() ==""){
+alert("Please enter Amount Given");
+return false;
+}
+
+if(jQuery("#amountGiven").val() < 0 || !StringUtils.isDigit(jQuery("#amountGiven").val())){
+alert("Please enter correct Amount Given");
+return false;
+}
+
+var amgiv=jQuery("#amountGiven").val();
+var tamp=jQuery("#totalAmountPayable").val();
+
+if(amgiv-tamp < 0 ){
+alert("Amount Given must be greater than Total Amount Payable");
+return false;
+}
+
+if(jQuery("#amountReturned").val() ==""){
+alert("Please enter Amount Returned");
+return false;
+}
+
+if(jQuery("#amountReturned").val() < 0 || !StringUtils.isDigit(jQuery("#amountReturned").val())){
+alert("Please enter correct Amount Returned");
+return false;
+}
+                
+ISSUE.processSlip('0');
+}
+</script>
+
+
+<form method="post" id="formIssueDrug">
 <div style="width: 40%; float: left; margin-left: 4px;">
 	<b class="boxHeader">Drug</b>
 	<div class="box">
 
-		<form method="post" id="formIssueDrug">
 			<c:if test="${not empty errors}">
 				<c:forEach items="${errors}" var="error">
 					<span class="error"><spring:message code="${error}" /></span>
@@ -136,7 +221,6 @@
 				class="ui-button ui-widget ui-state-default ui-corner-all"
 				value="<spring:message code="inventory.back"/>"
 				onclick="ACT.go('subStoreIssueDrugList.form');">
-		</form>
 	</div>
 </div>
 <!-- Purchase list -->
@@ -191,6 +275,40 @@
 			</c:choose>
 		</table>
 		<br />
+		
+		<table class="box" width="100%" cellpadding="5" cellspacing="0">
+		<tr>
+		<td>Total</td>
+		<td><input type="text" id="totalValue" name="totalValue"
+				size="11" value="0"/></td>
+		</tr>
+		<tr>
+		<td>Discount %</td>
+		<td><input type="text" id="waiverPercentage" name="waiverPercentage"
+				size="11" value="0" onkeyup="totalAmountToPay();"/></td>
+		</tr>
+		<tr>
+		<td>Total amount payable</td>
+		<td><input type="text" id="totalAmountPayable" name="totalAmountPayable"
+				size="11" value="0" readOnly="true"/></td>
+		</tr>
+		<tr>
+		<td>Comment</td>
+		<td><input type="text" id="waiverComment" name="waiverComment" size="11"/></td>
+		</tr>
+		<tr>
+		<td>Amount Given</td>
+		<td><input type="text" id="amountGiven" name="amountGiven" size="11" onkeyup="amountReturnedToPatient();"></td>
+		</tr>
+		<tr>
+		<td>Amount Returned to Patient</td>
+		<td><input type="text" id="amountReturned" name="amountReturned" size="11" readOnly="true"/></td>
+		</tr>
+		<tr>
+		<td> </td>
+		<td> </td>
+		</tr>
+		</table>
 
 		<table class="box" width="100%" cellpadding="5" cellspacing="0">
 			<tr>
@@ -198,8 +316,8 @@
 						test="${not empty listPatientDetail && not empty issueDrugPatient}">
 						<input type="button"
 							class="ui-button ui-widget ui-state-default ui-corner-all"
-							id="bttprocess" value="<spring:message code="inventory.finish"/>"
-							onclick="ISSUE.processSlip('0');" />
+							id="bttprocess" name="bttprocess" value="<spring:message code="inventory.finish"/>"
+							onclick="finishDrugOrder();" />
 						<input type="button"
 							class="ui-button ui-widget ui-state-default ui-corner-all"
 							id="bttprint" value="<spring:message code="inventory.print"/>"
@@ -216,6 +334,7 @@
 
 	</div>
 </div>
+</form>
 <!-- PRINT DIV -->
 <div id="printDiv" style="display: none;">
 	<div

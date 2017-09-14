@@ -24,8 +24,17 @@
 <div id="patientSearchResult"></div>
 
 <script type="text/javascript">
-
+var totalVal=0;
+var waiverPercentge=0;
+var totalAmountPy=0;
 	jQuery(document).ready(function(){
+	 var ca = document.cookie.split(';'); 
+	 var resetTov=0;
+	 var resetWp=0;
+	 var resetTap=0;
+     totalVal=ca[0];
+     waiverPercentge=ca[1];
+     totalAmountPy=ca[2];
 		jQuery("#searchbox").showPatientSearchBox({					
 			resultView: "/module/inventory/patientsearch/issuePatientDrug",
 			rowPerPage: 15

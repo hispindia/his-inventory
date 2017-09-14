@@ -115,7 +115,7 @@ VALIDATION={
 	<tr>
 		<td><spring:message code="inventory.receiptDrug.Discount"/></td>
 		<td>
-			<input type="text" id="Discount" name="Discount" />
+			<input type="text" id="waiverPercentage" name="waiverPercentage" />
 		</td>
 	</tr>
 	<tr>
@@ -187,7 +187,7 @@ VALIDATION={
 		<td>${receipt.quantity}</td>
 		<td>${receipt.VAT}</td>
         <td>${receipt.unitPrice}</td>
-         <td>${receipt.discount}</td>
+         <td>${receipt.waiverPercentage}</td>
 		<td>${receipt.totalPrice}</td>
 		<td>${receipt.batchNo}</td>
 		<td>${receipt.companyName}</td>

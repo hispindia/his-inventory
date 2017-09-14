@@ -421,7 +421,13 @@ public class AjaxController {
 	}
 	
 	@RequestMapping("/module/inventory/processIssueDrug.form")
-	public String processIssueDrug( @RequestParam(value="action",required=false)  Integer action,Model model) {
+	public String processIssueDrug( @RequestParam(value="action",required=false)  Integer action,Model model,HttpServletRequest request,
+			@RequestParam(value = "totalValue", required = false) float totalValue,
+			@RequestParam(value = "waiverPercentage", required = false) float waiverPercentage,
+            @RequestParam(value= "waiverComment", required = false) String waiverComment,
+			@RequestParam(value = "totalAmountPayable", required = false) BigDecimal totalAmountPayable,
+			@RequestParam(value = "amountGiven", required = false) Integer amountGiven,
+			@RequestParam(value = "amountReturned", required = false) Integer amountReturned) {
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		int userId = Context.getAuthenticatedUser().getId();
 		String fowardParam = "issueDrugDetail_"+userId;
@@ -444,8 +450,6 @@ public class AjaxController {
 			 transaction.setCreatedOn(date);
 			 transaction.setCreatedBy(Context.getAuthenticatedUser().getGivenName());
 			 transaction = inventoryService.saveStoreDrugTransaction(transaction);
-			 
-			 
 			
 			issueDrugPatient = inventoryService.saveStoreDrugPatient(issueDrugPatient);
 			for(InventoryStoreDrugPatientDetail pDetail : list){
@@ -471,6 +475,7 @@ public class AjaxController {
 				transDetail.setClosingBalance(t);
 				transDetail.setQuantity(0);
 				transDetail.setVAT(pDetail.getTransactionDetail().getVAT());
+				transDetail.setCostToPatient(drugTransactionDetail.getUnitPrice());
 				transDetail.setUnitPrice(pDetail.getTransactionDetail().getUnitPrice());
 				transDetail.setDrug(pDetail.getTransactionDetail().getDrug());
 				transDetail.setFormulation(pDetail.getTransactionDetail().getFormulation());
@@ -495,6 +500,13 @@ public class AjaxController {
 				BigDecimal moneyUnitPrice = pDetail.getTransactionDetail().getUnitPrice().multiply(new BigDecimal(pDetail.getQuantity()));
 				moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(pDetail.getTransactionDetail().getVAT().divide(new BigDecimal(100))));
 				transDetail.setTotalPrice(moneyUnitPrice);
+				
+				transDetail.setWaiverPercentage(waiverPercentage);
+				float waiverAmount=totalValue*waiverPercentage/100;
+				transDetail.setWaiverAmount(waiverAmount);
+				transDetail.setAmountPayable(totalAmountPayable);
+				transDetail.setAmountGiven(amountGiven);
+				transDetail.setAmountReturned(amountReturned);
 				
 				transDetail.setParent(pDetail.getTransactionDetail());
 				transDetail = inventoryService.saveStoreDrugTransactionDetail(transDetail);

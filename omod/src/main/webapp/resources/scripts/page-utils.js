@@ -813,13 +813,21 @@ ISSUE={
 		},
 		createPatient : function()
 		{
+			var totalValue=jQuery("#totalValue").val();
+			var waiverPercentage=jQuery("#waiverPercentage").val();
+            var totalAmountPay=totalValue-(totalValue*waiverPercentage)/100;
+            var tap=Math.round(totalAmountPay);
 			if(SESSION.checkSession()){
 				url = "createPatientIssueDrug.form?keepThis=false&TB_iframe=true&height=500&width=800";
+				document.cookie = "totalValue="+totalValue;
+				document.cookie = "waiverPercentage="+waiverPercentage;
+				document.cookie = "totalAmountPayable="+tap;
 				tb_show("...",url,false);
 			}
 		},
 		addPatient : function(url)
 		{
+			url=url.replace(/\s/g,'');
 			if(SESSION.checkSession()){
 				self.parent.tb_remove();
 				self.parent.ACT.go(url);
@@ -842,7 +850,13 @@ ISSUE={
 		processSlip : function(data){
 			if(data == 1){
 				if( confirm("Are you sure you want to clear this?")){
-					ACT.go("processIssueDrug.form?action="+data);
+					var totalValue=0;
+					var waiverPercentage=0;
+					var totalAmountPayable=0;
+					var waiverComment="";
+					var amountGiven=0;
+					var amountReturned=0;
+					ACT.go("processIssueDrug.form?totalValue="+totalValue+"&waiverPercentage="+waiverPercentage+"&totalAmountPayable="+totalAmountPayable+"&waiverComment="+waiverComment+"&amountGiven="+amountGiven+"&amountReturned="+amountReturned+"&action="+data);
 				}
 			}else{
 				if( confirm("Are you sure ?")){
@@ -850,7 +864,13 @@ ISSUE={
 					jQuery("#bttprocess").attr("disabled","disabled");
 					jQuery("#bttclear").attr("disabled","disabled");
 					jQuery("#bttprint").attr("disabled","disabled");
-					ACT.go("processIssueDrug.form?action="+data);
+					var totalValue=jQuery("#totalValue").val();
+					var waiverPercentage=jQuery("#waiverPercentage").val();
+					var totalAmountPayable=jQuery("#totalAmountPayable").val();
+					var waiverComment=jQuery("#waiverComment").val();
+					var amountGiven=jQuery("#amountGiven").val();
+					var amountReturned=jQuery("#amountReturned").val();
+					ACT.go("processIssueDrug.form?totalValue="+totalValue+"&waiverPercentage="+waiverPercentage+"&totalAmountPayable="+totalAmountPayable+"&waiverComment="+waiverComment+"&amountGiven="+amountGiven+"&amountReturned="+amountReturned+"&action="+data);
 				}
 			}
 			
