@@ -30,7 +30,6 @@
 	<th><spring:message code="inventory.drug.formulation"/></th>
 	<th><spring:message code="inventory.receiptDrug.receiptQuantity"/></th>
 	<th><spring:message code="inventory.receiptDrug.unitPrice"/></th>
-	<th><spring:message code="inventory.receiptDrug.costToPatient"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
 	<th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
@@ -49,7 +48,6 @@
 		<td>${receipt.formulation.name}-${receipt.formulation.dozage}</td>
 		<td>${receipt.quantity}</td>
 		<td>${receipt.unitPrice}</td>
-		<td>${receipt.costToPatient}</td>
 		<td>${receipt.VAT}</td>
 		<td>${receipt.totalPrice}</td>
 		<td>${receipt.batchNo}</td>
@@ -85,7 +83,6 @@
 	<th><spring:message code="inventory.drug.formulation"/></th>
 	<th><spring:message code="inventory.receiptDrug.quantity"/></th>
 	<th><spring:message code="inventory.receiptDrug.unitPrice"/></th>
-	<th><spring:message code="inventory.receiptDrug.costToPatient"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
 	<th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
@@ -104,7 +101,6 @@
 		<td>${receipt.formulation.name}-${receipt.formulation.dozage}</td>
 		<td>${receipt.quantity}</td>
 		<td>${receipt.unitPrice}</td>
-		<td>${receipt.costToPatient}</td>
 		<td>${receipt.VAT}</td>
 		<td>${receipt.totalPrice}</td>
 		<td>${receipt.batchNo}</td>

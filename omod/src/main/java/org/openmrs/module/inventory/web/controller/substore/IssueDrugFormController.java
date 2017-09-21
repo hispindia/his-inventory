@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.openmrs.Concept;
 import org.openmrs.Role;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.model.InventoryDrug;
@@ -127,6 +128,12 @@ public class IssueDrugFormController {
 			else{
 				model.addAttribute("totalAmountPayable", Float.parseFloat("0"));	
 			}
+		}
+		
+		if(issueDrugPatient!=null){
+		Integer patientCategoryConcept=Integer.parseInt(issueDrugPatient.getPatientCategory());
+		Concept concept=Context.getConceptService().getConcept(patientCategoryConcept);
+		model.addAttribute("patientCategory", concept.getName());
 		}
 	
 		return "/module/inventory/substore/subStoreIssueDrugForm";

@@ -156,26 +156,8 @@ public class ReceiptFormController {
 		transactionDetail.setDateManufacture(DateUtils.getDateFromStr(dateManufacture));
 		transactionDetail.setReceiptDate(DateUtils.getDateFromStr(receiptDate));
 		
-		
-		/*Money moneyUnitPrice = new Money(unitPrice);
-		Money totl = moneyUnitPrice.times(quantity);
-		totl = totl.plus(totl.times((double)VAT/100));
-		transactionDetail.setTotalPrice(totl.getAmount());*/
-		//BigDecimal moneyUnitPrice = costToPatient.multiply(new BigDecimal(quantity));
 		BigDecimal moneyUnitPrice = unitPrice.multiply(new BigDecimal(quantity));
-		moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(VAT.divide(new BigDecimal(100))));
-		if(waiverPercentage==0)
-		{
-			transactionDetail.setTotalPrice(moneyUnitPrice);
-			
-		}
-		else
-		{
-			BigDecimal wper=BigDecimal.valueOf(waiverPercentage/100);
-			moneyUnitPrice =moneyUnitPrice.subtract(moneyUnitPrice.multiply(wper));
-			
-			transactionDetail.setTotalPrice(moneyUnitPrice);
-		}
+		transactionDetail.setTotalPrice(moneyUnitPrice);
 		
 		int userId = Context.getAuthenticatedUser().getId();
 		String fowardParam = "reipt_"+userId;

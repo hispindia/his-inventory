@@ -49,6 +49,9 @@ var waiverPercentage=jQuery("#waiverPercentage").val();
 var totalAmountPay=total-(total*waiverPercentage)/100;
 var tap=Math.round(totalAmountPay);
 jQuery("#totalAmountPayable").val(tap);
+var amountGiven=jQuery("#amountGiven").val();
+var amountReturned=amountGiven-tap;
+jQuery("#amountReturned").val(amountReturned);
 }
 
 function amountReturnedToPatient(){
@@ -237,7 +240,7 @@ ISSUE.processSlip('0');
 				</tr>
 				<tr>
 					<td>${issueDrugPatient.patient.patientIdentifier.identifier}</td>
-					<td>${issueDrugPatient.patientCategory}</td>
+					<td>${patientCategory}</td>
 					<td>${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.middleName}&nbsp;${issueDrugPatient.patient.familyName}</td>
 					<td><c:choose>
 							<c:when test="${issueDrugPatient.patient.age == 0  }">&lt 1</c:when>
@@ -352,7 +355,7 @@ ISSUE.processSlip('0');
 				</tr>
 				<tr>
 					<td>Patient category</td>
-					<td>${issueDrugPatient.patientCategory }</td>
+					<td>${patientCategory}</td>
 				</tr>
 				<tr>
 					<td>Name</td>
@@ -395,6 +398,19 @@ ISSUE.processSlip('0');
 
 				</c:when>
 			</c:choose>
+		</table>
+		<table border="1">
+		<tr>
+		<th>Total</th>
+		<th>Discount</th>
+		<th>Total amount payable</th>
+		</tr>
+		<br /> <br />
+		<tr>
+		<td><span id="printableTotal" /></td>
+		<td><span id="printableDiscount" /></td>
+		<td><span id="printableTotalAmountPayable" /></td>
+		</tr>
 		</table>
 		<br /> <br /> <br /> <br /> <br /> <br /> 
 		<!-- [Inventory] kesavulu 21/03/2013 Support #1136 In the Print out of receipt signature  Inventory clerk changed to  pharmacist -->

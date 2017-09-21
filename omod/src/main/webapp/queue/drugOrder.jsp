@@ -297,6 +297,9 @@ var waiverPercentage=jQuery("#waiverPercentage").val();
 var totalAmountPay=total-(total*waiverPercentage)/100;
 var tap=Math.round(totalAmountPay);
 jQuery("#totalAmountPayable").val(tap);
+var amountGiven=jQuery("#amountGiven").val();
+var amountReturned=amountGiven-tap;
+jQuery("#amountReturned").val(amountReturned);
 }
 
 function amountReturnedToPatient(){
@@ -509,9 +512,9 @@ jQuery("#amountReturned").val(amountReturned);
 		</tr>
 		</table>
 
-
-<table id="myTablee" class="tablesorter" class="thickbox" style="width:100%; margin-top:30px">
+<table id="myTablee" class="tablesorter" class="thickbox" style="width:100%; margin-top:15px">
 		<thead>
+			<h4 align="center" style="color:black">Drug issued by pharmacy</h4>
 			<tr>
 				<th style="text-align: center;">S.No</th>
 				<th style="text-align: center;">Drug Name</th>
@@ -523,7 +526,7 @@ jQuery("#amountReturned").val(amountReturned);
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="dol" items="${drugOrderList}" varStatus="index">
+			<c:forEach var="dol" items="${drugOrderListAvailable}" varStatus="index">
 				<c:choose>
 					<c:when test="${index.count mod 2 == 0}">
 						<c:set var="klass" value="odd" />
@@ -541,8 +544,58 @@ jQuery("#amountReturned").val(amountReturned);
 					<td align="center">${dol.comments}</td>
 				</tr>
 			</c:forEach>
-			
+		</tbody>
+</table>
 
+<table id="drugNotAvailable" class="tablesorter" class="thickbox" style="width:100%; margin-top:15px">
+		<thead>
+			<h4 align="center" style="color:black">Drug not available in the pharmacy</h4>
+			<tr>
+				<th style="text-align: center;">S.No</th>
+				<th style="text-align: center;">Drug Name</th>
+				<th style="text-align: center;">Formulation</th>
+				<th style="text-align: center;">Days</th>
+				<th style="text-align: center;">Frequency</th>
+				<th style="text-align: center;">Comments</th>
+				<!-- <th style="text-align: center;">Quantity</th> -->
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="dol" items="${drugOrderListNotAvailable}" varStatus="index">
+				<c:choose>
+					<c:when test="${index.count mod 2 == 0}">
+						<c:set var="klass" value="odd" />
+					</c:when>
+					<c:otherwise>
+						<c:set var="klass" value="even" />
+					</c:otherwise>
+				</c:choose>
+				<tr class="${klass}" id="${dol.inventoryDrug.name}">
+					<td align="center">${index.count}</td>
+					<td align="center">${dol.inventoryDrug.name}</td>
+					<td align="center">${dol.inventoryDrugFormulation.name}-${dol.inventoryDrugFormulation.dozage}</td>
+					<td align="center">${dol.noOfDays}</td>
+					<td align="center">${dol.frequency.name}</td>
+					<td align="center">${dol.comments}</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+</table>
+
+<table id="discountDetails" frame="box" style="float:right; width:50%; margin-top:20px">
+<thead>
+<tr>
+		<th style="text-align: center;">Total amount</th>
+		<th style="text-align: center;">Discount %</th>
+		<th style="text-align: center;">Total amount payable</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td align="center"><span id="printableTotal" /></td>
+		<td align="center"><span id="printableDiscount" /></td>
+		<td align="center"><span id="printableTotalAmountPayable" /></td>
+		</tr>
 		</tbody>
 </table>
 <br><br><br><br><br><br><br>
@@ -574,6 +627,16 @@ jQuery("#amountReturned").val(amountReturned);
 	}
 	function printDiv2() {
 
+		var totalValue=jQuery("#totalValue").val();
+		var waiverPercentage=jQuery("#waiverPercentage").val();
+		var totalAmountPayable=jQuery("#totalAmountPayable").val();
+		var waiverComment=jQuery("#waiverComment").val();
+		var amountGiven=jQuery("#amountGiven").val();
+		var amountReturned=jQuery("#amountReturned").val();
+		jQuery("#printableTotal").append("<span style='margin:5px;'>" + totalValue + "</span>");
+		jQuery("#printableDiscount").append("<span style='margin:5px;'>" + waiverPercentage + "</span>");
+		jQuery("#printableTotalAmountPayable").append("<span style='margin:5px;'>" + totalAmountPayable + "</span>");
+		
 		var printer = window.open('', '', 'width=300,height=300');
 		printer.document.open("text/html");
 		printer.document.write(document.getElementById('printDiv').innerHTML);

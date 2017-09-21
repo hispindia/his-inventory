@@ -28,7 +28,7 @@
 	<th><spring:message code="inventory.viewStockBalance.category"/></th>
 	<th><spring:message code="inventory.viewStockBalance.drug"/></th>
 	<th><spring:message code="inventory.viewStockBalance.formulation"/></th>
-	<th ><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
+	<th><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
 	<th><spring:message code="inventory.issueDrug.quantity"/></th>
 	</tr>
 	<c:choose>
@@ -59,7 +59,7 @@
 <c:if  test="${not empty listDrugIssue}">
 <table border="1">
 	<tr><td>Patient identifier</td><td>${issueDrugPatient.identifier }</td></tr>
-	<tr><td>Patient category</td><td>${issueDrugPatient.patientCategory }</td></tr>
+	<tr><td>Patient category</td><td>${patientCategory}</td></tr>
 	<tr><td>Name</td><td>${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.middleName}&nbsp;${issueDrugPatient.patient.familyName}</td></tr>
 	<tr><td>Age</td><td>
 		<c:choose>

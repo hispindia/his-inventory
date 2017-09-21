@@ -45,6 +45,7 @@ import org.openmrs.module.hospitalcore.InventoryCommonService;
 import org.openmrs.module.hospitalcore.PatientDashboardService;
 import org.openmrs.module.hospitalcore.model.IndoorPatientServiceBill;
 import org.openmrs.module.hospitalcore.model.IndoorPatientServiceBillItem;
+import org.openmrs.module.hospitalcore.model.InventoryDrug;
 import org.openmrs.module.hospitalcore.model.InventoryDrugFormulation;
 import org.openmrs.module.hospitalcore.model.InventoryStore;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatient;
@@ -92,6 +93,31 @@ public class DrugOrderController {
 		
 		InventoryStoreDrugPatient inventoryStoreDrugPatient = new InventoryStoreDrugPatient();
 		model.addAttribute("pharmacist", Context.getAuthenticatedUser().getGivenName());
+		
+		List<OpdDrugOrder> drugOrderListAvailable = new ArrayList<OpdDrugOrder>();
+		List<OpdDrugOrder> drugOrderListNotAvailable = new ArrayList<OpdDrugOrder>();
+		
+		for(OpdDrugOrder dol:drugOrderList){
+		InventoryDrug drug = inventoryService.getDrugById(dol.getInventoryDrug().getId());
+		Integer formulationId = dol.getInventoryDrugFormulation().getId();
+		InventoryStore store = inventoryService
+				.getStoreByCollectionRole(new ArrayList<Role>(Context
+						.getAuthenticatedUser().getAllRoles()));
+		if (store != null && drug != null && formulationId != null) {
+			List<InventoryStoreDrugTransactionDetail> listReceiptDrug = inventoryService
+					.listStoreDrugTransactionDetail(store.getId(),
+							drug.getId(), formulationId, true);
+			if(listReceiptDrug.size()!=0){
+				drugOrderListAvailable.add(dol);
+			}
+			else{
+				drugOrderListNotAvailable.add(dol);	
+			}
+		  }
+		}
+		
+		model.addAttribute("drugOrderListAvailable", drugOrderListAvailable);
+		model.addAttribute("drugOrderListNotAvailable", drugOrderListNotAvailable);
                 
                 
 		return "/module/inventory/queue/drugOrder";

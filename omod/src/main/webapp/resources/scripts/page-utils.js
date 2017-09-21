@@ -352,7 +352,18 @@ PURCHASE={
 		},
 		printDiv : function ()
 		{
+		  	var totalValue=jQuery("#totalValue").val();
+			var waiverPercentage=jQuery("#waiverPercentage").val();
+			var totalAmountPayable=jQuery("#totalAmountPayable").val();
+			var waiverComment=jQuery("#waiverComment").val();
+			var amountGiven=jQuery("#amountGiven").val();
+			var amountReturned=jQuery("#amountReturned").val();
+		  	jQuery("#printableTotal").append("<span style='margin:5px;'>" + totalValue + "</span>");
+		  	jQuery("#printableDiscount").append("<span style='margin:5px;'>" + waiverPercentage + "</span>");
+		  	jQuery("#printableTotalAmountPayable").append("<span style='margin:5px;'>" + totalAmountPayable + "</span>");
 		  	jQuery("div#printDiv").printArea({mode:"popup",popClose:true,popTitle: "Support by HISP india(hispindia.org)"});
+		  	var data=0;
+		  	ACT.go("processIssueDrug.form?totalValue="+totalValue+"&waiverPercentage="+waiverPercentage+"&totalAmountPayable="+totalAmountPayable+"&waiverComment="+waiverComment+"&amountGiven="+amountGiven+"&amountReturned="+amountReturned+"&action="+data);
 		},
 		processSlip : function(action){
 				if(action == 0){
