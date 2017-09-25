@@ -339,83 +339,135 @@ ISSUE.processSlip('0');
 </div>
 </form>
 <!-- PRINT DIV -->
-<div id="printDiv" style="display: none;">
-	<div
-		style="margin: 10px auto; width: 981px; font-size: 1.0em; font-family: 'Dot Matrix Normal', Arial, Helvetica, sans-serif;">
+<div id="printDiv" style="display: none;"
+		style="width: 1280px; font-size: 0.8em">
+
+		<style>
+@media print {
+	.donotprint {
+		display: none;
+	}
+	.spacer {
+		margin-top: 50px;
+		font-family: "Dot Matrix Normal", Arial, Helvetica, sans-serif;
+		font-style: normal;
+		font-size: 14px;
+	}
+	.printfont {
+		font-family: "Dot Matrix Normal", Arial, Helvetica, sans-serif;
+		font-style: normal;
+		font-size: 14px;
+	}
+}
+</style>
 		<c:if test="${not empty issueDrugPatient}">
-			<br />
-			<br />
-			<center style="float: center; font-size: 2.2em">Issue Drug To Patient</center>
-			<br />
-			<br />
-			<table border="1">
+			<br /> <br />
+			<table align='Center'>
 				<tr>
-					<td>Patient identifier</td>
-					<td>${issueDrugPatient.identifier }</td>
-				</tr>
-				<tr>
-					<td>Patient category</td>
-					<td>${patientCategory}</td>
-				</tr>
-				<tr>
-					<td>Name</td>
-					<td>${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.middleName}&nbsp;${issueDrugPatient.patient.familyName}</td>
+					<td>Patient ID :</td>
+					<td>${issueDrugPatient.identifier }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					
+					<td>Name :</td>
+			        <td>${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.familyName}</td>
 				</tr>
 				<tr>
 					<td>Age</td>
 					<td><c:choose>
 							<c:when test="${issueDrugPatient.patient.age == 0  }">&lt 1</c:when>
 							<c:otherwise>${issueDrugPatient.patient.age }</c:otherwise>
-						</c:choose></td>
+						</c:choose>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						
+					<td>Gender:</td>
+        	        <td>${issueDrugPatient.patient.gender}</td>  	
 				</tr>
 				<tr>
 					<td>Date</td>
-					<td><openmrs:formatDate date="${date}" type="textbox" /></td>
+					<td><openmrs:formatDate date="${date}" type="textbox" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					
+					<td>Patient Category:</td>
+			        <td>${patientCategory}</td>
 				</tr>
 			</table>
 			<br />
 		</c:if>
-		<table border="1">
+		<table style="width:100%">
+			<thead>
+			<h4 align="left" style="color:black">Drugs Issued by Pharmacy</h4>
 			<tr>
-				<th>#</th>
-				<th><spring:message code="inventory.drug.category" /></th>
-				<th><spring:message code="inventory.drug.name" /></th>
-				<th><spring:message code="inventory.drug.formulation" /></th>
-				<th><spring:message code="inventory.receiptDrug.quantity" /></th>
+				<th style="text-align: center;">#</th>
+				<th style="text-align: center;"><spring:message code="inventory.drug.category" /></th>
+				<th style="text-align: center;"><spring:message code="inventory.drug.name" /></th>
+				<th style="text-align: center;"><spring:message code="inventory.drug.formulation" /></th>
+				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.quantity" /></th>
 			</tr>
+			</thead>
+			<tbody>
 			<c:choose>
 				<c:when test="${not empty listPatientDetail}">
 					<c:forEach items="${listPatientDetail}" var="issue"
 						varStatus="varStatus">
 						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
-							<td><c:out value="${varStatus.count }" /></td>
-							<td>${issue.transactionDetail.drug.category.name}</td>
-							<td>${issue.transactionDetail.drug.name}</td>
-							<td>${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
-							<td>${issue.quantity}</td>
+							<td style="text-align: center;"><c:out value="${varStatus.count }" /></td>
+							<td style="text-align: center;">${issue.transactionDetail.drug.category.name}</td>
+							<td style="text-align: center;">${issue.transactionDetail.drug.name}</td>
+							<td style="text-align: center;">${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
+							<td style="text-align: center;">${issue.quantity}</td>
 						</tr>
 					</c:forEach>
 
 				</c:when>
 			</c:choose>
+			</tbody>
 		</table>
-		<table border="1">
-		<tr>
-		<th>Total</th>
-		<th>Discount</th>
-		<th>Total amount payable</th>
-		</tr>
-		<br /> <br />
-		<tr>
-		<td><span id="printableTotal" /></td>
-		<td><span id="printableDiscount" /></td>
-		<td><span id="printableTotalAmountPayable" /></td>
-		</tr>
-		</table>
+	
+<table style="width:100%">
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td colspan="6">Total amount</td>
+<td><span id="printableTotal" /></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td colspan="6">Discount %</td>
+<td><span id="printableDiscount" /></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td colspan="6">Amount Given</td>
+<td><span id="printableGiven" /></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td colspan="6">Amount Returned</td>
+<td><span id="printableAmountReturned" /></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td colspan="6">Total amount payable</td>
+<td><span id="printableTotalAmountPayable" /></td>
+</tr>
+<tr>
+<td><b>Total Amount  Payable Rupees:</b><span id="printableTotalPayable" /></td>
+</tr>
+</table>
 		<br /> <br /> <br /> <br /> <br /> <br /> 
-		<!-- [Inventory] kesavulu 21/03/2013 Support #1136 In the Print out of receipt signature  Inventory clerk changed to  pharmacist -->
 		<span style="float: right; font-size: 1.5em">Signature of pharmacist/ Stamp</span>
-	</div>
 </div>
 <!-- END PRINT DIV -->
 

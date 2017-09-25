@@ -35,9 +35,10 @@ import org.openmrs.Concept;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.Patient;
+import org.openmrs.PersonAttribute;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.Role;
 import org.openmrs.api.PatientService;
-//new
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.BillingService;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
@@ -118,6 +119,18 @@ public class DrugOrderController {
 		
 		model.addAttribute("drugOrderListAvailable", drugOrderListAvailable);
 		model.addAttribute("drugOrderListNotAvailable", drugOrderListNotAvailable);
+		
+		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+		List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);
+		for (PersonAttribute pa : pas) {
+			PersonAttributeType attributeType = pa.getAttributeType();
+			if (attributeType.getPersonAttributeTypeId() == 14) {
+				String patientCategory=pa.getValue();
+				Integer patientCategoryConcept=Integer.parseInt(patientCategory);
+				Concept concept=Context.getConceptService().getConcept(patientCategoryConcept);
+				model.addAttribute("patientCategory", concept.getName());
+			}
+		}
                 
                 
 		return "/module/inventory/queue/drugOrder";
@@ -168,8 +181,6 @@ public class DrugOrderController {
 		transaction.setStore(store);
 		transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
 		transaction.setCreatedOn(date);
-		//transaction.setPaymentMode(paymentMode);
-		System.out.println("gsdgshgds"+patient.getAttribute(14).getValue());
 		if(patient.getAttribute(14).getValue().equals("3164")||patient.getAttribute(14).getValue().equals("3165")||
 				patient.getAttribute(14).getValue().equals("3166")||patient.getAttribute(14).getValue().equals("3167"))
 		{

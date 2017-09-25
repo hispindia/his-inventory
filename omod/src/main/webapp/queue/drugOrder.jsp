@@ -74,6 +74,7 @@
 
 
 <script type="text/javascript">
+var count=0;
 function process(drugId,formulationId,frequencyName,days,comments){
 
 	
@@ -130,6 +131,10 @@ function issueDrugOrder(listOfDrugQuantity) {
    var noOfDays=document.getElementById(availableIdArr[i].toString()+'_noOfDays').value;
    var comments=document.getElementById(availableIdArr[i].toString()+'_comments').value;
    var price=document.getElementById(availableIdArr[i].toString()+'_price').value;
+   
+   //jQuery("#qty"+drugId).append("<span style='margin:5px;'>" + totalValue + "</span>");
+   //jQuery("#mrp"+drugId).append("<span style='margin:5px;'>" + waiverPercentage + "</span>");
+  //jQuery("#total"+drugId).append("<span style='margin:5px;'>" + totalAmountPayable + "</span>");
   
   	totalValue = (totalValue + price*quantity);
  
@@ -191,6 +196,33 @@ function issueDrugOrder(listOfDrugQuantity) {
     var totalAmountPay=total-(total*waiverPercentage)/100;
     var tap=Math.round(totalAmountPay);
     jQuery("#totalAmountPayable").val(tap);
+    
+    var totalPrice=parseInt(quantity)*parseInt(price);
+    count++;
+    var drugIssuedText = "<td>"
+				 +count
+				 +"</td>"
+				 +"<td>"
+				 +drugName
+				 +"</td>"
+				 +"<td>"
+				 +formulation
+				 +"</td>"
+				 +"<td>"
+				 +quantity
+				 +"</td>"
+				 +"<td>"
+				 +price
+				 +"</td>"
+				 +"<td>"
+				 +totalPrice
+				 +"</td>";
+   
+   var newElementt = document.createElement('tr');
+   newElementt.setAttribute("align", "center");   
+   newElementt.innerHTML = drugIssuedText;
+   var fieldsAreaa = document.getElementById('drugIssuedheaderValue');
+   fieldsAreaa.appendChild(newElementt);
 
 }
 
@@ -485,79 +517,104 @@ jQuery("#amountReturned").val(amountReturned);
 		<table align='Center'>
 		<tr>
 			<td>Patient ID :</td>
-            <td>&nbsp;&nbsp;&nbsp;</td>
-			<td>&nbsp;${patientSearch.identifier}</td>
-		</tr>
-		<tr>
-			<td>Name :</td><td>&nbsp;</td>
-			<td>&nbsp;${patientSearch.givenName}&nbsp;
-				${patientSearch.familyName}&nbsp;&nbsp;${fn:replace(patientSearch.middleName,","," ")}</td>
+			<td>${patientSearch.identifier}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			
+			<td>Name :</td>
+			<td>${patientSearch.givenName}&nbsp;${patientSearch.familyName}</td>
 		</tr>
         <tr>
-        	<td>Age:</td><td>&nbsp;</td>
+        	<td>Age:</td>
 			<td><c:choose>
 							<c:when test="${patientSearch.age == 0}">&lt 1</c:when>
 							<c:otherwise>${patientSearch.age}</c:otherwise>
 						</c:choose>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					</td>
-        	
+					
+			<td>Gender:</td>
+        	<td>${patientSearch.gender}</td>  	
       </tr>
-        <tr>
-        	<td>Gender:</td><td>&nbsp;</td>
-        	<td>&nbsp;${patientSearch.gender}</td>
-        </tr>
 		<tr>
-			<td>Date :</td><td>&nbsp;</td>
-			<td>${date}</td>
+			<td>Date :</td>
+			<td>${date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			
+			<td>Patient Category:</td>
+			<td>${patientCategory}</td>
 		</tr>
 		</table>
-
-<table id="myTablee" class="tablesorter" class="thickbox" style="width:100%; margin-top:15px">
-		<thead>
-			<h4 align="center" style="color:black">Drug issued by pharmacy</h4>
-			<tr>
-				<th style="text-align: center;">S.No</th>
-				<th style="text-align: center;">Drug Name</th>
-				<th style="text-align: center;">Formulation</th>
-				<th style="text-align: center;">Days</th>
-				<th style="text-align: center;">Frequency</th>
-				<th style="text-align: center;">Comments</th>
-				<!-- <th style="text-align: center;">Quantity</th> -->
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="dol" items="${drugOrderListAvailable}" varStatus="index">
-				<c:choose>
-					<c:when test="${index.count mod 2 == 0}">
-						<c:set var="klass" value="odd" />
-					</c:when>
-					<c:otherwise>
-						<c:set var="klass" value="even" />
-					</c:otherwise>
-				</c:choose>
-				<tr class="${klass}" id="${dol.inventoryDrug.name}">
-					<td align="center">${index.count}</td>
-					<td align="center">${dol.inventoryDrug.name}</td>
-					<td align="center">${dol.inventoryDrugFormulation.name}-${dol.inventoryDrugFormulation.dozage}</td>
-					<td align="center">${dol.noOfDays}</td>
-					<td align="center">${dol.frequency.name}</td>
-					<td align="center">${dol.comments}</td>
-				</tr>
-			</c:forEach>
-		</tbody>
+ <hr  color="black">
+<table style="width:100%; margin-top:15px">
+<thead>
+<h4 align="left" style="color:black">Drugs Issued by Pharmacy</h4>
+<tr>
+<th style="text-align: center;">S.No</th>
+<th style="text-align: center;">Drug Name</th>
+<th style="text-align: center;">Formulation</th>
+<th style="text-align: center;">Qty</th>
+<th style="text-align: center;">MRP</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody id="drugIssuedheaderValue">
+</tbody>
 </table>
 
+<table style="width:100%">
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td colspan="6">Total amount</td>
+<td><span id="printableTotal" /></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td colspan="6">Discount %</td>
+<td><span id="printableDiscount" /></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td colspan="6">Amount Given</td>
+<td><span id="printableGiven" /></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td colspan="6">Amount Returned</td>
+<td><span id="printableAmountReturned" /></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td colspan="6">Total amount payable</td>
+<td><span id="printableTotalAmountPayable" /></td>
+</tr>
+<tr>
+<td><b>Total Amount  Payable Rupees:</b><span id="printableTotalPayable" /></td>
+</tr>
+</table>
+
+<hr  color="black">
 <table id="drugNotAvailable" class="tablesorter" class="thickbox" style="width:100%; margin-top:15px">
 		<thead>
-			<h4 align="center" style="color:black">Drug not available in the pharmacy</h4>
+			<h4 align="left" style="color:black">Drugs Not Issued by Pharmacy</h4>
 			<tr>
 				<th style="text-align: center;">S.No</th>
 				<th style="text-align: center;">Drug Name</th>
 				<th style="text-align: center;">Formulation</th>
 				<th style="text-align: center;">Days</th>
 				<th style="text-align: center;">Frequency</th>
-				<th style="text-align: center;">Comments</th>
-				<!-- <th style="text-align: center;">Quantity</th> -->
 			</tr>
 		</thead>
 		<tbody>
@@ -576,35 +633,17 @@ jQuery("#amountReturned").val(amountReturned);
 					<td align="center">${dol.inventoryDrugFormulation.name}-${dol.inventoryDrugFormulation.dozage}</td>
 					<td align="center">${dol.noOfDays}</td>
 					<td align="center">${dol.frequency.name}</td>
-					<td align="center">${dol.comments}</td>
 				</tr>
 			</c:forEach>
-		</tbody>
-</table>
-
-<table id="discountDetails" frame="box" style="float:right; width:50%; margin-top:20px">
-<thead>
-<tr>
-		<th style="text-align: center;">Total amount</th>
-		<th style="text-align: center;">Discount %</th>
-		<th style="text-align: center;">Total amount payable</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr>
-		<td align="center"><span id="printableTotal" /></td>
-		<td align="center"><span id="printableDiscount" /></td>
-		<td align="center"><span id="printableTotalAmountPayable" /></td>
-		</tr>
 		</tbody>
 </table>
 <br><br><br><br><br><br><br>
 <table  class="spacer" style="margin-left: 60px;width:100%;">
 				<tr>
-					<td width="20%"><b>Treating Doctor</b></td><td>:${doctor}</td>
+					<td align="right"><b>Treating Doctor</b></td><td>:${doctor}</td>
 				</tr>
 				<tr>
-					<td width="20%"><b>Treating Paharmacist</b></td><td>:${pharmacist}</td>
+					<td align="right"><b>Treating Paharmacist</b></td><td>:${pharmacist}</td>
 				</tr>
 </table>
 
@@ -636,6 +675,9 @@ jQuery("#amountReturned").val(amountReturned);
 		jQuery("#printableTotal").append("<span style='margin:5px;'>" + totalValue + "</span>");
 		jQuery("#printableDiscount").append("<span style='margin:5px;'>" + waiverPercentage + "</span>");
 		jQuery("#printableTotalAmountPayable").append("<span style='margin:5px;'>" + totalAmountPayable + "</span>");
+		jQuery("#printableTotalPayable").append("<span style='margin:5px;'>" + totalAmountPayable + "</span>");
+		jQuery("#printableGiven").append("<span style='margin:5px;'>" + amountGiven + "</span>");
+		jQuery("#printableAmountReturned").append("<span style='margin:5px;'>" + amountReturned + "</span>");
 		
 		var printer = window.open('', '', 'width=300,height=300');
 		printer.document.open("text/html");
