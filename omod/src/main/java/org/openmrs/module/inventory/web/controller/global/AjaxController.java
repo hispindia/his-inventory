@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.openmrs.Concept;
 import org.openmrs.Patient;
 import org.openmrs.Role;
 import org.openmrs.api.context.Context;
@@ -498,9 +499,10 @@ public class AjaxController {
 				transDetail.setTotalPrice(totl.getAmount());*/
 				
 				BigDecimal moneyUnitPrice = pDetail.getTransactionDetail().getUnitPrice().multiply(new BigDecimal(pDetail.getQuantity()));
-				moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(pDetail.getTransactionDetail().getVAT().divide(new BigDecimal(100))));
+				//moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(pDetail.getTransactionDetail().getVAT().divide(new BigDecimal(100))));
 				transDetail.setTotalPrice(moneyUnitPrice);
 				
+				transDetail.setTotalAmount(totalValue);
 				transDetail.setWaiverPercentage(waiverPercentage);
 				float waiverAmount=totalValue*waiverPercentage/100;
 				transDetail.setWaiverAmount(waiverAmount);
@@ -758,10 +760,26 @@ public class AjaxController {
 	public String viewDetailIssueDrug( @RequestParam(value="issueId",required=false)  Integer issueId, Model model) {
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		List<InventoryStoreDrugPatientDetail> listDrugIssue = inventoryService.listStoreDrugPatientDetail(issueId);
+		InventoryStoreDrugPatient inventoryStoreDrugPatient = new InventoryStoreDrugPatient();
 		model.addAttribute("listDrugIssue", listDrugIssue);
 		if(CollectionUtils.isNotEmpty(listDrugIssue)){
+			inventoryStoreDrugPatient=listDrugIssue.get(0).getStoreDrugPatient();
 			model.addAttribute("issueDrugPatient", listDrugIssue.get(0).getStoreDrugPatient());
 			model.addAttribute("date", listDrugIssue.get(0).getStoreDrugPatient().getCreatedOn());
+		}
+		if(inventoryStoreDrugPatient!=null){
+			Integer patientCategoryConcept=Integer.parseInt(inventoryStoreDrugPatient.getPatientCategory());
+			Concept concept=Context.getConceptService().getConcept(patientCategoryConcept);
+			model.addAttribute("patientCategory", concept.getName());
+		}
+		if(CollectionUtils.isNotEmpty(listDrugIssue)){
+		for(InventoryStoreDrugPatientDetail issue:listDrugIssue){
+		model.addAttribute("totalAmount", issue.getTransactionDetail().getTotalPrice());
+		model.addAttribute("discount", issue.getTransactionDetail().getWaiverPercentage());
+		model.addAttribute("totalAmountPayable", issue.getTransactionDetail().getAmountPayable());
+		model.addAttribute("amountGiven", issue.getTransactionDetail().getAmountGiven());
+		model.addAttribute("amountReturned", issue.getTransactionDetail().getAmountReturned());
+		}	
 		}
 		return "/module/inventory/substore/subStoreIssueDrugDettail";
 	}

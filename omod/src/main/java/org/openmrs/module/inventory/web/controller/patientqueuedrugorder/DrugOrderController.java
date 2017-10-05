@@ -263,6 +263,7 @@ public class DrugOrderController {
 			// moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(inventoryStoreDrugTransactionDetail.getVAT().divide(new BigDecimal(100))));
 			 transDetail.setTotalPrice(moneyUnitPrice);
 				
+			 transDetail.setTotalAmount(totalValue);
 			 transDetail.setWaiverPercentage(waiverPercentage);
 			 float waiverAmount=totalValue*waiverPercentage/100;
 			 transDetail.setWaiverAmount(waiverAmount);

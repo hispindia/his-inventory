@@ -82,52 +82,28 @@ public class IssueDrugFormController {
 		        .get("issueDrug_" + userId);
 		model.addAttribute("listPatientDetail", list);
 		model.addAttribute("issueDrugPatient", issueDrugPatient);
-		String totalValue=request.getParameter("totalValue");
 		String waiverPercentage=request.getParameter("waiverPercentage");
-		String totalAmountPay=request.getParameter("totalAmountPayable");
-		if(totalValue!=null){
-			model.addAttribute("total", Float.parseFloat(totalValue));	
+		Float totalValu=Float.parseFloat("0");
+		Float totalAmountPy=Float.parseFloat("0");
+		if(list!=null){
+		for(InventoryStoreDrugPatientDetail lst:list){
+			Float unitPrice=lst.getTransactionDetail().getUnitPrice().floatValue();
+			Integer quantity=lst.getQuantity();
+			totalValu=totalValu+quantity*unitPrice;
 		}
-		else{
-			if(list!=null){
-				float total=0;
-				for(InventoryStoreDrugPatientDetail lst:list){
-					BigDecimal unitPrice=lst.getTransactionDetail().getUnitPrice();
-					Integer quantity=lst.getQuantity();
-					float unitPric=unitPrice.floatValue();
-					total=total+quantity*unitPric;
-					model.addAttribute("total", total);
-				}
-			}
-			else{
-				model.addAttribute("total", Float.parseFloat("0"));	
-			}
+		Float waiverPercentge=Float.parseFloat("0");
+		if(waiverPercentage!=null){
+		waiverPercentge=Float.parseFloat(waiverPercentage);
 		}
-		
+		totalAmountPy=totalValu-(totalValu*waiverPercentge)/100;	
+		}
+		model.addAttribute("total", totalValu);
+		model.addAttribute("totalAmountPayable", Math.round(totalAmountPy));
 		if(waiverPercentage!=null){
 			model.addAttribute("waiverPercentage", Float.parseFloat(waiverPercentage));	
 		}
 		else{
 			model.addAttribute("waiverPercentage", Float.parseFloat("0"));
-		}
-		
-		if(totalAmountPay!=null){
-			model.addAttribute("totalAmountPayable", Float.parseFloat(totalAmountPay));	
-		}
-		else{
-			if(list!=null){
-				float total=0;
-				for(InventoryStoreDrugPatientDetail lst:list){
-					BigDecimal unitPrice=lst.getTransactionDetail().getUnitPrice();
-					Integer quantity=lst.getQuantity();
-					float unitPric=unitPrice.floatValue();
-					total=total+quantity*unitPric;
-					model.addAttribute("totalAmountPayable", total);
-				}
-			}
-			else{
-				model.addAttribute("totalAmountPayable", Float.parseFloat("0"));	
-			}
 		}
 		
 		if(issueDrugPatient!=null){
@@ -143,9 +119,6 @@ public class IssueDrugFormController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String submit(HttpServletRequest request, Model model) {
 		List<String> errors = new ArrayList<String>();
-		String totalVal=request.getParameter("totalValue");
-		Float totalValu=Float.parseFloat(totalVal);
-		
 		int drugId=0;
 		String drugN="",drugIdStr="";
 		InventoryDrug drug=null;
@@ -175,11 +148,6 @@ public class IssueDrugFormController {
 			}else{
 			 drugId = drug.getId();
 			}
-			
-			String drgId=request.getParameter("drgId");
-			Float unitPrice=Float.parseFloat(request.getParameter("unitPrice"));
-			Integer quantity=Integer.parseInt(request.getParameter(drgId));
-			totalValu=totalValu+quantity*unitPrice;
 		
 		InventoryDrugFormulation formulationO = inventoryService.getDrugFormulationById(formulation);
 		if (formulationO == null) {
@@ -285,7 +253,6 @@ public class IssueDrugFormController {
 		//model.addAttribute("listPatientDetail", list);
 		String waiverPercentage=request.getParameter("waiverPercentage");
 		Float waiverPercentge=Float.parseFloat(waiverPercentage);
-		Float totalAmountPy=totalValu-(totalValu*waiverPercentge)/100;
-		return "redirect:/module/inventory/subStoreIssueDrugForm.form?totalValue=" + totalValu + "&waiverPercentage=" + waiverPercentge +"&totalAmountPayable=" + totalAmountPy;
+		return "redirect:/module/inventory/subStoreIssueDrugForm.form?waiverPercentage=" + waiverPercentge;
 	}
 }

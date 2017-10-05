@@ -480,7 +480,7 @@ jQuery("#amountReturned").val(amountReturned);
 		</div>
 		<div>
 		Amount Given&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type="text" id="amountGiven" name="amountGiven" size="11" class="cancelDraggable" onkeyup="amountReturnedToPatient();">
+		<input type="text" id="amountGiven" name="amountGiven" size="11" class="cancelDraggable" onkeyup="amountReturnedToPatient();"/>
 		</div>
 		<div>
 		Amount Returned to Patient&nbsp;&nbsp;&nbsp;&nbsp;

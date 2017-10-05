@@ -259,6 +259,7 @@ ISSUE.processSlip('0');
 				<th><spring:message code="inventory.drug.name" /></th>
 				<th><spring:message code="inventory.drug.formulation" /></th>
 				<th><spring:message code="inventory.receiptDrug.quantity" /></th>
+				<th><spring:message code="inventory.receiptDrug.unitprice" /></th>
 			</tr>
 			<c:choose>
 				<c:when test="${not empty listPatientDetail}">
@@ -271,6 +272,7 @@ ISSUE.processSlip('0');
 								onclick="INVENTORY.removeObject('${varStatus.index}','5');">${issue.transactionDetail.drug.name}</a></td>
 							<td>${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
 							<td>${issue.quantity}</td>
+							<td>${issue.transactionDetail.unitPrice}</td>
 						</tr>
 					</c:forEach>
 
@@ -400,6 +402,7 @@ ISSUE.processSlip('0');
 				<th style="text-align: center;"><spring:message code="inventory.drug.name" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.drug.formulation" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.quantity" /></th>
+				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.unitprice" /></th>
 			</tr>
 			</thead>
 			<tbody>
@@ -413,6 +416,7 @@ ISSUE.processSlip('0');
 							<td style="text-align: center;">${issue.transactionDetail.drug.name}</td>
 							<td style="text-align: center;">${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
 							<td style="text-align: center;">${issue.quantity}</td>
+							<td style="text-align: center;">${issue.transactionDetail.unitPrice}</td>
 						</tr>
 					</c:forEach>
 
@@ -443,6 +447,14 @@ ISSUE.processSlip('0');
 <td></td>
 <td></td>
 <td></td>
+<td colspan="6">Total amount payable</td>
+<td><span id="printableTotalAmountPayable" /></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 <td colspan="6">Amount Given</td>
 <td><span id="printableGiven" /></td>
 </tr>
@@ -453,14 +465,6 @@ ISSUE.processSlip('0');
 <td></td>
 <td colspan="6">Amount Returned</td>
 <td><span id="printableAmountReturned" /></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td colspan="6">Total amount payable</td>
-<td><span id="printableTotalAmountPayable" /></td>
 </tr>
 <tr>
 <td><b>Total Amount  Payable Rupees:</b><span id="printableTotalPayable" /></td>
