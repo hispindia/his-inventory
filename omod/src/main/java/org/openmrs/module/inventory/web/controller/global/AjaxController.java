@@ -423,8 +423,8 @@ public class AjaxController {
 	
 	@RequestMapping("/module/inventory/processIssueDrug.form")
 	public String processIssueDrug( @RequestParam(value="action",required=false)  Integer action,Model model,HttpServletRequest request,
-			@RequestParam(value = "totalValue", required = false) float totalValue,
-			@RequestParam(value = "waiverPercentage", required = false) float waiverPercentage,
+			@RequestParam(value = "totalValue", required = false) Float totalValue,
+			@RequestParam(value = "waiverPercentage", required = false) Float waiverPercentage,
             @RequestParam(value= "waiverComment", required = false) String waiverComment,
 			@RequestParam(value = "totalAmountPayable", required = false) BigDecimal totalAmountPayable,
 			@RequestParam(value = "amountGiven", required = false) Integer amountGiven,
@@ -504,7 +504,7 @@ public class AjaxController {
 				
 				transDetail.setTotalAmount(totalValue);
 				transDetail.setWaiverPercentage(waiverPercentage);
-				float waiverAmount=totalValue*waiverPercentage/100;
+				Float waiverAmount=totalValue*waiverPercentage/100;
 				transDetail.setWaiverAmount(waiverAmount);
 				transDetail.setAmountPayable(totalAmountPayable);
 				transDetail.setAmountGiven(amountGiven);

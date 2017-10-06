@@ -143,8 +143,8 @@ public class DrugOrderController {
 			@RequestParam(value = "paymentMode", required = false) String paymentMode,
 			@RequestParam(value = "patientType", required = false) String patientType,
 			@RequestParam(value="avaiableId",required=false) String[] avaiableId,
-			@RequestParam(value = "totalValue", required = false) float totalValue,
-			@RequestParam(value = "waiverPercentage", required = false) float waiverPercentage,
+			@RequestParam(value = "totalValue", required = false) Float totalValue,
+			@RequestParam(value = "waiverPercentage", required = false) Float waiverPercentage,
             @RequestParam(value= "waiverComment", required = false) String waiverComment,
 			@RequestParam(value = "totalAmountPayable", required = false) BigDecimal totalAmountPayable,
 			@RequestParam(value = "amountGiven", required = false) Integer amountGiven,
@@ -265,7 +265,7 @@ public class DrugOrderController {
 				
 			 transDetail.setTotalAmount(totalValue);
 			 transDetail.setWaiverPercentage(waiverPercentage);
-			 float waiverAmount=totalValue*waiverPercentage/100;
+			 Float waiverAmount=totalValue*waiverPercentage/100;
 			 transDetail.setWaiverAmount(waiverAmount);
 			 transDetail.setAmountPayable(totalAmountPayable);
 			 transDetail.setAmountGiven(amountGiven);

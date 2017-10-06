@@ -157,9 +157,11 @@
 <td colspan="6">Amount Returned</td>
 <td>${amountReturned}</td>
 </tr>
+<!-- 
 <tr>
-<td><b>Total Amount  Payable Rupees:</b>${totalAmountPayable}</td>
+<td><b>Total Amount  Payable Rupees:</b>toWords(parseInt(${totalAmountPayable})) only</td>
 </tr>
+--> 
 </table>
 <br/><br/><br/><br/><br/><br/>
 <span style="float:right;font-size: 1.5em">Signature of pharmacist/ Stamp</span>

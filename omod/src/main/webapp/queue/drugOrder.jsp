@@ -581,6 +581,14 @@ jQuery("#amountReturned").val(amountReturned);
 <td></td>
 <td></td>
 <td></td>
+<td colspan="6">Total amount payable</td>
+<td><span id="printableTotalAmountPayable" /></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 <td colspan="6">Amount Given</td>
 <td><span id="printableGiven" /></td>
 </tr>
@@ -593,15 +601,7 @@ jQuery("#amountReturned").val(amountReturned);
 <td><span id="printableAmountReturned" /></td>
 </tr>
 <tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td colspan="6">Total amount payable</td>
-<td><span id="printableTotalAmountPayable" /></td>
-</tr>
-<tr>
-<td><b>Total Amount  Payable Rupees:</b><span id="printableTotalPayable" /></td>
+<td><b>Total Amount  Payable Rupees:</b><span id="printableTotalPayable" > </span> only</td>
 </tr>
 </table>
 
@@ -675,7 +675,7 @@ jQuery("#amountReturned").val(amountReturned);
 		jQuery("#printableTotal").append("<span style='margin:5px;'>" + totalValue + "</span>");
 		jQuery("#printableDiscount").append("<span style='margin:5px;'>" + waiverPercentage + "</span>");
 		jQuery("#printableTotalAmountPayable").append("<span style='margin:5px;'>" + totalAmountPayable + "</span>");
-		jQuery("#printableTotalPayable").append("<span style='margin:5px;'>" + totalAmountPayable + "</span>");
+		jQuery("#printableTotalPayable").append("<span style='margin:5px;'>" + toWords(totalAmountPayable) + "</span>");
 		jQuery("#printableGiven").append("<span style='margin:5px;'>" + amountGiven + "</span>");
 		jQuery("#printableAmountReturned").append("<span style='margin:5px;'>" + amountReturned + "</span>");
 		

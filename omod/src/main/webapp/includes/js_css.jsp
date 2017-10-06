@@ -40,4 +40,5 @@
 <script type="text/javascript"  src="${pageContext.request.contextPath}/moduleResources/inventory/scripts/paging.js" ></script>
 <script type="text/javascript"  src="${pageContext.request.contextPath}/moduleResources/inventory/scripts/page-actions.js" ></script>
 <script type="text/javascript"  src="${pageContext.request.contextPath}/moduleResources/inventory/scripts/page-utils.js" ></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/moduleResources/inventory/scripts/common.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/moduleResources/hospitalcore/styles/tablesorter/blue/style.css" />

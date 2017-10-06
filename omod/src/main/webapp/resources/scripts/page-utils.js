@@ -361,7 +361,7 @@ PURCHASE={
 		    jQuery("#printableTotal").append("<span style='margin:5px;'>" + totalValue + "</span>");
 		    jQuery("#printableDiscount").append("<span style='margin:5px;'>" + waiverPercentage + "</span>");
 		    jQuery("#printableTotalAmountPayable").append("<span style='margin:5px;'>" + totalAmountPayable + "</span>");
-		    jQuery("#printableTotalPayable").append("<span style='margin:5px;'>" + totalAmountPayable + "</span>");
+		    jQuery("#printableTotalPayable").append("<span style='margin:5px;'>" + toWords(totalAmountPayable) + "</span>");
 		    jQuery("#printableGiven").append("<span style='margin:5px;'>" + amountGiven + "</span>");
 		    jQuery("#printableAmountReturned").append("<span style='margin:5px;'>" + amountReturned + "</span>");
 		  	jQuery("div#printDiv").printArea({mode:"popup",popClose:true,popTitle: "Support by HISP india(hispindia.org)"});

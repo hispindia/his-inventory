@@ -467,7 +467,7 @@ ISSUE.processSlip('0');
 <td><span id="printableAmountReturned" /></td>
 </tr>
 <tr>
-<td><b>Total Amount  Payable Rupees:</b><span id="printableTotalPayable" /></td>
+<td><b>Total Amount  Payable Rupees:</b><span id="printableTotalPayable" > </span> only</td>
 </tr>
 </table>
 		<br /> <br /> <br /> <br /> <br /> <br /> 
