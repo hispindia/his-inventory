@@ -152,6 +152,7 @@ public class DrugOrderController {
 		PatientService  patientService = Context.getPatientService();
 		Patient patient = patientService.getPatient(patientId);
 		InventoryService inventoryService = Context.getService(InventoryService.class);
+		PatientDashboardService patientDashboardService = Context.getService(PatientDashboardService.class);
 		InventoryStore store =  inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
 		
 		Date date = new Date();
@@ -309,13 +310,33 @@ public class DrugOrderController {
 				
 			 OpdDrugOrder opdDrugOrder = inventoryService.getOpdDrugOrder(patientId,encounterId,
 					 inventoryStoreDrugTransactionDetail.getDrug().getId(),formulationId);
-			 PatientDashboardService patientDashboardService = Context.getService(PatientDashboardService.class);
 			 opdDrugOrder.setOrderStatus(1);
 			 patientDashboardService.saveOrUpdateOpdDrugOrder(opdDrugOrder);
 		    }
 				
 		  }
 		  
+		}
+		List<OpdDrugOrder> drugOrderList = inventoryService.listOfDrugOrder(patientId, encounterId);
+		
+		for(OpdDrugOrder dol:drugOrderList){
+		InventoryDrug drug = inventoryService.getDrugById(dol.getInventoryDrug().getId());
+		Integer formulationIdd = dol.getInventoryDrugFormulation().getId();
+		InventoryStore storee = inventoryService
+				.getStoreByCollectionRole(new ArrayList<Role>(Context
+						.getAuthenticatedUser().getAllRoles()));
+		if (storee != null && drug != null && formulationIdd != null) {
+			List<InventoryStoreDrugTransactionDetail> listReceiptDrug = inventoryService
+					.listStoreDrugTransactionDetail(storee.getId(),
+							drug.getId(), formulationIdd, true);
+			if(listReceiptDrug.size()!=0){
+		
+			}
+			else{
+				 dol.setCancelStatus(1);
+				 patientDashboardService.saveOrUpdateOpdDrugOrder(dol);
+			}
+		  }
 		}
 		return "redirect:/module/inventory/patientQueueDrugOrder.form";
 	}
