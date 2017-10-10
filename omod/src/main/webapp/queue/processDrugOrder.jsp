@@ -103,10 +103,17 @@
 		</c:choose>
 	</table>
 
-	<br /> <input type="button"
-		class="ui-button ui-widget ui-state-default ui-corner-all"
-		value="Issue" onClick="issueDrugOrder('${listOfDrugQuantity}');"> <input
-		type="button"
-		class="ui-button ui-widget ui-state-default ui-corner-all"
+	<br /> 
+	    <c:choose>
+			<c:when test="${not empty listReceiptDrug}">
+	    <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all"
+		value="Issue" onClick="issueDrugOrder('${listOfDrugQuantity}');">
+		</c:when>
+		<c:otherwise>
+		 <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all"
+		value="Issue" disabled="disabled">
+		</c:otherwise>
+		</c:choose>
+		<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all"
 		value="Cancel" onclick="cancel();">
 </form>

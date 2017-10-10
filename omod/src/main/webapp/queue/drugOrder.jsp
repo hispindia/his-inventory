@@ -122,11 +122,13 @@ function issueDrugOrder(listOfDrugQuantity) {
 	   return false;
 	  }
 	 }
+	 
    if(quantity!="0"){
   
    var drugName=document.getElementById(availableIdArr[i].toString()+'_drugName').value;
    var formulation=document.getElementById(availableIdArr[i].toString()+'_formulation').value;
    var formulationId=document.getElementById(availableIdArr[i].toString()+'_formulationId').value;
+   var quant=document.getElementById(availableIdArr[i].toString()+'_quantity').value;
    var frequencyName=document.getElementById(availableIdArr[i].toString()+'_frequencyName').value;
    var noOfDays=document.getElementById(availableIdArr[i].toString()+'_noOfDays').value;
    var comments=document.getElementById(availableIdArr[i].toString()+'_comments').value;
@@ -136,7 +138,7 @@ function issueDrugOrder(listOfDrugQuantity) {
    //jQuery("#mrp"+drugId).append("<span style='margin:5px;'>" + waiverPercentage + "</span>");
   //jQuery("#total"+drugId).append("<span style='margin:5px;'>" + totalAmountPayable + "</span>");
   
-  	totalValue = (totalValue + price*quantity);
+  	totalValue = (totalValue + price*quant);
  
    if (preTotal != null){
 		totalValue = +totalValue + +preTotal.value;
@@ -149,7 +151,7 @@ function issueDrugOrder(listOfDrugQuantity) {
    var htmlText =  "<div id='com_"+avaiableId+"_div'>"
 	       	 +"<input id='"+avaiableId+"_fName'  name='"+avaiableId+"_fName' type='text' size='20' value='"+drugName+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fFormulationName'  name='"+avaiableId+"_fFormulationName' type='text' size='11' value='"+formulation+"'  readonly='readonly'/>&nbsp;"
-	       	 +"<input id='"+avaiableId+"_fQuantity'  name='"+avaiableId+"_fQuantity' type='text' size='3' value='"+quantity+"'  readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fQuantity'  name='"+avaiableId+"_fQuantity' type='text' size='3' value='"+quant+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fPrice'  name='"+avaiableId+"_fPrice' type='text' size='3' type='hidden' value='"+price+"'  readonly='readonly'/>&nbsp;"
 	       	 
 	       	 +"<input id='"+avaiableId+"_fFormulationId'  name='"+avaiableId+"_fFormulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
@@ -197,7 +199,7 @@ function issueDrugOrder(listOfDrugQuantity) {
     var tap=Math.round(totalAmountPay);
     jQuery("#totalAmountPayable").val(tap);
     
-    var totalPrice=parseInt(quantity)*parseInt(price);
+    var totalPrice=parseInt(quant)*parseInt(price);
     count++;
     var drugIssuedText = "<td>"
 				 +count
@@ -209,7 +211,7 @@ function issueDrugOrder(listOfDrugQuantity) {
 				 +formulation
 				 +"</td>"
 				 +"<td>"
-				 +quantity
+				 +quant
 				 +"</td>"
 				 +"<td>"
 				 +price
@@ -561,50 +563,52 @@ jQuery("#amountReturned").val(amountReturned);
 
 <table style="width:100%">
 <tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td colspan="6">Total amount</td>
-<td><span id="printableTotal" /></td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">Total amount</td>
+<td style="text-align: center;"><span id="printableTotal" /></td>
 </tr>
 <tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td colspan="6">Discount %</td>
-<td><span id="printableDiscount" /></td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">Discount %</td>
+<td style="text-align: center;"><span id="printableDiscount" /></td>
 </tr>
 <tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td colspan="6">Total amount payable</td>
-<td><span id="printableTotalAmountPayable" /></td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">Total amount payable</td>
+<td style="text-align: center;"><span id="printableTotalAmountPayable" /></td>
 </tr>
 <tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td colspan="6">Amount Given</td>
-<td><span id="printableGiven" /></td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">Amount Given</td>
+<td style="text-align: center;"><span id="printableGiven" /></td>
 </tr>
 <tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td colspan="6">Amount Returned</td>
-<td><span id="printableAmountReturned" /></td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">Amount Returned</td>
+<td style="text-align: center;"><span id="printableAmountReturned" /></td>
 </tr>
 <tr>
 <td><b>Total Amount  Payable Rupees:</b><span id="printableTotalPayable" > </span> only</td>
 </tr>
 </table>
 
+<c:choose>
+<c:when test="${not empty drugOrderListNotAvailable}">
 <hr  color="black">
 <table id="drugNotAvailable" class="tablesorter" class="thickbox" style="width:100%; margin-top:15px">
 		<thead>
@@ -637,6 +641,8 @@ jQuery("#amountReturned").val(amountReturned);
 			</c:forEach>
 		</tbody>
 </table>
+</c:when>
+</c:choose>
 <br><br><br><br><br><br><br>
 <table  class="spacer" style="margin-left: 60px;width:100%;">
 				<tr>

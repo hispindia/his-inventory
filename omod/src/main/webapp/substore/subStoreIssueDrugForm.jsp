@@ -391,6 +391,7 @@ ISSUE.processSlip('0');
 			        <td>${patientCategory}</td>
 				</tr>
 			</table>
+			<hr  color="black">
 			<br />
 		</c:if>
 		<table style="width:100%">
@@ -403,6 +404,7 @@ ISSUE.processSlip('0');
 				<th style="text-align: center;"><spring:message code="inventory.drug.formulation" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.quantity" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.unitprice" /></th>
+				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.total" /></th>
 			</tr>
 			</thead>
 			<tbody>
@@ -417,55 +419,60 @@ ISSUE.processSlip('0');
 							<td style="text-align: center;">${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
 							<td style="text-align: center;">${issue.quantity}</td>
 							<td style="text-align: center;">${issue.transactionDetail.unitPrice}</td>
+							<td style="text-align: center;">${issue.transactionDetail.unitPrice*issue.quantity}</td>
 						</tr>
 					</c:forEach>
-
 				</c:when>
 			</c:choose>
+			<tr>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">Total amount</td>
+<td style="text-align: center;"><span id="printableTotal" /></td>
+</tr>
+<tr>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">Discount %</td>
+<td style="text-align: center;"><span id="printableDiscount" /></td>
+</tr>
+<tr>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">Total amount payable</td>
+<td style="text-align: center;"><span id="printableTotalAmountPayable" /></td>
+</tr>
+<tr>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">Amount Given</td>
+<td style="text-align: center;"><span id="printableGiven" /></td>
+</tr>
+<tr>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">Amount Returned</td>
+<td style="text-align: center;"><span id="printableAmountReturned" /></td>
+</tr>
 			</tbody>
 		</table>
 	
 <table style="width:100%">
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td colspan="6">Total amount</td>
-<td><span id="printableTotal" /></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td colspan="6">Discount %</td>
-<td><span id="printableDiscount" /></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td colspan="6">Total amount payable</td>
-<td><span id="printableTotalAmountPayable" /></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td colspan="6">Amount Given</td>
-<td><span id="printableGiven" /></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td colspan="6">Amount Returned</td>
-<td><span id="printableAmountReturned" /></td>
-</tr>
 <tr>
 <td><b>Total Amount  Payable Rupees:</b><span id="printableTotalPayable" > </span> only</td>
 </tr>
