@@ -774,7 +774,7 @@ public class AjaxController {
 		}
 		if(CollectionUtils.isNotEmpty(listDrugIssue)){
 		for(InventoryStoreDrugPatientDetail issue:listDrugIssue){
-		model.addAttribute("totalAmount", issue.getTransactionDetail().getTotalPrice());
+		model.addAttribute("totalAmount", issue.getTransactionDetail().getTotalAmount());
 		model.addAttribute("discount", issue.getTransactionDetail().getWaiverPercentage());
 		model.addAttribute("totalAmountPayable", issue.getTransactionDetail().getAmountPayable());
 		model.addAttribute("amountGiven", issue.getTransactionDetail().getAmountGiven());
