@@ -74,6 +74,9 @@
 
 
 <script type="text/javascript">
+jQuery(document).ready(function(){ 
+//jQuery("#headerValue").hide();
+});
 var count=0;
 function process(drugId,formulationId,frequencyName,days,comments){
 
@@ -96,6 +99,7 @@ jQuery.ajax({
 		});
 		
 		jQuery("#process"+drugId).attr("disabled", "disabled");
+		//jQuery("#headerValue").show();
 }
 
 </script>

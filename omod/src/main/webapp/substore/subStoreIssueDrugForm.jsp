@@ -259,7 +259,7 @@ ISSUE.processSlip('0');
 				<th><spring:message code="inventory.drug.name" /></th>
 				<th><spring:message code="inventory.drug.formulation" /></th>
 				<th><spring:message code="inventory.receiptDrug.quantity" /></th>
-				<th><spring:message code="inventory.receiptDrug.unitprice" /></th>
+				<th><spring:message code="inventory.receiptDrug.MRP" /></th>
 			</tr>
 			<c:choose>
 				<c:when test="${not empty listPatientDetail}">
@@ -403,7 +403,7 @@ ISSUE.processSlip('0');
 				<th style="text-align: center;"><spring:message code="inventory.drug.name" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.drug.formulation" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.quantity" /></th>
-				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.unitprice" /></th>
+				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.MRP" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.total" /></th>
 			</tr>
 			</thead>

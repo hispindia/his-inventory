@@ -61,7 +61,7 @@
 				<th style="text-align: center;"><spring:message code="inventory.drug.name" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.drug.formulation" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.quantity" /></th>
-				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.unitprice" /></th>
+				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.MRP" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.total" /></th>
 			</tr>
 			</thead>
@@ -89,7 +89,7 @@
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Total amount</td>
-<td style="text-align: center;">${totalAmount}</td>
+<td style="text-align: center;">${totalAmount}0</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -98,7 +98,7 @@
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Discount %</td>
-<td style="text-align: center;">${discount}</td>
+<td style="text-align: center;">${discount}0</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -116,7 +116,7 @@
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Amount Given</td>
-<td style="text-align: center;">${amountGiven}</td>
+<td style="text-align: center;">${amountGiven}.00</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -125,7 +125,7 @@
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Amount Returned</td>
-<td style="text-align: center;">${amountReturned}</td>
+<td style="text-align: center;">${amountReturned}.00</td>
 </tr>
 			</tbody>
 		</table>
@@ -198,7 +198,7 @@
 				<th style="text-align: center;"><spring:message code="inventory.drug.name" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.drug.formulation" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.quantity" /></th>
-				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.unitprice" /></th>
+				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.MRP" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.total" /></th>
 			</tr>
 			</thead>
@@ -226,7 +226,7 @@
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Total amount</td>
-<td style="text-align: center;">${totalAmount}</td>
+<td style="text-align: center;">${totalAmount}0</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -235,7 +235,7 @@
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Discount %</td>
-<td style="text-align: center;">${discount}</td>
+<td style="text-align: center;">${discount}0</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -253,7 +253,7 @@
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Amount Given</td>
-<td style="text-align: center;">${amountGiven}</td>
+<td style="text-align: center;">${amountGiven}.00</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -262,7 +262,7 @@
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Amount Returned</td>
-<td style="text-align: center;">${amountReturned}</td>
+<td style="text-align: center;">${amountReturned}.00</td>
 </tr>
 </tbody>
 </table>
