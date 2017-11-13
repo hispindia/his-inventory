@@ -116,6 +116,7 @@ jQuery("#delete").attr('disabled',true);
 	<c:choose>
 	<c:when test="${not empty stockBalances}">
 	<c:forEach items="${stockBalances}" var="balance" varStatus="varStatus">
+	<c:if test="${balance.currentQuantity!=0}">
 	<tr  align="left"  class='${balance.currentQuantity < balance.drug.reorderQty ?" reorder " : ""}${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" }' >
 		<td><c:out value="${(( pagingUtil.currentPage - 1  ) * pagingUtil.pageSize ) + varStatus.count }"/></td>
 		<td><a href="#" onclick="STOCKBALLANCE.detailExpiry('${balance.drug.id}', '${balance.formulation.id}');" title="Detail all transactions of this drug">${balance.drug.name}</td>
@@ -130,6 +131,7 @@ jQuery("#delete").attr('disabled',true);
 		<td><input type="checkbox"  id="drugCheck${balance.drug.id}-${balance.formulation.id}" name="drugCheck${balance.drug.id}-${balance.formulation.id}" onclick="selectDrug('${balance.drug.id}-${balance.formulation.id}');"/>
 		</td>
 		</tr>
+		</c:if>
 	</c:forEach>
 	</c:when>
 	</c:choose>
