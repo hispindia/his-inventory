@@ -507,6 +507,7 @@ public class AjaxController {
 				Float waiverAmount=totalValue*waiverPercentage/100;
 				transDetail.setWaiverAmount(waiverAmount);
 				transDetail.setAmountPayable(totalAmountPayable);
+				transDetail.setComments(waiverComment);
 				transDetail.setAmountGiven(amountGiven);
 				transDetail.setAmountReturned(amountReturned);
 				

@@ -166,4 +166,16 @@
 		</sql>
 	</diff>
 	
+	<diff>
+		<version>2.2.9</version>
+		<author>ghanshyan</author>
+		<date>27th Nov 2017</date>
+		<description>
+			ALTER inventory_store_drug_transaction_detail
+		</description>
+		<sql>
+		ALTER TABLE inventory_store_drug_transaction_detail ADD COLUMN(comments varchar(255) default NULL);
+		</sql>
+	</diff>
+	
 </sqldiff>
