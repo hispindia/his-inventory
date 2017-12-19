@@ -663,8 +663,8 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 	 * InventoryStoreDrugPatient
 	 */
 	public List<InventoryStoreDrugPatient> listStoreDrugPatient(Integer storeId, String name, String fromDate,
-	                                                            String toDate, int min, int max) throws APIException {
-		return dao.listStoreDrugPatient(storeId, name, fromDate, toDate, min, max);
+	                                                            String toDate, int min, int max,Integer billNo) throws APIException {
+		return dao.listStoreDrugPatient(storeId, name, fromDate, toDate, min, max,billNo);
 	}
 	
 	public int countStoreDrugPatient(Integer storeId, String name, String fromDate, String toDate) throws APIException {
@@ -675,7 +675,7 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 		return dao.saveStoreDrugPatient(bill);
 	}
 	
-	public InventoryStoreDrugPatient getStoreDrugPatientById(Integer id) throws APIException {
+	public List<InventoryStoreDrugPatient> getStoreDrugPatientById(Integer id) throws APIException {
 		return dao.getStoreDrugPatientById(id);
 	}
 	
@@ -994,5 +994,10 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 	 public List<PatientSearch> searchListOfPatient(Date date, String searchKey,int page,int pgSize) throws APIException {
 			return dao.searchListOfPatient(date,searchKey,page,pgSize);
 		}
-		
+		// bill id
+		@Override
+		public List<InventoryStoreDrugPatient> listPatientDetail() throws APIException {
+			// TODO Auto-generated method stub
+			return dao.listPatientDetail();
+		}
 }

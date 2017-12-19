@@ -74,7 +74,7 @@
 
 
 <script type="text/javascript">
-jQuery(document).ready(function(){ 
+jQuery(document).ready(function(){ jQuery("#creditheader").hide();
 //jQuery("#headerValue").hide();
 });
 var count=0;
@@ -137,7 +137,8 @@ function issueDrugOrder(listOfDrugQuantity) {
    var noOfDays=document.getElementById(availableIdArr[i].toString()+'_noOfDays').value;
    var comments=document.getElementById(availableIdArr[i].toString()+'_comments').value;
    var price=document.getElementById(availableIdArr[i].toString()+'_price').value;
-   
+   var batch=document.getElementById(availableIdArr[i].toString()+'_batchNo').value;
+   var expire=document.getElementById(availableIdArr[i].toString()+'_dateexpiry').value;
    //jQuery("#qty"+drugId).append("<span style='margin:5px;'>" + totalValue + "</span>");
    //jQuery("#mrp"+drugId).append("<span style='margin:5px;'>" + waiverPercentage + "</span>");
   //jQuery("#total"+drugId).append("<span style='margin:5px;'>" + totalAmountPayable + "</span>");
@@ -155,15 +156,17 @@ function issueDrugOrder(listOfDrugQuantity) {
    var htmlText =  "<div id='com_"+avaiableId+"_div'>"
 	       	 +"<input id='"+avaiableId+"_fName'  name='"+avaiableId+"_fName' type='text' size='20' value='"+drugName+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fFormulationName'  name='"+avaiableId+"_fFormulationName' type='text' size='11' value='"+formulation+"'  readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fbatchNo'  name='"+avaiableId+"_fbatchNo'  type='text' size='11' value='"+batch+"' readonly='readonly'/>&nbsp;"
+	       	+"<input id='"+avaiableId+"_fdateexpiry'  name='"+avaiableId+"_fdateexpiry'  type='text' size='11' value='"+expire+"' readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fQuantity'  name='"+avaiableId+"_fQuantity' type='text' size='3' value='"+quant+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fPrice'  name='"+avaiableId+"_fPrice' type='text' size='3' type='hidden' value='"+price+"'  readonly='readonly'/>&nbsp;"
-	       	 
 	       	 +"<input id='"+avaiableId+"_fFormulationId'  name='"+avaiableId+"_fFormulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fAvaiableId'  name='avaiableId' type='hidden' value='"+avaiableId+"'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fFrequencyName'  name='"+avaiableId+"_fFrequencyName' type='hidden' value='"+frequencyName+"'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fnoOfDays'  name='"+avaiableId+"_fnoOfDays' type='hidden' value='"+noOfDays+"'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fcomments'  name='"+avaiableId+"_fcomments' type='hidden' value='"+comments+"'/>&nbsp;"
 	       	 +"<input id='drugProcessName'  name='drugProcessName' type='hidden' value='"+drugName+"'/>&nbsp;"
+	       	
 	       	 //+"<a style='color:red' href='#' onclick='"+deleteString+"' >[X]</a>"	
 	       	 +"</div>";
 	
@@ -174,7 +177,7 @@ function issueDrugOrder(listOfDrugQuantity) {
    var fieldsArea = document.getElementById('headerValue');
    fieldsArea.appendChild(newElement);
    
-   jQuery("#"+drugName).hide();
+  jQuery("#"+drugName).hide();
    jQuery("#processDrugOrder").hide();
     }
   }
@@ -213,6 +216,12 @@ function issueDrugOrder(listOfDrugQuantity) {
 				 +"</td>"
 				 +"<td>"
 				 +formulation
+				 +"</td>"
+				 +"<td>"
+				 +batch
+				 +"</td>"
+				 +"<td>"
+				 +expire
 				 +"</td>"
 				 +"<td>"
 				 +quant
@@ -291,10 +300,13 @@ return false;
 }
 */
 
+if(document.getElementById("amountGiven").disabled != true)
+	{
 if(jQuery("#amountGiven").val() ==""){
 alert("Please enter Amount Given");
 return false;
 }
+
 
 if(jQuery("#amountGiven").val() < 0 || !StringUtils.isDigit(jQuery("#amountGiven").val())){
 alert("Please enter correct Amount Given");
@@ -317,13 +329,17 @@ if(jQuery("#amountReturned").val() < 0 || !StringUtils.isDigit(jQuery("#amountRe
 alert("Please enter correct Amount Returned");
 return false;
 }
-                
+	}
 if(confirm("Are you sure?")){
 jQuery("#subm").attr("disabled", "disabled");
 printDiv2();
 return true;
 }
-
+if(confirm("Are you sure?")){
+	jQuery("#sub").attr("disabled", "disabled");
+	printDiv2();
+	return true;
+	}
 return false;
 }
 </script>
@@ -437,7 +453,10 @@ jQuery("#amountReturned").val(amountReturned);
 		method="POST" onsubmit="javascript:return finishDrugOrder();">
 		<div>
 			<input type="submit" id="subm" name="subm"
-				value="<spring:message code='inventory.drug.process.finish'/>" /> <input
+				value="<spring:message code='inventory.drug.process.finish'/>" />
+				<input type="submit" id="sub" name="sub"
+				value="<spring:message code='inventory.drug.process.credit'/>"  onClick="credit();" />
+				 <input
 				type="button" value="<spring:message code='general.cancel'/>"
 				onclick="javascript:window.location.href='patientQueueDrugOrder.form'" />
 			<input type="button" id="print" name="print"
@@ -521,6 +540,8 @@ jQuery("#amountReturned").val(amountReturned);
 
 <br><br>
 		<table align='Center'>
+		<tr><td ></td><td id="creditheader" style="color:red">CREDIT BILL</td><td></td></tr>
+		<tr><td>BILL NO.:${isdpdt}</td></tr>
 		<tr>
 			<td>Patient ID :</td>
 			<td>${patientSearch.identifier}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -545,7 +566,7 @@ jQuery("#amountReturned").val(amountReturned);
 			<td>${date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			
 			<td>Patient Category:</td>
-			<td>${patientCategory}</td>
+			<td>${patientCategory} &nbsp;&nbsp;&nbsp; ${patientSubCategory}</td>
 		</tr>
 		</table>
  <hr  color="black">
@@ -556,6 +577,8 @@ jQuery("#amountReturned").val(amountReturned);
 <th style="text-align: center;">S.No</th>
 <th style="text-align: center;">Drug Name</th>
 <th style="text-align: center;">Formulation</th>
+<th style="text-align: center;">Batch No.</th>
+<th style="text-align: center;">Date Of Expiry</th>
 <th style="text-align: center;">Qty</th>
 <th style="text-align: center;">MRP</th>
 <th style="text-align: center;">Total</th>
@@ -595,7 +618,7 @@ jQuery("#amountReturned").val(amountReturned);
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">Amount Given</td>
+<td id=amtgiven style="text-align: center;">Amount Given</td>
 <td style="text-align: center;"><span id="printableGiven" /></td>
 </tr>
 <tr>
@@ -603,7 +626,7 @@ jQuery("#amountReturned").val(amountReturned);
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">Amount Returned</td>
+<td id="amtreturned" style="text-align: center;">Amount Returned</td>
 <td style="text-align: center;"><span id="printableAmountReturned" /></td>
 </tr>
 <tr>
@@ -674,6 +697,16 @@ jQuery("#amountReturned").val(amountReturned);
 		alert("Printing ...");
 		//setTimeout(function(){window.location.href = $("#contextPath").val()+"/getBill.list"}, 1000);	
 	}
+	function credit()
+	{  
+	jQuery("#waiverPercentage").attr("disabled", "disabled");
+	jQuery("#amountGiven").attr("disabled", "disabled");
+	jQuery("#amountReturned").attr("disabled", "disabled");
+	jQuery("#amtgiven").hide();
+	jQuery("#amtreturned").hide();
+	jQuery("#creditheader").show();
+		
+	}
 	function printDiv2() {
 
 		var totalValue=jQuery("#totalValue").val();
@@ -697,6 +730,7 @@ jQuery("#amountReturned").val(amountReturned);
 		printer.window.close();
 		//alert("Printing ...");
 	}
+
 </script>
 
 

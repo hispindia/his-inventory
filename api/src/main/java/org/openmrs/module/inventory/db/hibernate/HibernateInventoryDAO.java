@@ -32,6 +32,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.openmrs.Patient;
 import org.openmrs.Role;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.hospitalcore.model.InventoryDrug;
@@ -2033,7 +2034,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 	 * InventoryStoreDrugPatient
 	 */
 	public List<InventoryStoreDrugPatient> listStoreDrugPatient(Integer storeId, String name, String fromDate,
-	                                                            String toDate, int min, int max) throws DAOException {
+	                                                            String toDate, int min, int max,Integer billNo) throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(InventoryStoreDrugPatient.class, "bill")
 		        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).createAlias("bill.store", "store");
 		
@@ -2083,6 +2084,10 @@ public class HibernateInventoryDAO implements InventoryDAO {
 				e.printStackTrace();
 			}
 		}
+		if (billNo != null) {
+
+			criteria.add(Restrictions.eq("bill.id", billNo));
+		}
 		criteria.addOrder(Order.desc("bill.createdOn"));
 		criteria.setFirstResult(min).setMaxResults(max);
 		List<InventoryStoreDrugPatient> l = criteria.list();
@@ -2097,6 +2102,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		if (storeId != null) {
 			criteria.add(Restrictions.eq("store.id", storeId));
 		}
+	
 		if (!StringUtils.isBlank(name)) {
 			criteria.add(Restrictions.or(Restrictions.like("bill.identifier", "%" + name + "%"),
 			    Restrictions.like("bill.name", "%" + name + "%")));
@@ -2138,6 +2144,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 				e.printStackTrace();
 			}
 		}
+		
 		Number rs = (Number) criteria.uniqueResult();
 		return rs != null ? rs.intValue() : 0;
 	}
@@ -2146,11 +2153,12 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		return (InventoryStoreDrugPatient) sessionFactory.getCurrentSession().merge(bill);
 	}
 	
-	public InventoryStoreDrugPatient getStoreDrugPatientById(Integer id) throws DAOException {
+	public List<InventoryStoreDrugPatient> getStoreDrugPatientById(Integer patientId) throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession()
 		        .createCriteria(InventoryStoreDrugPatient.class, "drugPatient");
-		criteria.add(Restrictions.eq("patientBill.id", id));
-		return (InventoryStoreDrugPatient) criteria.uniqueResult();
+		criteria.add(Restrictions.eq("patient.id",patientId ));
+		List<InventoryStoreDrugPatient> l = criteria.list();
+		return l;
 	}
 	
 	/**
@@ -2172,7 +2180,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 	public InventoryStoreDrugPatientDetail getStoreDrugPatientDetailById(Integer id) throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession()
 		        .createCriteria(InventoryStoreDrugPatientDetail.class, "billDetail")
-		        .add(Restrictions.eq("billDetail.id", id));
+		        .add(Restrictions.eq("billDetail.storeDrugPatient.id", id));
 		
 		return (InventoryStoreDrugPatientDetail) criteria.uniqueResult();
 	}
@@ -3771,5 +3779,12 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		List<PatientSearch> list = q.list();
 		return list;
 	}
+	public List<InventoryStoreDrugPatient> listPatientDetail() throws DAOException {
+		Criteria criteria = sessionFactory.getCurrentSession()
+		        .createCriteria(InventoryStoreDrugPatient.class, "patientDetail");
+		        
+		return criteria.list();
+	}
+	
 
 }

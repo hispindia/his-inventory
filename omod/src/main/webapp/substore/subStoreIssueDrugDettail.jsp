@@ -20,19 +20,43 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ include file="/WEB-INF/template/headerMinimal.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
+<script type="text/javascript">
+jQuery(document).ready(function(){ jQuery("#creditheader").hide();
+jQuery("#creditheaders").hide();
+if(jQuery("#test").val().length!=0)
+	{
+	jQuery("#creditheader").show();
+	jQuery("#amtgiven").hide();
+	jQuery("#amtreturn").hide();
+	jQuery("#amtgven").hide();
+	jQuery("#amtretrn").hide();
+	}
+if(jQuery("#test1").val().length!=0)
+{
+jQuery("#creditheaders").show();
+jQuery("#amtgivens").hide();
+jQuery("#amtreturns").hide();
+jQuery("#amtgvens").hide();
+jQuery("#amtretrns").hide();
+}
+
+});
+</script>
 <span class="boxHeader">Issue drugs detail</span>
+<span class="boxHeader"><div id="creditheader" >CREDIT BILL</div></span>
 <div class="box">
+
 <c:if  test="${not empty listDrugIssue}">
 			<table align='Center'>
 				<tr>
 					<td>Patient ID :</td>
 					<td>${issueDrugPatient.identifier }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					
+					 
 					<td>Name :</td>
 			        <td>${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.familyName}</td>
 				</tr>
 				<tr>
-					<td>Age</td>
+					<td>Age:</td>
 					<td><c:choose>
 							<c:when test="${issueDrugPatient.patient.age == 0  }">&lt 1</c:when>
 							<c:otherwise>${issueDrugPatient.patient.age }</c:otherwise>
@@ -43,11 +67,12 @@
         	        <td>${issueDrugPatient.patient.gender}</td>  	
 				</tr>
 				<tr>
-					<td>Date</td>
+					<td>Date:</td>
 					<td><openmrs:formatDate date="${date}" type="textbox" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					
 					<td>Patient Category:</td>
-			        <td>${patientCategory}</td>
+			        <td>${patientCategory} &nbsp;&nbsp;&nbsp; ${patientSubCategory}</td>
+			       
 				</tr>
 			</table>
 			<br />
@@ -60,6 +85,8 @@
 				<th style="text-align: center;"><spring:message code="inventory.drug.category" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.drug.name" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.drug.formulation" /></th>
+				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.batchNo" /></th>
+                <th style="text-align: center;"><spring:message code="inventory.receiptDrug.dateExpiry" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.quantity" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.MRP" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.total" /></th>
@@ -75,14 +102,20 @@
 							<td style="text-align: center;">${issue.transactionDetail.drug.category.name}</td>
 							<td style="text-align: center;">${issue.transactionDetail.drug.name}</td>
 							<td style="text-align: center;">${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
+							<td style="text-align: center;">${issue.transactionDetail.batchNo}</td>
+							<td style="text-align: center;"><openmrs:formatDate date="${issue.transactionDetail.dateExpiry}"
+								type="textbox" /></td>
 							<td style="text-align: center;">${issue.quantity}</td>
 							<td style="text-align: center;">${issue.transactionDetail.unitPrice}</td>
 							<td style="text-align: center;">${issue.transactionDetail.unitPrice*issue.quantity}</td>
+						    <input type="hidden" id="test" value="${issue.transactionDetail.amountCredit}"/>
 						</tr>
 					</c:forEach>
 				</c:when>
 			</c:choose>
 			<tr>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
@@ -97,10 +130,14 @@
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Discount %</td>
 <td style="text-align: center;">${discount}0</td>
 </tr>
 <tr>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
@@ -115,8 +152,10 @@
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">Amount Given</td>
-<td style="text-align: center;">${amountGiven}.00</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td id="amtgven" style="text-align: center;">Amount Given</td>
+<td id="amtgiven" style="text-align: center;">${amountGiven}.00</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -124,8 +163,10 @@
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">Amount Returned</td>
-<td style="text-align: center;">${amountReturned}.00</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td id="amtretrn" style="text-align: center;">Amount Returned</td>
+<td id="amtreturn" style="text-align: center;">${amountReturned}.00</td>
 </tr>
 			</tbody>
 		</table>
@@ -156,19 +197,21 @@
 </style>
 
 
-<br><br>      		
+<br><br>   
+<div id="creditheaders" style="color:red;text-align: center;">CREDIT BILL</div>  
+<tr><td>BILL NO.:${billNo}</td></tr>
 <c:if  test="${not empty listDrugIssue}">
 <br /> <br />
 			<table align='Center'>
 				<tr>
 					<td>Patient ID :</td>
-					<td>${issueDrugPatient.identifier }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td>${issueDrugPatient.identifier }&nbsp;&nbsp;&nbsp;</td>
 					
 					<td>Name :</td>
 			        <td>${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.familyName}</td>
 				</tr>
 				<tr>
-					<td>Age</td>
+					<td>Age:</td>
 					<td><c:choose>
 							<c:when test="${issueDrugPatient.patient.age == 0  }">&lt 1</c:when>
 							<c:otherwise>${issueDrugPatient.patient.age }</c:otherwise>
@@ -179,11 +222,11 @@
         	        <td>${issueDrugPatient.patient.gender}</td>  	
 				</tr>
 				<tr>
-					<td>Date</td>
+					<td>Date:</td>
 					<td><openmrs:formatDate date="${date}" type="textbox" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					
 					<td>Patient Category:</td>
-			        <td>${patientCategory}</td>
+			        <td>${patientCategory} &nbsp;&nbsp;&nbsp; ${patientSubCategory}</td>
 				</tr>
 			</table>
 			<hr  color="black">
@@ -197,6 +240,8 @@
 				<th style="text-align: center;"><spring:message code="inventory.drug.category" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.drug.name" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.drug.formulation" /></th>
+				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.batchNo" /></th>
+                <th style="text-align: center;"><spring:message code="inventory.receiptDrug.dateExpiry" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.quantity" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.MRP" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.total" /></th>
@@ -212,14 +257,20 @@
 							<td style="text-align: center;">${issue.transactionDetail.drug.category.name}</td>
 							<td style="text-align: center;">${issue.transactionDetail.drug.name}</td>
 							<td style="text-align: center;">${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
+						    <td style="text-align: center;">${issue.transactionDetail.batchNo}</td>
+							<td style="text-align: center;"><openmrs:formatDate date="${issue.transactionDetail.dateExpiry}"
+								type="textbox" /></td>
 							<td style="text-align: center;">${issue.quantity}</td>
 							<td style="text-align: center;">${issue.transactionDetail.unitPrice}</td>
 							<td style="text-align: center;">${issue.transactionDetail.unitPrice*issue.quantity}</td>
+						    <input type="hidden" id="test1" value="${issue.transactionDetail.amountCredit}"/>
 						</tr>
 					</c:forEach>
 				</c:when>
 			</c:choose>
 			<tr>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
@@ -234,10 +285,14 @@
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Discount %</td>
 <td style="text-align: center;">${discount}0</td>
 </tr>
 <tr>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
@@ -252,8 +307,10 @@
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">Amount Given</td>
-<td style="text-align: center;">${amountGiven}.00</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td id="amtgvens" style="text-align: center;">Amount Given</td>
+<td id="amtgivens" style="text-align: center;">${amountGiven}.00</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -261,8 +318,10 @@
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">Amount Returned</td>
-<td style="text-align: center;">${amountReturned}.00</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td id="amtretrns" style="text-align: center;">Amount Returned</td>
+<td id="amtreturns" style="text-align: center;">${amountReturned}.00</td>
 </tr>
 </tbody>
 </table>

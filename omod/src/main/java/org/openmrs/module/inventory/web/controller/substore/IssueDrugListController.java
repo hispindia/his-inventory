@@ -29,6 +29,7 @@ public class IssueDrugListController {
             @RequestParam(value="issueName",required=false)  String issueName,
             @RequestParam(value="fromDate",required=false)  String fromDate,
             @RequestParam(value="toDate",required=false)  String toDate,
+            @RequestParam(value="billNo",required=false)  Integer billNo,
             Map<String, Object> model, HttpServletRequest request
 	) {
 	 InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
@@ -62,10 +63,18 @@ public class IssueDrugListController {
 				temp +="&toDate="+toDate;
 			}
 	}
+		if(billNo != null){	
+			if(StringUtils.isBlank(temp)){
+				temp = "?billNo="+billNo;
+			}else{
+				temp +="&billNo="+billNo;
+			}
+	}
 		
 		PagingUtil pagingUtil = new PagingUtil( RequestUtil.getCurrentLink(request)+temp , pageSize, currentPage, total );
-		List<InventoryStoreDrugPatient> listIssue = inventoryService.listStoreDrugPatient(store.getId(), issueName,fromDate, toDate, pagingUtil.getStartPos(), pagingUtil.getPageSize());
+		List<InventoryStoreDrugPatient> listIssue = inventoryService.listStoreDrugPatient(store.getId(), issueName,fromDate, toDate, pagingUtil.getStartPos(), pagingUtil.getPageSize(),billNo);
 		model.put("issueName", issueName );
+		model.put("billNo", billNo );
 		model.put("toDate", toDate );
 		model.put("fromDate", fromDate );
 		model.put("pagingUtil", pagingUtil );

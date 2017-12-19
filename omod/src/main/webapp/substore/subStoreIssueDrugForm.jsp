@@ -27,7 +27,7 @@
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <%@ include file="../includes/js_css.jsp"%>
 <script type="text/javascript">
-jQuery(document).ready(function(){ 
+jQuery(document).ready(function(){ jQuery("#creditheader").hide();
 var tot=parseFloat(${total});
 jQuery("#totalValue").val("");
 jQuery("#totalValue").val(tot);
@@ -43,6 +43,22 @@ jQuery("#totalAmountPayable").val(totalAmountPay);
 </script>
 
 <script type="text/javascript">
+function credit()
+{
+jQuery("#waiverPercentage").attr("disabled", "disabled");
+jQuery("#amountGiven").attr("disabled", "disabled");
+jQuery("#amountReturned").attr("disabled", "disabled");
+jQuery("#amtgiven").hide();
+jQuery("#amtreturned").hide();
+jQuery("#creditheader").show();
+if(confirm("Are you sure?")){
+	jQuery("#sub").attr("disabled", "disabled");
+	PURCHASE.printDiv();
+	return true;
+	}
+
+	
+}
 function totalAmountToPay(){
 var total=jQuery("#totalValue").val();
 var waiverPercentage=jQuery("#waiverPercentage").val();
@@ -323,6 +339,9 @@ ISSUE.processSlip('0');
 							class="ui-button ui-widget ui-state-default ui-corner-all"
 							id="bttprocess" name="bttprocess" value="<spring:message code="inventory.finish"/>"
 							onclick="finishDrugOrder();" />
+							<input type="submit" id="sub" name="sub"
+							class="ui-button ui-widget ui-state-default ui-corner-all"
+				value="<spring:message code='inventory.drug.process.credit'/>"  onClick="credit();" />
 						<input type="button"
 							class="ui-button ui-widget ui-state-default ui-corner-all"
 							id="bttprint" value="<spring:message code="inventory.print"/>"
@@ -365,6 +384,8 @@ ISSUE.processSlip('0');
 		<c:if test="${not empty issueDrugPatient}">
 			<br /> <br />
 			<table align='Center'>
+			<tr><td ></td><td id="creditheader" style="color:red;text-align: center;">CREDIT BILL</td><td></td></tr>
+			<tr><td>BILL NO.:${isdpdt}</td></tr>
 				<tr>
 					<td>Patient ID :</td>
 					<td>${issueDrugPatient.identifier }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -388,7 +409,7 @@ ISSUE.processSlip('0');
 					<td><openmrs:formatDate date="${date}" type="textbox" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					
 					<td>Patient Category:</td>
-			        <td>${patientCategory}</td>
+			        <td>${patientCategory} &nbsp;&nbsp;&nbsp; ${patientSubCategory}</td>
 				</tr>
 			</table>
 			<hr  color="black">
@@ -402,6 +423,8 @@ ISSUE.processSlip('0');
 				<th style="text-align: center;"><spring:message code="inventory.drug.category" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.drug.name" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.drug.formulation" /></th>
+				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.batchNo" /></th>
+                <th style="text-align: center;"><spring:message code="inventory.receiptDrug.dateExpiry" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.quantity" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.MRP" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.total" /></th>
@@ -414,9 +437,13 @@ ISSUE.processSlip('0');
 						varStatus="varStatus">
 						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 							<td style="text-align: center;"><c:out value="${varStatus.count }" /></td>
+							${issue.transactionDetail.id}
 							<td style="text-align: center;">${issue.transactionDetail.drug.category.name}</td>
 							<td style="text-align: center;">${issue.transactionDetail.drug.name}</td>
 							<td style="text-align: center;">${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
+							<td style="text-align: center;">${issue.transactionDetail.batchNo}</td>
+							<td style="text-align: center;"><openmrs:formatDate date="${issue.transactionDetail.dateExpiry}"
+								type="textbox" /></td>
 							<td style="text-align: center;">${issue.quantity}</td>
 							<td style="text-align: center;">${issue.transactionDetail.unitPrice}</td>
 							<td style="text-align: center;">${issue.transactionDetail.unitPrice*issue.quantity}</td>
@@ -425,6 +452,8 @@ ISSUE.processSlip('0');
 				</c:when>
 			</c:choose>
 			<tr>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
@@ -439,10 +468,14 @@ ISSUE.processSlip('0');
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Discount %</td>
 <td style="text-align: center;"><span id="printableDiscount" /></td>
 </tr>
 <tr>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
@@ -457,7 +490,9 @@ ISSUE.processSlip('0');
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">Amount Given</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td id=amtgiven style="text-align: center;">Amount Given</td>
 <td style="text-align: center;"><span id="printableGiven" /></td>
 </tr>
 <tr>
@@ -466,7 +501,9 @@ ISSUE.processSlip('0');
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">Amount Returned</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td id="amtreturned" style="text-align: center;">Amount Returned</td>
 <td style="text-align: center;"><span id="printableAmountReturned" /></td>
 </tr>
 			</tbody>

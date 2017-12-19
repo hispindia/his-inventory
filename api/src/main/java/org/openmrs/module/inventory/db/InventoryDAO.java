@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.openmrs.Role;
+import org.openmrs.api.APIException;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.hospitalcore.model.InventoryDrug;
 import org.openmrs.module.hospitalcore.model.InventoryDrugCategory;
@@ -398,13 +399,13 @@ public interface InventoryDAO {
 	 * InventoryStoreDrugPatient
 	 */
 	public List<InventoryStoreDrugPatient> listStoreDrugPatient(Integer storeId, String name, String fromDate,
-	                                                            String toDate, int min, int max) throws DAOException;
+	                                                            String toDate, int min, int max,Integer billNo) throws DAOException;
 	
-	public int countStoreDrugPatient(Integer storeId, String name, String fromDate, String toDate) throws DAOException;
+	public int countStoreDrugPatient(Integer storeId,String name, String fromDate, String toDate) throws DAOException;
 	
 	public InventoryStoreDrugPatient saveStoreDrugPatient(InventoryStoreDrugPatient bill) throws DAOException;
 	
-	public InventoryStoreDrugPatient getStoreDrugPatientById(Integer id) throws DAOException;
+	public List<InventoryStoreDrugPatient> getStoreDrugPatientById(Integer id) throws DAOException;
 	
 	/**
 	 * InventoryStoreDrugPatientDetail
@@ -598,6 +599,7 @@ public interface InventoryDAO {
     public int countSearchListOfPatient(Date date, String searchKey,int page) throws DAOException;
 	public List<PatientSearch> searchListOfPatient(Date date, String searchKey,int page) throws DAOException;
     public List<PatientSearch> searchListOfPatient(Date date, String searchKey,int page,int pgSize) throws DAOException;
-
+//bill id
+    public List<InventoryStoreDrugPatient> listPatientDetail() throws DAOException;
 	
 }

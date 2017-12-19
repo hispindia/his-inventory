@@ -92,22 +92,28 @@ public class DrugOrderController {
 		model.addAttribute("doctor", drugOrderList.get(0).getCreator().getGivenName());
 		
 		
-		InventoryStoreDrugPatient inventoryStoreDrugPatient = new InventoryStoreDrugPatient();
+		List<InventoryStoreDrugPatient> inventoryStoreDrugPatient = new ArrayList<InventoryStoreDrugPatient>();
+		inventoryStoreDrugPatient=inventoryService.listPatientDetail();
+		model.addAttribute("isdpdt", inventoryStoreDrugPatient.size()+1);
+		
+		
 		model.addAttribute("pharmacist", Context.getAuthenticatedUser().getGivenName());
 		
 		List<OpdDrugOrder> drugOrderListAvailable = new ArrayList<OpdDrugOrder>();
 		List<OpdDrugOrder> drugOrderListNotAvailable = new ArrayList<OpdDrugOrder>();
-		
+	
 		for(OpdDrugOrder dol:drugOrderList){
-		InventoryDrug drug = inventoryService.getDrugById(dol.getInventoryDrug().getId());
-		Integer formulationId = dol.getInventoryDrugFormulation().getId();
-		InventoryStore store = inventoryService
+		
+			InventoryDrug drug = inventoryService.getDrugById(dol.getInventoryDrug().getId());
+			Integer formulationId = dol.getInventoryDrugFormulation().getId();
+			InventoryStore	store = inventoryService
 				.getStoreByCollectionRole(new ArrayList<Role>(Context
 						.getAuthenticatedUser().getAllRoles()));
 		if (store != null && drug != null && formulationId != null) {
 			List<InventoryStoreDrugTransactionDetail> listReceiptDrug = inventoryService
 					.listStoreDrugTransactionDetail(store.getId(),
 							drug.getId(), formulationId, true);
+		
 			if(listReceiptDrug.size()!=0){
 				drugOrderListAvailable.add(dol);
 			}
@@ -115,9 +121,12 @@ public class DrugOrderController {
 				drugOrderListNotAvailable.add(dol);	
 			}
 		  }
+		
 		}
 		
+		
 		model.addAttribute("drugOrderListAvailable", drugOrderListAvailable);
+	
 		model.addAttribute("drugOrderListNotAvailable", drugOrderListNotAvailable);
 		
 		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
@@ -129,6 +138,12 @@ public class DrugOrderController {
 				Integer patientCategoryConcept=Integer.parseInt(patientCategory);
 				Concept concept=Context.getConceptService().getConcept(patientCategoryConcept);
 				model.addAttribute("patientCategory", concept.getName());
+			}
+			if (attributeType.getPersonAttributeTypeId() == 31) {
+				String patientCategory=pa.getValue();
+				Integer patientCategoryConcept=Integer.parseInt(patientCategory);
+				Concept concept=Context.getConceptService().getConcept(patientCategoryConcept);
+				model.addAttribute("patientSubCategory", concept.getName());
 			}
 		}
                 
@@ -149,6 +164,8 @@ public class DrugOrderController {
 			@RequestParam(value = "totalAmountPayable", required = false) BigDecimal totalAmountPayable,
 			@RequestParam(value = "amountGiven", required = false) Integer amountGiven,
 			@RequestParam(value = "amountReturned", required = false) Integer amountReturned) throws Exception{
+		
+		
 		PatientService  patientService = Context.getPatientService();
 		Patient patient = patientService.getPatient(patientId);
 		InventoryService inventoryService = Context.getService(InventoryService.class);
@@ -261,9 +278,25 @@ public class DrugOrderController {
 				
 			 transDetail.setTotalAmount(totalValue);
 			 transDetail.setWaiverPercentage(waiverPercentage);
-			 Float waiverAmount=totalValue*waiverPercentage/100;
+			 Float waiverAmount=null;
+			 if(waiverPercentage!=null)
+			 {
+			 waiverAmount=totalValue*waiverPercentage/100;
+			
+			 
 			 transDetail.setWaiverAmount(waiverAmount);
+			 }
+			 else
+			 {
+				 transDetail.setWaiverAmount(waiverAmount);
+			 }
+			 
 			 transDetail.setAmountPayable(totalAmountPayable);
+			 if(amountGiven==null)
+			 {
+			 transDetail.setAmountCredit(totalAmountPayable);
+			 }
+			
 			 transDetail.setAmountGiven(amountGiven);
 			 transDetail.setAmountReturned(amountReturned);
 			 transDetail.setParent(inventoryStoreDrugTransactionDetail);
@@ -273,9 +306,10 @@ public class DrugOrderController {
 			 
 			 pDetail.setStoreDrugPatient(inventoryStoreDrugPatient);
 			 pDetail.setTransactionDetail(transDetail);
+			 
 			 //save issue to patient detail
 			 inventoryService.saveStoreDrugPatientDetail(pDetail);
-			 
+			
 			 BillingService billingService = Context.getService(BillingService.class);
 				IndoorPatientServiceBill bill = new IndoorPatientServiceBill();
 				bill.setActualAmount(moneyUnitPrice);

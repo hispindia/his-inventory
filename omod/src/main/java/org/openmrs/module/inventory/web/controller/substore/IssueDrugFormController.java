@@ -23,8 +23,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.openmrs.Concept;
+import org.openmrs.PersonAttribute;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.Role;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.model.InventoryDrug;
 import org.openmrs.module.hospitalcore.model.InventoryDrugCategory;
 import org.openmrs.module.hospitalcore.model.InventoryDrugFormulation;
@@ -66,10 +69,11 @@ public class IssueDrugFormController {
 		if (categoryId != null && categoryId > 0) {
 			List<InventoryDrug> drugs = inventoryService.findDrug(categoryId, null);
 			model.addAttribute("drugs", drugs);
-			
+	
 		} else {
 			List<InventoryDrug> drugs = inventoryService.getAllDrug();
 			model.addAttribute("drugs", drugs);
+		
 		}
 		
 		model.addAttribute("date", new Date());
@@ -78,6 +82,7 @@ public class IssueDrugFormController {
 		String fowardParam = "issueDrugDetail_" + userId;
 		List<InventoryStoreDrugPatientDetail> list = (List<InventoryStoreDrugPatientDetail>) StoreSingleton.getInstance()
 		        .getHash().get(fowardParam);
+	
 		InventoryStoreDrugPatient issueDrugPatient = (InventoryStoreDrugPatient) StoreSingleton.getInstance().getHash()
 		        .get("issueDrug_" + userId);
 		model.addAttribute("listPatientDetail", list);
@@ -90,6 +95,7 @@ public class IssueDrugFormController {
 			Float unitPrice=lst.getTransactionDetail().getUnitPrice().floatValue();
 			Integer quantity=lst.getQuantity();
 			totalValu=totalValu+quantity*unitPrice;
+			
 		}
 		Float waiverPercentge=Float.parseFloat("0");
 		if(waiverPercentage!=null){
@@ -107,9 +113,26 @@ public class IssueDrugFormController {
 		}
 		
 		if(issueDrugPatient!=null){
+			HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 		Integer patientCategoryConcept=Integer.parseInt(issueDrugPatient.getPatientCategory());
 		Concept concept=Context.getConceptService().getConcept(patientCategoryConcept);
 		model.addAttribute("patientCategory", concept.getName());
+		List<PersonAttribute> pas = hcs.getPersonAttributes(issueDrugPatient.getPatient().getId());
+		for (PersonAttribute pa : pas) {
+			PersonAttributeType attributeType = pa.getAttributeType();
+		if (attributeType.getPersonAttributeTypeId() == 31) {
+			String patientCategory=pa.getValue();
+			Integer patientSubCategoryConcept=Integer.parseInt(patientCategory);
+			Concept subconcept=Context.getConceptService().getConcept(patientSubCategoryConcept);
+			
+			model.addAttribute("patientSubCategory", subconcept.getName());
+		}
+		}
+		List<InventoryStoreDrugPatient> inventoryStoreDrugPatient = new ArrayList<InventoryStoreDrugPatient>();
+		inventoryStoreDrugPatient=inventoryService.listPatientDetail();
+		
+			model.addAttribute("isdpdt", inventoryStoreDrugPatient.size()+1);
+		
 		}
 	
 		return "/module/inventory/substore/subStoreIssueDrugForm";

@@ -86,7 +86,15 @@
 							value=<fmt:formatNumber value="${price}" type="number" maxFractionDigits="2"/>
 							/>
 						</td>
-						
+						<td><input id="${avaiable.id }_batchNo"
+							name="${avaiable.id }_batchNo" type='hidden'
+							value="${avaiable.batchNo}" />
+						</td>
+							<td><input id="${avaiable.id }_dateexpiry"
+							name="${avaiable.id }_dateexpiry" type='hidden'
+							value="<openmrs:formatDate date="${avaiable.dateExpiry}"
+								type="textbox" />" />
+						</td>
 					</tr>
 				</c:forEach>
 

@@ -13,8 +13,11 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.Concept;
 import org.openmrs.Patient;
+import org.openmrs.PersonAttribute;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.Role;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.InventoryCommonService;
 import org.openmrs.module.hospitalcore.model.InventoryDrug;
 import org.openmrs.module.hospitalcore.model.InventoryDrugCategory;
@@ -507,6 +510,12 @@ public class AjaxController {
 				Float waiverAmount=totalValue*waiverPercentage/100;
 				transDetail.setWaiverAmount(waiverAmount);
 				transDetail.setAmountPayable(totalAmountPayable);
+				//credit amount set
+				if (amountGiven==null)
+				{
+				transDetail.setAmountCredit(totalAmountPayable);
+				}
+		
 				transDetail.setComments(waiverComment);
 				transDetail.setAmountGiven(amountGiven);
 				transDetail.setAmountReturned(amountReturned);
@@ -769,9 +778,21 @@ public class AjaxController {
 			model.addAttribute("date", listDrugIssue.get(0).getStoreDrugPatient().getCreatedOn());
 		}
 		if(inventoryStoreDrugPatient!=null){
+			HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 			Integer patientCategoryConcept=Integer.parseInt(inventoryStoreDrugPatient.getPatientCategory());
 			Concept concept=Context.getConceptService().getConcept(patientCategoryConcept);
 			model.addAttribute("patientCategory", concept.getName());
+			List<PersonAttribute> pas = hcs.getPersonAttributes(inventoryStoreDrugPatient.getPatient().getId());
+			for (PersonAttribute pa : pas) {
+				PersonAttributeType attributeType = pa.getAttributeType();
+			if (attributeType.getPersonAttributeTypeId() == 31) {
+				String patientCategory=pa.getValue();
+				Integer patientSubCategoryConcept=Integer.parseInt(patientCategory);
+				Concept subconcept=Context.getConceptService().getConcept(patientSubCategoryConcept);
+				model.addAttribute("patientSubCategory", subconcept.getName());
+			}
+			}
+			model.addAttribute("billNo",inventoryStoreDrugPatient.getId());
 		}
 		if(CollectionUtils.isNotEmpty(listDrugIssue)){
 		for(InventoryStoreDrugPatientDetail issue:listDrugIssue){
@@ -1000,6 +1021,7 @@ public class AjaxController {
 			for (InventoryStoreDrugTransactionDetail lrdr : listReceiptDrugReturn) {
 				listOfDrugQuantity = listOfDrugQuantity
 						+ lrdr.getId().toString() + ".";
+				
 			}
 
 			model.addAttribute("listOfDrugQuantity", listOfDrugQuantity);
