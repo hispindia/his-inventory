@@ -20,10 +20,21 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ include file="/WEB-INF/template/headerMinimal.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
+
 <form method="post" >
 <table class="box" width="100%">
+    <tr>
+		<td>Receipt No</td>
+		<td><input type="text" name="receipt" id="receipt" size="35"/></td>
+		
+	</tr>
 	<tr>
-		<td>Description</td>
+		<td>Bill Amount</td>
+		<td><input type="text" name="bill" id="bill" size="35" value="${totPrice}"/></td>
+		
+	</tr>
+	<tr>
+		<td>Name Of the Vendor</td>
 		<td><input type="text" name="description" id="description" size="35"/></td>
 		
 	</tr>
@@ -32,4 +43,5 @@
 		<td colspan="2"><input type="submit" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="general.save"/>"></td>
 	</tr>
 </table>
+
 </form>

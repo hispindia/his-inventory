@@ -189,4 +189,27 @@
 		</sql>
 	</diff>
 	
+			<diff>
+		<version>2.3.1</version>
+		<author>ambika</author>
+		<date>20th Dec 2017</date>
+		<description>
+			ALTER inventory_store_drug_transaction_detail
+		</description>
+		<sql>
+		ALTER TABLE inventory_store_drug_transaction_detail ADD COLUMN(Rate decimal(11,2), cgst decimal(11,2),cgst_amount decimal(11,2), sgst decimal(11,2),sgst_amount decimal(11,2));
+		</sql>
+	</diff>
+	
+		<diff>
+		<version>2.3.2</version>
+		<author>ambika</author>
+		<date>20th Dec 2017</date>
+		<description>
+			ALTER inventory_store_drug_transaction
+		</description>
+		<sql>
+		ALTER TABLE inventory_store_drug_transaction ADD COLUMN( receipt_No varchar(500), bill_Amount decimal(11,2));
+		</sql>
+	</diff>
 </sqldiff>

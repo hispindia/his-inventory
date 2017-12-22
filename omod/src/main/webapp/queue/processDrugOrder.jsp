@@ -24,7 +24,6 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <openmrs:require privilege="Drug order queue" otherwise="/login.htm" redirect="/module/inventory/main.form" />
-
 <form method="post" id="processDrugOrderForm" class="box">
 	<table class="box">
 		<tr>

@@ -842,8 +842,10 @@ public class AjaxController {
 	public String drugReceiptDetail( @RequestParam(value="receiptId",required=false)  Integer receiptId, Model model) {
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		List<InventoryStoreDrugTransactionDetail> transactionDetails = inventoryService.listTransactionDetail(receiptId);
+
 		if(!CollectionUtils.isEmpty(transactionDetails)){
 			model.addAttribute("store", transactionDetails.get(0).getTransaction().getStore());
+			model.addAttribute("vendorName", transactionDetails.get(0).getTransaction().getDescription());
 			model.addAttribute("date", transactionDetails.get(0).getTransaction().getCreatedOn());
 		}
 		model.addAttribute("transactionDetails", transactionDetails);

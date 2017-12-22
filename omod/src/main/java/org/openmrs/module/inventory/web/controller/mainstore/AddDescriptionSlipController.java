@@ -12,12 +12,14 @@
 
 package org.openmrs.module.inventory.web.controller.mainstore;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.openmrs.Role;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.model.InventoryStore;
@@ -31,6 +33,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * <p> Class: AddDescriptionSlipController </p>
@@ -46,12 +49,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/module/inventory/addDescriptionReceiptSlip.form")
 public class AddDescriptionSlipController {
 	@RequestMapping(method = RequestMethod.GET)
-	public String firstView(Model model) {
+	public String firstView(@RequestParam(value="totAmount",required=false)  float totAmount,Model model) {
+		
+		model.addAttribute("totPrice", totAmount);
 		return "/module/inventory/mainstore/addDescriptionReceiptSlip";
 	}
 	@RequestMapping(method = RequestMethod.POST)
 	public String submit(HttpServletRequest request, Model model) {
 		String description = request.getParameter("description");
+		String receipt=request.getParameter("receipt");
+		BigDecimal bill=NumberUtils.createBigDecimal(request.getParameter("bill"));
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		Date date = new Date();
 		int userId = Context.getAuthenticatedUser().getId();
@@ -63,6 +70,9 @@ public class AddDescriptionSlipController {
 		transaction.setStore(store);
 		transaction.setTypeTransaction(ActionValue.TRANSACTION[0]);
 		transaction.setCreatedBy(Context.getAuthenticatedUser().getGivenName());
+		transaction.setBillAmount(bill);
+		transaction.setReceiptNo(receipt);
+		
 		transaction = inventoryService.saveStoreDrugTransaction(transaction);
 		
 		String fowardParam = "reipt_"+userId;

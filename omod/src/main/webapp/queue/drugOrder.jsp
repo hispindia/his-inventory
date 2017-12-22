@@ -156,8 +156,8 @@ function issueDrugOrder(listOfDrugQuantity) {
    var htmlText =  "<div id='com_"+avaiableId+"_div'>"
 	       	 +"<input id='"+avaiableId+"_fName'  name='"+avaiableId+"_fName' type='text' size='20' value='"+drugName+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fFormulationName'  name='"+avaiableId+"_fFormulationName' type='text' size='11' value='"+formulation+"'  readonly='readonly'/>&nbsp;"
-	       	 +"<input id='"+avaiableId+"_fbatchNo'  name='"+avaiableId+"_fbatchNo'  type='text' size='11' value='"+batch+"' readonly='readonly'/>&nbsp;"
-	       	+"<input id='"+avaiableId+"_fdateexpiry'  name='"+avaiableId+"_fdateexpiry'  type='text' size='11' value='"+expire+"' readonly='readonly'/>&nbsp;"
+	       	 +"<input id='"+avaiableId+"_fbatchNo'  name='"+avaiableId+"_fbatchNo' type='hidden' size='11' value='"+batch+"'  readonly='readonly'/>&nbsp;"
+	       	+"<input id='"+avaiableId+"_fdateexpiry'  name='"+avaiableId+"_fdateexpiry' type='hidden'  size='11' value='"+expire+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fQuantity'  name='"+avaiableId+"_fQuantity' type='text' size='3' value='"+quant+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fPrice'  name='"+avaiableId+"_fPrice' type='text' size='3' type='hidden' value='"+price+"'  readonly='readonly'/>&nbsp;"
 	       	 +"<input id='"+avaiableId+"_fFormulationId'  name='"+avaiableId+"_fFormulationId' type='hidden' value='"+formulationId+"'/>&nbsp;"
@@ -617,9 +617,8 @@ jQuery("#amountReturned").val(amountReturned);
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td id=amtgiven style="text-align: center;">Amount Given</td>
-<td style="text-align: center;"><span id="printableGiven" /></td>
+<td id="amtgiven" style="text-align: center;">Amount Given</td>
+<td id="amtgivn" style="text-align: center;"><span id="printableGiven" /></td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -627,7 +626,7 @@ jQuery("#amountReturned").val(amountReturned);
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td id="amtreturned" style="text-align: center;">Amount Returned</td>
-<td style="text-align: center;"><span id="printableAmountReturned" /></td>
+<td id="amtreturnd" style="text-align: center;"><span id="printableAmountReturned" /></td>
 </tr>
 <tr>
 <td><b>Total Amount  Payable Rupees:</b><span id="printableTotalPayable" > </span> only</td>
@@ -704,6 +703,8 @@ jQuery("#amountReturned").val(amountReturned);
 	jQuery("#amountReturned").attr("disabled", "disabled");
 	jQuery("#amtgiven").hide();
 	jQuery("#amtreturned").hide();
+	jQuery("#amtgivn").hide();
+	jQuery("#amtreturnd").hide();
 	jQuery("#creditheader").show();
 		
 	}

@@ -174,7 +174,7 @@ RECEIPT={
 		detailReceiptDrug : function(receiptId)
 		{
 			if(SESSION.checkSession()){
-				url = "drugReceiptDetail.form?receiptId="+receiptId+"&keepThis=false&TB_iframe=true&height=500&width=1000";
+				url = "drugReceiptDetail.form?receiptId="+receiptId+"&keepThis=false&TB_iframe=true&height=500&width=1260";
 				tb_show("Detail receipt drug....",url,false);
 			}
 		},
@@ -273,10 +273,10 @@ RECEIPT={
 		{
 		  	jQuery("div#printDiv").printArea({mode:"popup",popClose:true,popTitle: "Support by HISP india(hispindia.org)"});
 		},
-		receiptSlip : function(action){
+		receiptSlip : function(action,totAmount){
 				if(action == 0){
 					if(SESSION.checkSession()){
-						url = "addDescriptionReceiptSlip.form?action="+action+"&keepThis=false&TB_iframe=true&height=200&width=450";
+						url = "addDescriptionReceiptSlip.form?action="+action+"&totAmount="+totAmount+"&keepThis=false&TB_iframe=true&height=200&width=450";
 						tb_show("Add description for this slip....",url,false);
 					}
 				}else{

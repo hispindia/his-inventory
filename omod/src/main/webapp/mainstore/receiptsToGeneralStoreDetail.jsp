@@ -29,15 +29,21 @@
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
 	<th><spring:message code="inventory.receiptDrug.receiptQuantity"/></th>
-	<th><spring:message code="inventory.receiptDrug.unitPrice"/></th>
+	<th><spring:message code="inventory.receiptDrug.Rate"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
-	<th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
+	<th><spring:message code="inventory.receiptDrug.MRP"/></th>
 	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
-	<th title="<spring:message code="inventory.receiptDrug.companyName"/>">CN</th>
-	<th title="<spring:message code="inventory.receiptDrug.dateManufacture"/>">DM</th>
-	<th title="<spring:message code="inventory.receiptDrug.dateExpiry"/>">DE</th>
-	<th title="<spring:message code="inventory.receiptDrug.receiptDate"/>">RD</th>
+    <th>CD(%)</th>
+    <th>CD Amount</th>
+    <th>CGST(%)</th>
+    <th>CGST Amount</th>
+    <th>SGST(%)</th>
+    <th>SGST Amount</th>
+	<th>DE</th>
+	<th>RD</th>
+	<th>Total Amount</th>
 	</tr>
+	
 	<c:choose>
 	<c:when test="${not empty transactionDetails}">
 	<c:forEach items="${transactionDetails}" var="receipt" varStatus="varStatus">
@@ -47,14 +53,54 @@
 		<td>${receipt.drug.name}</td>
 		<td>${receipt.formulation.name}-${receipt.formulation.dozage}</td>
 		<td>${receipt.quantity}</td>
-		<td>${receipt.unitPrice}</td>
+		<td>${receipt.rate}</td>
+		<c:choose>
+		<c:when test="${not empty receipt.VAT}" >
 		<td>${receipt.VAT}</td>
-		<td>${receipt.totalPrice}</td>
+		</c:when>
+		<c:otherwise>
+		<td>NA</td>
+		</c:otherwise>
+		</c:choose>
+		<td>${receipt.unitPrice}</td>
 		<td>${receipt.batchNo}</td>
-		<td>${receipt.companyName}</td>
-		<td><openmrs:formatDate date="${receipt.dateManufacture}" type="textbox"/></td>
+		<td>${receipt.waiverPercentage}</td>
+		<td>${receipt.waiverAmount}</td>
+        <c:choose>
+        <c:when test="${not empty receipt.cgst}" >
+         <td>${receipt.cgst}</td>
+        </c:when>
+              <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
+        <c:choose>
+        <c:when test="${not empty receipt.cgstAmount}" >
+         <td>${receipt.cgstAmount}</td>
+        </c:when>
+        <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
+	        <c:choose>
+		<c:when test="${not empty receipt.sgst}" >
+        <td>${receipt.sgst}</td>
+        </c:when>
+              <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
+        <c:choose>
+        <c:when test="${not empty receipt.sgstAmount}" >
+         <td>${receipt.sgstAmount}</td>
+        </c:when>
+              <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
 		<td><openmrs:formatDate date="${receipt.dateExpiry}" type="textbox"/></td>
 		<td><openmrs:formatDate date="${receipt.receiptDate}" type="textbox"/></td>
+		<td>${receipt.totalPrice}</td>
 		</tr>
 	</c:forEach>
 	</c:when>
@@ -66,10 +112,10 @@
 
 <!-- PRINT DIV -->
 <div  id="printDiv" style="display: none;">
-<div style="margin: 10px auto; width: 981px; font-size: 1.0em;font-family:'Dot Matrix Normal',Arial,Helvetica,sans-serif;">        		
+<div style="margin: 10px auto; width: 1700px; font-size: 1.0em;font-family:'Dot Matrix Normal',Arial,Helvetica,sans-serif;">        		
 <br />
 <br />      		
-<center style="float:center;font-size: 2.2em">${store.name} - Receipt - Drugs</center>
+<center style="float:center;font-size: 2.2em">Name Of The Vendor : ${vendorName}</center>
 <br/>
 <br/>
 <span style="float:right;font-size: 1.7em">Date: <openmrs:formatDate date="${date}" type="textbox"/></span>
@@ -82,14 +128,19 @@
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
 	<th><spring:message code="inventory.receiptDrug.quantity"/></th>
-	<th><spring:message code="inventory.receiptDrug.unitPrice"/></th>
+	<th><spring:message code="inventory.receiptDrug.Rate"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
-	<th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
-	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
-	<th>CN</th>
-	<th>DM</th>
+    <th><spring:message code="inventory.receiptDrug.MRP"/></th>
+    <th><spring:message code="inventory.receiptDrug.batchNo"/></th>
+    <th>CD(%)</th>
+    <th>CD Amount</th>
+    <th>CGST(%)</th>
+    <th>CGST Amount</th>
+    <th>SGST(%)</th>
+    <th>SGST Amount</th>
 	<th>DE</th>
-	<th>DR</th>
+	<th>RD</th>
+	<th>Total Amount</th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty transactionDetails}">
@@ -100,14 +151,40 @@
 		<td>${receipt.drug.name}</td>
 		<td>${receipt.formulation.name}-${receipt.formulation.dozage}</td>
 		<td>${receipt.quantity}</td>
-		<td>${receipt.unitPrice}</td>
+		<td>${receipt.rate}</td>
+		<c:choose>
+		<c:when test="${not empty receipt.VAT}" >
 		<td>${receipt.VAT}</td>
-		<td>${receipt.totalPrice}</td>
+		</c:when>
+		<c:otherwise>
+		<td>NA</td>
+		</c:otherwise>
+		</c:choose>
+		<td>${receipt.unitPrice}</td>
 		<td>${receipt.batchNo}</td>
-		<td>${receipt.companyName}</td>
-		<td><openmrs:formatDate date="${receipt.dateManufacture}" type="textbox"/></td>
+		<td>${receipt.waiverPercentage}</td>
+		<td>${receipt.waiverAmount}</td>
+	        <c:choose>
+        <c:when test="${not empty receipt.cgst}" >
+         <td>${receipt.cgst}</td>
+        </c:when>
+              <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
+        <c:choose>
+        <c:when test="${not empty receipt.cgstAmount}" >
+         <td>${receipt.cgstAmount}</td>
+        </c:when>
+        <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
+		<td>${receipt.sgst}</td>
+		<td>${receipt.sgstAmount}</td>
 		<td><openmrs:formatDate date="${receipt.dateExpiry}" type="textbox"/></td>
 		<td><openmrs:formatDate date="${receipt.receiptDate}" type="textbox"/></td>
+		<td>${receipt.totalPrice}</td>
 		</tr>
 	</c:forEach>
 	</c:when>

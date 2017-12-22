@@ -43,7 +43,23 @@ VALIDATION={
 		}
 	}
 }
+function myFunction()
+{
+jQuery("#sgst").attr("disabled", "disabled");
+jQuery("#cgst").attr("disabled", "disabled");
+jQuery("#sgstamt").attr("disabled", "disabled");
+jQuery("#cgstamt").attr("disabled", "disabled");
 
+}
+
+function myFunction1()
+{
+jQuery("#VAT").attr("disabled", "disabled");
+var sgstAmount=(jQuery("#rate").val())*(jQuery("#sgst").val()/100);
+var cgstAmount=(jQuery("#rate").val())*(jQuery("#cgst").val()/100);
+jQuery("#sgstamt").val(sgstAmount);
+jQuery("#cgstamt").val(cgstAmount);
+}
 </script>
 
 <div style="width: 26%; float: left; margin-left: 4px; ">
@@ -103,7 +119,7 @@ VALIDATION={
 	<tr>
 		<td><spring:message code="inventory.receiptDrug.VAT"/><em>*</em></td>
 		<td>
-			<input type="text" id="VAT" name="VAT" />
+			<input type="text" id="VAT" name="VAT" oninput="myFunction()"/>
 		</td>
 	</tr>
 	<tr>
@@ -112,7 +128,38 @@ VALIDATION={
 			<input type="text" id="unitPrice" name="unitPrice" />
 		</td>
 	</tr>
+		<tr>
+		<td><spring:message code="inventory.receiptDrug.Rate"/><em>*</em></td>
+		<td>
+			<input type="text" id="rate" name="rate" />
+		</td>
+	</tr>
+		<tr>
+		<td><spring:message code="inventory.receiptDrug.cgst"/><em>*</em></td>
+		<td>
+			<input type="text" id="cgst" name="cgst" oninput="myFunction1()" />
+		</td>
+	</tr>
+			<tr>
+		<td><spring:message code="inventory.receiptDrug.cgstamt"/><em>*</em></td>
+		<td>
+			<input type="text" id="cgstamt" name="cgstamt" />
+		</td>
+	</tr>
+				<tr>
+		<td><spring:message code="inventory.receiptDrug.sgst"/><em>*</em></td>
+		<td>
+			<input type="text" id="sgst" name="sgst" oninput="myFunction1()" />
+		</td>
+	</tr>
+			<tr>
+		<td><spring:message code="inventory.receiptDrug.sgstamt"/><em>*</em></td>
+		<td>
+			<input type="text" id="sgstamt" name="sgstamt" />
+		</td>
+	</tr>
 	<tr>
+
 		<td><spring:message code="inventory.receiptDrug.Discount"/></td>
 		<td>
 			<input type="text" id="waiverPercentage" name="waiverPercentage" />
@@ -156,6 +203,7 @@ VALIDATION={
 </div>
 </div>
 <!-- Receipt list -->
+
 <div style="width: 73%; float: right; margin-right: 4px; ">
 <b class="boxHeader">Receipt Slip</b>  <!-- Sept 22,2012 -- Sagar Bele -- Issue 387 --Change case of word Slip-->
 <div class="box">
@@ -168,6 +216,11 @@ VALIDATION={
 	<th><spring:message code="inventory.receiptDrug.quantity"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
 	<th><spring:message code="inventory.receiptDrug.MRP"/></th>
+	<th><spring:message code="inventory.receiptDrug.Rate"/></th>
+    <th title="<spring:message code="inventory.receiptDrug.sgst"/>">SGST</th>
+    <th title="<spring:message code="inventory.receiptDrug.sgstamt"/>">SGSTAMT</th>
+    <th title="<spring:message code="inventory.receiptDrug.cgst"/>">CGST</th>
+    <th title="<spring:message code="inventory.receiptDrug.cgstamt"/>">CGSTAMT</th>
     <th><spring:message code="inventory.receiptDrug.Discount"/></th>
 	<th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
@@ -185,15 +238,56 @@ VALIDATION={
 		<td><a href="#" title="Remove this" onclick="INVENTORY.removeObject('${varStatus.index}','7');">${receipt.drug.name}</a></td>
 		<td>${receipt.formulation.name}-${receipt.formulation.dozage}</td>
 		<td>${receipt.quantity}</td>
+		<c:choose>
+		<c:when test="${not empty receipt.VAT}" >
 		<td>${receipt.VAT}</td>
+		</c:when>
+		<c:otherwise>
+		<td>NA</td>
+		</c:otherwise>
+		</c:choose>
         <td>${receipt.unitPrice}</td>
-         <td>${receipt.waiverPercentage}</td>
+        <td>${receipt.rate}</td>
+        <c:choose>
+        <c:when test="${not empty receipt.cgst}" >
+         <td>${receipt.cgst}</td>
+        </c:when>
+              <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
+        <c:choose>
+        <c:when test="${not empty receipt.cgstAmount}" >
+         <td>${receipt.cgstAmount}</td>
+        </c:when>
+        <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
+                <c:choose>
+		<c:when test="${not empty receipt.sgst}" >
+        <td>${receipt.sgst}</td>
+        </c:when>
+              <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
+        <c:choose>
+        <c:when test="${not empty receipt.sgstAmount}" >
+         <td>${receipt.sgstAmount}</td>
+        </c:when>
+              <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
+        <td>${receipt.waiverPercentage}</td>
 		<td>${receipt.totalPrice}</td>
 		<td>${receipt.batchNo}</td>
 		<td>${receipt.companyName}</td>
 		<td><openmrs:formatDate date="${receipt.dateManufacture}" type="textbox"/></td>
 		<td><openmrs:formatDate date="${receipt.dateExpiry}" type="textbox"/></td>
 		<td><openmrs:formatDate date="${receipt.receiptDate}" type="textbox"/></td>
+		
 		</tr>
 	</c:forEach>
 	
@@ -205,7 +299,7 @@ VALIDATION={
 		<table class="box" width="100%" cellpadding="5" cellspacing="0">
 		<tr>
 			<td>
-				<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.receiptDrug.finish"/>" onclick="RECEIPT.receiptSlip('0');" />
+				<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.receiptDrug.finish"/>" onclick="RECEIPT.receiptSlip('0','${totPrice}');" />
 				<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.receiptDrug.clear"/>"  onclick="RECEIPT.receiptSlip('1');"/>
 				<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.receiptDrug.print"/>" onClick="RECEIPT.printDiv();" />
 			</td>
@@ -214,6 +308,7 @@ VALIDATION={
 	</c:if>
 </div>
 </div>
+
 <!-- PRINT DIV -->
 <div  id="printDiv" style="display: none; ">
 <div style="margin: 10px auto; width: 981px; font-size: 1.0em;font-family:'Dot Matrix Normal',Arial,Helvetica,sans-serif;">        		
@@ -234,6 +329,11 @@ VALIDATION={
 	<th><spring:message code="inventory.receiptDrug.quantity"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
     <th><spring:message code="inventory.receiptDrug.MRP"/></th>
+    <th><spring:message code="inventory.receiptDrug.Rate"/></th>
+    <th><spring:message code="inventory.receiptDrug.sgst"/></th>
+    <th><spring:message code="inventory.receiptDrug.sgstamt"/></th>
+    <th><spring:message code="inventory.receiptDrug.cgst"/></th>
+    <th><spring:message code="inventory.receiptDrug.cgstamt"/></th>
     <th><spring:message code="inventory.receiptDrug.Discount"/></th>
 	<th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
