@@ -205,11 +205,11 @@ public class ReceiptFormController {
 		BigDecimal totalAmountAfterGst =new BigDecimal(0.0);
 		if(cgst!=null || sgst!=null)
 		{
-		totalAmountAfterGst=totprice.subtract(waiverAmount.add(cgstAmount).add(sgstAmount));
+		totalAmountAfterGst=totprice.subtract(waiverAmount).add(cgstAmount).add(sgstAmount);
 		}
 		else
 		{  VAT.multiply(unitPrice).multiply(new BigDecimal(quantity)).multiply(new BigDecimal(.01));
-			totalAmountAfterGst=totprice.subtract(waiverAmount.add(VAT));
+			totalAmountAfterGst=totprice.subtract(waiverAmount).add(VAT);
 		}
 		transactionDetail.setTotalAmountAfterGst(totalAmountAfterGst.setScale(2));
 		//BigDecimal moneyUnitPrice = Rate.add(cgstAmount).add(sgstAmount);
