@@ -49,9 +49,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/module/inventory/addDescriptionReceiptSlip.form")
 public class AddDescriptionSlipController {
 	@RequestMapping(method = RequestMethod.GET)
-	public String firstView(@RequestParam(value="totAmount",required=false)  float totAmount,Model model) {
+	public String firstView(@RequestParam(value="totAmountafterGst",required=false)  float totAmountafterGst,Model model) {
 		
-		model.addAttribute("totPrice", totAmount);
+		model.addAttribute("totAmountafterGst", totAmountafterGst);
 		return "/module/inventory/mainstore/addDescriptionReceiptSlip";
 	}
 	@RequestMapping(method = RequestMethod.POST)

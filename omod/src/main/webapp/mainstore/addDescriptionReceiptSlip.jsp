@@ -30,7 +30,7 @@
 	</tr>
 	<tr>
 		<td>Bill Amount</td>
-		<td><input type="text" name="bill" id="bill" size="35" value="${totPrice}"/></td>
+		<td><input type="text" name="bill" id="bill" size="35" value="${totAmountafterGst}"/></td>
 		
 	</tr>
 	<tr>

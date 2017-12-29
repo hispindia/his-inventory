@@ -271,7 +271,7 @@ ISSUE.processSlip('0');
 		<table class="box" width="100%" cellpadding="5" cellspacing="0">
 			<tr>
 				<th>#</th>
-				<th><spring:message code="inventory.drug.category" /></th>
+			
 				<th><spring:message code="inventory.drug.name" /></th>
 				<th><spring:message code="inventory.drug.formulation" /></th>
 				<th><spring:message code="inventory.receiptDrug.quantity" /></th>
@@ -283,12 +283,12 @@ ISSUE.processSlip('0');
 						varStatus="varStatus">
 						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 							<td><c:out value="${varStatus.count }" /></td>
-							<td>${issue.transactionDetail.drug.category.name}</td>
+							
 							<td><a href="#" title="Remove this"
 								onclick="INVENTORY.removeObject('${varStatus.index}','5');">${issue.transactionDetail.drug.name}</a></td>
 							<td>${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
 							<td>${issue.quantity}</td>
-							<td>${issue.transactionDetail.unitPrice}</td>
+							<td>${issue.transactionDetail.mrpPrice}</td>
 						</tr>
 					</c:forEach>
 
@@ -384,7 +384,7 @@ ISSUE.processSlip('0');
 		<c:if test="${not empty issueDrugPatient}">
 			<br /> <br />
 			<table align='Center'>
-			<tr><td ></td><td id="creditheader" style="color:red;text-align: center;">CREDIT BILL</td><td></td></tr>
+			<tr><td ></td><td id="creditheader" style="color:red;text-align: center;"><b>CREDIT BILL</b></td><td></td></tr>
 			<tr><td>BILL NO.:${isdpdt}</td></tr>
 				<tr>
 					<td>Patient ID :</td>
@@ -420,7 +420,6 @@ ISSUE.processSlip('0');
 			<h4 align="left" style="color:black">Drugs Issued by Pharmacy</h4>
 			<tr>
 				<th style="text-align: center;">#</th>
-				<th style="text-align: center;"><spring:message code="inventory.drug.category" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.drug.name" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.drug.formulation" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.batchNo" /></th>
@@ -437,16 +436,16 @@ ISSUE.processSlip('0');
 						varStatus="varStatus">
 						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 							<td style="text-align: center;"><c:out value="${varStatus.count }" /></td>
-							${issue.transactionDetail.id}
-							<td style="text-align: center;">${issue.transactionDetail.drug.category.name}</td>
+							
+						
 							<td style="text-align: center;">${issue.transactionDetail.drug.name}</td>
 							<td style="text-align: center;">${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
 							<td style="text-align: center;">${issue.transactionDetail.batchNo}</td>
 							<td style="text-align: center;"><openmrs:formatDate date="${issue.transactionDetail.dateExpiry}"
 								type="textbox" /></td>
 							<td style="text-align: center;">${issue.quantity}</td>
-							<td style="text-align: center;">${issue.transactionDetail.unitPrice}</td>
-							<td style="text-align: center;">${issue.transactionDetail.unitPrice*issue.quantity}</td>
+							<td style="text-align: center;">${issue.transactionDetail.mrpPrice}</td>
+							<td style="text-align: center;">${issue.transactionDetail.mrpPrice*issue.quantity}</td>
 						</tr>
 					</c:forEach>
 				</c:when>

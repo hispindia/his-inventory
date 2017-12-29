@@ -53,11 +53,17 @@ public class ReceiptFormController {
 	 model.addAttribute("listReceipt", list);
 	 if(list!=null)
 	 {
-	 for(InventoryStoreDrugTransactionDetail ist:list)
+	 float totAmtgst[]=new float[list.size()]; double totAmountafterGst=0.0;
+	 for(int i=0;i<list.size();i++)
 	 {
-		 
-		 model.addAttribute("totPrice", ist.getTotalPrice());
+		 if( totAmtgst[i]==0.0)
+		
+		 {totAmtgst[i]=totAmtgst[i]+list.get(i).getTotalAmountAfterGst().floatValue();
+		
+		 }
+		 totAmountafterGst=totAmountafterGst+totAmtgst[i];
 	 }
+	model.addAttribute("totAmountafterGst", totAmountafterGst);
 	 }
 	
 	 
@@ -99,13 +105,10 @@ public class ReceiptFormController {
 		BigDecimal VAT = NumberUtils.createBigDecimal(request.getParameter("VAT"));
 		BigDecimal Rate=  NumberUtils.createBigDecimal(request.getParameter("rate"));
 		BigDecimal sgst=  NumberUtils.createBigDecimal(request.getParameter("sgst"));
-		BigDecimal sgstAmount=  NumberUtils.createBigDecimal(request.getParameter("sgstamt"));
-		
-		
+	
 		BigDecimal cgst=  NumberUtils.createBigDecimal(request.getParameter("cgst"));
-		BigDecimal cgstAmount=  NumberUtils.createBigDecimal(request.getParameter("cgstamt"));
-		
-		BigDecimal unitPrice =  NumberUtils.createBigDecimal(request.getParameter("unitPrice"));
+	
+		BigDecimal mrPrice =  NumberUtils.createBigDecimal(request.getParameter("mrPrice"));
 		float waiverPercentage =  Float.parseFloat(request.getParameter("waiverPercentage"));
 		String batchNo = request.getParameter("batchNo");
 		String companyName = request.getParameter("companyName");
@@ -138,9 +141,9 @@ public class ReceiptFormController {
 			model.addAttribute("formulation", formulation);
 			model.addAttribute("drugId", drugId);
 			model.addAttribute("quantity", quantity);
-			model.addAttribute("VAT", VAT);
+			//model.addAttribute("VAT", VAT);
 			model.addAttribute("batchNo", batchNo);
-			model.addAttribute("unitPrice", unitPrice);
+			model.addAttribute("mrpPrice", mrPrice);
 			model.addAttribute("Discount", waiverPercentage);
 			
 			model.addAttribute("companyName", companyName);
@@ -158,17 +161,35 @@ public class ReceiptFormController {
 		transactionDetail.setCompanyName(companyName);
 		transactionDetail.setCurrentQuantity(quantity);
 		transactionDetail.setQuantity(quantity);
-		transactionDetail.setUnitPrice(unitPrice);
+		transactionDetail.setMrpPrice(mrPrice);
 		transactionDetail.setWaiverPercentage(waiverPercentage);
 		BigDecimal waiverAmount=Rate.multiply(new BigDecimal(waiverPercentage).multiply(new BigDecimal(1).divide(new BigDecimal(100))));
 		transactionDetail.setWaiverAmount(waiverAmount.floatValue());
-		
+		BigDecimal unitPrice = Rate;
+		if(waiverPercentage!=0.0)
+		{
+			 unitPrice = Rate.subtract(waiverAmount);
+			
+		}
+		transactionDetail.setUnitPrice(unitPrice.setScale(2));
 		transactionDetail.setVAT(VAT);
 		transactionDetail.setRate(Rate);
 		transactionDetail.setCgst(cgst);
-		transactionDetail.setCgstAmount(cgstAmount);
 		transactionDetail.setSgst(sgst);
-		transactionDetail.setSgstAmount(sgstAmount);
+		BigDecimal cgstAmount=new BigDecimal(0.0);
+		BigDecimal sgstAmount=new BigDecimal(0.0);
+		
+		if(cgst!=null)
+		{
+	     cgstAmount= (cgst.multiply(new BigDecimal(quantity).multiply(unitPrice))).divide(new BigDecimal(100));
+		transactionDetail.setCgstAmount(cgstAmount.setScale(2));
+		}
+		if(sgst!=null)
+		{
+		sgstAmount= (sgst.multiply(new BigDecimal(quantity).multiply(unitPrice))).divide(new BigDecimal(100));
+		transactionDetail.setSgstAmount(sgstAmount.setScale(2));
+		}
+		
 		transactionDetail.setIssueQuantity(0);
 		transactionDetail.setCreatedOn(new Date());
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -180,33 +201,19 @@ public class ReceiptFormController {
 		transactionDetail.setDateManufacture(DateUtils.getDateFromStr(dateManufacture));
 		transactionDetail.setReceiptDate(DateUtils.getDateFromStr(receiptDate));
 		BigDecimal totprice=new BigDecimal(0.0);
-		if(waiverPercentage!=0.0)
+		totprice=new BigDecimal(quantity).multiply(Rate);
+		BigDecimal totalAmountAfterGst =new BigDecimal(0.0);
+		if(cgst!=null || sgst!=null)
 		{
-			totprice=Rate.subtract(Rate.multiply(new BigDecimal(waiverPercentage).multiply(new BigDecimal(1).divide(new BigDecimal(100)))));
-		      if(!(cgstAmount.equals(null))||!(sgstAmount.equals(null)))
-		      {
-		    	  totprice=totprice.add(cgstAmount).add(sgstAmount);
-		      }
-		      else
-		      { BigDecimal cal=totprice.multiply(VAT.multiply(new BigDecimal(1).divide(new BigDecimal(100))));
-		    	  totprice=totprice.add(cal);
-		      }
+		totalAmountAfterGst=totprice.subtract(waiverAmount.add(cgstAmount).add(sgstAmount));
 		}
 		else
-		{
-			totprice=Rate;
-		      if(!(cgstAmount.equals(null))||!(sgstAmount.equals(null)))
-		      {
-		    	  totprice=totprice.add(cgstAmount).add(sgstAmount);
-		      }
-		      else
-		      { BigDecimal cal=totprice.multiply(VAT.multiply(new BigDecimal(1).divide(new BigDecimal(100))));
-		    	  totprice=totprice.add(cal);
-		      }
+		{  VAT.multiply(unitPrice).multiply(new BigDecimal(quantity)).multiply(new BigDecimal(.01));
+			totalAmountAfterGst=totprice.subtract(waiverAmount.add(VAT));
 		}
-		
+		transactionDetail.setTotalAmountAfterGst(totalAmountAfterGst.setScale(2));
 		//BigDecimal moneyUnitPrice = Rate.add(cgstAmount).add(sgstAmount);
-		transactionDetail.setTotalPrice(totprice);
+		transactionDetail.setTotalPrice(totprice.setScale(2));
 		
 		int userId = Context.getAuthenticatedUser().getId();
 		String fowardParam = "reipt_"+userId;

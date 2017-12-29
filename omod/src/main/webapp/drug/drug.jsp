@@ -68,7 +68,7 @@
 		<td><spring:message code="inventory.drug.formulation"/><em>*</em></td>
 		<td><spring:bind path="drug.formulations">
 		<%--New Requirement "UnFreeze Formulation" --%>
-			<select name="${status.expression }" id="${status.expression }"  multiple="multiple"  size="10" style="width:150px">
+			<select name="${status.expression }" id="${status.expression }"  multiple="multiple"  size="10" style="width:275px">
 				<c:forEach items="${formulations}" var="sFormulation">
 					<option value="${sFormulation.id}"
 						<c:forEach items="${status.value}" var="formulation">

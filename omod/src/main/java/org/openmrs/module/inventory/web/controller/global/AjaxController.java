@@ -479,8 +479,8 @@ public class AjaxController {
 				transDetail.setClosingBalance(t);
 				transDetail.setQuantity(0);
 				transDetail.setVAT(pDetail.getTransactionDetail().getVAT());
-				transDetail.setCostToPatient(drugTransactionDetail.getUnitPrice());
-				transDetail.setUnitPrice(pDetail.getTransactionDetail().getUnitPrice());
+				transDetail.setCostToPatient(drugTransactionDetail.getMrpPrice());
+				transDetail.setMrpPrice(pDetail.getTransactionDetail().getMrpPrice());
 				transDetail.setDrug(pDetail.getTransactionDetail().getDrug());
 				transDetail.setFormulation(pDetail.getTransactionDetail().getFormulation());
 				transDetail.setBatchNo(pDetail.getTransactionDetail().getBatchNo());
@@ -501,7 +501,7 @@ public class AjaxController {
 				totl = totl.plus(totl.times((double)pDetail.getTransactionDetail().getVAT()/100));
 				transDetail.setTotalPrice(totl.getAmount());*/
 				
-				BigDecimal moneyUnitPrice = pDetail.getTransactionDetail().getUnitPrice().multiply(new BigDecimal(pDetail.getQuantity()));
+				BigDecimal moneyUnitPrice = pDetail.getTransactionDetail().getMrpPrice().multiply(new BigDecimal(pDetail.getQuantity()));
 				//moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(pDetail.getTransactionDetail().getVAT().divide(new BigDecimal(100))));
 				transDetail.setTotalPrice(moneyUnitPrice);
 				
@@ -591,7 +591,7 @@ public class AjaxController {
 				transDetail.setClosingBalance(t);
 				transDetail.setQuantity(0);
 				transDetail.setVAT(pDetail.getTransactionDetail().getVAT());
-				transDetail.setUnitPrice(pDetail.getTransactionDetail().getUnitPrice());
+				transDetail.setMrpPrice(pDetail.getTransactionDetail().getMrpPrice());
 				transDetail.setDrug(pDetail.getTransactionDetail().getDrug());
 				transDetail.setFormulation(pDetail.getTransactionDetail().getFormulation());
 				transDetail.setBatchNo(pDetail.getTransactionDetail().getBatchNo());
@@ -611,7 +611,7 @@ public class AjaxController {
 				
 				totl = totl.plus(totl.times((double)pDetail.getTransactionDetail().getVAT()/100));
 				transDetail.setTotalPrice(totl.getAmount());*/
-				BigDecimal moneyUnitPrice = pDetail.getTransactionDetail().getUnitPrice().multiply(new BigDecimal(pDetail.getQuantity()));
+				BigDecimal moneyUnitPrice = pDetail.getTransactionDetail().getMrpPrice().multiply(new BigDecimal(pDetail.getQuantity()));
 				moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(pDetail.getTransactionDetail().getVAT().divide(new BigDecimal(100))));
 				transDetail.setTotalPrice(moneyUnitPrice);
 				
@@ -847,8 +847,54 @@ public class AjaxController {
 			model.addAttribute("store", transactionDetails.get(0).getTransaction().getStore());
 			model.addAttribute("vendorName", transactionDetails.get(0).getTransaction().getDescription());
 			model.addAttribute("date", transactionDetails.get(0).getTransaction().getCreatedOn());
+			
+			
 		}
 		model.addAttribute("transactionDetails", transactionDetails);
+		 if(transactionDetails!=null)
+		 {
+		 float totAmtgst[]=new float[transactionDetails.size()]; double totAmountafterGst=0.0;
+		 float totAmt[]=new float[transactionDetails.size()]; double totAmount=0.0;
+		 float totCD[]=new float[transactionDetails.size()];double totCDamount=0.0;
+		 float totcgst[]=new float[transactionDetails.size()];double totcgstAmount=0.0;
+		 float totsgst[]=new float[transactionDetails.size()];double totsgstAmount=0.0;
+		 for(int i=0;i<transactionDetails.size();i++)
+		 {
+			 if( totAmtgst[i]==0.0)
+			 {totAmtgst[i]=totAmtgst[i]+transactionDetails.get(i).getTotalAmountAfterGst().floatValue();
+			 }
+			 if(transactionDetails.get(i).getWaiverAmount().floatValue()!=0.0)
+			 {
+			 if(totCD[i]==0.0)
+			 {totCD[i]=totCD[i]+transactionDetails.get(i).getWaiverAmount().floatValue(); 
+			 }
+			 }
+			if(transactionDetails.get(i).getCgstAmount()!=null)
+			{ if(totcgst[i]==0.0)
+			 {totcgst[i]=totcgst[i]+transactionDetails.get(i).getCgstAmount().floatValue();
+			 }
+			}
+			if(transactionDetails.get(i).getSgstAmount()!=null)
+			 {
+				if(totsgst[i]==0.0)
+			 {totsgst[i]=totsgst[i]+transactionDetails.get(i).getSgstAmount().floatValue();	 
+			 }
+			 }
+			 if( totAmt[i]==0.0)
+			 {totAmt[i]=totAmt[i]+transactionDetails.get(i).getTotalPrice().floatValue();
+			 }
+			 totAmountafterGst=totAmountafterGst+totAmtgst[i];
+			 totCDamount=totCDamount+totCD[i];
+			 totcgstAmount=totcgstAmount+totcgst[i];
+			 totsgstAmount=totsgstAmount+totsgst[i];
+			 totAmount=totAmount+totAmt[i];
+		 }
+		model.addAttribute("totAmountafterGst",(double)Math.round(totAmountafterGst * 100) / 100);
+		model.addAttribute("totAmount",(double)Math.round(totAmount * 100) / 100);
+		model.addAttribute("totCDamount",(double) Math.round(totCDamount * 100) / 100 );
+		model.addAttribute("totcgstAmount", (double) Math.round(totcgstAmount * 100) / 100);
+		model.addAttribute("totsgstAmount",(double) Math.round(totsgstAmount * 100) / 100 );
+		 }
 		return "/module/inventory/mainstore/receiptsToGeneralStoreDetail";
 	}
 	@RequestMapping("/module/inventory/itemReceiptDetail.form")

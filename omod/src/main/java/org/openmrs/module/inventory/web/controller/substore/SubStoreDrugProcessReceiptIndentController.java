@@ -96,7 +96,7 @@ public class SubStoreDrugProcessReceiptIndentController {
 				transDetail.setCreatedOn(new Date());
 				transDetail.setDateManufacture(refund.getDateManufacture());
 				transDetail.setFormulation(refund.getFormulation());
-				transDetail.setUnitPrice(refund.getUnitPrice());
+				transDetail.setMrpPrice(refund.getMrpPrice());
 				transDetail.setCostToPatient(refund.getCostToPatient());
 				transDetail.setVAT(refund.getVAT());
 				transDetail.setParent(refund);
@@ -113,7 +113,7 @@ public class SubStoreDrugProcessReceiptIndentController {
 				
 				totl = totl.plus(totl.times((double)refund.getVAT()/100));
 				transDetail.setTotalPrice(totl.getAmount());*/
-				BigDecimal moneyUnitPrice = refund.getUnitPrice().multiply(new BigDecimal(refund.getIssueQuantity()));
+				BigDecimal moneyUnitPrice = refund.getMrpPrice().multiply(new BigDecimal(refund.getIssueQuantity()));
 				moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(refund.getVAT().divide(new BigDecimal(100))));
 				transDetail.setTotalPrice(moneyUnitPrice);
 				
@@ -157,7 +157,7 @@ public class SubStoreDrugProcessReceiptIndentController {
 			transDetail.setCreatedOn(date);
 			transDetail.setDateManufacture(refund.getDateManufacture());
 			transDetail.setFormulation(refund.getFormulation());
-			transDetail.setUnitPrice(refund.getUnitPrice());
+			transDetail.setMrpPrice(refund.getMrpPrice());
 			transDetail.setCostToPatient(refund.getCostToPatient());
 			transDetail.setVAT(refund.getVAT());
 			transDetail.setParent(refund);
@@ -174,8 +174,8 @@ public class SubStoreDrugProcessReceiptIndentController {
 			
 			totl = totl.plus(totl.times((double)refund.getVAT()/100));
 			transDetail.setTotalPrice(totl.getAmount());*/
-			BigDecimal moneyUnitPrice = refund.getUnitPrice().multiply(new BigDecimal(refund.getIssueQuantity()));
-			moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(refund.getVAT().divide(new BigDecimal(100))));
+			BigDecimal moneyUnitPrice = refund.getMrpPrice().multiply(new BigDecimal(refund.getIssueQuantity()));
+		//	moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(refund.getVAT().divide(new BigDecimal(100))));
 			transDetail.setTotalPrice(moneyUnitPrice);
 			
 			transDetail.setQuantity(refund.getIssueQuantity());

@@ -273,10 +273,10 @@ RECEIPT={
 		{
 		  	jQuery("div#printDiv").printArea({mode:"popup",popClose:true,popTitle: "Support by HISP india(hispindia.org)"});
 		},
-		receiptSlip : function(action,totAmount){
+		receiptSlip : function(action,totAmountafterGst){
 				if(action == 0){
 					if(SESSION.checkSession()){
-						url = "addDescriptionReceiptSlip.form?action="+action+"&totAmount="+totAmount+"&keepThis=false&TB_iframe=true&height=200&width=450";
+						url = "addDescriptionReceiptSlip.form?action="+action+"&totAmountafterGst="+totAmountafterGst+"&keepThis=false&TB_iframe=true&height=200&width=450";
 						tb_show("Add description for this slip....",url,false);
 					}
 				}else{

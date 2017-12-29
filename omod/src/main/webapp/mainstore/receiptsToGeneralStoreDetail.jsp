@@ -23,13 +23,16 @@
 <span class="boxHeader"><spring:message code="inventory.receiptDrug.receiptDrugList"/></span>
 <div class="box">
 <table width="100%" cellpadding="5" cellspacing="0">
+	<tr>
+	<td style="width:100%;">
+	<table>
 	<tr align="center">
 	<th>#</th>
-	<th><spring:message code="inventory.drug.category"/></th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
 	<th><spring:message code="inventory.receiptDrug.receiptQuantity"/></th>
 	<th><spring:message code="inventory.receiptDrug.Rate"/></th>
+    <th><spring:message code="inventory.receiptDrug.unitPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
 	<th><spring:message code="inventory.receiptDrug.MRP"/></th>
 	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
@@ -40,8 +43,8 @@
     <th>SGST(%)</th>
     <th>SGST Amount</th>
 	<th>DE</th>
-	<th>RD</th>
 	<th>Total Amount</th>
+	<th>Total Amount After GST</th>
 	</tr>
 	
 	<c:choose>
@@ -49,11 +52,11 @@
 	<c:forEach items="${transactionDetails}" var="receipt" varStatus="varStatus">
 	<tr align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${varStatus.count }"/></td>
-		<td>${receipt.drug.category.name} </td>	
 		<td>${receipt.drug.name}</td>
 		<td>${receipt.formulation.name}-${receipt.formulation.dozage}</td>
 		<td>${receipt.quantity}</td>
 		<td>${receipt.rate}</td>
+       <td>${receipt.unitPrice}</td>
 		<c:choose>
 		<c:when test="${not empty receipt.VAT}" >
 		<td>${receipt.VAT}</td>
@@ -62,7 +65,7 @@
 		<td>NA</td>
 		</c:otherwise>
 		</c:choose>
-		<td>${receipt.unitPrice}</td>
+		<td>${receipt.mrpPrice}</td>
 		<td>${receipt.batchNo}</td>
 		<td>${receipt.waiverPercentage}</td>
 		<td>${receipt.waiverAmount}</td>
@@ -99,12 +102,45 @@
         </c:otherwise>
         </c:choose>
 		<td><openmrs:formatDate date="${receipt.dateExpiry}" type="textbox"/></td>
-		<td><openmrs:formatDate date="${receipt.receiptDate}" type="textbox"/></td>
+
 		<td>${receipt.totalPrice}</td>
+		<td>${receipt.totalAmountAfterGst}</td>
 		</tr>
 	</c:forEach>
 	</c:when>
 	</c:choose>
+	</table>
+	</td>
+	
+	</tr>
+<tr>
+<td>
+</br>
+<table style="width:20%;float:right;">
+<tr>
+<td style="text-align: center;">Total Cash Discount</td>
+<td style="text-align: center;">${totCDamount }</td>
+</tr>
+<tr>
+<td style="text-align: center;">Total CGST</td>
+<td style="text-align: center;">${totcgstAmount }</td>
+</tr>
+<tr>
+<td style="text-align: center;">Total SGST</td>
+<td style="text-align: center;">${totsgstAmount }</td>
+</tr>
+<tr>
+<td style="text-align: center;">Total Amount</td>
+<td style="text-align: center;">${totAmount }</td>
+</tr>
+<tr>
+<td style="text-align: center;">Total Amount After GST</td>
+<td style="text-align: center;">${totAmountafterGst }</td>
+</tr>
+</table>
+</td>
+</tr>
+
 </table>
 </div>
 
@@ -121,14 +157,17 @@
 <span style="float:right;font-size: 1.7em">Date: <openmrs:formatDate date="${date}" type="textbox"/></span>
 <br />
 <br />
-<table border="1">
+<table >
+	<tr>
+	<td style="width:100%;">
+	<table>
 	<tr align="center">
 	<th>#</th>
-	<th><spring:message code="inventory.drug.category"/></th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
 	<th><spring:message code="inventory.receiptDrug.quantity"/></th>
 	<th><spring:message code="inventory.receiptDrug.Rate"/></th>
+	<th><spring:message code="inventory.receiptDrug.unitPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
     <th><spring:message code="inventory.receiptDrug.MRP"/></th>
     <th><spring:message code="inventory.receiptDrug.batchNo"/></th>
@@ -139,19 +178,19 @@
     <th>SGST(%)</th>
     <th>SGST Amount</th>
 	<th>DE</th>
-	<th>RD</th>
 	<th>Total Amount</th>
+	<th>Total Amount After GST</th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty transactionDetails}">
 	<c:forEach items="${transactionDetails}" var="receipt" varStatus="varStatus">
 	<tr align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${(( pagingUtil.currentPage - 1  ) * pagingUtil.pageSize ) + varStatus.count }"/></td>
-		<td>${receipt.drug.category.name} </td>	
 		<td>${receipt.drug.name}</td>
 		<td>${receipt.formulation.name}-${receipt.formulation.dozage}</td>
 		<td>${receipt.quantity}</td>
 		<td>${receipt.rate}</td>
+		<td>${receipt.unitPrice}</td>
 		<c:choose>
 		<c:when test="${not empty receipt.VAT}" >
 		<td>${receipt.VAT}</td>
@@ -160,7 +199,7 @@
 		<td>NA</td>
 		</c:otherwise>
 		</c:choose>
-		<td>${receipt.unitPrice}</td>
+		<td>${receipt.mrpPrice}</td>
 		<td>${receipt.batchNo}</td>
 		<td>${receipt.waiverPercentage}</td>
 		<td>${receipt.waiverAmount}</td>
@@ -180,16 +219,61 @@
         <td>NA</td>
         </c:otherwise>
         </c:choose>
-		<td>${receipt.sgst}</td>
-		<td>${receipt.sgstAmount}</td>
+		         <c:choose>
+        <c:when test="${not empty receipt.sgst}" >
+         <td>${receipt.sgst}</td>
+        </c:when>
+              <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
+		 <c:choose>
+        <c:when test="${not empty receipt.sgstAmount}" >
+         <td>${receipt.sgstAmount}</td>
+        </c:when>
+        <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
 		<td><openmrs:formatDate date="${receipt.dateExpiry}" type="textbox"/></td>
-		<td><openmrs:formatDate date="${receipt.receiptDate}" type="textbox"/></td>
 		<td>${receipt.totalPrice}</td>
+		<td>${receipt.totalAmountAfterGst}</td>
 		</tr>
 	</c:forEach>
 	</c:when>
 	</c:choose>
+		</table>
+	</td>
+	
+	</tr>
+<tr>
+<td>
+
+<table style="width:20%;float:right;">
+<tr>
+<td style="text-align: center;">Total Cash Discount</td>
+<td style="text-align: center;">${totCDamount }</td>
+</tr>
+<tr>
+<td style="text-align: center;">Total CGST</td>
+<td style="text-align: center;">${totcgstAmount }</td>
+</tr>
+<tr>
+<td style="text-align: center;">Total SGST</td>
+<td style="text-align: center;">${totsgstAmount }</td>
+</tr>
+<tr>
+<td style="text-align: center;">Total Amount</td>
+<td style="text-align: center;">${totAmount }</td>
+</tr>
+<tr>
+<td style="text-align: center;">Total Amount After GST</td>
+<td style="text-align: center;">${totAmountafterGst }</td>
+</tr>
 </table>
+	</td>
+	</tr>
+</table> 
 <br/><br/><br/><br/><br/><br/>
 <span style="float:right;font-size: 1.5em">Signature of inventory clerk/ Stamp</span>
 </div>

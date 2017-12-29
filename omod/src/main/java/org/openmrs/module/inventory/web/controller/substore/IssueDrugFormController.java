@@ -92,7 +92,7 @@ public class IssueDrugFormController {
 		Float totalAmountPy=Float.parseFloat("0");
 		if(list!=null){
 		for(InventoryStoreDrugPatientDetail lst:list){
-			Float unitPrice=lst.getTransactionDetail().getUnitPrice().floatValue();
+			Float unitPrice=lst.getTransactionDetail().getMrpPrice().floatValue();
 			Integer quantity=lst.getQuantity();
 			totalValu=totalValu+quantity*unitPrice;
 			

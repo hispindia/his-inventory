@@ -32,7 +32,7 @@ if(jQuery("#test").val().length!=0)
 	jQuery("#amtretrn").hide();
 	}
 if(jQuery("#test1").val().length!=0)
-{
+{ 
 jQuery("#creditheaders").show();
 jQuery("#amtgivens").hide();
 jQuery("#amtreturns").hide();
@@ -82,7 +82,7 @@ jQuery("#amtretrns").hide();
 			<h4 align="left" style="color:black">Drugs Issued by Pharmacy</h4>
 			<tr>
 				<th style="text-align: center;">#</th>
-				<th style="text-align: center;"><spring:message code="inventory.drug.category" /></th>
+			
 				<th style="text-align: center;"><spring:message code="inventory.drug.name" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.drug.formulation" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.batchNo" /></th>
@@ -99,15 +99,15 @@ jQuery("#amtretrns").hide();
 						varStatus="varStatus">
 						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 							<td style="text-align: center;"><c:out value="${varStatus.count }" /></td>
-							<td style="text-align: center;">${issue.transactionDetail.drug.category.name}</td>
+							
 							<td style="text-align: center;">${issue.transactionDetail.drug.name}</td>
 							<td style="text-align: center;">${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
 							<td style="text-align: center;">${issue.transactionDetail.batchNo}</td>
 							<td style="text-align: center;"><openmrs:formatDate date="${issue.transactionDetail.dateExpiry}"
 								type="textbox" /></td>
 							<td style="text-align: center;">${issue.quantity}</td>
-							<td style="text-align: center;">${issue.transactionDetail.unitPrice}</td>
-							<td style="text-align: center;">${issue.transactionDetail.unitPrice*issue.quantity}</td>
+							<td style="text-align: center;">${issue.transactionDetail.mrpPrice}</td>
+							<td style="text-align: center;">${issue.transactionDetail.mrpPrice*issue.quantity}</td>
 						    <input type="hidden" id="test" value="${issue.transactionDetail.amountCredit}"/>
 						</tr>
 					</c:forEach>
@@ -237,7 +237,7 @@ jQuery("#amtretrns").hide();
 			<h4 align="left" style="color:black">Drugs Issued by Pharmacy</h4>
 			<tr>
 				<th style="text-align: center;">#</th>
-				<th style="text-align: center;"><spring:message code="inventory.drug.category" /></th>
+		
 				<th style="text-align: center;"><spring:message code="inventory.drug.name" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.drug.formulation" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.batchNo" /></th>
@@ -254,15 +254,15 @@ jQuery("#amtretrns").hide();
 						varStatus="varStatus">
 						<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 							<td style="text-align: center;"><c:out value="${varStatus.count }" /></td>
-							<td style="text-align: center;">${issue.transactionDetail.drug.category.name}</td>
+					
 							<td style="text-align: center;">${issue.transactionDetail.drug.name}</td>
 							<td style="text-align: center;">${issue.transactionDetail.formulation.name}-${issue.transactionDetail.formulation.dozage}</td>
 						    <td style="text-align: center;">${issue.transactionDetail.batchNo}</td>
 							<td style="text-align: center;"><openmrs:formatDate date="${issue.transactionDetail.dateExpiry}"
 								type="textbox" /></td>
 							<td style="text-align: center;">${issue.quantity}</td>
-							<td style="text-align: center;">${issue.transactionDetail.unitPrice}</td>
-							<td style="text-align: center;">${issue.transactionDetail.unitPrice*issue.quantity}</td>
+							<td style="text-align: center;">${issue.transactionDetail.mrpPrice}</td>
+							<td style="text-align: center;">${issue.transactionDetail.mrpPrice*issue.quantity}</td>
 						    <input type="hidden" id="test1" value="${issue.transactionDetail.amountCredit}"/>
 						</tr>
 					</c:forEach>

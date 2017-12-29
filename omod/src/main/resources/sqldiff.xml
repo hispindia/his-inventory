@@ -212,4 +212,20 @@
 		ALTER TABLE inventory_store_drug_transaction ADD COLUMN( receipt_No varchar(500), bill_Amount decimal(11,2));
 		</sql>
 	</diff>
+	
+	
+			<diff>
+		<version>2.3.3</version>
+		<author>ambika</author>
+		<date>27th Dec 2017</date>
+		<description>
+			ALTER inventory_store_drug_transaction_detail
+		</description>
+		<sql>
+		ALTER TABLE inventory_store_drug_transaction_detail
+CHANGE  unit_price  mrp_price DECIMAL(19,2);
+		ALTER TABLE inventory_store_drug_transaction_detail ADD COLUMN( unit_price DECIMAL(19,2),total_amount_after_gst DECIMAL(19,2));
+
+		</sql>
+	</diff>
 </sqldiff>

@@ -60,9 +60,10 @@ var cgstAmount=(jQuery("#rate").val())*(jQuery("#cgst").val()/100);
 jQuery("#sgstamt").val(sgstAmount);
 jQuery("#cgstamt").val(cgstAmount);
 }
+
 </script>
 
-<div style="width: 26%; float: left; margin-left: 4px; ">
+<div style="width: 22.5%; float: left; margin-left: 4px; ">
 <b class="boxHeader">Drug</b>
 <div class="box">
 <form method="post" id="receiptDrug">
@@ -93,7 +94,7 @@ jQuery("#cgstamt").val(cgstAmount);
 		<td>Brand Name<em>*</em></td>
 		<td>
 			
-				<input id="drugName" name="drugName" onblur="RECEIPT.onBlur(this);" style="width: 200px;">
+				<input id="drugName" name="drugName" onblur="RECEIPT.onBlur(this);" style="width: 150px;">
 				<div id="divDrug"  ></div>
 		</td>
 	</tr>
@@ -101,7 +102,7 @@ jQuery("#cgstamt").val(cgstAmount);
 		<td><spring:message code="inventory.drug.formulation"/><em>*</em></td>
 		<td>
 			<div id="divFormulation"  >
-				<select id="formulation"  name="formulation">
+				<select id="formulation"  name="formulation" >
 					<option value=""><spring:message code="inventory.pleaseSelect"/></option>
 				</select>
 			</div>
@@ -113,86 +114,75 @@ jQuery("#cgstamt").val(cgstAmount);
 	<tr>
 		<td><spring:message code="inventory.receiptDrug.quantiry"/><em>*</em></td>
 		<td>
-			<input type="text" id="quantity" name="quantity" />
-		</td>
-	</tr>
-	<tr>
-		<td><spring:message code="inventory.receiptDrug.VAT"/><em>*</em></td>
-		<td>
-			<input type="text" id="VAT" name="VAT" oninput="myFunction()"/>
-		</td>
-	</tr>
-	<tr>
-		<td><spring:message code="inventory.receiptDrug.MRP"/><em>*</em></td>
-		<td>
-			<input type="text" id="unitPrice" name="unitPrice" />
+			<input type="text" id="quantity" name="quantity" style="width: 120px;"/>
 		</td>
 	</tr>
 		<tr>
 		<td><spring:message code="inventory.receiptDrug.Rate"/><em>*</em></td>
 		<td>
-			<input type="text" id="rate" name="rate" />
+			<input type="text" id="rate" name="rate" style="width: 120px;"/>
+		</td>
+	</tr>
+	<tr>
+		<td><spring:message code="inventory.receiptDrug.VAT"/></td>
+		<td>
+			<input type="text" id="VAT" name="VAT" oninput="myFunction()" style="width: 120px;"/>
+		</td>
+	</tr>
+	<tr>
+		<td><spring:message code="inventory.receiptDrug.MRP"/><em>*</em></td>
+		<td>
+			<input type="text" id="mrPrice" name="mrPrice" style="width: 120px;" />
 		</td>
 	</tr>
 		<tr>
-		<td><spring:message code="inventory.receiptDrug.cgst"/><em>*</em></td>
-		<td>
-			<input type="text" id="cgst" name="cgst" oninput="myFunction1()" />
-		</td>
-	</tr>
-			<tr>
-		<td><spring:message code="inventory.receiptDrug.cgstamt"/><em>*</em></td>
-		<td>
-			<input type="text" id="cgstamt" name="cgstamt" />
-		</td>
-	</tr>
-				<tr>
-		<td><spring:message code="inventory.receiptDrug.sgst"/><em>*</em></td>
-		<td>
-			<input type="text" id="sgst" name="sgst" oninput="myFunction1()" />
-		</td>
-	</tr>
-			<tr>
-		<td><spring:message code="inventory.receiptDrug.sgstamt"/><em>*</em></td>
-		<td>
-			<input type="text" id="sgstamt" name="sgstamt" />
-		</td>
-	</tr>
-	<tr>
-
-		<td><spring:message code="inventory.receiptDrug.Discount"/></td>
-		<td>
-			<input type="text" id="waiverPercentage" name="waiverPercentage" />
-		</td>
-	</tr>
-	<tr>
-		<td><spring:message code="inventory.receiptDrug.batchNo"/><em>*</em></td>
-		<td>
-			<input type="text" id="batchNo" name="batchNo" />
-		</td>
-	</tr>
-	<tr>
 		<td><spring:message code="inventory.receiptDrug.companyName"/><em>*</em></td>
 		<td>
-			<input type="text" id="companyName" name="companyName" />
+			<input type="text" id="companyName" name="companyName" style="width: 120px;" />
+		</td>
+	</tr>
+		<tr>
+		<td><spring:message code="inventory.receiptDrug.batchNo"/><em>*</em></td>
+		<td>
+			<input type="text" id="batchNo" name="batchNo" style="width: 120px;" />
+		</td>
+	</tr>
+		<tr>
+
+		<td><spring:message code="inventory.receiptDrug.Dis"/></td>
+		<td>
+			<input type="text" id="waiverPercentage" name="waiverPercentage" style="width: 120px;" />
+		</td>
+	</tr>
+		<tr>
+		<td><spring:message code="inventory.receiptDrug.cgst"/></td>
+		<td>
+			<input type="text" id="cgst" name="cgst" oninput="myFunction1()"  style="width: 120px;"/>
+		</td>
+	</tr>
+	
+				<tr>
+		<td><spring:message code="inventory.receiptDrug.sgst"/></td>
+		<td>
+			<input type="text" id="sgst" name="sgst" oninput="myFunction1()" style="width: 120px;" />
+		</td>
+	</tr>
+		<tr>
+		<td><spring:message code="inventory.receiptDrug.dateExpiry"/><em>*</em></td>
+		<td>
+			<input type="text" id="dateExpiry" name="dateExpiry" class="date-pick left" readonly="readonly"  ondblclick="this.value='';" style="width: 120px;"/>
 		</td>
 	</tr>
 	<tr>
 		<td><spring:message code="inventory.receiptDrug.dateManufacture"/><em>*</em></td>
 		<td>
-			<input type="text" id="dateManufacture" name="dateManufacture" class="date-pick left" readonly="readonly"  ondblclick="this.value='';"/>
-		</td>
-	</tr>
-	<tr>
-		<td><spring:message code="inventory.receiptDrug.dateExpiry"/><em>*</em></td>
-		<td>
-			<input type="text" id="dateExpiry" name="dateExpiry" class="date-pick left" readonly="readonly"  ondblclick="this.value='';"/>
+			<input type="text" id="dateManufacture" name="dateManufacture" class="date-pick left" readonly="readonly"  ondblclick="this.value='';" style="width: 120px;"/>
 		</td>
 	</tr>
 	<tr>
 		<td><spring:message code="inventory.receiptDrug.receiptDate"/><em>*</em></td>
 		<td>
-			<input type="text" id="receiptDate" name="receiptDate" class="date-pick left" readonly="readonly"  ondblclick="this.value='';"/>
+			<input type="text" id="receiptDate" name="receiptDate" class="date-pick left" readonly="readonly"  ondblclick="this.value='';" style="width: 120px;"/>
 		</td>
 	</tr>
 </table>
@@ -204,40 +194,37 @@ jQuery("#cgstamt").val(cgstAmount);
 </div>
 <!-- Receipt list -->
 
-<div style="width: 73%; float: right; margin-right: 4px; ">
+<div style="width: 76.5%; float: right; margin-right: 4px; ">
 <b class="boxHeader">Receipt Slip</b>  <!-- Sept 22,2012 -- Sagar Bele -- Issue 387 --Change case of word Slip-->
 <div class="box">
 <table class="box" width="100%" cellpadding="5" cellspacing="0">
 	<tr>
 	<th>#</th>
-	<th><spring:message code="inventory.drug.category"/></th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
 	<th><spring:message code="inventory.receiptDrug.quantity"/></th>
+	<th><spring:message code="inventory.receiptDrug.Rate"/></th>
+	<th><spring:message code="inventory.receiptDrug.unitPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
 	<th><spring:message code="inventory.receiptDrug.MRP"/></th>
-	<th><spring:message code="inventory.receiptDrug.Rate"/></th>
-    <th title="<spring:message code="inventory.receiptDrug.sgst"/>">SGST</th>
-    <th title="<spring:message code="inventory.receiptDrug.sgstamt"/>">SGSTAMT</th>
-    <th title="<spring:message code="inventory.receiptDrug.cgst"/>">CGST</th>
-    <th title="<spring:message code="inventory.receiptDrug.cgstamt"/>">CGSTAMT</th>
-    <th><spring:message code="inventory.receiptDrug.Discount"/></th>
-	<th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
-	<th title="<spring:message code="inventory.receiptDrug.companyName"/>">CN</th>
-	<th title="<spring:message code="inventory.receiptDrug.dateManufacture"/>">DM</th>
-	<th title="<spring:message code="inventory.receiptDrug.dateExpiry"/>">DE</th>
-	<th title="<spring:message code="inventory.receiptDrug.receiptDate"/>">RD</th>
+	<th><spring:message code="inventory.receiptDrug.Dis"/></th>
+    <th ><spring:message code="inventory.receiptDrug.cgst"/></th>
+   <th><spring:message code="inventory.receiptDrug.sgst"/></th>
+   <th><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
+   <th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
+	<th><spring:message code="inventory.receiptDrug.totalAmountAfterGst"/></th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty listReceipt}">
 	<c:forEach items="${listReceipt}" var="receipt" varStatus="varStatus">
 	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${(( pagingUtil.currentPage - 1  ) * pagingUtil.pageSize ) + varStatus.count }"/></td>
-		<td>${receipt.drug.category.name} </td>	
 		<td><a href="#" title="Remove this" onclick="INVENTORY.removeObject('${varStatus.index}','7');">${receipt.drug.name}</a></td>
 		<td>${receipt.formulation.name}-${receipt.formulation.dozage}</td>
 		<td>${receipt.quantity}</td>
+		<td>${receipt.rate}</td>
+		<td>${receipt.unitPrice}</td>
 		<c:choose>
 		<c:when test="${not empty receipt.VAT}" >
 		<td>${receipt.VAT}</td>
@@ -246,8 +233,9 @@ jQuery("#cgstamt").val(cgstAmount);
 		<td>NA</td>
 		</c:otherwise>
 		</c:choose>
-        <td>${receipt.unitPrice}</td>
-        <td>${receipt.rate}</td>
+        <td>${receipt.mrpPrice}</td>
+        <td>${receipt.batchNo}</td>
+        <td>${receipt.waiverPercentage}</td>
         <c:choose>
         <c:when test="${not empty receipt.cgst}" >
          <td>${receipt.cgst}</td>
@@ -257,14 +245,6 @@ jQuery("#cgstamt").val(cgstAmount);
         </c:otherwise>
         </c:choose>
         <c:choose>
-        <c:when test="${not empty receipt.cgstAmount}" >
-         <td>${receipt.cgstAmount}</td>
-        </c:when>
-        <c:otherwise>
-        <td>NA</td>
-        </c:otherwise>
-        </c:choose>
-                <c:choose>
 		<c:when test="${not empty receipt.sgst}" >
         <td>${receipt.sgst}</td>
         </c:when>
@@ -272,22 +252,9 @@ jQuery("#cgstamt").val(cgstAmount);
         <td>NA</td>
         </c:otherwise>
         </c:choose>
-        <c:choose>
-        <c:when test="${not empty receipt.sgstAmount}" >
-         <td>${receipt.sgstAmount}</td>
-        </c:when>
-              <c:otherwise>
-        <td>NA</td>
-        </c:otherwise>
-        </c:choose>
-        <td>${receipt.waiverPercentage}</td>
+        <td><openmrs:formatDate date="${receipt.dateExpiry}" type="textbox"/></td>
 		<td>${receipt.totalPrice}</td>
-		<td>${receipt.batchNo}</td>
-		<td>${receipt.companyName}</td>
-		<td><openmrs:formatDate date="${receipt.dateManufacture}" type="textbox"/></td>
-		<td><openmrs:formatDate date="${receipt.dateExpiry}" type="textbox"/></td>
-		<td><openmrs:formatDate date="${receipt.receiptDate}" type="textbox"/></td>
-		
+		<td>${receipt.totalAmountAfterGst}</td>
 		</tr>
 	</c:forEach>
 	
@@ -299,7 +266,7 @@ jQuery("#cgstamt").val(cgstAmount);
 		<table class="box" width="100%" cellpadding="5" cellspacing="0">
 		<tr>
 			<td>
-				<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.receiptDrug.finish"/>" onclick="RECEIPT.receiptSlip('0','${totPrice}');" />
+				<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.receiptDrug.finish"/>" onclick="RECEIPT.receiptSlip('0','${totAmountafterGst}');" />
 				<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.receiptDrug.clear"/>"  onclick="RECEIPT.receiptSlip('1');"/>
 				<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.receiptDrug.print"/>" onClick="RECEIPT.printDiv();" />
 			</td>
@@ -323,42 +290,81 @@ jQuery("#cgstamt").val(cgstAmount);
 <table border="1">
 	<tr>
 	<th>#</th>
-	<th><spring:message code="inventory.drug.category"/></th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
 	<th><spring:message code="inventory.receiptDrug.quantity"/></th>
+	<th><spring:message code="inventory.receiptDrug.Rate"/></th>
+	<th><spring:message code="inventory.receiptDrug.unitPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
-    <th><spring:message code="inventory.receiptDrug.MRP"/></th>
-    <th><spring:message code="inventory.receiptDrug.Rate"/></th>
-    <th><spring:message code="inventory.receiptDrug.sgst"/></th>
-    <th><spring:message code="inventory.receiptDrug.sgstamt"/></th>
-    <th><spring:message code="inventory.receiptDrug.cgst"/></th>
-    <th><spring:message code="inventory.receiptDrug.cgstamt"/></th>
-    <th><spring:message code="inventory.receiptDrug.Discount"/></th>
-	<th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
+	<th><spring:message code="inventory.receiptDrug.MRP"/></th>
 	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
-	<th><spring:message code="inventory.receiptDrug.companyName"/></th>
-	<th><spring:message code="inventory.receiptDrug.dateManufacture"/></th>
-	<th><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
-	<th><spring:message code="inventory.receiptDrug.receiptDate"/></th>
+	<th><spring:message code="inventory.receiptDrug.Dis"/></th>
+	<th><spring:message code="inventory.receiptDrug.DiscountAmount"/></th>
+   <th><spring:message code="inventory.receiptDrug.cgst"/></th>
+   <th><spring:message code="inventory.receiptDrug.cgstamt"/></th>
+   <th><spring:message code="inventory.receiptDrug.sgst"/></th>
+   <th><spring:message code="inventory.receiptDrug.sgstamt"/></th>
+   <th><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
+   <th><spring:message code="inventory.receiptDrug.totalPrice"/></th>
+	<th><spring:message code="inventory.receiptDrug.totalAmountAfterGst"/></th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty listReceipt}">
 	<c:forEach items="${listReceipt}" var="receipt" varStatus="varStatus">
 	<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${(( pagingUtil.currentPage - 1  ) * pagingUtil.pageSize ) + varStatus.count }"/></td>
-		<td>${receipt.drug.category.name} </td>	
 		<td>${receipt.drug.name}</td>
 		<td>${receipt.formulation.name}-${receipt.formulation.dozage}</td>
 		<td>${receipt.quantity}</td>
-		<td>${receipt.VAT}</td>
+		<td>${receipt.rate}</td>
 		<td>${receipt.unitPrice}</td>
+		<c:choose>
+		<c:when test="${not empty receipt.VAT}" >
+		<td>${receipt.VAT}</td>
+		</c:when>
+		<c:otherwise>
+		<td>NA</td>
+		</c:otherwise>
+		</c:choose>
+        <td>${receipt.mrpPrice}</td>
+        <td>${receipt.batchNo}</td>
+        <td>${receipt.waiverPercentage}</td>
+        <td>${receipt.waiverAmount}</td>
+        <c:choose>
+        <c:when test="${not empty receipt.cgst}" >
+         <td>${receipt.cgst}</td>
+        </c:when>
+              <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
+         <c:choose>
+        <c:when test="${not empty receipt.cgstAmount}" >
+         <td>${receipt.cgst}</td>
+        </c:when>
+              <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
+        <c:choose>
+		<c:when test="${not empty receipt.sgst}" >
+        <td>${receipt.sgst}</td>
+        </c:when>
+              <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
+        <c:choose>
+        <c:when test="${not empty receipt.sgstAmount}" >
+         <td>${receipt.cgst}</td>
+        </c:when>
+              <c:otherwise>
+        <td>NA</td>
+        </c:otherwise>
+        </c:choose>
+        <td><openmrs:formatDate date="${receipt.dateExpiry}" type="textbox"/></td>
 		<td>${receipt.totalPrice}</td>
-		<td>${receipt.batchNo}</td>
-		<td>${receipt.companyName}</td>
-		<td><openmrs:formatDate date="${receipt.dateManufacture}" type="textbox"/></td>
-		<td><openmrs:formatDate date="${receipt.dateExpiry}" type="textbox"/></td>
-		<td><openmrs:formatDate date="${receipt.receiptDate}" type="textbox"/></td>
+		<td>${receipt.totalAmountAfterGst}</td>
 		</tr>
 	</c:forEach>
 	</c:when>
