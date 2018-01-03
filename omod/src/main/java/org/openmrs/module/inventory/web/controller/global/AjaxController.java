@@ -853,7 +853,7 @@ public class AjaxController {
 		model.addAttribute("transactionDetails", transactionDetails);
 		 if(transactionDetails!=null)
 		 {
-		 float totAmtgst[]=new float[transactionDetails.size()]; double totAmountafterGst=0.0;
+		 float totAmtgst[]=new float[transactionDetails.size()]; BigDecimal totAmountafterGst=new BigDecimal(0.0);
 		 float totAmt[]=new float[transactionDetails.size()]; double totAmount=0.0;
 		 float totCD[]=new float[transactionDetails.size()];double totCDamount=0.0;
 		 float totcgst[]=new float[transactionDetails.size()];double totcgstAmount=0.0;
@@ -883,13 +883,13 @@ public class AjaxController {
 			 if( totAmt[i]==0.0)
 			 {totAmt[i]=totAmt[i]+transactionDetails.get(i).getTotalPrice().floatValue();
 			 }
-			 totAmountafterGst=totAmountafterGst+totAmtgst[i];
+			 totAmountafterGst=totAmountafterGst.add(new BigDecimal(totAmtgst[i]));
 			 totCDamount=totCDamount+totCD[i];
 			 totcgstAmount=totcgstAmount+totcgst[i];
 			 totsgstAmount=totsgstAmount+totsgst[i];
 			 totAmount=totAmount+totAmt[i];
 		 }
-		model.addAttribute("totAmountafterGst",(double)Math.round(totAmountafterGst * 100) / 100);
+		model.addAttribute("totAmountafterGst",totAmountafterGst.setScale(0, BigDecimal.ROUND_HALF_UP));
 		model.addAttribute("totAmount",(double)Math.round(totAmount * 100) / 100);
 		model.addAttribute("totCDamount",(double) Math.round(totCDamount * 100) / 100 );
 		model.addAttribute("totcgstAmount", (double) Math.round(totcgstAmount * 100) / 100);
