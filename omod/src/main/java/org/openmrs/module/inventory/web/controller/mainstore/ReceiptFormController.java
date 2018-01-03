@@ -163,15 +163,15 @@ public class ReceiptFormController {
 		transactionDetail.setQuantity(quantity);
 		transactionDetail.setMrpPrice(mrPrice);
 		transactionDetail.setWaiverPercentage(waiverPercentage);
-		BigDecimal waiverAmount=Rate.multiply(new BigDecimal(waiverPercentage).multiply(new BigDecimal(1).divide(new BigDecimal(100))));
+		BigDecimal waiverAmount=Rate.multiply(new BigDecimal(quantity)).multiply(new BigDecimal(waiverPercentage).multiply(new BigDecimal(1).divide(new BigDecimal(100))));
 		transactionDetail.setWaiverAmount(waiverAmount.floatValue());
 		BigDecimal unitPrice = Rate;
 		if(waiverPercentage!=0.0)
 		{
-			 unitPrice = Rate.subtract(waiverAmount);
+			 unitPrice = Rate.subtract(new BigDecimal(waiverPercentage).multiply(new BigDecimal(.01)).multiply(Rate));
 			
 		}
-		transactionDetail.setUnitPrice(unitPrice.setScale(2));
+		transactionDetail.setUnitPrice(unitPrice.setScale(0, BigDecimal.ROUND_HALF_UP));
 		transactionDetail.setVAT(VAT);
 		transactionDetail.setRate(Rate);
 		transactionDetail.setCgst(cgst);
@@ -182,12 +182,12 @@ public class ReceiptFormController {
 		if(cgst!=null)
 		{
 	     cgstAmount= (cgst.multiply(new BigDecimal(quantity).multiply(unitPrice))).divide(new BigDecimal(100));
-		transactionDetail.setCgstAmount(cgstAmount.setScale(2));
+		transactionDetail.setCgstAmount(cgstAmount.setScale(0, BigDecimal.ROUND_HALF_UP));
 		}
 		if(sgst!=null)
 		{
 		sgstAmount= (sgst.multiply(new BigDecimal(quantity).multiply(unitPrice))).divide(new BigDecimal(100));
-		transactionDetail.setSgstAmount(sgstAmount.setScale(2));
+		transactionDetail.setSgstAmount(sgstAmount.setScale(0, BigDecimal.ROUND_HALF_UP));
 		}
 		
 		transactionDetail.setIssueQuantity(0);
@@ -208,12 +208,12 @@ public class ReceiptFormController {
 		totalAmountAfterGst=totprice.subtract(waiverAmount).add(cgstAmount).add(sgstAmount);
 		}
 		else
-		{  VAT.multiply(unitPrice).multiply(new BigDecimal(quantity)).multiply(new BigDecimal(.01));
+		{  VAT=VAT.multiply(unitPrice).multiply(new BigDecimal(quantity)).multiply(new BigDecimal(.01));
 			totalAmountAfterGst=totprice.subtract(waiverAmount).add(VAT);
 		}
-		transactionDetail.setTotalAmountAfterGst(totalAmountAfterGst.setScale(2));
+		transactionDetail.setTotalAmountAfterGst(totalAmountAfterGst.setScale(0, BigDecimal.ROUND_HALF_UP));
 		//BigDecimal moneyUnitPrice = Rate.add(cgstAmount).add(sgstAmount);
-		transactionDetail.setTotalPrice(totprice.setScale(2));
+		transactionDetail.setTotalPrice(totprice.setScale(0, BigDecimal.ROUND_HALF_UP));
 		
 		int userId = Context.getAuthenticatedUser().getId();
 		String fowardParam = "reipt_"+userId;

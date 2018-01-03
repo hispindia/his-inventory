@@ -44,7 +44,7 @@
     <th>SGST Amount</th>
 	<th>DE</th>
 	<th>Total Amount</th>
-	<th>Total Amount After GST</th>
+	<th>Amount After GST</th>
 	</tr>
 	
 	<c:choose>
@@ -118,22 +118,6 @@
 </br>
 <table style="width:20%;float:right;">
 <tr>
-<td style="text-align: center;">Total Cash Discount</td>
-<td style="text-align: center;">${totCDamount }</td>
-</tr>
-<tr>
-<td style="text-align: center;">Total CGST</td>
-<td style="text-align: center;">${totcgstAmount }</td>
-</tr>
-<tr>
-<td style="text-align: center;">Total SGST</td>
-<td style="text-align: center;">${totsgstAmount }</td>
-</tr>
-<tr>
-<td style="text-align: center;">Total Amount</td>
-<td style="text-align: center;">${totAmount }</td>
-</tr>
-<tr>
 <td style="text-align: center;">Total Amount After GST</td>
 <td style="text-align: center;">${totAmountafterGst }</td>
 </tr>
@@ -179,7 +163,7 @@
     <th>SGST Amount</th>
 	<th>DE</th>
 	<th>Total Amount</th>
-	<th>Total Amount After GST</th>
+	<th>Amount After GST</th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty transactionDetails}">
@@ -250,22 +234,6 @@
 <td>
 
 <table style="width:20%;float:right;">
-<tr>
-<td style="text-align: center;">Total Cash Discount</td>
-<td style="text-align: center;">${totCDamount }</td>
-</tr>
-<tr>
-<td style="text-align: center;">Total CGST</td>
-<td style="text-align: center;">${totcgstAmount }</td>
-</tr>
-<tr>
-<td style="text-align: center;">Total SGST</td>
-<td style="text-align: center;">${totsgstAmount }</td>
-</tr>
-<tr>
-<td style="text-align: center;">Total Amount</td>
-<td style="text-align: center;">${totAmount }</td>
-</tr>
 <tr>
 <td style="text-align: center;">Total Amount After GST</td>
 <td style="text-align: center;">${totAmountafterGst }</td>
