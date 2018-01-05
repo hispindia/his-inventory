@@ -698,7 +698,7 @@ jQuery("#amountReturned").val(amountReturned);
 	}
 	function credit()
 	{  
-	jQuery("#waiverPercentage").attr("disabled", "disabled");
+	
 	jQuery("#amountGiven").attr("disabled", "disabled");
 	jQuery("#amountReturned").attr("disabled", "disabled");
 	jQuery("#amtgiven").hide();

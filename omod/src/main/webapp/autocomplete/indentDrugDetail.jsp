@@ -27,7 +27,7 @@
 		<div class="box">
 		
 		<table width="100%" cellpadding="5" cellspacing="0">
-			<tr align="center">
+			<tr align="left">
 			<th>#</th>
 			<th><spring:message code="inventory.indent.category"/></th>
 			<th><spring:message code="inventory.indent.name"/></th>
@@ -38,7 +38,7 @@
 			<c:choose>
 			<c:when test="${not empty listIndentDetail}">
 			<c:forEach items="${listIndentDetail}" var="indent" varStatus="varStatus">
-			<tr align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+			<tr align="left" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 				<td><c:out value="${ varStatus.count}"/></td>
 				<td>${indent.drug.category.name} </td>	
 				<td>${indent.drug.name}</td>
@@ -67,7 +67,6 @@
 		<table border="1">
 			<tr>
 			<th>#</th>
-			<th><spring:message code="inventory.drug.category"/></th>
 			<th><spring:message code="inventory.drug.name"/></th>
 			<th><spring:message code="inventory.drug.formulation"/></th>
 			<th><spring:message code="inventory.indent.quantity"/></th>
@@ -78,7 +77,6 @@
 			<c:forEach items="${listIndentDetail}" var="indent" varStatus="varStatus">
 			<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 				<td><c:out value="${varStatus.count }"/></td>
-				<td>${indent.drug.category.name} </td>	
 				<td>${indent.drug.name}</td>
 				<td>${indent.formulation.name}-${indent.formulation.dozage}</td>
 				<td>${indent.quantity}</td>
@@ -102,13 +100,13 @@
 		<div class="box">
 		
 		<table width="100%" cellpadding="5" cellspacing="0">
-			<tr align="center">
+			<tr align="left">
 			<th>#</th>
-			<th><spring:message code="inventory.indent.category"/></th>
 			<th><spring:message code="inventory.indent.name"/></th>
 			<th><spring:message code="inventory.indent.formulation"/></th>
 			<th><spring:message code="inventory.indent.quantityIndent"/></th>
 			<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
+			<th><spring:message code="inventory.receiptDrug.MRP"/></th>
 			<th><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
 			<th><spring:message code="inventory.receiptDrug.companyName"/></th>
 			<th><spring:message code="inventory.indent.transferQuantity"/></th>
@@ -116,9 +114,8 @@
 			<c:choose>
 			<c:when test="${not empty listIndentDetail}">
 			<c:forEach items="${listIndentDetail}" var="indent" varStatus="varStatus">
-			<tr align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+			<tr align="left" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 				<td><c:out value="${ varStatus.count}"/></td>
-				<td>${indent.drug.category.name} </td>	
 				<td>${indent.drug.name}</td>
 				<td>${indent.formulation.name}-${indent.formulation.dozage}</td>
 				<td>${indent.quantity}</td>
@@ -138,6 +135,7 @@
 							<td></td>
 							<td></td>
 							<td>${trDetail.batchNo }</td>
+							<td>${trDetail.mrpPrice }</td>
 							<td><openmrs:formatDate date="${trDetail.dateExpiry}" type="textbox"/></td>
 							<td>${trDetail.companyName }</td>
 							<td>${trDetail.issueQuantity }</td>
@@ -145,6 +143,7 @@
 							</c:when>
 							<c:otherwise>
 								<td>${trDetail.batchNo }</td>
+								<td>${trDetail.mrpPrice }</td>
 								<td><openmrs:formatDate date="${trDetail.dateExpiry}" type="textbox"/></td>
 								<td>${trDetail.companyName }</td>
 								<td>${trDetail.issueQuantity }</td>
@@ -183,11 +182,11 @@
 		<table border="1">
 			<tr>
 			<th>#</th>
-			<th><spring:message code="inventory.indent.category"/></th>
 			<th><spring:message code="inventory.indent.name"/></th>
 			<th><spring:message code="inventory.indent.formulation"/></th>
 			<th><spring:message code="inventory.indent.quantityIndent"/></th>
 			<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
+			<th><spring:message code="inventory.receiptDrug.MRP"/></th>
 			<th><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
 			<th><spring:message code="inventory.receiptDrug.companyName"/></th>
 			<th><spring:message code="inventory.indent.transferQuantity"/></th>
@@ -197,7 +196,6 @@
 			<c:forEach items="${listIndentDetail}" var="indent" varStatus="varStatus">
 			<tr align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 				<td><c:out value="${ varStatus.count}"/></td>
-				<td>${indent.drug.category.name} </td>	
 				<td>${indent.drug.name}</td>
 				<td>${indent.formulation.name}-${indent.formulation.dozage}</td>
 				<td>${indent.quantity}</td>
@@ -217,6 +215,7 @@
 							<td></td>
 							<td></td>
 							<td>${trDetail.batchNo }</td>
+							<td>${trDetail.mrpPrice }</td>
 							<td><openmrs:formatDate date="${trDetail.dateExpiry}" type="textbox"/></td>
 							<td>${trDetail.companyName }</td>
 							<td>${trDetail.issueQuantity }</td>
@@ -224,6 +223,7 @@
 							</c:when>
 							<c:otherwise>
 								<td>${trDetail.batchNo }</td>
+								<td>${trDetail.mrpPrice }</td>
 								<td><openmrs:formatDate date="${trDetail.dateExpiry}" type="textbox"/></td>
 								<td>${trDetail.companyName }</td>
 								<td>${trDetail.issueQuantity }</td>

@@ -851,13 +851,15 @@ public class AjaxController {
 			
 		}
 		model.addAttribute("transactionDetails", transactionDetails);
+		model.addAttribute("receiptNo", transactionDetails.get(0).getTransaction().getReceiptNo());
+	
 		 if(transactionDetails!=null)
 		 {
 		 float totAmtgst[]=new float[transactionDetails.size()]; BigDecimal totAmountafterGst=new BigDecimal(0.0);
-		 float totAmt[]=new float[transactionDetails.size()]; double totAmount=0.0;
-		 float totCD[]=new float[transactionDetails.size()];double totCDamount=0.0;
-		 float totcgst[]=new float[transactionDetails.size()];double totcgstAmount=0.0;
-		 float totsgst[]=new float[transactionDetails.size()];double totsgstAmount=0.0;
+		 float totAmt[]=new float[transactionDetails.size()]; BigDecimal totAmount=new BigDecimal(0.0);
+		 float totCD[]=new float[transactionDetails.size()];BigDecimal totCDamount=new BigDecimal(0.0);
+		 float totcgst[]=new float[transactionDetails.size()];BigDecimal totcgstAmount=new BigDecimal(0.0);
+		 float totsgst[]=new float[transactionDetails.size()];BigDecimal totsgstAmount=new BigDecimal(0.0);
 		 for(int i=0;i<transactionDetails.size();i++)
 		 {
 			 if( totAmtgst[i]==0.0)
@@ -884,16 +886,16 @@ public class AjaxController {
 			 {totAmt[i]=totAmt[i]+transactionDetails.get(i).getTotalPrice().floatValue();
 			 }
 			 totAmountafterGst=totAmountafterGst.add(new BigDecimal(totAmtgst[i]));
-			 totCDamount=totCDamount+totCD[i];
-			 totcgstAmount=totcgstAmount+totcgst[i];
-			 totsgstAmount=totsgstAmount+totsgst[i];
-			 totAmount=totAmount+totAmt[i];
+			 totCDamount=totCDamount.add(new BigDecimal(totCD[i]));
+			 totcgstAmount=totcgstAmount.add(new BigDecimal(totcgst[i]));
+			 totsgstAmount=totsgstAmount.add(new BigDecimal(totsgst[i]));
+			 totAmount=totAmount.add(new BigDecimal(totAmt[i]));
 		 }
-		model.addAttribute("totAmountafterGst",totAmountafterGst.setScale(0, BigDecimal.ROUND_HALF_UP));
-		model.addAttribute("totAmount",(double)Math.round(totAmount * 100) / 100);
-		model.addAttribute("totCDamount",(double) Math.round(totCDamount * 100) / 100 );
-		model.addAttribute("totcgstAmount", (double) Math.round(totcgstAmount * 100) / 100);
-		model.addAttribute("totsgstAmount",(double) Math.round(totsgstAmount * 100) / 100 );
+		model.addAttribute("totAmountafterGst",totAmountafterGst.setScale(2, BigDecimal.ROUND_HALF_UP));
+		model.addAttribute("totAmount",totAmount.setScale(2, BigDecimal.ROUND_HALF_UP));
+		model.addAttribute("totCDamount",totCDamount.setScale(2, BigDecimal.ROUND_HALF_UP));
+		model.addAttribute("totcgstAmount", totcgstAmount.setScale(2, BigDecimal.ROUND_HALF_UP));
+		model.addAttribute("totsgstAmount", totsgstAmount.setScale(2, BigDecimal.ROUND_HALF_UP));
 		 }
 		return "/module/inventory/mainstore/receiptsToGeneralStoreDetail";
 	}

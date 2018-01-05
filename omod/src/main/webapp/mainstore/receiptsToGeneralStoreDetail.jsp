@@ -26,7 +26,7 @@
 	<tr>
 	<td style="width:100%;">
 	<table>
-	<tr align="center">
+	<tr align="left">
 	<th>#</th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
@@ -50,7 +50,7 @@
 	<c:choose>
 	<c:when test="${not empty transactionDetails}">
 	<c:forEach items="${transactionDetails}" var="receipt" varStatus="varStatus">
-	<tr align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+	<tr align="left" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${varStatus.count }"/></td>
 		<td>${receipt.drug.name}</td>
 		<td>${receipt.formulation.name}-${receipt.formulation.dozage}</td>
@@ -118,6 +118,22 @@
 </br>
 <table style="width:20%;float:right;">
 <tr>
+<td style="text-align: center;">Total Cash Discount</td>
+<td style="text-align: center;">${totCDamount }</td>
+</tr>
+<tr>
+<td style="text-align: center;">Total CGST</td>
+<td style="text-align: center;">${totcgstAmount }</td>
+</tr>
+<tr>
+<td style="text-align: center;">Total SGST</td>
+<td style="text-align: center;">${totsgstAmount }</td>
+</tr>
+<tr>
+<td style="text-align: center;">Total Amount</td>
+<td style="text-align: center;">${totAmount }</td>
+</tr>
+<tr>
 <td style="text-align: center;">Total Amount After GST</td>
 <td style="text-align: center;">${totAmountafterGst }</td>
 </tr>
@@ -138,6 +154,7 @@
 <center style="float:center;font-size: 2.2em">Name Of The Vendor : ${vendorName}</center>
 <br/>
 <br/>
+<span style="float:left;font-size: 1.7em">Receipt No: ${receiptNo}</span>
 <span style="float:right;font-size: 1.7em">Date: <openmrs:formatDate date="${date}" type="textbox"/></span>
 <br />
 <br />
@@ -145,7 +162,7 @@
 	<tr>
 	<td style="width:100%;">
 	<table>
-	<tr align="center">
+	<tr align="left">
 	<th>#</th>
 	<th><spring:message code="inventory.drug.name"/></th>
 	<th><spring:message code="inventory.drug.formulation"/></th>
@@ -168,7 +185,7 @@
 	<c:choose>
 	<c:when test="${not empty transactionDetails}">
 	<c:forEach items="${transactionDetails}" var="receipt" varStatus="varStatus">
-	<tr align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
+	<tr align="left" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } '>
 		<td><c:out value="${(( pagingUtil.currentPage - 1  ) * pagingUtil.pageSize ) + varStatus.count }"/></td>
 		<td>${receipt.drug.name}</td>
 		<td>${receipt.formulation.name}-${receipt.formulation.dozage}</td>
@@ -230,10 +247,27 @@
 	</td>
 	
 	</tr>
+	</br>
 <tr>
 <td>
 
 <table style="width:20%;float:right;">
+<tr>
+<td style="text-align: center;">Total Cash Discount</td>
+<td style="text-align: center;">${totCDamount }</td>
+</tr>
+<tr>
+<td style="text-align: center;">Total CGST</td>
+<td style="text-align: center;">${totcgstAmount }</td>
+</tr>
+<tr>
+<td style="text-align: center;">Total SGST</td>
+<td style="text-align: center;">${totsgstAmount }</td>
+</tr>
+<tr>
+<td style="text-align: center;">Total Amount</td>
+<td style="text-align: center;">${totAmount }</td>
+</tr>
 <tr>
 <td style="text-align: center;">Total Amount After GST</td>
 <td style="text-align: center;">${totAmountafterGst }</td>

@@ -151,7 +151,7 @@ jQuery("#cgstamt").val(cgstAmount);
 
 		<td><spring:message code="inventory.receiptDrug.Dis"/></td>
 		<td>
-			<input type="text" id="waiverPercentage" name="waiverPercentage" style="width: 120px;" />
+			<input type="text" id="waiverPercentage" name="waiverPercentage" style="width: 120px;" value="0"/>
 		</td>
 	</tr>
 		<tr>
