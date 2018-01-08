@@ -127,6 +127,11 @@ public class IssueDrugFormController {
 			
 			model.addAttribute("patientSubCategory", subconcept.getName());
 		}
+		
+		if (attributeType.getPersonAttributeTypeId() == 29) {
+			String dohId=pa.getValue();
+			model.addAttribute("dohId", dohId);
+		}
 		}
 		List<InventoryStoreDrugPatient> inventoryStoreDrugPatient = new ArrayList<InventoryStoreDrugPatient>();
 		inventoryStoreDrugPatient=inventoryService.listPatientDetail();

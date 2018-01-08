@@ -145,6 +145,11 @@ public class DrugOrderController {
 				Concept concept=Context.getConceptService().getConcept(patientCategoryConcept);
 				model.addAttribute("patientSubCategory", concept.getName());
 			}
+			if (attributeType.getPersonAttributeTypeId() == 29) {
+				String dohId=pa.getValue();
+				
+				model.addAttribute("dohId", dohId);
+			}
 		}
                 
                 
@@ -279,6 +284,7 @@ public class DrugOrderController {
 			 transDetail.setTotalAmount(totalValue);
 			 transDetail.setWaiverPercentage(waiverPercentage);
 			 Float waiverAmount=null;
+			 
 			 if(waiverPercentage!=null)
 			 {
 			 waiverAmount=totalValue*waiverPercentage/100;

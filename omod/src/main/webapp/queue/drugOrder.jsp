@@ -561,6 +561,13 @@ jQuery("#amountReturned").val(amountReturned);
 			<td>Gender:</td>
         	<td>${patientSearch.gender}</td>  	
       </tr>
+      <tr>
+     <c:if test="${not empty dohId}">
+			<td id="doh">DoH Id:</td>
+			<td id="dohid">${dohId}</td>
+			</c:if>
+      
+      </tr>
 		<tr>
 			<td>Date :</td>
 			<td>${date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>

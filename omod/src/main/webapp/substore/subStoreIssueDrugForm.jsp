@@ -405,6 +405,13 @@ ISSUE.processSlip('0');
         	        <td>${issueDrugPatient.patient.gender}</td>  	
 				</tr>
 				<tr>
+     <c:if test="${not empty dohId}">
+			<td id="doh">DoH Id:</td>
+			<td id="dohid">${dohId}</td>
+			</c:if>
+      
+      </tr>
+				<tr>
 					<td>Date</td>
 					<td><openmrs:formatDate date="${date}" type="textbox" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					

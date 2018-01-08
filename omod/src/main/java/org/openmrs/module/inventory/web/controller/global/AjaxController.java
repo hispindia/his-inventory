@@ -791,6 +791,10 @@ public class AjaxController {
 				Concept subconcept=Context.getConceptService().getConcept(patientSubCategoryConcept);
 				model.addAttribute("patientSubCategory", subconcept.getName());
 			}
+			if (attributeType.getPersonAttributeTypeId() == 29) {
+				String dohId=pa.getValue();
+				model.addAttribute("dohId", dohId);
+			}
 			}
 			model.addAttribute("billNo",inventoryStoreDrugPatient.getId());
 		}
