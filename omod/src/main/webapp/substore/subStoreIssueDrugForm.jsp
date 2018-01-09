@@ -45,11 +45,13 @@ jQuery("#totalAmountPayable").val(totalAmountPay);
 <script type="text/javascript">
 function credit()
 {
-jQuery("#waiverPercentage").attr("disabled", "disabled");
+
 jQuery("#amountGiven").attr("disabled", "disabled");
 jQuery("#amountReturned").attr("disabled", "disabled");
 jQuery("#amtgiven").hide();
 jQuery("#amtreturned").hide();
+jQuery("#amtgivn").hide();
+jQuery("#amtreturnd").hide();
 jQuery("#creditheader").show();
 if(confirm("Are you sure?")){
 	jQuery("#sub").attr("disabled", "disabled");
@@ -251,12 +253,14 @@ ISSUE.processSlip('0');
 				<tr>
 					<th>Identifier</th>
 					<th>Category</th>
+					<th>SubCategory</th>
 					<th>Name</th>
 					<th>Age</th>
 				</tr>
 				<tr>
 					<td>${issueDrugPatient.patient.patientIdentifier.identifier}</td>
 					<td>${patientCategory}</td>
+				     <td>${patientSubCategory}</td>
 					<td>${issueDrugPatient.patient.givenName}&nbsp;${issueDrugPatient.patient.middleName}&nbsp;${issueDrugPatient.patient.familyName}</td>
 					<td><c:choose>
 							<c:when test="${issueDrugPatient.patient.age == 0  }">&lt 1</c:when>
@@ -499,7 +503,7 @@ ISSUE.processSlip('0');
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td id=amtgiven style="text-align: center;">Amount Given</td>
-<td style="text-align: center;"><span id="printableGiven" /></td>
+<td id="amtgivn" style="text-align: center;"><span id="printableGiven" /></td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -510,7 +514,7 @@ ISSUE.processSlip('0');
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td id="amtreturned" style="text-align: center;">Amount Returned</td>
-<td style="text-align: center;"><span id="printableAmountReturned" /></td>
+<td id="amtreturnd" style="text-align: center;"><span id="printableAmountReturned" /></td>
 </tr>
 			</tbody>
 		</table>
