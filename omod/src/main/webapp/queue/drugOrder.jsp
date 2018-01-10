@@ -624,6 +624,7 @@ jQuery("#amountReturned").val(amountReturned);
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
 <td id="amtgiven" style="text-align: center;">Amount Given</td>
 <td id="amtgivn" style="text-align: center;"><span id="printableGiven" /></td>
 </tr>
@@ -723,6 +724,12 @@ jQuery("#amountReturned").val(amountReturned);
 		var waiverComment=jQuery("#waiverComment").val();
 		var amountGiven=jQuery("#amountGiven").val();
 		var amountReturned=jQuery("#amountReturned").val();
+		jQuery("#printableTotal").empty();
+		jQuery("#printableDiscount").empty();
+		jQuery("#printableTotalAmountPayable").empty();
+		jQuery("#printableTotalPayable").empty();
+		jQuery("#printableGiven").empty();
+		jQuery("#printableAmountReturned").empty();
 		jQuery("#printableTotal").append("<span style='margin:5px;'>" + totalValue + "</span>");
 		jQuery("#printableDiscount").append("<span style='margin:5px;'>" + waiverPercentage + "</span>");
 		jQuery("#printableTotalAmountPayable").append("<span style='margin:5px;'>" + totalAmountPayable + "</span>");
