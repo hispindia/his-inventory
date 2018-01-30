@@ -39,6 +39,7 @@ jQuery("#waiverPercentage").val(waiverPercentage);
 var totalAmountPay=parseFloat(${totalAmountPayable});
 jQuery("#totalAmountPayable").val("");
 jQuery("#totalAmountPayable").val(totalAmountPay);
+
 });
 </script>
 
@@ -58,9 +59,9 @@ if(confirm("Are you sure?")){
 	PURCHASE.printDiv();
 	return true;
 	}
-
-	
 }
+
+
 function totalAmountToPay(){
 var total=jQuery("#totalValue").val();
 var waiverPercentage=jQuery("#waiverPercentage").val();
@@ -303,6 +304,7 @@ ISSUE.processSlip('0');
 		
 		<table class="box" width="100%" cellpadding="5" cellspacing="0">
 		<tr>
+		<tr>
 		<td>Total</td>
 		<td><input type="text" id="totalValue" name="totalValue"
 				size="11" value="0"/></td>
@@ -322,11 +324,11 @@ ISSUE.processSlip('0');
 		<td><input type="text" id="waiverComment" name="waiverComment" size="11"/></td>
 		</tr>
 		<tr>
-		<td>Amount Given</td>
+		<td >Amount Given</td>
 		<td><input type="text" id="amountGiven" name="amountGiven" size="11" onkeyup="amountReturnedToPatient();"></td>
 		</tr>
 		<tr>
-		<td>Amount Returned to Patient</td>
+		<td >Amount Returned to Patient</td>
 		<td><input type="text" id="amountReturned" name="amountReturned" size="11" readOnly="true"/></td>
 		</tr>
 		<tr>
@@ -387,7 +389,9 @@ ISSUE.processSlip('0');
 </style>
 		<c:if test="${not empty issueDrugPatient}">
 			<br /> <br />
+			<center><h2>${hospitalName}</h2></center>
 			<table align='Center'>
+			
 			<tr><td ></td><td id="creditheader" style="color:red;text-align: center;"><b>CREDIT BILL</b></td><td></td></tr>
 			<tr><td>BILL NO.:${isdpdt}</td></tr>
 				<tr>

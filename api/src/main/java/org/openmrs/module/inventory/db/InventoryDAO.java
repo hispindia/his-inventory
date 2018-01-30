@@ -601,5 +601,6 @@ public interface InventoryDAO {
     public List<PatientSearch> searchListOfPatient(Date date, String searchKey,int page,int pgSize) throws DAOException;
 //bill id
     public List<InventoryStoreDrugPatient> listPatientDetail() throws DAOException;
+    public List<InventoryStoreDrugTransaction> listTransaction() throws DAOException;
 	
 }

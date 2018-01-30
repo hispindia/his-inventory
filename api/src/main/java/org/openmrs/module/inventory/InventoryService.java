@@ -639,4 +639,6 @@ public interface InventoryService extends OpenmrsService {
 	public List<PatientSearch> searchListOfPatient(Date date, String searchKey,int page,int pgSize) throws APIException;
    //bill id
 	public List<InventoryStoreDrugPatient> listPatientDetail() throws APIException;
+	public List<InventoryStoreDrugTransaction> listTransaction() throws APIException;
+
 }

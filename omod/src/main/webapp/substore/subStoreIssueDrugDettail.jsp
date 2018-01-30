@@ -198,6 +198,7 @@ jQuery("#amtretrns").hide();
 
 
 <br><br>   
+<center><h2>${hospitalName}</h2></center>
 <div id="creditheaders" style="color:red;text-align: center;">CREDIT BILL</div>  
 <tr><td>BILL NO.:${billNo}</td></tr>
 <c:if  test="${not empty listDrugIssue}">

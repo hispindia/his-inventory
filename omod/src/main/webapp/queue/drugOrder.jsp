@@ -540,6 +540,7 @@ jQuery("#amountReturned").val(amountReturned);
 
 <br><br>
 		<table align='Center'>
+		<center><h2>${hospitalName}</h2></center>
 		<tr><td ></td><td id="creditheader" style="color:red">CREDIT BILL</td><td></td></tr>
 		<tr><td>BILL NO.:${isdpdt}</td></tr>
 		<tr>

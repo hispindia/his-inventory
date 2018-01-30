@@ -1000,4 +1000,10 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 			// TODO Auto-generated method stub
 			return dao.listPatientDetail();
 		}
+		public List<InventoryStoreDrugTransaction> listTransaction() throws APIException {
+			// TODO Auto-generated method stub
+			return dao.listTransaction();
+		}
+		
+
 }

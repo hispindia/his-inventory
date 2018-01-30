@@ -3785,6 +3785,11 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		        
 		return criteria.list();
 	}
-	
+	public List<InventoryStoreDrugTransaction> listTransaction() throws DAOException {
+		Criteria criteria = sessionFactory.getCurrentSession()
+		        .createCriteria(InventoryStoreDrugTransaction.class, "transact");
+		        
+		return criteria.list();
+	}
 
 }

@@ -35,6 +35,7 @@ import org.openmrs.module.hospitalcore.model.InventoryStore;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatient;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatientDetail;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransactionDetail;
+import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.inventory.InventoryService;
 import org.openmrs.module.inventory.web.controller.global.StoreSingleton;
 import org.springframework.stereotype.Controller;
@@ -139,6 +140,9 @@ public class IssueDrugFormController {
 			model.addAttribute("isdpdt", inventoryStoreDrugPatient.size()+1);
 		
 		}
+		String hospitalName=GlobalPropertyUtil.getString("hospitalcore.hospitalParticularName", "Kollegal DVT Hospital");
+		model.addAttribute("hospitalName", hospitalName);
+		
 	
 		return "/module/inventory/substore/subStoreIssueDrugForm";
 		

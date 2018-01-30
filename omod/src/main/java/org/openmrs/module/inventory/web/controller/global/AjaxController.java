@@ -29,6 +29,7 @@ import org.openmrs.module.hospitalcore.model.InventoryStoreDrugPatientDetail;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransaction;
 import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransactionDetail;
 import org.openmrs.module.hospitalcore.util.ActionValue;
+import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.inventory.InventoryService;
 import org.openmrs.module.inventory.model.InventoryItem;
 import org.openmrs.module.inventory.model.InventoryItemSpecification;
@@ -612,6 +613,7 @@ public class AjaxController {
 				totl = totl.plus(totl.times((double)pDetail.getTransactionDetail().getVAT()/100));
 				transDetail.setTotalPrice(totl.getAmount());*/
 				BigDecimal moneyUnitPrice = pDetail.getTransactionDetail().getMrpPrice().multiply(new BigDecimal(pDetail.getQuantity()));
+				
 				moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(pDetail.getTransactionDetail().getVAT().divide(new BigDecimal(100))));
 				transDetail.setTotalPrice(moneyUnitPrice);
 				
@@ -739,6 +741,32 @@ public class AjaxController {
 		InventoryStore store =  inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
 		List<InventoryStoreDrugTransactionDetail> listViewStockBalance = inventoryService.listStoreDrugTransactionDetail(store.getId(), drugId, formulationId , expiry);
 		model.addAttribute("listViewStockBalance", listViewStockBalance);
+		
+		
+		for(InventoryStoreDrugTransactionDetail isdt:listViewStockBalance)
+		{
+			
+			for(InventoryStoreDrugTransactionDetail ifdt: isdt.getSubDetails() )
+			{ 	
+				if(ifdt.getParent().getRate()!=null || ifdt.getParent().getWaiverPercentage()!=null)
+					{
+			model.addAttribute("cashDiscount",(ifdt.getParent().getRate().multiply(new BigDecimal(ifdt.getClosingBalance())).multiply(new BigDecimal(ifdt.getParent().getWaiverPercentage()).multiply(new BigDecimal(1).divide(new BigDecimal(100))))).setScale(1, BigDecimal.ROUND_HALF_UP));
+					}
+				if(ifdt.getParent().getCgst()!=null && ifdt.getParent().getUnitPrice()!=null)
+				{
+					model.addAttribute("cgstAmount",((ifdt.getParent().getCgst().multiply(new BigDecimal(ifdt.getClosingBalance()).multiply(ifdt.getParent().getUnitPrice()))).divide(new BigDecimal(100))).setScale(1, BigDecimal.ROUND_HALF_UP));
+	
+				}
+				if(ifdt.getParent().getSgst()!=null && ifdt.getParent().getUnitPrice()!=null)
+				{
+					model.addAttribute("sgstAmount",((ifdt.getParent().getSgst().multiply(new BigDecimal(ifdt.getClosingBalance()).multiply(ifdt.getParent().getUnitPrice()))).divide(new BigDecimal(100))).setScale(1, BigDecimal.ROUND_HALF_UP));
+	
+				}
+			
+			}
+			
+
+		}
 		return "/module/inventory/mainstore/viewStockBalanceDetail";
 	}
 	@RequestMapping("/module/inventory/itemViewStockBalanceDetail.form")
@@ -755,6 +783,36 @@ public class AjaxController {
 		InventoryStore store =  inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
 		List<InventoryStoreDrugTransactionDetail> listViewStockBalance = inventoryService.listStoreDrugTransactionDetail(store.getId(), drugId, formulationId, expiry);
 		model.addAttribute("listViewStockBalance", listViewStockBalance);
+		List<InventoryStoreDrugTransaction> listMainStoreTransaction = inventoryService.listTransaction();
+		for(InventoryStoreDrugTransaction lmst:listMainStoreTransaction)
+       {
+    	   if(lmst.getBillAmount()!=null)
+    	   {
+    			List<InventoryStoreDrugTransactionDetail> listmainstoretransactdetail = inventoryService.listTransactionDetail(lmst.getId());
+    			 for(InventoryStoreDrugTransactionDetail isdt:listmainstoretransactdetail)
+    			{
+    				 model.addAttribute("vat",isdt.getVAT());
+    				 model.addAttribute("rate",isdt.getRate());
+    				 model.addAttribute("unitprice",isdt.getUnitPrice());
+    					if(isdt.getWaiverPercentage()!=null)
+    						{
+    						model.addAttribute("discount",isdt.getWaiverPercentage());
+    						}
+    					if(isdt.getCgst()!=null )
+    					{   model.addAttribute("cgst",isdt.getCgst());
+    		
+    					}
+    					if(isdt.getSgst()!=null )
+    					{   model.addAttribute("sgst",isdt.getSgst());
+    						
+    		
+    					}
+    			}
+
+    			}
+    	   }
+       
+
 		return "/module/inventory/substore/viewStockBalanceDetail";
 	}
 	@RequestMapping("/module/inventory/itemViewStockBalanceSubStoreDetail.form")
@@ -772,6 +830,7 @@ public class AjaxController {
 		List<InventoryStoreDrugPatientDetail> listDrugIssue = inventoryService.listStoreDrugPatientDetail(issueId);
 		InventoryStoreDrugPatient inventoryStoreDrugPatient = new InventoryStoreDrugPatient();
 		model.addAttribute("listDrugIssue", listDrugIssue);
+		
 		if(CollectionUtils.isNotEmpty(listDrugIssue)){
 			inventoryStoreDrugPatient=listDrugIssue.get(0).getStoreDrugPatient();
 			model.addAttribute("issueDrugPatient", listDrugIssue.get(0).getStoreDrugPatient());
@@ -807,6 +866,9 @@ public class AjaxController {
 		model.addAttribute("amountReturned", issue.getTransactionDetail().getAmountReturned());
 		}	
 		}
+		String hospitalName=GlobalPropertyUtil.getString("hospitalcore.hospitalParticularName", "Kollegal DVT Hospital");
+		model.addAttribute("hospitalName", hospitalName);
+		
 		return "/module/inventory/substore/subStoreIssueDrugDettail";
 	}
 	

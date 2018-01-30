@@ -56,6 +56,7 @@ import org.openmrs.module.hospitalcore.model.InventoryStoreDrugTransactionDetail
 import org.openmrs.module.hospitalcore.model.OpdDrugOrder;
 import org.openmrs.module.hospitalcore.model.PatientSearch;
 import org.openmrs.module.hospitalcore.util.ActionValue;
+import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.inventory.InventoryService;
 import org.openmrs.module.inventory.util.DateUtils;
 import org.springframework.stereotype.Controller;
@@ -151,7 +152,9 @@ public class DrugOrderController {
 				model.addAttribute("dohId", dohId);
 			}
 		}
-                
+		String hospitalName=GlobalPropertyUtil.getString("hospitalcore.hospitalParticularName", "Kollegal DVT Hospital");
+		model.addAttribute("hospitalName", hospitalName);
+		
                 
 		return "/module/inventory/queue/drugOrder";
 	}

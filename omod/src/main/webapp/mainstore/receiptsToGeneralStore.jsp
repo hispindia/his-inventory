@@ -43,6 +43,7 @@ VALIDATION={
 		}
 	}
 }
+/*
 function myFunction()
 {
 jQuery("#sgst").attr("disabled", "disabled");
@@ -60,7 +61,7 @@ var cgstAmount=(jQuery("#rate").val())*(jQuery("#cgst").val()/100);
 jQuery("#sgstamt").val(sgstAmount);
 jQuery("#cgstamt").val(cgstAmount);
 }
-
+*/
 </script>
 
 <div style="width: 22.5%; float: left; margin-left: 4px; ">
@@ -126,7 +127,7 @@ jQuery("#cgstamt").val(cgstAmount);
 	<tr>
 		<td><spring:message code="inventory.receiptDrug.VAT"/></td>
 		<td>
-			<input type="text" id="VAT" name="VAT" oninput="myFunction()" style="width: 120px;"/>
+			<input type="text" id="VAT" name="VAT" value="0" style="width: 120px;"/>
 		</td>
 	</tr>
 	<tr>
@@ -157,14 +158,14 @@ jQuery("#cgstamt").val(cgstAmount);
 		<tr>
 		<td><spring:message code="inventory.receiptDrug.cgst"/></td>
 		<td>
-			<input type="text" id="cgst" name="cgst" oninput="myFunction1()"  style="width: 120px;"/>
+			<input type="text" id="cgst" name="cgst" value="0"  style="width: 120px;"/>
 		</td>
 	</tr>
 	
 				<tr>
 		<td><spring:message code="inventory.receiptDrug.sgst"/></td>
 		<td>
-			<input type="text" id="sgst" name="sgst" oninput="myFunction1()" style="width: 120px;" />
+			<input type="text" id="sgst" name="sgst" value="0" style="width: 120px;" />
 		</td>
 	</tr>
 		<tr>
