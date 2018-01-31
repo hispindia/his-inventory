@@ -143,6 +143,17 @@ jQuery("#amtretrns").hide();
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">DiscountAmount</td>
+<td style="text-align: center;">${discountAmount}</td>
+</tr>
+<tr>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Total amount payable</td>
 <td style="text-align: center;">${totalAmountPayable}</td>
 </tr>
@@ -297,6 +308,17 @@ jQuery("#amtretrns").hide();
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Discount %</td>
 <td style="text-align: center;">${discount}0</td>
+</tr>
+<tr>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">DiscountAmount</td>
+<td style="text-align: center;">${discountAmount}</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>

@@ -202,6 +202,7 @@ function issueDrugOrder(listOfDrugQuantity) {
 	
 	var total=jQuery("#totalValue").val();
     var waiverPercentage=jQuery("#waiverPercentage").val();
+    var waiverAmount=(total*waiverPercentage)/100;
     var totalAmountPay=total-(total*waiverPercentage)/100;
     var tap=Math.round(totalAmountPay);
     jQuery("#totalAmountPayable").val(tap);
@@ -348,6 +349,7 @@ return false;
 function totalAmountToPay(){
 var total=jQuery("#totalValue").val();
 var waiverPercentage=jQuery("#waiverPercentage").val();
+var waiverAmount=(total*waiverPercentage)/100;
 var totalAmountPay=total-(total*waiverPercentage)/100;
 var tap=Math.round(totalAmountPay);
 jQuery("#totalAmountPayable").val(tap);
@@ -618,6 +620,14 @@ jQuery("#amountReturned").val(amountReturned);
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">DiscountAmount</td>
+<td style="text-align: center;"><span id="printableDiscountAmount" /></td>
+</tr>
+<tr>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Total amount payable</td>
 <td style="text-align: center;"><span id="printableTotalAmountPayable" /></td>
 </tr>
@@ -721,18 +731,21 @@ jQuery("#amountReturned").val(amountReturned);
 
 		var totalValue=jQuery("#totalValue").val();
 		var waiverPercentage=jQuery("#waiverPercentage").val();
+		var waiverAmount=(totalValue*waiverPercentage)/100;
 		var totalAmountPayable=jQuery("#totalAmountPayable").val();
 		var waiverComment=jQuery("#waiverComment").val();
 		var amountGiven=jQuery("#amountGiven").val();
 		var amountReturned=jQuery("#amountReturned").val();
 		jQuery("#printableTotal").empty();
 		jQuery("#printableDiscount").empty();
+		jQuery("#printableDiscountAmount").empty();
 		jQuery("#printableTotalAmountPayable").empty();
 		jQuery("#printableTotalPayable").empty();
 		jQuery("#printableGiven").empty();
 		jQuery("#printableAmountReturned").empty();
 		jQuery("#printableTotal").append("<span style='margin:5px;'>" + totalValue + "</span>");
 		jQuery("#printableDiscount").append("<span style='margin:5px;'>" + waiverPercentage + "</span>");
+		jQuery("#printableDiscountAmount").append("<span style='margin:5px;'>" + waiverAmount + "</span>");
 		jQuery("#printableTotalAmountPayable").append("<span style='margin:5px;'>" + totalAmountPayable + "</span>");
 		jQuery("#printableTotalPayable").append("<span style='margin:5px;'>" + toWords(totalAmountPayable) + "</span>");
 		jQuery("#printableGiven").append("<span style='margin:5px;'>" + amountGiven + "</span>");

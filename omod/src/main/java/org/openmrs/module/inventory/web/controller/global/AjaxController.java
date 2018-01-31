@@ -861,6 +861,7 @@ public class AjaxController {
 		for(InventoryStoreDrugPatientDetail issue:listDrugIssue){
 		model.addAttribute("totalAmount", issue.getTransactionDetail().getTotalAmount());
 		model.addAttribute("discount", issue.getTransactionDetail().getWaiverPercentage());
+		model.addAttribute("discountAmount", issue.getTransactionDetail().getWaiverAmount());
 		model.addAttribute("totalAmountPayable", issue.getTransactionDetail().getAmountPayable());
 		model.addAttribute("amountGiven", issue.getTransactionDetail().getAmountGiven());
 		model.addAttribute("amountReturned", issue.getTransactionDetail().getAmountReturned());

@@ -495,6 +495,17 @@ ISSUE.processSlip('0');
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">DiscountAmount</td>
+<td style="text-align: center;"><span id="printableDiscountAmount" /></td>
+</tr>
+<tr>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Total amount payable</td>
 <td style="text-align: center;"><span id="printableTotalAmountPayable" /></td>
 </tr>
