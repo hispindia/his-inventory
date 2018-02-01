@@ -28,6 +28,23 @@
 <%@ include file="../includes/js_css.jsp"%>
 <script type="text/javascript">
 jQuery(document).ready(function(){ jQuery("#creditheader").hide();
+document.getElementById("crditcheck").checked = true;
+if(document.getElementById("crditcheck").checked == true){
+
+	jQuery("#amountGiven").hide();
+	jQuery("#amountReturned").hide();
+	jQuery("#amtg").hide();
+	jQuery("#amtr").hide();
+	
+	}
+else
+	{
+	
+	jQuery("#amountGiven").show();
+	jQuery("#amountReturned").show();
+	jQuery("#amtg").show();
+	jQuery("#amtr").show();
+	}
 var tot=parseFloat(${total});
 jQuery("#totalValue").val("");
 jQuery("#totalValue").val(tot);
@@ -40,10 +57,29 @@ var totalAmountPay=parseFloat(${totalAmountPayable});
 jQuery("#totalAmountPayable").val("");
 jQuery("#totalAmountPayable").val(totalAmountPay);
 
+
 });
 </script>
 
 <script type="text/javascript">
+function abc()
+{
+	if(document.getElementById("crditcheck").checked == true){
+	
+		jQuery("#amountGiven").hide();
+		jQuery("#amountReturned").hide();
+		jQuery("#amtg").hide();
+		jQuery("#amtr").hide();
+		}
+	else
+		{
+		
+		jQuery("#amountGiven").show();
+		jQuery("#amountReturned").show();
+		jQuery("#amtg").show();
+		jQuery("#amtr").show();
+		}
+}
 function credit()
 {
 
@@ -305,6 +341,10 @@ ISSUE.processSlip('0');
 		<table class="box" width="100%" cellpadding="5" cellspacing="0">
 		<tr>
 		<tr>
+		<td>Credit</td>
+		<td><input type="checkbox" id="crditcheck" name="crditcheck" onchange="abc();"/></td>
+		</tr>
+		<tr>
 		<td>Total</td>
 		<td><input type="text" id="totalValue" name="totalValue"
 				size="11" value="0"/></td>
@@ -324,11 +364,11 @@ ISSUE.processSlip('0');
 		<td><input type="text" id="waiverComment" name="waiverComment" size="11"/></td>
 		</tr>
 		<tr>
-		<td >Amount Given</td>
+		<td id=amtg >Amount Given</td>
 		<td><input type="text" id="amountGiven" name="amountGiven" size="11" onkeyup="amountReturnedToPatient();"></td>
 		</tr>
 		<tr>
-		<td >Amount Returned to Patient</td>
+		<td id=amtr>Amount Returned to Patient</td>
 		<td><input type="text" id="amountReturned" name="amountReturned" size="11" readOnly="true"/></td>
 		</tr>
 		<tr>

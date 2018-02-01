@@ -354,7 +354,7 @@ PURCHASE={
 		{
 		  	var totalValue=jQuery("#totalValue").val();
 			var waiverPercentage=jQuery("#waiverPercentage").val();
-			var waiverAmount=(totalValue*waiverPercentage)/100;
+			var waiverAmount=parseFloat(Math.round(((totalValue*waiverPercentage)/100) * 100) / 100).toFixed(2);
 			var totalAmountPayable=jQuery("#totalAmountPayable").val();
 			var waiverComment=jQuery("#waiverComment").val();
 			var amountGiven=jQuery("#amountGiven").val();
