@@ -28,23 +28,7 @@
 <%@ include file="../includes/js_css.jsp"%>
 <script type="text/javascript">
 jQuery(document).ready(function(){ jQuery("#creditheader").hide();
-document.getElementById("crditcheck").checked = true;
-if(document.getElementById("crditcheck").checked == true){
 
-	jQuery("#amountGiven").hide();
-	jQuery("#amountReturned").hide();
-	jQuery("#amtg").hide();
-	jQuery("#amtr").hide();
-	
-	}
-else
-	{
-	
-	jQuery("#amountGiven").show();
-	jQuery("#amountReturned").show();
-	jQuery("#amtg").show();
-	jQuery("#amtr").show();
-	}
 var tot=parseFloat(${total});
 jQuery("#totalValue").val("");
 jQuery("#totalValue").val(tot);
@@ -62,24 +46,7 @@ jQuery("#totalAmountPayable").val(totalAmountPay);
 </script>
 
 <script type="text/javascript">
-function abc()
-{
-	if(document.getElementById("crditcheck").checked == true){
-	
-		jQuery("#amountGiven").hide();
-		jQuery("#amountReturned").hide();
-		jQuery("#amtg").hide();
-		jQuery("#amtr").hide();
-		}
-	else
-		{
-		
-		jQuery("#amountGiven").show();
-		jQuery("#amountReturned").show();
-		jQuery("#amtg").show();
-		jQuery("#amtr").show();
-		}
-}
+
 function credit()
 {
 
@@ -339,11 +306,6 @@ ISSUE.processSlip('0');
 		<br />
 		
 		<table class="box" width="100%" cellpadding="5" cellspacing="0">
-		<tr>
-		<tr>
-		<td>Credit</td>
-		<td><input type="checkbox" id="crditcheck" name="crditcheck" onchange="abc();"/></td>
-		</tr>
 		<tr>
 		<td>Total</td>
 		<td><input type="text" id="totalValue" name="totalValue"
