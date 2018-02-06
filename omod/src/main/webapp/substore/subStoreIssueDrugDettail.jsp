@@ -331,7 +331,7 @@ jQuery("#amtretrns").hide();
 <td style="text-align: center;">Total amount payable</td>
 <td style="text-align: center;">${totalAmountPayable}</td>
 </tr>
-<tr>
+<!--  <tr>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
@@ -352,7 +352,7 @@ jQuery("#amtretrns").hide();
 <td style="text-align: center;">&nbsp;</td>
 <td id="amtretrns" style="text-align: center;">Amount Returned</td>
 <td id="amtreturns" style="text-align: center;">${amountReturned}.00</td>
-</tr>
+</tr>-->
 </tbody>
 </table>
 <br/><br/><br/><br/><br/><br/>

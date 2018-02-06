@@ -631,7 +631,7 @@ jQuery("#amountReturned").val(amountReturned);
 <td style="text-align: center;">Total amount payable</td>
 <td style="text-align: center;"><span id="printableTotalAmountPayable" /></td>
 </tr>
-<tr>
+<!--  <tr>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
@@ -646,7 +646,7 @@ jQuery("#amountReturned").val(amountReturned);
 <td style="text-align: center;">&nbsp;</td>
 <td id="amtreturned" style="text-align: center;">Amount Returned</td>
 <td id="amtreturnd" style="text-align: center;"><span id="printableAmountReturned" /></td>
-</tr>
+</tr>-->
 <tr>
 <td><b>Total Amount  Payable Rupees:</b><span id="printableTotalPayable" > </span> only</td>
 </tr>
@@ -748,8 +748,8 @@ jQuery("#amountReturned").val(amountReturned);
 		jQuery("#printableDiscountAmount").append("<span style='margin:5px;'>" + waiverAmount + "</span>");
 		jQuery("#printableTotalAmountPayable").append("<span style='margin:5px;'>" + totalAmountPayable + "</span>");
 		jQuery("#printableTotalPayable").append("<span style='margin:5px;'>" + toWords(totalAmountPayable) + "</span>");
-		jQuery("#printableGiven").append("<span style='margin:5px;'>" + amountGiven + "</span>");
-		jQuery("#printableAmountReturned").append("<span style='margin:5px;'>" + amountReturned + "</span>");
+		//jQuery("#printableGiven").append("<span style='margin:5px;'>" + amountGiven + "</span>");
+		//jQuery("#printableAmountReturned").append("<span style='margin:5px;'>" + amountReturned + "</span>");
 		
 		var printer = window.open('', '', 'width=300,height=300');
 		printer.document.open("text/html");

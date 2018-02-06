@@ -511,6 +511,7 @@ ISSUE.processSlip('0');
 <td style="text-align: center;">Total amount payable</td>
 <td style="text-align: center;"><span id="printableTotalAmountPayable" /></td>
 </tr>
+<!--  
 <tr>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
@@ -532,7 +533,7 @@ ISSUE.processSlip('0');
 <td style="text-align: center;">&nbsp;</td>
 <td id="amtreturned" style="text-align: center;">Amount Returned</td>
 <td id="amtreturnd" style="text-align: center;"><span id="printableAmountReturned" /></td>
-</tr>
+</tr>--->
 			</tbody>
 		</table>
 	
