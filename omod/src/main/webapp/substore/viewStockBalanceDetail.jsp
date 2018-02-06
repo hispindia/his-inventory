@@ -59,7 +59,14 @@
 		<td><c:out value="${varStatus.count }"/></td>
 		<td>${balance.drug.name}</td>
 		<td>${balance.formulation.name}-${balance.formulation.dozage}</td>
-		<td>${balance.transaction.typeTransactionName}</td>
+		<c:choose>
+		<c:when test="${ balance.transaction.typeTransaction==2}">
+		<td>${balance.transaction.description}</td>
+		</c:when>
+		<c:otherwise>
+		<td> ${balance.transaction.typeTransactionName}</td>
+		</c:otherwise>
+		</c:choose>
 		<td>${balance.openingBalance}</td>
 		<td>${balance.quantity }</td>
 		<td>${balance.issueQuantity}</td>
@@ -123,7 +130,14 @@
 		<td><c:out value="${varStatus.count }"/></td>
 		<td>${balance.drug.name}</td>
 		<td>${balance.formulation.name}-${balance.formulation.dozage}</td>
-		<td>${balance.transaction.typeTransactionName}</td>
+		<c:choose>
+		<c:when test="${ balance.transaction.typeTransaction==2}">
+		<td>${balance.transaction.description}</td>
+		</c:when>
+		<c:otherwise>
+		<td> ${balance.transaction.typeTransactionName}</td>
+		</c:otherwise>
+		</c:choose>
 		<td>${balance.openingBalance}</td>
 		<td>${balance.quantity }</td>
 		<td>${balance.issueQuantity}</td>
