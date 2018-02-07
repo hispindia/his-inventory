@@ -28,6 +28,9 @@
 <%@ include file="../includes/js_css.jsp"%>
 <script type="text/javascript">
 jQuery(document).ready(function(){ jQuery("#creditheader").hide();
+$('#bttprint').one('click', function() {
+   
+});
 
 var tot=parseFloat(${total});
 jQuery("#totalValue").val("");
