@@ -179,13 +179,13 @@ public class ReceiptFormController {
 		BigDecimal cgstAmount=new BigDecimal(0.0);
 		BigDecimal sgstAmount=new BigDecimal(0.0);
 		
-		if(cgst!=null)
+		if(cgst.doubleValue()!=0.00)
 		{
 	     cgstAmount= (cgst.multiply(new BigDecimal(quantity).multiply(unitPrice))).divide(new BigDecimal(100));
 		transactionDetail.setCgstAmount(cgstAmount.setScale(2, BigDecimal.ROUND_HALF_UP));
 		
 		}
-		if(sgst!=null)
+		if(sgst.doubleValue()!=0.00)
 		{
 		sgstAmount= (sgst.multiply(new BigDecimal(quantity).multiply(unitPrice))).divide(new BigDecimal(100));
 		transactionDetail.setSgstAmount(sgstAmount.setScale(2, BigDecimal.ROUND_HALF_UP));
