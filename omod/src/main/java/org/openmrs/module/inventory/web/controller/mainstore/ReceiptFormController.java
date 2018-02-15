@@ -204,7 +204,7 @@ public class ReceiptFormController {
 		BigDecimal totprice=new BigDecimal(0.0);
 		totprice=new BigDecimal(quantity).multiply(Rate);
 		BigDecimal totalAmountAfterGst =new BigDecimal(0.0);
-		if(cgst!=null || sgst!=null)
+		if(cgst.doubleValue()!=0.00 || sgst.doubleValue()!=0.00)
 		{
 		totalAmountAfterGst=totprice.subtract(waiverAmount).add(cgstAmount).add(sgstAmount);
 		}
