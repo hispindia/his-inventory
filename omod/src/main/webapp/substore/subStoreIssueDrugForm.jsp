@@ -29,6 +29,7 @@
 <script type="text/javascript">
 jQuery(document).ready(function(){ jQuery("#creditheader").hide();
 $('#bttprint').one('click', function() {
+	 $(this).attr('disabled','disabled');
    
 });
 
