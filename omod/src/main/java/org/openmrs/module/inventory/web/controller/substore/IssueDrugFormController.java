@@ -134,10 +134,17 @@ public class IssueDrugFormController {
 			model.addAttribute("dohId", dohId);
 		}
 		}
+		
 		List<InventoryStoreDrugPatient> inventoryStoreDrugPatient = new ArrayList<InventoryStoreDrugPatient>();
 		inventoryStoreDrugPatient=inventoryService.listPatientDetail();
-		
-			model.addAttribute("isdpdt", inventoryStoreDrugPatient.size()+1);
+		for(InventoryStoreDrugPatient is:inventoryStoreDrugPatient)
+		{
+			
+			model.addAttribute("isdpdt", (is.getId()+1));
+
+		}
+			
+			
 		
 		}
 		String hospitalName=GlobalPropertyUtil.getString("hospitalcore.hospitalParticularName", "Kollegal DVT Hospital");

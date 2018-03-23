@@ -3781,7 +3781,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 	}
 	public List<InventoryStoreDrugPatient> listPatientDetail() throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession()
-		        .createCriteria(InventoryStoreDrugPatient.class, "patientDetail");
+		        .createCriteria(InventoryStoreDrugPatient.class, "id");
 		        
 		return criteria.list();
 	}
