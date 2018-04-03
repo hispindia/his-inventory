@@ -86,6 +86,8 @@ var amountGiven=jQuery("#amountGiven").val();
 var amountReturned=amountGiven-totalAmountToPay;
 jQuery("#amountReturned").val(amountReturned);
 }
+
+jQuery("#sub").attr("disabled", "disabled");
 </script>
 
 <script type="text/javascript">
@@ -135,7 +137,9 @@ if(jQuery("#amountReturned").val() < 0 || !StringUtils.isDigit(jQuery("#amountRe
 alert("Please enter correct Amount Returned");
 return false;
 }
-                
+
+jQuery("#bttprocess").attr("disabled", "disabled");
+               
 ISSUE.processSlip('0');
 }
 </script>
