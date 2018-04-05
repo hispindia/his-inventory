@@ -1249,7 +1249,8 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		        .createAlias("transactionDetail.transaction", "transaction")
 		        .add(Restrictions.eq("transaction.store.id", storeId))
 		        .add(Restrictions.eq("transactionDetail.drug.id", drugId))
-		        .add(Restrictions.eq("transactionDetail.formulation.id", formulationId));
+		        .add(Restrictions.eq("transactionDetail.formulation.id", formulationId))
+		        .add(Restrictions.eq("transactionDetail.duplicateStatus", 0));
 		criteria.addOrder(Order.desc("transactionDetail.createdOn"));
 		if (isExpiry != null && isExpiry == 1) {
 			criteria.add(Restrictions.lt("transactionDetail.dateExpiry", new Date()));
@@ -1451,7 +1452,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		if (!StringUtils.isBlank(drugName)) {
 			criteria.add(Restrictions.like("drugAlias.name", "%" + drugName + "%"));
 		}
-		System.out.println("bcvbcbcbcbc");
+
 		if (!StringUtils.isBlank(fromDate) && StringUtils.isBlank(toDate)) {
 			String startFromDate = fromDate + " 00:00:00";
 			String endFromDate = fromDate + " 23:59:59";

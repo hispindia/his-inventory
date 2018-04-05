@@ -228,4 +228,15 @@ CHANGE  unit_price  mrp_price DECIMAL(19,2);
 
 		</sql>
 	</diff>
+	<diff>
+		<version>2.3.4</version>
+		<author>ghanshyan</author>
+		<date>4th April 2018</date>
+		<description>
+			ALTER inventory_store_drug_transaction_detail
+		</description>
+		<sql>
+		ALTER TABLE inventory_store_drug_transaction_detail ADD COLUMN duplicate_status  TINYINT(1) DEFAULT 0;
+		</sql>
+	</diff>
 </sqldiff>
