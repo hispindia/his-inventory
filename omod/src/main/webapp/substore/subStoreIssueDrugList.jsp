@@ -58,6 +58,7 @@
 	<th>Name</th>
 	<th>Age</th>
 	<th><spring:message code="inventory.issueDrug.createdOn"/></th>
+	<th>&nbsp;</th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty listIssue}">
@@ -74,6 +75,9 @@
               	</c:choose>
         </td>	
 		<td><openmrs:formatDate date="${issue.createdOn}" type="textbox"/></td>
+		<c:if test="${issue.duplicateBill == 1}">
+		<td><font color="red">Duplicate Bill</font></td>
+		</c:if>
 		</tr>
 	</c:forEach>
 	</c:when>
