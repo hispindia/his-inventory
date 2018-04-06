@@ -53,9 +53,13 @@ jQuery("#totalAmountPayable").val(totalAmountPay);
 
 function credit()
 {
-
-jQuery("#amountGiven").attr("disabled", "disabled");
-jQuery("#amountReturned").attr("disabled", "disabled");
+if(jQuery("#amountGiven").val()!="")
+	{
+	jQuery("#amountGiven").val(null);
+	jQuery("#amountReturned").val(null);
+	}
+//jQuery("#amountGiven").attr("disabled", "disabled");
+//jQuery("#amountReturned").attr("disabled", "disabled");
 jQuery("#amtgiven").hide();
 jQuery("#amtreturned").hide();
 jQuery("#amtgivn").hide();
