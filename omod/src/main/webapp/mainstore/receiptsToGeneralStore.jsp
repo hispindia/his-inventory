@@ -267,7 +267,7 @@ jQuery("#cgstamt").val(cgstAmount);
 		<table class="box" width="100%" cellpadding="5" cellspacing="0">
 		<tr>
 			<td>
-				<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.receiptDrug.finish"/>" onclick="RECEIPT.receiptSlip('0','${totAmountafterGst}');" />
+				<input type="button" id="finish" name="finish" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.receiptDrug.finish"/>" onclick="disableFunction();RECEIPT.receiptSlip('0','${totAmountafterGst}');" />
 				<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.receiptDrug.clear"/>"  onclick="RECEIPT.receiptSlip('1');"/>
 				<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.receiptDrug.print"/>" onClick="RECEIPT.printDiv();" />
 			</td>
@@ -377,5 +377,10 @@ jQuery("#cgstamt").val(cgstAmount);
 </div>
 <!-- END PRINT DIV -->   
 
+<script type="text/javascript">
+function disableFunction(){
+jQuery("#finish").attr("disabled", "disabled");
+}
+</script>
  
 <%@ include file="/WEB-INF/template/footer.jsp" %>
