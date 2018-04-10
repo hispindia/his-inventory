@@ -70,10 +70,16 @@
 		
 <br />		
 <br />
-<input type="submit" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.indent.receipt"/>">
+<input type="submit" id="accept" name="accept" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.indent.receipt"/>" onclick="disableFunction();">
 <input type="hidden" id="refuse" name="refuse" value="">
 <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.indent.refuse"/>" onclick="INDENT.refuseIndentFromSubStore(this);">
 <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code="inventory.returnList"/>" onclick="ACT.go('subStoreIndentDrugList.form');">
 </form>
+
+<script type="text/javascript">
+function disableFunction(){
+jQuery("#accept").attr("disabled", "disabled");
+}
+</script> 
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>
