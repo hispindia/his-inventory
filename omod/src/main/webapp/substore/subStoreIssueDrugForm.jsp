@@ -28,10 +28,6 @@
 <%@ include file="../includes/js_css.jsp"%>
 <script type="text/javascript">
 jQuery(document).ready(function(){ jQuery("#creditheader").hide();
-$('#bttprint').one('click', function() {
-	 $(this).attr('disabled','disabled');
-   
-});
 
 var tot=parseFloat(${total});
 jQuery("#totalValue").val("");
@@ -148,6 +144,59 @@ ISSUE.processSlip('0');
 }
 </script>
 
+<script type="text/javascript">
+function finishPrint() {
+
+if(jQuery("#waiverPercentage").val() ==""){
+alert("Please enter Discount Percentage");
+return false;
+}
+
+if(jQuery("#waiverPercentage").val() < 0 ){
+alert("Please enter correct Discount Percentage");
+return false;
+}
+
+                
+/*if(jQuery("#waiverPercentage").val()>0 && jQuery("#waiverComment").val() ==""){
+alert("Please enter comment");
+return false;
+}
+*/
+
+if(jQuery("#amountGiven").val() ==""){
+alert("Please enter Amount Given");
+return false;
+}
+
+if(jQuery("#amountGiven").val() < 0 || !StringUtils.isDigit(jQuery("#amountGiven").val())){
+alert("Please enter correct Amount Given");
+return false;
+}
+
+var amgiv=jQuery("#amountGiven").val();
+var tamp=jQuery("#totalAmountPayable").val();
+
+if(amgiv-tamp < 0 ){
+alert("Amount Given must be greater than Total Amount Payable");
+return false;
+}
+
+if(jQuery("#amountReturned").val() ==""){
+alert("Please enter Amount Returned");
+return false;
+}
+
+if(jQuery("#amountReturned").val() < 0 || !StringUtils.isDigit(jQuery("#amountReturned").val())){
+alert("Please enter correct Amount Returned");
+return false;
+}
+
+jQuery("#bttprint").attr("disabled", "disabled");
+               
+PURCHASE.printDiv();
+}
+</script>
 
 <form method="post" id="formIssueDrug">
 <div style="width: 40%; float: left; margin-left: 4px;">
@@ -364,8 +413,8 @@ ISSUE.processSlip('0');
 				value="<spring:message code='inventory.drug.process.credit'/>"  onClick="credit();" />
 						<input type="button"
 							class="ui-button ui-widget ui-state-default ui-corner-all"
-							id="bttprint" value="<spring:message code="inventory.print"/>"
-							onClick="PURCHASE.printDiv();" />
+							id="bttprint" name="bttprint" value="<spring:message code="inventory.print"/>"
+							onClick="finishPrint();" />
 					</c:if> <c:if
 						test="${not empty listPatientDetail || not empty issueDrugPatient}">
 						<input type="button"
