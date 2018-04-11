@@ -85,14 +85,7 @@
                 	<openmrs:formatDate date="${patient.birthdate}"/>
                 </td>
 				<td> 
-                	<%
-						Patient patient = (Patient) pageContext.getAttribute("patient");
-						Map<Integer, Map<Integer, String>> attributes = (Map<Integer, Map<Integer, String>>) pageContext.findAttribute("attributeMap");						
-						Map<Integer, String> patientAttributes = (Map<Integer, String>) attributes.get(patient.getPatientId());						
-						String relativeName = patientAttributes.get(8); 
-						if(relativeName!=null)
-							out.print(relativeName);
-					%>
+                	${patientSearchMap[patient.patientId]}
                 </td>
 			</tr>
 		</c:forEach>
