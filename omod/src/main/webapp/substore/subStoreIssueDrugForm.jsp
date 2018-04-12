@@ -86,8 +86,6 @@ var amountGiven=jQuery("#amountGiven").val();
 var amountReturned=amountGiven-totalAmountToPay;
 jQuery("#amountReturned").val(amountReturned);
 }
-
-jQuery("#sub").attr("disabled", "disabled");
 </script>
 
 <script type="text/javascript">
