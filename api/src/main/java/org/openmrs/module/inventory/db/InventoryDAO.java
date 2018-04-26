@@ -602,5 +602,6 @@ public interface InventoryDAO {
 //bill id
     public List<InventoryStoreDrugPatient> listPatientDetail() throws DAOException;
     public List<InventoryStoreDrugTransaction> listTransaction() throws DAOException;
+	public List<InventoryStoreDrugTransactionDetail> listTransactionDetailByDrugFormulation(Integer drugId,Integer formulationId)  throws DAOException;
 	
 }

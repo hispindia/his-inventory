@@ -38,19 +38,19 @@
 	<th ><spring:message code="inventory.viewStockBalance.receiptQty"/></th>
 	<th><spring:message code="inventory.viewStockBalance.STTSS"/></th>
 	<th ><spring:message code="inventory.receiptDrug.closingBalance"/></th>
+	 <th ><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
+	<th><spring:message code="inventory.viewStockBalance.receiptIssueDate"/></th>
+	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
 	<th><spring:message code="inventory.receiptDrug.Rate"/></th>
 	<th><spring:message code="inventory.receiptDrug.unitPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
 	<th><spring:message code="inventory.receiptDrug.MRP"/></th>
-	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
 	<th><spring:message code="inventory.receiptDrug.Dis"/></th>
 	<th><spring:message code="inventory.receiptDrug.DiscountAmount"/></th>
 	<th ><spring:message code="inventory.receiptDrug.cgst"/></th>
 	<th><spring:message code="inventory.receiptDrug.cgstamt"/></th>
     <th><spring:message code="inventory.receiptDrug.sgst"/></th>
     <th><spring:message code="inventory.receiptDrug.sgstamt"/></th>
-	<th ><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
-	<th><spring:message code="inventory.viewStockBalance.receiptIssueDate"/></th>
 	</tr>
 	<c:choose>
 	<c:when test="${not empty listViewStockBalance}">
@@ -71,19 +71,32 @@
 		<td>${balance.quantity }</td>
 		<td>${balance.issueQuantity}</td>
 		<td>${balance.closingBalance}</td>
-		<td>${rate}</td>
-		<td>${unitprice}</td>	
-		<td>${vat}</td>
-		<td>${balance.mrpPrice}</td>
-		<td>${balance.batchNo}</td>
-		<td>${discount}</td>
-		<td><fmt:formatNumber value="${(rate*balance.closingBalance)*((0.01)*discount)}" maxFractionDigits="2" /></td>
-		<td>${cgst}</td>
-		<td><fmt:formatNumber value="${((0.01)*cgst*balance.closingBalance)*(unitprice)}" maxFractionDigits="2" /></td>
-		<td>${sgst}</td>
-		<td><fmt:formatNumber value="${((0.01)*sgst*balance.closingBalance)*(unitprice)}" maxFractionDigits="2" /></td>
 		<td><openmrs:formatDate date="${balance.dateExpiry}" type="textbox"/></td>
 		<td><openmrs:formatDate date="${balance.createdOn}" type="textbox"/></td>
+		<td>${balance.batchNo}</td>
+		<c:choose>
+		<c:when test="${not empty listmainstoretransactdetail}">
+		<c:forEach items="${listmainstoretransactdetail}" var="transact" varStatus="varStatus">
+		<c:if test="${transact.parent == null}">
+		<c:if test="${balance.batchNo == transact.batchNo}">
+		<c:if test="${transact.cgst !=null}">
+		<td>${transact.rate}</td>
+		<td>${transact.unitPrice}</td>
+		<td>${transact.VAT}</td>
+		<td>${transact.mrpPrice}</td>
+		<td>${transact.waiverPercentage}</td>
+		<td><fmt:formatNumber value="${(transact.rate*balance.closingBalance)*((0.01)*transact.waiverPercentage)}" maxFractionDigits="2" /></td>
+		<td>${transact.cgst}</td>
+		<td><fmt:formatNumber value="${((0.01)*transact.cgst*balance.closingBalance)*(transact.unitPrice)}" maxFractionDigits="2" /></td>
+		<td>${transact.sgst}</td>
+		<td><fmt:formatNumber value="${((0.01)*transact.sgst*balance.closingBalance)*(transact.unitPrice)}" maxFractionDigits="2" /></td>
+		</c:if>
+		</c:if>
+		</c:if>
+		</c:forEach>
+		</c:when>
+		</c:choose>      
+
 		</tr>
 	</c:forEach>
 	</c:when>
@@ -109,19 +122,21 @@
 	<th ><spring:message code="inventory.viewStockBalance.receiptQty"/></th>
 	<th><spring:message code="inventory.viewStockBalance.STTSS"/></th>
 	<th ><spring:message code="inventory.receiptDrug.closingBalance"/></th>
+	<th ><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
+	<th><spring:message code="inventory.viewStockBalance.receiptIssueDate"/></th>
+	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
 	<th><spring:message code="inventory.receiptDrug.Rate"/></th>
 	<th><spring:message code="inventory.receiptDrug.unitPrice"/></th>
 	<th><spring:message code="inventory.receiptDrug.VAT"/></th>
 	<th><spring:message code="inventory.receiptDrug.MRP"/></th>
-	<th><spring:message code="inventory.receiptDrug.batchNo"/></th>
+	
 	<th><spring:message code="inventory.receiptDrug.Dis"/></th>
 	<th><spring:message code="inventory.receiptDrug.DiscountAmount"/></th>
 	<th ><spring:message code="inventory.receiptDrug.cgst"/></th>
 	<th><spring:message code="inventory.receiptDrug.cgstamt"/></th>
     <th><spring:message code="inventory.receiptDrug.sgst"/></th>
     <th><spring:message code="inventory.receiptDrug.sgstamt"/></th>
-	<th ><spring:message code="inventory.receiptDrug.dateExpiry"/></th>
-	<th><spring:message code="inventory.viewStockBalance.receiptIssueDate"/></th>
+
 	</tr>
 <c:choose>
 	<c:when test="${not empty listViewStockBalance}">
@@ -142,19 +157,32 @@
 		<td>${balance.quantity }</td>
 		<td>${balance.issueQuantity}</td>
 		<td>${balance.closingBalance}</td>
-		<td>${rate}</td>
-		<td>${unitprice}</td>	
-		<td>${vat}</td>
-		<td>${balance.mrpPrice}</td>
-		<td>${balance.batchNo}</td>
-		<td>${discount}</td>
-		<td><fmt:formatNumber value="${(rate*balance.closingBalance)*((0.01)*discount)}" maxFractionDigits="2" /></td>
-		<td>${cgst}</td>
-		<td><fmt:formatNumber value="${((0.01)*cgst*balance.closingBalance)*(unitprice)}" maxFractionDigits="2" /></td>
-		<td>${sgst}</td>
-		<td><fmt:formatNumber value="${((0.01)*sgst*balance.closingBalance)*(unitprice)}" maxFractionDigits="2" /></td>
 		<td><openmrs:formatDate date="${balance.dateExpiry}" type="textbox"/></td>
 		<td><openmrs:formatDate date="${balance.createdOn}" type="textbox"/></td>
+		<td>${balance.batchNo}</td>
+		<c:choose>
+		<c:when test="${not empty listmainstoretransactdetail}">
+		<c:forEach items="${listmainstoretransactdetail}" var="transact" varStatus="varStatus">
+		<c:if test="${transact.parent == null}">
+		<c:if test="${balance.batchNo == transact.batchNo}">
+		<c:if test="${transact.cgst !=null}">
+		<td>${transact.rate}</td>
+		<td>${transact.unitPrice}</td>
+		<td>${transact.VAT}</td>
+		<td>${transact.mrpPrice}</td>
+		<td>${transact.waiverPercentage}</td>
+		<td><fmt:formatNumber value="${(transact.rate*balance.closingBalance)*((0.01)*transact.waiverPercentage)}" maxFractionDigits="2" /></td>
+		<td>${transact.cgst}</td>
+		<td><fmt:formatNumber value="${((0.01)*transact.cgst*balance.closingBalance)*(transact.unitPrice)}" maxFractionDigits="2" /></td>
+		<td>${transact.sgst}</td>
+		<td><fmt:formatNumber value="${((0.01)*transact.sgst*balance.closingBalance)*(transact.unitPrice)}" maxFractionDigits="2" /></td>
+		</c:if>
+		</c:if>
+		</c:if>
+		</c:forEach>
+		</c:when>
+		</c:choose> 
+
 		</tr>
 	</c:forEach>
 	</c:when>

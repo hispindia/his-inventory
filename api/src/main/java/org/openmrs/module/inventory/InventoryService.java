@@ -640,5 +640,5 @@ public interface InventoryService extends OpenmrsService {
    //bill id
 	public List<InventoryStoreDrugPatient> listPatientDetail() throws APIException;
 	public List<InventoryStoreDrugTransaction> listTransaction() throws APIException;
-
+	public List<InventoryStoreDrugTransactionDetail> listTransactionDetailByDrugFormulation(Integer drugId,Integer formulationId)  throws APIException;
 }

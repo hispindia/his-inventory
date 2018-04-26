@@ -783,36 +783,8 @@ public class AjaxController {
 		InventoryStore store =  inventoryService.getStoreByCollectionRole(new ArrayList<Role>(Context.getAuthenticatedUser().getAllRoles()));
 		List<InventoryStoreDrugTransactionDetail> listViewStockBalance = inventoryService.listStoreDrugTransactionDetail(store.getId(), drugId, formulationId, expiry);
 		model.addAttribute("listViewStockBalance", listViewStockBalance);
-		List<InventoryStoreDrugTransaction> listMainStoreTransaction = inventoryService.listTransaction();
-		for(InventoryStoreDrugTransaction lmst:listMainStoreTransaction)
-       {
-    	   if(lmst.getBillAmount()!=null)
-    	   {
-    			List<InventoryStoreDrugTransactionDetail> listmainstoretransactdetail = inventoryService.listTransactionDetail(lmst.getId());
-    			 for(InventoryStoreDrugTransactionDetail isdt:listmainstoretransactdetail)
-    			{
-    				 model.addAttribute("vat",isdt.getVAT());
-    				 model.addAttribute("rate",isdt.getRate());
-    				 model.addAttribute("unitprice",isdt.getUnitPrice());
-    					if(isdt.getWaiverPercentage()!=null)
-    						{
-    						model.addAttribute("discount",isdt.getWaiverPercentage());
-    						}
-    					if(isdt.getCgst()!=null )
-    					{   model.addAttribute("cgst",isdt.getCgst());
-    		
-    					}
-    					if(isdt.getSgst()!=null )
-    					{   model.addAttribute("sgst",isdt.getSgst());
-    						
-    		
-    					}
-    			}
-
-    			}
-    	   }
-       
-
+		List<InventoryStoreDrugTransactionDetail> listmainstoretransactdetail = inventoryService.listTransactionDetailByDrugFormulation(drugId, formulationId);
+ 		model.addAttribute("listmainstoretransactdetail",listmainstoretransactdetail);
 		return "/module/inventory/substore/viewStockBalanceDetail";
 	}
 	@RequestMapping("/module/inventory/itemViewStockBalanceSubStoreDetail.form")

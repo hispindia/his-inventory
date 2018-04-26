@@ -3792,5 +3792,17 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		        
 		return criteria.list();
 	}
+	@Override
+	public List<InventoryStoreDrugTransactionDetail> listTransactionDetailByDrugFormulation(
+			Integer drugId, Integer formulationId) throws DAOException {
+		Criteria criteria = sessionFactory.getCurrentSession()
+		        .createCriteria(InventoryStoreDrugTransactionDetail.class, "transactionDetail")
+		        .createAlias("transactionDetail.transaction", "transaction")
+		        .add(Restrictions.eq("transactionDetail.drug.id", drugId))
+		        .add(Restrictions.eq("transactionDetail.formulation.id", formulationId));
+		//criteria.addOrder(Order.desc("transactionDetail.createdOn"));
+		List<InventoryStoreDrugTransactionDetail> l = criteria.list();
+		return l;
+	}
 
 }
