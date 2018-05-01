@@ -17,8 +17,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Query;
@@ -32,6 +36,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.openmrs.Encounter;
+import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.Role;
 import org.openmrs.api.db.DAOException;
@@ -3800,9 +3806,9 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		        .createAlias("transactionDetail.transaction", "transaction")
 		        .add(Restrictions.eq("transactionDetail.drug.id", drugId))
 		        .add(Restrictions.eq("transactionDetail.formulation.id", formulationId));
-		//criteria.addOrder(Order.desc("transactionDetail.createdOn"));
-		List<InventoryStoreDrugTransactionDetail> l = criteria.list();
-		return l;
+
+	return criteria.list();
+	
 	}
 
 }

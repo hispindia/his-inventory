@@ -4,8 +4,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -748,7 +751,7 @@ public class AjaxController {
 			
 			for(InventoryStoreDrugTransactionDetail ifdt: isdt.getSubDetails() )
 			{ 	
-				if(ifdt.getParent().getRate()!=null || ifdt.getParent().getWaiverPercentage()!=null)
+				if(ifdt.getParent().getRate()!=null && ifdt.getParent().getWaiverPercentage()!=null)
 					{
 			model.addAttribute("cashDiscount",(ifdt.getParent().getRate().multiply(new BigDecimal(ifdt.getClosingBalance())).multiply(new BigDecimal(ifdt.getParent().getWaiverPercentage()).multiply(new BigDecimal(1).divide(new BigDecimal(100))))).setScale(1, BigDecimal.ROUND_HALF_UP));
 					}
@@ -784,7 +787,34 @@ public class AjaxController {
 		List<InventoryStoreDrugTransactionDetail> listViewStockBalance = inventoryService.listStoreDrugTransactionDetail(store.getId(), drugId, formulationId, expiry);
 		model.addAttribute("listViewStockBalance", listViewStockBalance);
 		List<InventoryStoreDrugTransactionDetail> listmainstoretransactdetail = inventoryService.listTransactionDetailByDrugFormulation(drugId, formulationId);
- 		model.addAttribute("listmainstoretransactdetail",listmainstoretransactdetail);
+		
+		List<InventoryStoreDrugTransactionDetail> listtransactdetail= new CopyOnWriteArrayList<InventoryStoreDrugTransactionDetail>();
+
+		for(InventoryStoreDrugTransactionDetail id:listmainstoretransactdetail)
+{ if(id.getParent()==null)
+	{if(listtransactdetail.isEmpty()==true)
+	{
+		listtransactdetail.add(id);
+		
+	}
+	else
+	{
+		for(InventoryStoreDrugTransactionDetail l:listtransactdetail)
+		{
+			if(l.getBatchNo().equals(id.getBatchNo()))
+			{listtransactdetail.remove(l);
+			
+			
+			}
+			
+		}
+		listtransactdetail.add(id);
+		
+		
+	}
+	
+	}
+}model.addAttribute("listmainstoretransactdetail",listtransactdetail);
 		return "/module/inventory/substore/viewStockBalanceDetail";
 	}
 	@RequestMapping("/module/inventory/itemViewStockBalanceSubStoreDetail.form")
