@@ -310,6 +310,7 @@ public interface InventoryDAO {
 	
 	public InventoryStoreDrugTransactionDetail saveStoreDrugTransactionDetail(InventoryStoreDrugTransactionDetail storeTransactionDetail)
 	                                                                                                                                     throws DAOException;
+	public void saveOrUpdateStoreDrugTransactionDetail(InventoryStoreDrugTransactionDetail storeTransactionDetail) throws DAOException;
 	
 	public int countStoreDrugTransactionDetail(Integer storeId, Integer categoryId, String drugName, String formulationName,
 	                                           String fromDate, String toDate) throws DAOException;

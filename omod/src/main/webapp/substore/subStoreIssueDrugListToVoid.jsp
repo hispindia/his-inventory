@@ -23,13 +23,10 @@
 <spring:message var="pageTitle" code="inventory.issueDrug.manage" scope="page"/>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="nav.jsp" %>
-<h2><spring:message code="inventory.issueDrug.manage"/></h2>	
-<br />
 <c:forEach items="${errors.allErrors}" var="error">
 	<span class="error"><spring:message code="${error.defaultMessage}" text="${error.defaultMessage}"/></span><
 </c:forEach>
-<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<spring:message code='inventory.issueDrug.add'/>" onclick="ACT.go('subStoreIssueDrugForm.form');"/>
-<br /><br />
+<br />
 
 <form method="get"  id="form">
 <table >
@@ -58,7 +55,7 @@
 	<th>Name</th>
 	<th>Age</th>
 	<th><spring:message code="inventory.issueDrug.createdOn"/></th>
-	<th>&nbsp;</th>
+	<th>Action</th>
 	<th>Description</th>
 	<th>Voided By</th>
 	</tr>
@@ -69,7 +66,7 @@
 		<td><c:out value="${(( pagingUtil.currentPage - 1  ) * pagingUtil.pageSize ) + varStatus.count }"/></td>
 	     <td> ${issue.id}</td>
 		<td> <a href="#" title="Detail issue drug to this patient" onclick="ISSUE.detailIssueDrug('${issue.id}');">${issue.identifier}</a> </td>
-		<td>${issue.patient.givenName}&nbsp;${issue.patient.middleName}&nbsp;${issue.patient.familyName}</td>
+		<td>${issue.patient.givenName}&nbsp;${issue.patient.familyName}</td>
 		<td>
               	<c:choose>
               		<c:when test="${issue.patient.age == 0  }">&lt 1</c:when>
@@ -77,15 +74,14 @@
               	</c:choose>
         </td>	
 		<td><openmrs:formatDate date="${issue.createdOn}" type="textbox"/></td>
-		<c:if test="${issue.voided == 1}">
-		<td><font color="black">Voided Bill</font></td>
+		<td class='<c:if test="${issue.voided==1}">retired </c:if>'>
+		<input type="button" value="Void Bill"
+					onclick="voidTheBill(${issue.id},${issue.voided});" />
+		</td>
+		<c:if test="${issue.voided==1}">
 		<td>${issue.voidedReason}</td>
 		<td>${issue.voidedBy}</td>
 		</c:if>
-		<c:if test="${issue.duplicateBill == 1}">
-		<td><font color="red">Duplicate Bill</font></td>
-		</c:if>
-		
 		</tr>
 	</c:forEach>
 	</c:when>
@@ -99,7 +95,19 @@
 
 </form>
 
-
+<script type="text/javascript">
+function voidTheBill(billNo,voided){
+if(voided==1){
+alert("bill already voided");
+return false;
+}
+else{
+url = "voidTheBill.form?billNo="+billNo+"&keepThis=false&TB_iframe=true&height=400&width=700";
+tb_show(" ",url,false);
+return true;
+}
+}
+</script>
 
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>

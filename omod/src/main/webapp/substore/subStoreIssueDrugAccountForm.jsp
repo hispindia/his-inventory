@@ -122,7 +122,7 @@
 </div>
 <!-- Purchase list -->
 <div style="width: 58%; float: right; margin-right: 16px; ">
-<b class="boxHeader">Issue drugs to account</b>
+<b class="boxHeader">Issue drugs to Account/Return</b>
 <div class="box">
 <c:if  test="${not empty issueDrugAccount}">
 <table class="box" width="100%">

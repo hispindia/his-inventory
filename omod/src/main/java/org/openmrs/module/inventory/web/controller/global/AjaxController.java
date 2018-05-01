@@ -4,10 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -551,16 +549,16 @@ public class AjaxController {
 		if(action == 1){
 			StoreSingleton.getInstance().getHash().remove(fowardParam);
 			StoreSingleton.getInstance().getHash().remove("issueDrugAccount_"+userId);
+			StoreSingleton.getInstance().getHash().remove("transaction_"+userId);
 			return "redirect:/module/inventory/subStoreIssueDrugAccountForm.form";
 		}
 		List<InventoryStoreDrugAccountDetail> list = (List<InventoryStoreDrugAccountDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
 		InventoryStoreDrugAccount issueDrugAccount = (InventoryStoreDrugAccount )StoreSingleton.getInstance().getHash().get("issueDrugAccount_"+userId);
+		InventoryStoreDrugTransaction transaction = (InventoryStoreDrugTransaction )StoreSingleton.getInstance().getHash().get("transaction_"+userId);
 		if(issueDrugAccount != null && list != null && list.size() > 0){
 			
 			Date date = new Date();
-			//create transaction issue from substore
-			 InventoryStoreDrugTransaction transaction = new InventoryStoreDrugTransaction();
-			 transaction.setDescription("ISSUE DRUG TO ACCOUNT "+DateUtils.getDDMMYYYY());
+
 			 transaction.setStore(store);
 			 transaction.setTypeTransaction(ActionValue.TRANSACTION[1]);
 			 transaction.setCreatedOn(date);
@@ -867,6 +865,7 @@ public class AjaxController {
 		model.addAttribute("totalAmountPayable", issue.getTransactionDetail().getAmountPayable());
 		model.addAttribute("amountGiven", issue.getTransactionDetail().getAmountGiven());
 		model.addAttribute("amountReturned", issue.getTransactionDetail().getAmountReturned());
+		model.addAttribute("voided", issue.getTransactionDetail().getVoided());
 		}	
 		}
 		String hospitalName=GlobalPropertyUtil.getString("hospitalcore.hospitalParticularName", "Kollegal DVT Hospital");

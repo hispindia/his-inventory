@@ -74,6 +74,10 @@ jQuery("#amtretrns").hide();
 			        <td>${patientCategory} &nbsp;&nbsp;&nbsp; ${patientSubCategory}</td>
 			       
 				</tr>
+				<tr>
+				<td>Bill No:</td>
+				<td>${billNo}</td>
+				</tr>
 			</table>
 			<br />
 </c:if>
@@ -88,8 +92,14 @@ jQuery("#amtretrns").hide();
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.batchNo" /></th>
                 <th style="text-align: center;"><spring:message code="inventory.receiptDrug.dateExpiry" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.quantity" /></th>
+				<!--
+				<th style="text-align: center;">&nbsp;</th>
+				-->
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.MRP" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.total" /></th>
+				<!--
+				<th style="text-align: center;">&nbsp;</th>
+				-->
 			</tr>
 			</thead>
 			<tbody>
@@ -105,9 +115,21 @@ jQuery("#amtretrns").hide();
 							<td style="text-align: center;">${issue.transactionDetail.batchNo}</td>
 							<td style="text-align: center;"><openmrs:formatDate date="${issue.transactionDetail.dateExpiry}"
 								type="textbox" /></td>
-							<td style="text-align: center;">${issue.quantity}</td>
+							<td  style="text-align: center;" class='<c:if test="${issue.transactionDetail.voided==1}">retired</c:if>'>${issue.quantity}</td>
+							<!--
+							<c:choose>
+							<c:when test="${issue.transactionDetail.voided==1}"><td style="text-align: center;">${issue.transactionDetail.quantityAfterReturn}</td></c:when>
+							<c:otherwise><td style="text-align: center;">&nbsp;</td></c:otherwise>
+							</c:choose>
+							 -->
 							<td style="text-align: center;">${issue.transactionDetail.mrpPrice}</td>
-							<td style="text-align: center;">${issue.transactionDetail.mrpPrice*issue.quantity}</td>
+						    <td  style="text-align: center;" class='<c:if test="${issue.transactionDetail.voided==1}">retired</c:if>'>${issue.transactionDetail.mrpPrice*issue.quantity}</td>
+						   <!--
+						    <c:choose>
+						    <c:when test="${issue.transactionDetail.voided==1}"><td style="text-align: center;">${issue.transactionDetail.mrpPrice*issue.transactionDetail.quantityAfterReturn}</td></c:when>
+						    <c:otherwise><td style="text-align: center;">&nbsp;</td></c:otherwise>
+						    </c:choose>
+						    -->
 						    <input type="hidden" id="test" value="${issue.transactionDetail.amountCredit}"/>
 						</tr>
 					</c:forEach>
@@ -120,9 +142,12 @@ jQuery("#amtretrns").hide();
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
+<!--
 <td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+ -->
 <td style="text-align: center;">Total amount</td>
-<td style="text-align: center;">${totalAmount}0</td>
+<td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${totalAmount}0</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -131,9 +156,12 @@ jQuery("#amtretrns").hide();
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
+<!--
 <td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+ -->
 <td style="text-align: center;">Discount %</td>
-<td style="text-align: center;">${discount}0</td>
+<td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${discount}0</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -142,9 +170,12 @@ jQuery("#amtretrns").hide();
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
+<!--
 <td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+ -->
 <td style="text-align: center;">DiscountAmount</td>
-<td style="text-align: center;">${discountAmount}</td>
+<td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${discountAmount}</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -153,9 +184,12 @@ jQuery("#amtretrns").hide();
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
+<!--
 <td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+ -->
 <td style="text-align: center;">Total amount payable</td>
-<td style="text-align: center;">${totalAmountPayable}</td>
+<td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${totalAmountPayable}</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -164,9 +198,12 @@ jQuery("#amtretrns").hide();
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
+<!--
 <td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+ -->
 <td id="amtgven" style="text-align: center;">Amount Given</td>
-<td id="amtgiven" style="text-align: center;">${amountGiven}.00</td>
+<td id="amtgiven" style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${amountGiven}.00</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -175,9 +212,12 @@ jQuery("#amtretrns").hide();
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
+<!--
 <td style="text-align: center;">&nbsp;</td>
+<td style="text-align: center;">&nbsp;</td>
+ -->
 <td id="amtretrn" style="text-align: center;">Amount Returned</td>
-<td id="amtreturn" style="text-align: center;">${amountReturned}.00</td>
+<td id="amtreturn" style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${amountReturned}.00</td>
 </tr>
 			</tbody>
 		</table>
@@ -256,7 +296,6 @@ jQuery("#amtretrns").hide();
 			<h4 align="left" style="color:black">Drugs Issued by Pharmacy</h4>
 			<tr>
 				<th style="text-align: center;">#</th>
-		
 				<th style="text-align: center;"><spring:message code="inventory.drug.name" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.drug.formulation" /></th>
 				<th style="text-align: center;"><spring:message code="inventory.receiptDrug.batchNo" /></th>
@@ -279,9 +318,9 @@ jQuery("#amtretrns").hide();
 						    <td style="text-align: center;">${issue.transactionDetail.batchNo}</td>
 							<td style="text-align: center;"><openmrs:formatDate date="${issue.transactionDetail.dateExpiry}"
 								type="textbox" /></td>
-							<td style="text-align: center;">${issue.quantity}</td>
+							<td style="text-align: center;" class='<c:if test="${issue.transactionDetail.voided==1}">retired</c:if>'>${issue.quantity}</td>
 							<td style="text-align: center;">${issue.transactionDetail.mrpPrice}</td>
-							<td style="text-align: center;">${issue.transactionDetail.mrpPrice*issue.quantity}</td>
+							<td style="text-align: center;" class='<c:if test="${issue.transactionDetail.voided==1}">retired</c:if>'>${issue.transactionDetail.mrpPrice*issue.quantity}</td>
 						    <input type="hidden" id="test1" value="${issue.transactionDetail.amountCredit}"/>
 						</tr>
 					</c:forEach>
@@ -294,12 +333,10 @@ jQuery("#amtretrns").hide();
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Total amount</td>
-<td style="text-align: center;">${totalAmount}0</td>
+<td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${totalAmount}0</td>
 </tr>
 <tr>
-<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
@@ -307,10 +344,9 @@ jQuery("#amtretrns").hide();
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Discount %</td>
-<td style="text-align: center;">${discount}0</td>
+<td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${discount}0</td>
 </tr>
 <tr>
-<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
@@ -318,7 +354,7 @@ jQuery("#amtretrns").hide();
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">DiscountAmount</td>
-<td style="text-align: center;">${discountAmount}</td>
+<td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${discountAmount}</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -327,9 +363,8 @@ jQuery("#amtretrns").hide();
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Total amount payable</td>
-<td style="text-align: center;">${totalAmountPayable}</td>
+<td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${totalAmountPayable}</td>
 </tr>
 <!--  <tr>
 <td style="text-align: center;">&nbsp;</td>

@@ -20,12 +20,22 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ include file="/WEB-INF/template/headerMinimal.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
-<form class="box" method="post" id="createAccountIssueDrug">
+<form class="box" method="post" id="createAccountIssueDrug" onsubmit="javascript:return validate();">
 <table width="100%">
 	<tr>
 		<td><spring:message code="inventory.issueDrug.account"/><em>*</em></td>
 		<td><input type="text" name="accountName" id="accountName" size="35"/>
 		</td>
+	</tr>
+	<tr></tr><tr></tr><tr></tr><tr></tr>
+	<tr>
+		<td><spring:message code="inventory.issueDrug.accountType"/><em>*</em></td>
+		<td><select id="accountType" name="accountType" style="width:280px">
+        <option value=""> </option>
+        <option value="ISSUE DRUG TO ADJUSTMENT">ISSUE DRUG TO ADJUSTMENT</option>
+        <option value="ISSUE DRUG TO RETUN">ISSUE DRUG TO RETUN</option>
+        </select>
+        </td>
 	</tr>
 	<tr>
 		<td></td>
@@ -33,3 +43,14 @@
 	</tr>
 </table>
 </form>
+
+<script type="text/javascript">
+function validate(){
+var accountType=jQuery("#accountType").val();
+if (accountType==null || accountType=="")
+{
+alert("Please Select Account Type");
+return false;
+}
+}
+</script>

@@ -214,7 +214,7 @@
 	</diff>
 	
 	
-			<diff>
+		<diff>
 		<version>2.3.3</version>
 		<author>ambika</author>
 		<date>27th Dec 2017</date>
@@ -223,9 +223,8 @@
 		</description>
 		<sql>
 		ALTER TABLE inventory_store_drug_transaction_detail
-CHANGE  unit_price  mrp_price DECIMAL(19,2);
+        CHANGE  unit_price  mrp_price DECIMAL(19,2);
 		ALTER TABLE inventory_store_drug_transaction_detail ADD COLUMN( unit_price DECIMAL(19,2),total_amount_after_gst DECIMAL(19,2));
-
 		</sql>
 	</diff>
 	<diff>
@@ -248,6 +247,28 @@ CHANGE  unit_price  mrp_price DECIMAL(19,2);
 		</description>
 		<sql>
 		ALTER TABLE inventory_store_drug_patient ADD COLUMN duplicate_bill  TINYINT(1) DEFAULT 0;
+		</sql>
+	</diff>
+	<diff>
+		<version>2.3.6</version>
+		<author>ghanshyan</author>
+		<date>12th April 2018</date>
+		<description>
+			ALTER inventory_store_drug_patient
+		</description>
+		<sql>
+		ALTER TABLE inventory_store_drug_patient ADD COLUMN(voided  TINYINT(1) DEFAULT 0,voided_date datetime,voided_by varchar(51),voided_reason varchar(251));
+		</sql>
+	</diff>
+	<diff>
+		<version>2.3.7</version>
+		<author>ghanshyan</author>
+		<date>20th April 2018</date>
+		<description>
+			ALTER inventory_store_drug_transaction_detail
+		</description>
+		<sql>
+		ALTER TABLE inventory_store_drug_transaction_detail ADD COLUMN(voided  TINYINT(1) DEFAULT 0,quantity_after_return integer DEFAULT 0,total_amount_after_void float(11,2),waiver_amount_afer_void float(11,2),cash_returned int(11),amount_credit_after_void decimal(11,2));
 		</sql>
 	</diff>
 </sqldiff>

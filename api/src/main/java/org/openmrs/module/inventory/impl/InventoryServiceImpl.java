@@ -499,6 +499,11 @@ public class InventoryServiceImpl extends BaseOpenmrsService implements Inventor
 		return dao.saveStoreDrugTransactionDetail(storeTransactionDetail);
 	}
 	
+	public void saveOrUpdateStoreDrugTransactionDetail(InventoryStoreDrugTransactionDetail storeTransactionDetail) throws APIException {
+     
+		dao.saveOrUpdateStoreDrugTransactionDetail(storeTransactionDetail);
+    }
+	
 	public int countStoreDrugTransactionDetail(Integer storeId, Integer categoryId, String drugName, String formulationName,
 	                                           String fromDate, String toDate) throws APIException {
 		return dao.countStoreDrugTransactionDetail(storeId, categoryId, drugName, formulationName, fromDate, toDate);

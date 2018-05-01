@@ -17,28 +17,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.hibernate.Session;
-import org.hibernate.Query;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.openmrs.Encounter;
-import org.openmrs.Obs;
-import org.openmrs.Patient;
 import org.openmrs.Role;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.hospitalcore.model.InventoryDrug;
@@ -1138,6 +1131,10 @@ public class HibernateInventoryDAO implements InventoryDAO {
 	                                                                                                                                     throws DAOException {
 		return (InventoryStoreDrugTransactionDetail) sessionFactory.getCurrentSession().merge(storeTransactionDetail);
 	}
+	
+	public void saveOrUpdateStoreDrugTransactionDetail(InventoryStoreDrugTransactionDetail storeTransactionDetail) throws DAOException {
+		sessionFactory.getCurrentSession().saveOrUpdate(storeTransactionDetail);
+    }
 	
 	public int countStoreDrugTransactionDetail(Integer storeId, Integer categoryId, String drugName, String formulationName,
 	                                           String fromDate, String toDate) throws DAOException {

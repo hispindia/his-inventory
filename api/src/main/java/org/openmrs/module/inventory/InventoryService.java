@@ -336,6 +336,7 @@ public interface InventoryService extends OpenmrsService {
 	@Transactional(readOnly = false)
 	public InventoryStoreDrugTransactionDetail saveStoreDrugTransactionDetail(InventoryStoreDrugTransactionDetail storeTransactionDetail)
 	                                                                                                                                     throws APIException;
+	public void saveOrUpdateStoreDrugTransactionDetail(InventoryStoreDrugTransactionDetail storeTransactionDetail) throws APIException;
 	
 	public int countStoreDrugTransactionDetail(Integer storeId, Integer categoryId, String drugName, String formulationName,
 	                                           String fromDate, String toDate) throws APIException;
