@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.inventory.model">
+
+	<class name="InventoryStoreItem" table="inventory_store_item" batch-size="500">
+
+		<id name="id" type="int" column="id" unsaved-value="0">
+				<generator class="native" />
+		</id>
+		<many-to-one name="store" class="org.openmrs.module.hospitalcore.model.InventoryStore"
+	        column="store_id" cascade="none" lazy="false" />
+	    <many-to-one name="item" class="org.openmrs.module.inventory.model.InventoryItem"
+	        column="item_id" cascade="none" lazy="false" />
+	    <many-to-one name="specification" class="org.openmrs.module.inventory.model.InventoryItemSpecification"
+	        column="specification_id" cascade="none" lazy="false" />
+	        
+		<property name="currentQuantity" column="current_quantity"  />
+		<property name="receiptQuantity" column="receipt_quantity"  />
+		<property name="issueQuantity" column="issue_quantity"  />
+		<property name="statusIndent" column="status_indent"  />
+		<property name="reorderQty" column="reorder_qty"  />
+		
+		<property name="openingBalance" column="opening_balance"  />
+		<property name="closingBalance" column="closing_balance"  />
+		<property name="status" column="status"  />
+		<property name="createdOn" column="created_on"  />
+	</class>
+</hibernate-mapping>
