@@ -445,6 +445,10 @@ public class AjaxController {
 		}
 		List<InventoryStoreDrugPatientDetail> list = (List<InventoryStoreDrugPatientDetail> )StoreSingleton.getInstance().getHash().get(fowardParam);
 		InventoryStoreDrugPatient issueDrugPatient = (InventoryStoreDrugPatient )StoreSingleton.getInstance().getHash().get("issueDrug_"+userId);
+		
+		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+		List<PersonAttribute> pas = hcs.getPersonAttributes(issueDrugPatient.getPatient().getPatientId());
+		
 		if(issueDrugPatient != null && list != null && list.size() > 0){
 			
 			Date date = new Date();
@@ -456,8 +460,25 @@ public class AjaxController {
 			 transaction.setCreatedOn(date);
 			 transaction.setCreatedBy(Context.getAuthenticatedUser().getGivenName());
 			 transaction = inventoryService.saveStoreDrugTransaction(transaction);
+			 
+			 String patientCategory = "";
+			 String patientSubcategory = "";
+		       for (PersonAttribute pa : pas) {
+		            PersonAttributeType attributeType = pa.getAttributeType();
+		            if(pa.getAttributeType().getId()==14)
+		            {
+		            	patientCategory = pa.getValue();
+		            	issueDrugPatient.setPatientCategry(patientCategory);
+		            }
+		            if(pa.getAttributeType().getId()==31)
+		            {
+		            	patientSubcategory = pa.getValue();
+		            	issueDrugPatient.setPatientSubcategory(patientSubcategory);
+		            }
+		       }
 			
 			issueDrugPatient = inventoryService.saveStoreDrugPatient(issueDrugPatient);
+			
 			for(InventoryStoreDrugPatientDetail pDetail : list){
 				Date date1 = new Date();
 				try {
