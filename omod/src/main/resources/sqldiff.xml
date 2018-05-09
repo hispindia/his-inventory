@@ -271,4 +271,15 @@
 		ALTER TABLE inventory_store_drug_transaction_detail ADD COLUMN(voided  TINYINT(1) DEFAULT 0,quantity_after_return integer DEFAULT 0,total_amount_after_void float(11,2),waiver_amount_afer_void float(11,2),cash_returned int(11),amount_credit_after_void decimal(11,2));
 		</sql>
 	</diff>
+	<diff>
+		<version>2.3.8</version>
+		<author>ghanshyan</author>
+		<date>8th May 2018</date>
+		<description>
+			ALTER inventory_store_drug_patient
+		</description>
+		<sql>
+		ALTER TABLE inventory_store_drug_patient ADD COLUMN(patient_category varchar(100),patient_subcategory varchar(100));
+		</sql>
+	</diff>
 </sqldiff>
