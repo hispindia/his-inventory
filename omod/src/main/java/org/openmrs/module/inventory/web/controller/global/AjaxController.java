@@ -2,6 +2,7 @@ package org.openmrs.module.inventory.web.controller.global;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.Concept;
+import org.openmrs.ConceptAnswer;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
@@ -848,6 +850,19 @@ public class AjaxController {
 	@RequestMapping("/module/inventory/subStoreIssueDrugDettail.form")
 	public String viewDetailIssueDrug( @RequestParam(value="issueId",required=false)  Integer issueId, Model model) {
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
+		Concept conceptPaidCategory=Context.getConceptService().getConceptByName("Paid Category");
+		Collection<ConceptAnswer> cpcAns=conceptPaidCategory.getAnswers();
+		List<String> conceptListForPaidCategory = new ArrayList<String>();
+		for(ConceptAnswer cpc:cpcAns){
+			conceptListForPaidCategory.add(cpc.getAnswerConcept().getId().toString());
+		}
+		
+		Concept conceptPrograms=Context.getConceptService().getConceptByName("Programs");
+		Collection<ConceptAnswer> cpAns=conceptPrograms.getAnswers();
+		List<String> conceptListForPrograms = new ArrayList<String>();
+		for(ConceptAnswer cp:cpAns){
+			conceptListForPrograms.add(cp.getAnswerConcept().getId().toString());
+		}
 		List<InventoryStoreDrugPatientDetail> listDrugIssue = inventoryService.listStoreDrugPatientDetail(issueId);
 		InventoryStoreDrugPatient inventoryStoreDrugPatient = new InventoryStoreDrugPatient();
 		model.addAttribute("listDrugIssue", listDrugIssue);
@@ -877,6 +892,25 @@ public class AjaxController {
 			}
 			}
 			model.addAttribute("billNo",inventoryStoreDrugPatient.getId());
+			
+			if (conceptListForPaidCategory.contains(inventoryStoreDrugPatient.getPatientCategory())) {
+				model.addAttribute("categoryf", "Paid Category");
+				if(inventoryStoreDrugPatient.getPatientCategory()!=null){
+				model.addAttribute("subCategoryf", Context.getConceptService().getConcept(Integer.parseInt(inventoryStoreDrugPatient.getPatientCategory())));
+				}
+				if(inventoryStoreDrugPatient.getPatientSubcategory()!=null){
+				model.addAttribute("childCategoryf", Context.getConceptService().getConcept(Integer.parseInt(inventoryStoreDrugPatient.getPatientSubcategory())));
+				}
+			}
+			else if(conceptListForPrograms.contains(inventoryStoreDrugPatient.getPatientCategory())){
+				model.addAttribute("categoryf", "Programs");
+				if(inventoryStoreDrugPatient.getPatientCategory()!=null){
+				model.addAttribute("subCategoryf", Context.getConceptService().getConcept(Integer.parseInt(inventoryStoreDrugPatient.getPatientCategory())));
+				}
+				if(inventoryStoreDrugPatient.getPatientSubcategory()!=null){
+				model.addAttribute("childCategoryf", Context.getConceptService().getConcept(Integer.parseInt(inventoryStoreDrugPatient.getPatientSubcategory())));
+				}
+			}
 		}
 		if(CollectionUtils.isNotEmpty(listDrugIssue)){
 		for(InventoryStoreDrugPatientDetail issue:listDrugIssue){

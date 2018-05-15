@@ -188,6 +188,10 @@ public class DrugOrderController {
 		Integer noOfDays;
 		Integer avlId;
 		BigDecimal Discount;
+		String patientCategory = "";
+		String patientSubcategory = "";
+		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+		List<PersonAttribute> pas = hcs.getPersonAttributes(patient.getPatientId());
 		InventoryStoreDrugPatient inventoryStoreDrugPatient = new InventoryStoreDrugPatient();
 		inventoryStoreDrugPatient.setStore(store);
 		inventoryStoreDrugPatient.setPatient(patient);
@@ -195,6 +199,18 @@ public class DrugOrderController {
 		inventoryStoreDrugPatient.setIdentifier(patient.getPatientIdentifier().getIdentifier());
 		inventoryStoreDrugPatient.setCreatedBy(Context.getAuthenticatedUser().getGivenName());
 		inventoryStoreDrugPatient.setCreatedOn(date);
+		
+		for (PersonAttribute pa : pas) {
+		PersonAttributeType attributeType = pa.getAttributeType();
+		if(pa.getAttributeType().getId()==14){
+		patientCategory = pa.getValue();
+		inventoryStoreDrugPatient.setPatientCategry(patientCategory);
+		}
+		if(pa.getAttributeType().getId()==31){
+		patientSubcategory = pa.getValue();
+		inventoryStoreDrugPatient.setPatientSubcategory(patientSubcategory);
+		 }
+		}
 		inventoryStoreDrugPatient = inventoryService.saveStoreDrugPatient(inventoryStoreDrugPatient);
 		
 		InventoryStoreDrugTransaction transaction = new InventoryStoreDrugTransaction();
@@ -218,7 +234,6 @@ public class DrugOrderController {
 		List<EncounterType> types = new ArrayList<EncounterType>();
 		EncounterType eType = new EncounterType(10);
 		types.add(eType);
-		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 		Encounter lastVisitEncounter = hcs.getLastVisitEncounter(patient, types);
 		if(avaiableId!=null){
 		for (String avId : avaiableId) {
