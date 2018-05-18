@@ -204,11 +204,11 @@ public class DrugOrderController {
 	    PersonAttributeType attributeType = pa.getAttributeType();
 	    if(pa.getAttributeType().getId()==14){
 	    patientCategory = pa.getValue();
-	    inventoryStoreDrugPatient.setPatientCategry(patientCategory);
+	    inventoryStoreDrugPatient.setPatientCategoryf(patientCategory);
 	    }
 	    if(pa.getAttributeType().getId()==31){
 	    patientSubcategory = pa.getValue();
-	    inventoryStoreDrugPatient.setPatientSubcategory(patientSubcategory);
+	    inventoryStoreDrugPatient.setPatientSubcategoryf(patientSubcategory);
 	     }
 	    }
 		inventoryStoreDrugPatient = inventoryService.saveStoreDrugPatient(inventoryStoreDrugPatient);
