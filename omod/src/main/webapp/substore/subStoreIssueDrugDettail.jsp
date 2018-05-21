@@ -71,7 +71,7 @@ jQuery("#amtretrns").hide();
 					<td><openmrs:formatDate date="${date}" type="textbox" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					
 					<td>Patient Category:</td>
-			        <td>${subCategoryf.name} &nbsp;&nbsp;&nbsp; ${{childCategoryf.name}</td>
+			        <td>${subCategoryf.name} &nbsp;&nbsp;&nbsp; ${childCategoryf.name}</td>
 			       
 				</tr>
 				<tr>
@@ -285,7 +285,7 @@ jQuery("#amtretrns").hide();
 					<td><openmrs:formatDate date="${date}" type="textbox" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					
 					<td>Patient Category:</td>
-			        <td>${{subCategoryf.name} &nbsp;&nbsp;&nbsp; ${{childCategoryf.name}</td>
+			        <td>${subCategoryf.name} &nbsp;&nbsp;&nbsp; ${childCategoryf.name}</td>
 				</tr>
 			</table>
 			<hr  color="black">

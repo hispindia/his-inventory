@@ -470,12 +470,12 @@ public class AjaxController {
 		            if(pa.getAttributeType().getId()==14)
 		            {
 		            	patientCategory = pa.getValue();
-		            	issueDrugPatient.setPatientCategry(patientCategory);
+		            	issueDrugPatient.setPatientCategoryf(patientCategory);
 		            }
 		            if(pa.getAttributeType().getId()==31)
 		            {
 		            	patientSubcategory = pa.getValue();
-		            	issueDrugPatient.setPatientSubcategory(patientSubcategory);
+		            	issueDrugPatient.setPatientSubcategoryf(patientSubcategory);
 		            }
 		       }
 			
@@ -893,22 +893,22 @@ public class AjaxController {
 			}
 			model.addAttribute("billNo",inventoryStoreDrugPatient.getId());
 			
-			if (conceptListForPaidCategory.contains(inventoryStoreDrugPatient.getPatientCategory())) {
+			if (conceptListForPaidCategory.contains(inventoryStoreDrugPatient.getPatientCategoryf())) {
 				model.addAttribute("categoryf", "Paid Category");
-				if(inventoryStoreDrugPatient.getPatientCategory()!=null){
+				if(inventoryStoreDrugPatient.getPatientCategoryf()!=null){
 				model.addAttribute("subCategoryf", Context.getConceptService().getConcept(Integer.parseInt(inventoryStoreDrugPatient.getPatientCategory())));
 				}
-				if(inventoryStoreDrugPatient.getPatientSubcategory()!=null){
-				model.addAttribute("childCategoryf", Context.getConceptService().getConcept(Integer.parseInt(inventoryStoreDrugPatient.getPatientSubcategory())));
+				if(inventoryStoreDrugPatient.getPatientSubcategoryf()!=null){
+				model.addAttribute("childCategoryf", Context.getConceptService().getConcept(Integer.parseInt(inventoryStoreDrugPatient.getPatientSubcategoryf())));
 				}
 			}
-			else if(conceptListForPrograms.contains(inventoryStoreDrugPatient.getPatientCategory())){
+			else if(conceptListForPrograms.contains(inventoryStoreDrugPatient.getPatientCategoryf())){
 				model.addAttribute("categoryf", "Programs");
-				if(inventoryStoreDrugPatient.getPatientCategory()!=null){
-				model.addAttribute("subCategoryf", Context.getConceptService().getConcept(Integer.parseInt(inventoryStoreDrugPatient.getPatientCategory())));
+				if(inventoryStoreDrugPatient.getPatientCategoryf()!=null){
+				model.addAttribute("subCategoryf", Context.getConceptService().getConcept(Integer.parseInt(inventoryStoreDrugPatient.getPatientCategoryf())));
 				}
-				if(inventoryStoreDrugPatient.getPatientSubcategory()!=null){
-				model.addAttribute("childCategoryf", Context.getConceptService().getConcept(Integer.parseInt(inventoryStoreDrugPatient.getPatientSubcategory())));
+				if(inventoryStoreDrugPatient.getPatientSubcategoryf()!=null){
+				model.addAttribute("childCategoryf", Context.getConceptService().getConcept(Integer.parseInt(inventoryStoreDrugPatient.getPatientSubcategoryf())));
 				}
 			}
 		}

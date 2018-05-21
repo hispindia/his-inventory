@@ -1279,7 +1279,9 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		proList.add(Projections.sum("currentQuantity"));
 		criteria.setProjection(proList);
 		Object l = criteria.uniqueResult();
-		return l != null ? (Integer) l : 0;
+		String st=l.toString();
+		Integer it=Integer.parseInt(st);
+		return l != null ? it : 0;
 	}
 	
 	public List<InventoryStoreDrugTransactionDetail> listStoreDrugAvaiable(Integer storeId, Collection<Integer> drugs,
@@ -1404,9 +1406,9 @@ public class HibernateInventoryDAO implements InventoryDAO {
 			InventoryStoreDrugTransactionDetail tDetail = new InventoryStoreDrugTransactionDetail();
 			tDetail.setDrug((InventoryDrug) row[0]);
 			tDetail.setFormulation((InventoryDrugFormulation) row[1]);
-			tDetail.setCurrentQuantity((Integer) row[2]);
-			tDetail.setQuantity((Integer) row[3]);
-			tDetail.setIssueQuantity((Integer) row[4]);
+			tDetail.setCurrentQuantity(Integer.parseInt(row[2].toString()));
+			tDetail.setQuantity(Integer.parseInt(row[3].toString()));
+			tDetail.setIssueQuantity(Integer.parseInt(row[4].toString()));
 			list.add(tDetail);
 		}
 		
