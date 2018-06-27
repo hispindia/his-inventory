@@ -2097,7 +2097,8 @@ public class HibernateInventoryDAO implements InventoryDAO {
 
 			criteria.add(Restrictions.eq("bill.id", billNo));
 		}
-		criteria.addOrder(Order.desc("bill.createdOn"));
+		//criteria.addOrder(Order.desc("bill.createdOn"));
+		criteria.addOrder(Order.asc("bill.id"));
 		criteria.setFirstResult(min).setMaxResults(max);
 		List<InventoryStoreDrugPatient> l = criteria.list();
 		return l;
