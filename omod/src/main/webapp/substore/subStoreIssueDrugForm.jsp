@@ -29,6 +29,7 @@
 <script type="text/javascript">
 jQuery(document).ready(function(){ jQuery("#creditheader").hide();
 
+jQuery("#cashheader").hide();
 var tot=parseFloat(${total});
 jQuery("#totalValue").val("");
 jQuery("#totalValue").val(tot);
@@ -137,6 +138,8 @@ return false;
 }
 
 jQuery("#bttprocess").attr("disabled", "disabled");
+
+jQuery("#cashheader").show();
                
 ISSUE.processSlip('0');
 }
@@ -191,6 +194,8 @@ return false;
 }
 
 jQuery("#bttprint").attr("disabled", "disabled");
+
+jQuery("#cashheader").show();
                
 PURCHASE.printDiv();
 }
@@ -453,7 +458,8 @@ PURCHASE.printDiv();
 			<center><h2>${hospitalName}</h2></center>
 			<table align='Center'>
 			
-			<tr><td ></td><td id="creditheader" style="color:red;text-align: center;"><b>CREDIT BILL</b></td><td></td></tr>
+			<tr><td ></td><td ><td><td id="creditheader" style="color:red;text-align: center;"><b>CREDIT BILL</b></td><td></td></tr>
+			<tr><td ></td><td ></td><td id="cashheader" style="color:red;text-align: center;"><b>CASH BILL</b></td><td></td></tr>
 			<tr><td>BILL NO.:${isdpdt}</td></tr>
 				<tr>
 					<td>Patient ID :</td>

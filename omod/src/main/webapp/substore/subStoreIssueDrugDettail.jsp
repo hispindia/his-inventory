@@ -21,8 +21,13 @@
 <%@ include file="/WEB-INF/template/headerMinimal.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
 <script type="text/javascript">
-jQuery(document).ready(function(){ jQuery("#creditheader").hide();
+jQuery(document).ready(function(){ 
+var tap="${totalAmountPayable}";
+jQuery("#printableTotalPayablee").append("<span style='margin:5px;'>" + toWords(tap) + "</span>");
+jQuery("#creditheader").hide();
 jQuery("#creditheaders").hide();
+jQuery("#cashheader").hide();
+jQuery("#cashheaders").hide();
 if(jQuery("#test").val().length!=0)
 	{
 	jQuery("#creditheader").show();
@@ -30,6 +35,9 @@ if(jQuery("#test").val().length!=0)
 	jQuery("#amtreturn").hide();
 	jQuery("#amtgven").hide();
 	jQuery("#amtretrn").hide();
+	}
+	else{
+	jQuery("#cashheader").show();
 	}
 if(jQuery("#test1").val().length!=0)
 { 
@@ -39,11 +47,15 @@ jQuery("#amtreturns").hide();
 jQuery("#amtgvens").hide();
 jQuery("#amtretrns").hide();
 }
+else{
+jQuery("#cashheaders").show();
+}
 
 });
 </script>
 <span class="boxHeader">Issue drugs detail</span>
 <span class="boxHeader"><div id="creditheader" >CREDIT BILL</div></span>
+<span class="boxHeader"><div id="cashheader" >CASH BILL</div></span>
 <div class="box">
 
 <c:if  test="${not empty listDrugIssue}">
@@ -251,6 +263,7 @@ jQuery("#amtretrns").hide();
 <br><br>   
 <center><h2>${hospitalName}</h2></center>
 <div id="creditheaders" style="color:red;text-align: center;">CREDIT BILL</div>  
+<div id="cashheaders" style="color:red;text-align: center;">CASH BILL</div>  
 <tr><td>BILL NO.:${billNo}</td></tr>
 <c:if  test="${not empty listDrugIssue}">
 <br /> <br />
@@ -365,6 +378,9 @@ jQuery("#amtretrns").hide();
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Total amount payable</td>
 <td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${totalAmountPayable}</td>
+</tr>
+<tr>
+<td colspan="6"><b>Total Amount  Payable Rupees:</b><span id="printableTotalPayablee" > </span> only</td>
 </tr>
 <!--  <tr>
 <td style="text-align: center;">&nbsp;</td>
