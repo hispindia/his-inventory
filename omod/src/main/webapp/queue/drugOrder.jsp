@@ -75,6 +75,7 @@
 
 <script type="text/javascript">
 jQuery(document).ready(function(){ jQuery("#creditheader").hide();
+jQuery("#cashheader").hide();
 //jQuery("#headerValue").hide();
 });
 var count=0;
@@ -540,10 +541,11 @@ jQuery("#amountReturned").val(amountReturned);
 </style>
 
 
-<br><br>
+<br><br>  
+<center><h2>${hospitalName}</h2></center>
+<div id="creditheader" style="color:red;text-align: center;">CREDIT BILL</div>  
+<div id="cashheader" style="color:red;text-align: center;">CASH BILL</div>  
 		<table align='Center'>
-		<center><h2>${hospitalName}</h2></center>
-		<tr><td ></td><td id="creditheader" style="color:red">CREDIT BILL</td><td></td></tr>
 		<tr><td>BILL NO.:${isdpdt}</td></tr>
 		<tr>
 			<td>Patient ID :</td>
@@ -718,6 +720,8 @@ jQuery("#amountReturned").val(amountReturned);
 	function credit()
 	{  
 	
+	jQuery("#amountGiven").val("");
+	jQuery("#amountReturned").val("");
 	jQuery("#amountGiven").attr("disabled", "disabled");
 	jQuery("#amountReturned").attr("disabled", "disabled");
 	jQuery("#amtgiven").hide();
@@ -743,6 +747,12 @@ jQuery("#amountReturned").val(amountReturned);
 		jQuery("#printableTotalPayable").empty();
 		jQuery("#printableGiven").empty();
 		jQuery("#printableAmountReturned").empty();
+		if(jQuery("#amountGiven").val()!=""){
+		jQuery("#cashheader").show();
+		}
+		else{
+		jQuery("#cashheader").hide();
+		}
 		jQuery("#printableTotal").append("<span style='margin:5px;'>" + totalValue + "</span>");
 		jQuery("#printableDiscount").append("<span style='margin:5px;'>" + waiverPercentage + "</span>");
 		jQuery("#printableDiscountAmount").append("<span style='margin:5px;'>" + waiverAmount + "</span>");

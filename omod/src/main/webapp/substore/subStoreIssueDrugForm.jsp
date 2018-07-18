@@ -454,12 +454,11 @@ PURCHASE.printDiv();
 }
 </style>
 		<c:if test="${not empty issueDrugPatient}">
-			<br /> <br />
-			<center><h2>${hospitalName}</h2></center>
+			<br><br>  
+<center><h2>${hospitalName}</h2></center>
+<div id="creditheader" style="color:red;text-align: center;">CREDIT BILL</div>  
+<div id="cashheader" style="color:red;text-align: center;">CASH BILL</div>  
 			<table align='Center'>
-			
-			<tr><td ></td><td ><td><td id="creditheader" style="color:red;text-align: center;"><b>CREDIT BILL</b></td><td></td></tr>
-			<tr><td ></td><td ></td><td id="cashheader" style="color:red;text-align: center;"><b>CASH BILL</b></td><td></td></tr>
 			<tr><td>BILL NO.:${isdpdt}</td></tr>
 				<tr>
 					<td>Patient ID :</td>
