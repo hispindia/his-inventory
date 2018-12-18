@@ -57,7 +57,13 @@ jQuery("#cashheaders").show();
 <span class="boxHeader"><div id="creditheader" >CREDIT BILL</div></span>
 <span class="boxHeader"><div id="cashheader" >CASH BILL</div></span>
 <div class="box">
-
+<div align="center">
+  <tr><td style="text-align:center;">
+	     <img  type="image" src="../../moduleResources/inventory/Logo_Tibet.jpg" align="middle"/>
+	     </td>
+	     </tr>
+		 <tr><td> <h2>${hospitalName}</h2> </td></tr>
+		 </div>
 <c:if  test="${not empty listDrugIssue}">
 			<table align='Center'>
 				<tr>
@@ -260,8 +266,15 @@ jQuery("#cashheaders").show();
 </style>
 
 
-<br><br>   
-<center><h2>${hospitalName}</h2></center>
+<br><br>  
+<div align="center">
+  <tr><td style="text-align:center;">
+	     <img  type="image" src="../../moduleResources/laboratory/Logo_Tibet.jpg" align="middle"/>
+	     </td>
+	     </tr>
+		<center><h2>${hospitalName}</h2></center>
+</div> 
+
 <div id="creditheaders" style="color:red;text-align: center;">CREDIT BILL</div>  
 <div id="cashheaders" style="color:red;text-align: center;">CASH BILL</div>  
 <tr><td>BILL NO.:${billNo}</td></tr>

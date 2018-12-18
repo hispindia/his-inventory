@@ -541,8 +541,14 @@ jQuery("#amountReturned").val(amountReturned);
 </style>
 
 
-<br><br>  
-<center><h2>${hospitalName}</h2></center>
+<br><br> 
+<div align="center">
+  <tr><td style="text-align:center;">
+	     <img  type="image" src="../../moduleResources/laboratory/Logo_Tibet.jpg" align="middle"/>
+	     </td>
+	     </tr>
+		<center><h2>${hospitalName}</h2></center>
+</div>  
 <div id="creditheader" style="color:red;text-align: center;">CREDIT BILL</div>  
 <div id="cashheader" style="color:red;text-align: center;">CASH BILL</div>  
 		<table align='Center'>
