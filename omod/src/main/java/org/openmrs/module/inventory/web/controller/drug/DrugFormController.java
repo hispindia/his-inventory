@@ -1,5 +1,9 @@
 package org.openmrs.module.inventory.web.controller.drug;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -11,13 +15,16 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Drug;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.concept.ConceptNode;
 import org.openmrs.module.hospitalcore.model.InventoryDrug;
 import org.openmrs.module.hospitalcore.model.InventoryDrugCategory;
 import org.openmrs.module.hospitalcore.model.InventoryDrugFormulation;
 import org.openmrs.module.hospitalcore.model.InventoryDrugUnit;
 import org.openmrs.module.hospitalcore.util.Action;
 import org.openmrs.module.hospitalcore.util.ActionValue;
+import org.openmrs.module.hospitalcore.util.ConceptAnswerComparator;
 import org.openmrs.module.inventory.InventoryService;
+import org.openmrs.module.inventory.util.InventoryDrugFormulationComparator;
 import org.openmrs.module.inventory.web.controller.property.editor.DrugCategoryPropertyEditor;
 import org.openmrs.module.inventory.web.controller.property.editor.DrugCorePropertyEditor;
 import org.openmrs.module.inventory.web.controller.property.editor.DrugUnitPropertyEditor;
@@ -66,7 +73,11 @@ Log log = LogFactory.getLog(this.getClass());
  
 		InventoryService inventoryService = (InventoryService) Context.getService(InventoryService.class);
 		List<InventoryDrugFormulation> formulations = inventoryService.findDrugFormulation("");
-		return formulations;
+		List<InventoryDrugFormulation> form = new ArrayList(formulations);
+		
+	
+		Collections.sort(form, new InventoryDrugFormulationComparator());
+		return form;
 	}
 	@ModelAttribute("units")
 	public List<InventoryDrugUnit> populateUnit() {
