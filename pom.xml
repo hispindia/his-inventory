@@ -4,7 +4,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>inventory</artifactId>
-	<version>2.0.11</version>
+	<version>2.0.12-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>inventory</name>
 	<description>Parent project for inventory</description>
@@ -22,13 +22,13 @@
             <repository>
                 <id>shimla-nexus</id>
                 <name>Shimla nexus repo</name>
-                <url>http://hospdev.hispindia.org/nexus/content/repositories/releases/</url>
+                <url>http://apps.hispindia.org/nexus/content/repositories/hpupgraded-releases</url>
             </repository>
         <!-- use the following if you ARE using a snapshot version. -->
             <snapshotRepository>
                 <id>shimla-nexus</id>
                 <name>Shimla nexus repo</name>
-                <url>http://hospdev.hispindia.org/nexus/content/repositories/snapshots/</url>
+                <url>http://apps.hispindia.org/nexus/content/repositories/hpupgraded-snapshots</url>
                 <uniqueVersion>false</uniqueVersion>
              </snapshotRepository>
      </distributionManagement>
@@ -88,7 +88,7 @@
 	</dependencyManagement>
 
 	<properties>
-		<openMRSVersion>1.8.0</openMRSVersion>
+		<openMRSVersion>1.9.10</openMRSVersion>
 	</properties>
 
 	<build>
