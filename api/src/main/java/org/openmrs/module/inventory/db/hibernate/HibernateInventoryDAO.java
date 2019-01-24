@@ -1304,7 +1304,7 @@ public class HibernateInventoryDAO implements InventoryDAO {
 			InventoryStoreDrugTransactionDetail tDetail = new InventoryStoreDrugTransactionDetail();
 			tDetail.setDrug((InventoryDrug) row[0]);
 			tDetail.setFormulation((InventoryDrugFormulation) row[1]);
-			tDetail.setCurrentQuantity((Integer) row[2]);
+			tDetail.setCurrentQuantity(Integer.parseInt(row[2].toString()));
 			list.add(tDetail);
 			//System.out.println("I: "+i+" drug: "+tDetail.getDrug().getName()+" formulation: "+tDetail.getFormulation().getName()+" quantity: "+tDetail.getCurrentQuantity());
 		}
@@ -1394,9 +1394,9 @@ public class HibernateInventoryDAO implements InventoryDAO {
 			InventoryStoreDrugTransactionDetail tDetail = new InventoryStoreDrugTransactionDetail();
 			tDetail.setDrug((InventoryDrug) row[0]);
 			tDetail.setFormulation((InventoryDrugFormulation) row[1]);
-			tDetail.setCurrentQuantity((Integer) row[2]);
-			tDetail.setQuantity((Integer) row[3]);
-			tDetail.setIssueQuantity((Integer) row[4]);
+			tDetail.setCurrentQuantity(Integer.parseInt(row[2].toString()));
+			tDetail.setQuantity(Integer.parseInt(row[3].toString()));
+			tDetail.setIssueQuantity(Integer.parseInt(row[4].toString()));
 			list.add(tDetail);
 		}
 		
