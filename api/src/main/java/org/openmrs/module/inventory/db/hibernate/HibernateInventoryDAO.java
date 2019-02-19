@@ -1269,7 +1269,9 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		proList.add(Projections.sum("currentQuantity"));
 		criteria.setProjection(proList);
 		Object l = criteria.uniqueResult();
-		return l != null ? (Integer) l : 0;
+		String st=l.toString();
+		Integer it=Integer.parseInt(st);
+		return l != null ? it : 0;
 	}
 	
 	public List<InventoryStoreDrugTransactionDetail> listStoreDrugAvaiable(Integer storeId, Collection<Integer> drugs,
