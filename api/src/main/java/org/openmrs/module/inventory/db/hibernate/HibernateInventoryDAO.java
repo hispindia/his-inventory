@@ -1269,8 +1269,11 @@ public class HibernateInventoryDAO implements InventoryDAO {
 		proList.add(Projections.sum("currentQuantity"));
 		criteria.setProjection(proList);
 		Object l = criteria.uniqueResult();
+		Integer it=0;
+		if(l!=null){
 		String st=l.toString();
-		Integer it=Integer.parseInt(st);
+		it=Integer.parseInt(st);
+		}
 		return l != null ? it : 0;
 	}
 	
