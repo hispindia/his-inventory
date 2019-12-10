@@ -362,13 +362,15 @@ PURCHASE={
 			jQuery("#printableTotal").empty();
 			jQuery("#printableDiscount").empty();
 			jQuery("#printableDiscountAmount").empty();
+			jQuery("#printableDiscountComment").empty();
 			jQuery("#printableTotalAmountPayable").empty();
 			jQuery("#printableTotalPayable").empty();
 			jQuery("#printableGiven").empty();
 			jQuery("#printableAmountReturned").empty();
 		    jQuery("#printableTotal").append("<span style='margin:5px;'>" + totalValue + "</span>");
 		    jQuery("#printableDiscount").append("<span style='margin:5px;'>" + waiverPercentage + "</span>");
-		    jQuery("#printableDiscountAmount").append("<span style='margin:5px;'>" + waiverAmount + "</span>");
+			jQuery("#printableDiscountAmount").append("<span style='margin:5px;'>" + waiverAmount + "</span>");
+			jQuery("#printableDiscountComment").append("<span style='margin:5px;'>" + waiverComment + "</span>");
 		    jQuery("#printableTotalAmountPayable").append("<span style='margin:5px;'>" + totalAmountPayable + "</span>");
 		    jQuery("#printableTotalPayable").append("<span style='margin:5px;'>" + toWords(totalAmountPayable) + "</span>");
 		    jQuery("#printableGiven").append("<span style='margin:5px;'>" + amountGiven + "</span>");

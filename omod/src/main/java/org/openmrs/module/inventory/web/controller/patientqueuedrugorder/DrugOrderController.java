@@ -183,7 +183,6 @@ public class DrugOrderController {
 		Date date = new Date();
 		Integer formulationId;
 		String frequencyName;
-		String comments;
 		Integer quantity;
 		Integer noOfDays;
 		Integer avlId;
@@ -249,7 +248,6 @@ public class DrugOrderController {
 			
 			frequencyName = request.getParameter(avId + "_fFrequencyName");
 			noOfDays = Integer.parseInt(request.getParameter(avId + "_fnoOfDays"));
-			comments = request.getParameter(avId + "_fcomments");
 			
 			
 			Concept fCon = Context.getConceptService().getConcept(frequencyName);
@@ -293,7 +291,7 @@ public class DrugOrderController {
 			
 			 transDetail.setFrequency(fCon);
 			 transDetail.setNoOfDays(noOfDays);
-			 transDetail.setComments(comments);
+			 transDetail.setComments(waiverComment);
 			
 			 BigDecimal moneyUnitPrice = inventoryStoreDrugTransactionDetail.getMrpPrice().multiply(new BigDecimal(quantity));
 			// moneyUnitPrice = moneyUnitPrice.add(moneyUnitPrice.multiply(inventoryStoreDrugTransactionDetail.getVAT().divide(new BigDecimal(100))));
@@ -301,6 +299,7 @@ public class DrugOrderController {
 				
 			 transDetail.setTotalAmount(totalValue);
 			 transDetail.setWaiverPercentage(waiverPercentage);
+
 			 Float waiverAmount=null;
 			 
 			 if(waiverPercentage!=null)

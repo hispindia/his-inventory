@@ -182,18 +182,18 @@ jQuery("#cashheaders").show();
 <td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${discount}0</td>
 </tr>
 <tr>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<!--
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
- -->
-<td style="text-align: center;">DiscountAmount</td>
-<td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${discountAmount}</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<!--
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	 -->
+	<td style="text-align: center;">DiscountAmount</td>
+	<td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${discountAmount}</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -236,6 +236,9 @@ jQuery("#cashheaders").show();
  -->
 <td id="amtretrn" style="text-align: center;">Amount Returned</td>
 <td id="amtreturn" style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${amountReturned}.00</td>
+</tr>
+<tr>
+	<td colspan="8" class='<c:if test="${voided==1}">retired</c:if>'><b>Comment: </b>${discountComment}</td>
 </tr>
 			</tbody>
 		</table>
@@ -373,14 +376,14 @@ jQuery("#cashheaders").show();
 <td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${discount}0</td>
 </tr>
 <tr>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">DiscountAmount</td>
-<td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${discountAmount}</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">DiscountAmount</td>
+	<td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${discountAmount}</td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -391,6 +394,9 @@ jQuery("#cashheaders").show();
 <td style="text-align: center;">&nbsp;</td>
 <td style="text-align: center;">Total amount payable</td>
 <td  style="text-align: center;" class='<c:if test="${voided==1}">retired</c:if>'>${totalAmountPayable}</td>
+</tr>
+<tr>
+	<td colspan="6" class='<c:if test="${voided==1}">retired</c:if>'><b>Comment: </b>${discountComment}</td>
 </tr>
 <tr>
 <td colspan="6"><b>Total Amount  Payable Rupees:</b><span id="printableTotalPayablee" > </span> only</td>

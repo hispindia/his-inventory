@@ -560,15 +560,15 @@ PURCHASE.printDiv();
 <td style="text-align: center;"><span id="printableDiscount" /></td>
 </tr>
 <tr>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">&nbsp;</td>
-<td style="text-align: center;">DiscountAmount</td>
-<td style="text-align: center;"><span id="printableDiscountAmount" /></td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">&nbsp;</td>
+	<td style="text-align: center;">DiscountAmount</td>
+	<td style="text-align: center;"><span id="printableDiscountAmount" /></td>
 </tr>
 <tr>
 <td style="text-align: center;">&nbsp;</td>
@@ -608,9 +608,12 @@ PURCHASE.printDiv();
 		</table>
 	
 <table style="width:100%">
-<tr>
-<td><b>Total Amount  Payable Rupees:</b><span id="printableTotalPayable" > </span> only</td>
-</tr>
+	<tr>
+		<td><b>Comment: </b><span id="printableDiscountComment"></span></td>
+	</tr>
+	<tr>
+		<td><b>Total Amount  Payable Rupees:</b><span id="printableTotalPayable" > </span> only</td>
+	</tr>
 </table>
 		<br /> <br /> <br /> <br /> <br /> <br /> 
 		<span style="float: right; font-size: 1.5em">Signature of pharmacist/ Stamp</span>
