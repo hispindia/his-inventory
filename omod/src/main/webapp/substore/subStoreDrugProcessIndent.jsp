@@ -78,7 +78,7 @@
 
 <script type="text/javascript">
 function disableFunction(){
-jQuery("#accept").attr("disabled", "disabled");
+// jQuery("#accept").attr("disabled", "disabled");
 }
 </script> 
 
